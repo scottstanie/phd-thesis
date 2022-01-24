@@ -16,7 +16,7 @@
 % \cosupervisor{Cosupervisor Name}
 %% Other committee members full names, comma-separated.
 %% Comment this out if empty, e.g., for a masters thesis with only a supervisor and cosupervisor.
-\othercommitteemembers{Srinivas Bettadpur, Todd Humphreys, Jon Olson}
+\othercommitteemembers{Srinivas Bettadpur, Todd Humphreys, Jon Olson, Peter Hennings}
 
 %% Optional customizations
 %% =======================
@@ -25,6 +25,7 @@
 \usepackage{amsmath}
 \usepackage{bm}
 \usepackage{minted}
+\usepackage{epsfig}
 %% and Computer Modern Typewriter Proportional as the teletype font face
 \renewcommand*\ttdefault{cmvtt}
 
@@ -64,11 +65,103 @@ Your ETD must be correct in spelling and punctuation and presented in a consiste
 
 This is the first line of the first section of the first chapter, but not the first line of the first chapter, which belongs to no section.
 
+\chapter{InSAR Background}
+
+\section{SAR Basics}
+
+\subsection{SAR Constellations}
+
+- Make a figure with historial sar mission, and include private sector companies as well
+
+\url{https://digitalcommons.usu.edu/cgi/viewcontent.cgi?article=5092&context=smallsat}
+
+\url{https://www.newspace.im/ }
+
+\url{https://www.newspace.im/constellations/iceye}
+
+
+- There may be more SAR satellites launched in the next 5 years than cumulatively before this
+
+\section{InSAR}
+
+\section{InSAR Time Series}
+
+stacking for avg rate
+
+SBAS linear system. doesn't need to be short baseline. just a way to solve for the phase at each date
+
+Phase linking approaches solve for this using an eptimization on each pixels time-covariance matrix.
+
+\subsection{Uncertainty}
+
+Several ways for uncertainty.
+
+jackknife (maybe look into the NSBAS/GIANT time series way they do it....). prob an underestimate, since this is *precision* of the estimator. often it's jsut precision of the noise+deformation phase. but we really want the defo phase.
+
+other is least squares propagation of covariance. difficult to calibrate without good atmo noise estimate, can underestimate/overestimate.
+
+one problem with daily time series: often uncertainty is a single number. but each day's atmo noise can vary by 10-20x.
+
+Even with temporal smoothing (example pic of that super storm cell), there can be many days with "blobs" of atmospheric noise which exceed real deformation.
+
+Chapter (2nd paper) will discus a third novel way using computer vision.
+
+
+Bootstrap:
+
+From "practictioners guide":
+A natural question for the practitioner is to ask  “ Why bootstrap in the linear regression case? Isn ’ t least - squares a well - established approach that  has  served  us  well  in  countless  applications? ”   The  answer  is  that  for  many  problems, least - squares regression has served us well and is always useful as  a first approach but is problematic when the residuals have heavy - tailed distributions or if even just a few outliers are present.
+
+\chapter{Permian Basin Background}
+
+
+\chapter{Oil and Gas production in West Texas}
+
+\section{Permian Basin Oil Production and Induced Seismicity}
+
+TODO: need to look into recent mentone stuff. peters papers, recent skoumal paper
+
+The success of shale development technologies \cite{Waters2006use} has opened up vast shale resources for economically viable oil and gas production. Based on a recent assessment by the U.S. Geological Survey (USGS), the Wolfcamp shale in Texas' Permian Basin is the largest continuous oil field that has ever been discovered in the United States \cite{GaswirthAssessment2016}. As of 2017, there were over 130,000 active production wells, 23,041 active enhanced oil production (EOR) wells, and 3794 active saltwater disposal (SWD) wells in the Permian Basin (Figure \ref{fig:Permian} (a)). It has been recognized that injection or withdrawal of fluids from the subsurface can induce earthquakes along existing faults \cite{Ellsworth2013, simpson1988two}. While petroleum production and wastewater injection volumes have been rising throughout the basin, the recently cataloged earthquakes are spatially clustered (Figure \ref{fig:Permian} (b)-(f)). One significant cluster is near Pecos, TX, where increased seismic activity began in 2009. Subsequent activity has increased considerably, with more than 2000 earthquakes identified in 2017 \cite{Frohlich2019}.
+
+
+\begin{figure*}[hbt!]
+\centering
+\includegraphics[width=0.99\linewidth]{figures/supplement/figureS1-cisr-data.pdf}
+\caption{Shale development and induced seismicity in the Permian Basin. (a) Locations of oil production, enhanced oil recovery (EOR), and saltwater disposal (SWD) wells active in 2017. (b) Annual oil production volume on a 10-mile grid in 2017. (c) Permian region oil production rate as reported by the Texas Railroad Commission. (d) Locations of earthquake hypocenters detected by TexNet in 2017. The color and size of a circle indicates the estimated earthquake depth and magnitude. (e) Annual injection volume (including both SWD and EOR wells) on a 5-mile grid. (f) Permian region injection rate (including both SWD and EOR wells) as reported by the Texas Railroad Commission.
+}
+\label{fig:Permian}
+\end{figure*}
+
+Understanding the nature and causes of earthquakes and how they are linked to certain production and disposal wells requires extensive knowledge of the subsurface. InSAR surface deformation measurements allow us to estimate the distribution of fault slip at depth and infer the associated seismic risk \cite{Segall2010, huang2017fault}. Furthermore, measurements of reservoir inflation due to wastewater injection allows operators to assess pressure build-up in disposal aquifers and the associated triggered seismicity risk. It is also worth noting that oil recovery in shale wells is notoriously low \cite{clark2009determination}, and the performance of these wells varies significantly. InSAR can be employed to map subsurface fluid depletion and pressurization. These surface deformation observations, when coupled with reservoir compaction inversion modeling, can be used to assess the areal effectiveness of oil and gas extraction operations \cite{Du2001, Vasco2005}. 
+echanically layered earth as a homogeneous half space, even though the stiffness increases with depth \cite{Du1992}. 
+
 
 \chapter{Atmospheric Noise Analysis and Simulation}
 \label{chap:atmo-noise}
 
 This is the first line of Chapter \ref{chap:atmo-noise}, 
+
+
+Ideas:
+
+- comparison of ways people have tried to correct for troposphere
+
+- plots/images of possible views into the single day atmosphere.
+ -- modis
+ -- HRRR, ECMWF
+ --  GOES
+ -- insar averaging
+ 
+ axes of comparison:
+ - resolution
+ - time availability
+ - spatial availibility
+ - sensitivity to phase propation delay
+ 
+ 
+ SEASONAL plots...
+ 
+ Note
 
 \section{Disambiguating terms from fractal surfaces, Gaussian random
 fields, and power
@@ -145,6 +238,11 @@ be written, using the same \(\beta\), as
 \[D_{\phi}(\rho) \propto \rho^{\beta-1}\] which means that if the
 structure function exponent is \(5/3\), then \(\beta=8/3\) for the
 spectrum slope.
+
+
+(NOTE: This integral is why the vertical-line average has a slope that's 1 less than the isotropic k slope: \url{https://www.wolframalpha.com/input/?i=integral+of+1+%2F+%28x%5E2+%2B+y%5E2%29+dy+from+-c+to+c}
+Start with $1 / r^2 = 1/(x^2 + y^2)$.
+Then change to x/y from polar, integrate over y. it tends to 1/x for large x.
 
 My confusion earlier: thinking that the frequency content of the signal
 was doing to dictate the amplitude distribution in space (or time for
