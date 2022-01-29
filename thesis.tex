@@ -23,9 +23,21 @@
 %% Use Palatino as the primary font face
 \usepackage{palatino}
 \usepackage{amsmath}
+\usepackage{amsfonts}
 \usepackage{bm}
+\usepackage[noend]{algpseudocode}
+\usepackage{algorithm2e}
+\usepackage{booktabs}
+\usepackage{color}
 \usepackage{minted}
 \usepackage{epsfig}
+
+
+%\usepackage{cite}
+
+
+
+
 %% and Computer Modern Typewriter Proportional as the teletype font face
 \renewcommand*\ttdefault{cmvtt}
 
@@ -305,6 +317,397 @@ The power spectrum is useful to recognize scaling properties of the data or to d
 TODO 1. Random field 1. Gaussian random field 1. Power spectrum
 
 
+
+
+\chapter{Automatic Detection of InSAR Surface Deformation Signals In the Presence Severe Tropospheric Noise}
+
+
+\section{Methods}
+\label{sec:methods}
+
+% \subsection{Overview}
+% \label{subsec:methods-overview}
+
+
+\subsection{Automatic Feature Detection}
+\label{subsec:methods-1-log}
+
+Given a surface deformation map $M$ derived from InSAR data, the value $ M_{ij} $ at the $i^{th}$ row and $j^{th}$ column represents the magnitude of a cumulative, seasonal, or transient deformation signal at this pixel. Because the earth can be considered as a stratified elastic-viscoelastic medium, surface deformation features in an InSAR map are often spatially coherent \cite{Segall2010EarthquakeVolcanoDeformation}.
+
+There have been many computer vision algorithms that were designed to automatically detect spatially coherent ``blob-like'' features in 2D image data \cite{Lindeberg1993DetectingSalientBlob, Lindeberg1998FeatureDetectionAutomatic, Lowe2004DistinctiveImageFeatures}. Here we employ the Laplacian of Gaussian (LoG) filters as a blob detector. An LoG kernel $K^{(m)}$ with a size $\sigma_m$ is written as:
+\begin{equation}
+K^{(m)}_{ij} = \left(\frac{(i - l)^2 + (j - l)^2 - 2\sigma_m^2}{2 \pi \sigma_m^4}\right) \, e^{-\frac{ (i - l)^2 + (j - l)^2}{2 \sigma_m^2}} \label{eq:log-kernel}
+\end{equation}
+where pixel indices $ij  \in \left\lbrace 0, 1, \ldots, 2l \right\rbrace$. The unit of $\sigma_m$ is given in pixels, which can be scaled to meters based on the pixel spacing of the InSAR deformation map $M$.
+% and $l$ is a kernel size chosen to be sufficiently larger than $\sigma_n$ such that the edge pixels approach 0. 
+%is a matrix of size $ (2l + 1, 2l + 1) $ whose value in the $i$th row and $j$th column is given by
+%The kernel is derived by taking spatial second derivatives of a Gaussian smoothing kernel, then normalizing with an extra factor of $\sigma_n^2$ so that kernels with both small and large $\sigma_n$ produce comparable filter responses. 
+
+%Each kernel is sensitive to deformation features which roughly match the radius of the kernel. The radius $ r_n $ of a circularly symmetric feature with the highest sensitivity to kernel $K^{(n)}$ can be calculated as $ r_n = \sqrt{2}\sigma_n $.
+
+We generate a set of LoG kernels $K^{(1)}, K^{(2)}, \ldots$ with progressively larger $\sigma_m$ (Figure \ref{fig:log-kernel}), and calculate the $m^{th}$ filter response $ L^{(m)} $ as:
+\begin{equation}
+L^{(m)} = M \ast K^{(m)}  \label{eq:log-layer-conv}
+\end{equation}
+%However, this operation is computationally expensive for larger kernels; thus, the filtering is carried out in the Fourier domain.
+Here $*$ denotes the 2D discrete convolution, which is typically computed using the Fast Fourier Transform (FFT) algorithm because of its superior computational efficiency \cite{Szeliski2022ComputerVision}.
+
+To demonstrate how to estimate the size of an unknown deformation feature, Figure \ref{fig:log-response} (a) shows a $500 \times 500$ synthetic deformation map $M$ that contains one Gaussian-shaped uplift feature in the upper left and one elliptical Gaussian subsidence feature in the lower right. We filtered this deformation map using 20 LoG kernels of sizes ranging from $\sigma_1 = 3$ pixels to $\sigma_{20} = 100$ pixels with a base-2 logarithmic spacing, and the filter responses are shown in Figure \ref{fig:log-response} (b)-(e). For the round uplift case, the filter response $L^{(m)}$ (the black curve in Figure \ref{fig:log-response} (b)) is strongest when the kernel size $\sigma_m$ matches the deformation feature radius $r$ as $r = \sqrt{2}\sigma_m$. This is known as the extreme point, or the local maximum points of $|L^{(m)}|$ for all attempted $\sigma_m$. For the elliptical subsidence case, the extreme point is reached when the average length of the two primary axes of the deformation feature is $\sim \sqrt{2}\sigma_m$ (the green curve in Figure \ref{fig:log-response} (b)). For the case of no deformation, no substantial filter response is generated for any filter size (the gold curve in Figure \ref{fig:log-response} (b)).
+
+\begin{figure}[hbt!]
+\centering
+ \includegraphics[width=0.98\linewidth]{paper2/figures/figure1_log_examples.pdf}
+\caption{
+Laplacian of Gaussian (LoG) kernels with (a) $\sigma_m=30$ pixels and (b) $\sigma_m=80$ pixels for an image of size of 500-by-500 pixels.
+}
+\label{fig:log-kernel}
+%
+\end{figure}
+
+\begin{figure}[hbt!]
+\centering
+\includegraphics[width=0.98\linewidth]{paper2/figures/figure2_log_response.pdf}
+\caption{
+(a) A synthetic deformation map that contains one Gaussian-shaped uplift feature in the upper left and one elliptical Gaussian subsidence feature in the lower right. (b) LoG response amplitudes for 20 filters with various sizes ($\sigma_m$) at three marker points. The marker locations are shown in panel (a). (c)-(e) The LoG filter responses for $\sigma_m=$ 12, 50, and 84.}
+\label{fig:log-response}
+%
+\end{figure}
+
+%Paragraph 3 : Ghost blob removal
+%To obtain the final detection results, we add two additional steps to remove undesirable detection candidates. 
+% (Figure \ref{fig:log-response}e, bottom right).% (Figure \ref{fig:log-response}e, upper right).
+In the case that two candidate blobs have more than 50\% overlapping area, the blob with a smaller size is discarded. 
+Additionally, the LoG filter may falsely flag ghost blobs at the edges of real deformation features. This is because deformation features with strong curvature at the center also contain a strong opposite-signed curvature near the border \cite{Lindeberg1998FeatureDetectionAutomatic}. To remove those false positives, we use the distance from the candidate blob's center location to the nearest deformation amplitude extremum as a measure. If this distance is close to the blob radius, the detection is likely a ghost blob. In our test case, we discarded blobs with local extremum distances larger than 75$\%$ of the blob radius, which effectively removed all visible false positives near the edge of real deformation features.
+
+For the $k$th detected deformation feature, our algorithm outputs the blob center location $(i_k, j_k)$, the blob radius $ r_k$, the filter response magnitude $|g_k|$ at the extreme point, and the deformation magnitude $|\bar{d_k}|$ defined as the weighed maximum of all pixels within the $k^{th}$ blob:
+\begin{equation}
+\bar{d_k} = \max_{kk} |w_{kk} M_{kk} | 
+\end{equation}
+Here the weight $w_{kk}$ equals $\exp\left[-(r_{kk} / r_k)^2\right]$, where $r_{kk}$ is the distance between a pixel within the blob and the blob center. The exponential weighting prevents pixel outliers from distorting the measure of feature magnitude. 
+
+We can exclude undesired deformation features by setting magnitude thresholds on $|g_k|$ and $|\bar{d_k}|$ based on users' interest. Furthermore, we need to determine whether a detected deformation feature has a signal magnitude above the noise level of the InSAR deformation map, which is the focus of the following method sections. 
+
+
+\begin{algorithm} [htb]
+\caption{LoG Based Deformation Feature Detection}\label{algo:blobs}
+\SetAlgoLined
+\KwIn{2D InSAR deformation map $M$}
+\KwResult{For each $k \in {1, \ldots, N_d}$ detections, the algorithm outputs the blob center location $ (i_k,j_k) $, the blob radius $ r_k $, the filter response magnitude $|g_k|$ at the extreme point, the deformation magnitude $|\bar{d_k}|$ }
+
+
+// Calculate filter responses:\\
+\ForEach{$ \sigma_m \in \left\lbrace \sigma_{min} \ldots \sigma_{max}\right\rbrace $}{
+%$L^{(n)} = \mathcal{F}^{-1} \left[ \mathcal{F} M \cdot  \mathcal{F} K^{(n)} \right] $
+$ L^{(m)} = M \ast K^{(m)}  $
+%$\nabla^2_{norm} L(\cdot, \cdot, \sigma) \gets I(\cdot, \cdot) * \nabla^2_{norm} G(\cdot,\cdot, \sigma)$
+}
+
+// Find candidate blobs from local extrema:\\
+\For{$ (i, j, m) \in  L $}{
+	\If{$L[i, j, m] $ is local extremum }{
+    % \If{$\det \mathcal{H}_{norm} L(x,y,\sigma ) $ is local extremum }{
+		Compute $ r = \sqrt{2}\sigma_m $ \\
+		Add $ (i, j, r) $ to list of candidate detections
+	}
+}
+// Prune blobs with overlap:\\
+\ForEach{$ b_1 := (i_1, j_1, r_1), b2 := (i_2, j_2, r_2) \in $ candidates}{
+%	Form circle of radius $ r_i $ around $ (i_1, j_1) $\\
+	\If{ Overlap$( b_1, b_2 ) > 0.5 $  }{
+		Remove smaller of $ b_1, b_2 $
+	}
+}
+
+// Prune edge blob false positives:\\
+\ForEach{$ b_k := (i_k, j_k, \sigma_k) \in $ candidates}{
+    Find coordinates $(u, v)$ of local max of $M$ within
+    radius $r_k$ around $ (i_k, j_k) $
+    \\
+    \If{ $\sqrt{(x - u)^2 + (y - v)^2} > 0.75 $  }{
+		Discard $ b_k $
+	}
+}
+// Prune with thresholds $ \gamma_g, \gamma_d $:\\
+\ForEach{$ b_k := (i_k, j_k, r_k,|g_k|, |\bar{d_k}|) \in $ candidates}{
+	\If{ $ |g_k| <  \gamma_g $ \text{or} $ |\bar{d_k}| <  \gamma_d $  }{
+		Discard $ b_k $
+	}
+}
+\end{algorithm}
+
+
+
+\subsection{Tropospheric Noise Spectrum}
+\label{subsec:methods-2-tropo-spectrum}
+ InSAR measurement noise can also produce spatially coherent "blob-like" features that are detectable by our algorithm.  Here we focus on characterizing the tropospheric turbulence noise in each SAR scene. This is because tropospheric turbulent noise (1) is correlated in space; (2) is present in all InSAR data sets with greatly varying magnitudes; and (3) is often the primary noise source that limits InSAR measurement accuracy \cite{Bekaert2015StatisticalComparisonInsar}.
+
+% tropospheric turbulence noise occurs in all study regions globally, and is often the dominant error source even in cases where decorrelation is non-negligible.
+%Even if a study area has regions containing decorrelation, the resulting noise does not appear as a blob-like feature and is unlikely to our algorithm. 
+
+Consider an interferogram formed using two SAR scenes acquired at times $t_1$ and $t_2$. In the case that tropospheric turbulence noise is the dominant noise term, the measured interferometric phase $\phi_{1,2}$ (in radians) at a pixel of interest can be written as \cite{Zebker1997AtmosphericEffectsInterferometric}:
+\begin{equation}
+\phi_{1,2} \approx \frac{4 \pi}{\lambda} \left(\alpha_2 - \alpha_1 + \Delta d_{1,2} \right)
+\end{equation}
+where $ \lambda $ is the radar wavelength, $\alpha_1$ and $\alpha_2$ represent the tropospheric delay at the two SAR acquisition times $t_1$ and $t_2$, and $\Delta d_{1,2} $ is the Line-Of-Sight (LOS) deformation ($d_2-d_1$) between $t_1$ and $t_2$. The unit of $\lambda$, $\alpha_1$, $\alpha_2$, and $\Delta d_{1,2} $ is in centimeters. 
+
+Given N SAR acquisitions, we can estimate the tropospheric noise on the $n^{th}$ SAR acquisition date by averaging $N-1$ interferograms that share the common reference SAR scene $n$ \cite{Tymofyeyeva2015MitigationAtmosphericPhase}:
+\begin{multline}
+\bar{\alpha}_n = \frac{\lambda}{4 \pi} \frac{1}{N-1} \left(\sum_{k=1, k \neq n}^{N} \phi_{k,n}\right)  \\
+=  \alpha_n  + \frac{1}{N-1} \left( \sum_{k=1, k \neq n}^{N}  \Delta d_{k,n} - \sum_{k=1, k \neq n}^{N}  \alpha_k  \right)  \label{eq:avg-ifg} 
+\end{multline}
+%Note that the interferograms are all formed with $k$ as the reference date; any interferogram which was processed using $k$ as the secondary is multiplied by $-1$ before averaging. 
+Because tropospheric turbulence noise is uncorrelated in time for scales longer than one day \cite{Emardson2003NeutralAtmosphericDelay, Onn2006ModelingWaterVapor}, the term $ \frac{1}{N-1} \sum \alpha_k \rightarrow 0$ when  when $N$ is sufficiently large. 
+%Additionally, for uncertainty quantification, we are interested determining the size of the smallest possible detectable signal. This will typically be much smaller than the tropospheric turbulence noise on any given day, since InSAR time series analysis can reduce tropospheric turbulence noise by a factor of $\sqrt{N}$ \cite{Sandwell1998PhaseGradientApproach}. Thus, the residual deformation term $  \frac{1}{N-1}  \sum  \Delta d_{k, m} $ does not significantly affect our estimation of the noise $\alpha_n$. 
+%Additionally, in the cases where we're interested in automatically detecting unknown deformation signals, the deformation $\Delta d_{n,k}$ is small (sub-centimeter). In any given interferogram, the noise $\alpha_n$ has much more power than the local deformation features, and thus is not a substantial component in the characterization.
+Under the assumption that $ \frac{1}{N-1} \sum \Delta d_{k,n} $ is relatively small comparing to $\alpha_n$, we compute $ \bar{\alpha}_n $ at each pixel to obtain a tropospheric turbulence noise map $A^{(n)}$ for the $n^{th}$ SAR acquisition date over the entire study area. In Section \ref{subsec:discussion-residual-deformation}, we further discuss the impact of the deformation signals on our tropospheric noise analysis.
+%We then use spectral analysis on $A^{(n)}$ to further estimate the noise \cite{Hanssen2001RadarInterferometryData}. Figure \ref{fig:psd-example}a shows an example of one day's tropospheric turbulence noise estimate for a $ 500 \times 500 $ pixel map with $100$ meter pixel spacing. The noise is spatially correlated with a peak-to-peak amplitude of several centimeters. 
+
+We next compute the 2D Power Spectral Density (PSD) of the $n^{th}$ tropospheric noise estimates at  wavenumber $ k_x, k_y $ (with units $1/m$) as \cite{Jacobs2017QuantitativeCharacterizationSurface}:
+\begin{equation}
+\text{PSD}_n(k_x, k_y) = \frac{| \widehat{A^{(n)}} |^2 }{N_x N_y (\frac{1}{\Delta x \Delta y}) } \label{eq:pow-spec}
+\end{equation}
+where  $\widehat{A^{(n)}}$ is the Discrete Fourier transform (DFT) of  the $n^{th}$ tropospheric noise map $A^{(n)}$, $\Delta x$ and $\Delta y$ are the interferogram pixel spacings (in meters) in the $x$ and $y$ directions, $N_x$ and $N_y$ are the total number of pixels in the $x$ and $y$ directions, and the squared absolute value and division are pixel-wise operations. 
+
+
+%The arguments $k_x, k_y$ are 2D spatial frequency coordinates (also called the wavenumber) with units $1/m$. 
+%The result is shown in Figure \ref{fig:psd-example}b. The majority of the noise power is at low spatial frequencies (near the origin), and at higher frequencies, the PSD drops off as a power law \cite{Hanssen2001RadarInterferometryData}. 
+
+Here we use an example to demonstrate how to estimate the PSD of a 2D tropospheric turbulence noise map (Figure \ref{fig:psd-example} (a)). First, we calculate the 2D PSD of the noise map following Equation \eqref{eq:pow-spec} (Figure \ref{fig:psd-example} (b)). Under the assumption that tropospheric noise is isotropic, we average all pixels with a distance  $k= \sqrt{k_x^2 + k_y^2}$ from the origin to generate a 1D PSD as a function of $k$ \cite{Hanssen2001RadarInterferometryData}.
+%The vertical dashed line in Figure \ref{fig:psd-example}c marks a reference frequency $k_0$ where the power level $P_0$ is measured to compare the power of tropospheric turbulence noise on different days. 
+%We parameterize $ \text{PSD}_n(k) $ by fitting a cubic polynomial to $ \log ( \text{PSD}_n(k) )$ vs. $\log (k) $ \cite{Treuhaft1987effectdynamicwet}. 
+%The cubic polynomial accounts for the varying power-law slopes of the three turbulence regimes in \cite{Hanssen2001RadarInterferometryData}, which are derived from Kolmogorov turbulence theory. Finally, 
+Here the 1D PSD is plotted on a log-log scale, which rolls off following a power law at higher frequencies (Figure \ref{fig:psd-example} (c)). By contrast, the power spectrum of spatially uncorrelated while noise is relatively flat across all frequencies $k$ (Figure \ref{fig:psd-example} (d)-(f)).
+
+%To produce a single atmospheric noise curve $\tilde{P}(k)$ for the study region, we average all dates' power spectra and fit a polynomial to this averaged spectrum. This curve has a shape and power level which reflects the characteristics of the study area's atmospheric noise. 
+
+
+\begin{figure}[hbt!]
+\centering 
+%\includegraphics[width=0.98\linewidth]{figures/figure3_psd_radial.pdf}
+\includegraphics[width=0.98\linewidth]{paper2/figures/figure3_psd_radial.png}
+\caption{
+(a) A simulated 2D turbulent atmospheric noise map with $ 500 \times 500 $ pixels at $100$ meter pixel spacing.
+(b) 2D Power Spectral Density (PSD) of the tropospheric noise map in panel (a) computed using Equation \eqref{eq:pow-spec}.
+(c) 1D PSD as a function of wavenumber $k = \sqrt{k_x^2 + k_y^2}$ derived from panel (b), under the assumption that tropospheric noise is isotropic.
+(d) A simulated 2D white noise map (spatially uncorrelated) with the same dimension and pixel spacing as panel (a)
+(e) 2D PSD of the white noise map in panel (d) computed using Equation \eqref{eq:pow-spec}.
+(f) 1D PSD as as a function of wavenumber $k = \sqrt{k_x^2 + k_y^2}$. Here We averaged the 1D PSD of 50  2D white noise instances to improve the statistical stability of the spectral estimates.
+}
+\label{fig:psd-example}
+\end{figure}
+
+
+
+\subsection{Uncertainty Quantification}
+\label{subsec:methods-3-noise-sim}
+
+Using the average 1D PSD of all $N$ InSAR-observed tropospheric turbulence noise maps, we can simulate $N$ noise incidences  $S^{(1)},\dots, S^{(N)} $ that closely resemble the real tropospheric noise over the study area \cite{Hanssen2001RadarInterferometryData}. Using these simulated noise maps, we form up to $N(N-1)/2$ noise-only interferograms, and derive a time series solution following the same method that is used for generating the real InSAR deformation map $M$ (e.g. \cite{Sandwell1998PhaseGradientApproach, Berardino2002NewAlgorithmSurface}). Because these synthetic interferograms contain no deformation, any "blob-like" features in the simulated time series solution are associated with tropospheric noise. We record the radius $r_k$,  filter response magnitude $|g_k|$ and deformation magnitude $|\bar{d_k}|$ of each noise feature using our automatic blob detection algorithm.
+
+Similarly, we generate many synthetic InSAR data sets that share the same noise spectrum derived from data, and record all detected noise blobs. We create 2D histograms of the noise attributes (filter response magnitude vs. radius and deformation magnitude vs. radius), which allows us to remove candidate blob features in the real deformation map $M$ that are likely due to tropospheric noise artifacts.
+
+\section{Test Site and Available InSAR Data}
+\label{sec:site}
+
+We tested our deformation detection algorithm on over an 80,000 $km^2$ oil-producing region in the Permian Basin, West Texas.  As described in \cite{Staniewicz2020InsarRevealsComplex}, we processed 84 ascending (path 78, frames 94–104) Sentinel-1 scenes acquired between November 2014 and January 2019 (Figure \ref{fig:study-area}). We imposed no maximum spatial baseline and a maximum temporal baseline of 800 days for interferogram selection, resulting in 2550 multi-looked interferograms with 120 m pixel spacing.  We used the GPS station TXKM as the reference location, where little surface deformation was observed over the study period (Figure \ref{fig:study-area}, yellow dot).
+
+We employed a stacking approach \cite{Sandwell1998PhaseGradientApproach, Staniewicz2020InsarRevealsComplex} to calculate the average LOS velocity $v_{avg}$ of each ground pixel over a time period of interest $ T $ as
+\begin{equation}
+v_{avg} = \frac{\sum_{i \in G} d_i}{\sum_{i \in G} t_i}
+\label{eq:stacking}
+\end{equation}
+where $G$ is a subset of interferograms formed using two SAR scenes acquired within the time period $T$. The LOS measurement (in cm) and the temporal baseline of the $i^{th}$ interferogram in $G$ are written as $d_i$ and $ t_i $ respectively.
+For example, we used 29 SAR scenes acquired between November 2014 and January 2017 to solve for the average velocity during this period, and we computed the cumulative deformation as the average velocity times the total time span ($\sim 2 years$). Similarly, we used 52 SAR scenes acquired between November 2014 and January 2018, and 84 SAR scenes acquired between November 2014 to January 2019 to derive the cumulative deformation maps over these two study periods.
+
+
+\begin{figure}[hbt!]
+\centering
+%\includegraphics[width=0.9\linewidth]{paper2/figures/figure4-study-area.pdf}
+\includegraphics[width=0.96\linewidth]{paper2/figures/figure4-study-area.png}
+\caption{GPS and InSAR data coverage over the Permian Basin. Teal and red boxes indicate ascending path 78 and descending path 85 paths of Sentinel 1 InSAR coverage, respectively. GPS station TXKM (yellow dot) was used as the reference point for both paths.
+%Each path contains over 80 SAR acquisitions, leading to over 3500 interferograms per path at 180 m pixel spacing.
+}
+\label{fig:study-area}
+\end{figure}
+
+We estimated the tropospheric turbulence noise for the $n^{th}$ SAR acquisition date using all interferograms that contain this SAR scene. (Equation \eqref{eq:avg-ifg}). We removed a quadratic ramp in each noise map, and calculated the average 1D PSD of all 84 noise maps as described in \ref{subsec:methods-2-tropo-spectrum}.
+%The 800 day temporal baseline resulted in up to $\sim$80 interferograms per acquisition near the middle of the time period (which have 800 days available before and after the date).
+Using the average noise spectrum, we generated 29 synthetic noise maps, which corresponds to the 29 Sentinel-1 acquisition dates between November 2014 and January 2017. We formed noise-only synthetic interferograms and calculated the cumulative stacking solution using Equation \eqref{eq:stacking}. We ran our blob detection algorithm on the noise-only stacking solution, and recorded the size, filter response magnitude, and deformation magnitude of each detected blob feature. We counted the total number of detections, and created 2D histograms of the noise attributes (filter magnitude vs. radius, and deformation magnitude vs. radius) for the Sentinel-1 November 2014-January 2017 solution.
+%We call this entire procedure one simulation, and we call the resulting set of detections one synthetic dataset. 
+Similarly, we ran additional simulations to create 2D histograms of the noise attributes (filter magnitude vs. radius, and deformation magnitude vs. radius) for the November 2014-January 2018, and November 2014-January 2019 solutions.
+%We repeated this simulation for the Nov. 2014 - Jan. 2018 time period using 52 simulated tropospheric turbulence maps, and for the Nov. 2014 - Jan. 2019 time period using 84 simulated tropospheric turbulence maps.
+%we performed 3 rounds of simulation: one for the 2-year, 3-year, and 4-year cumulative deformation maps. For each round, we generated the same number of synthetic tropospheric turbulence noise maps as Sentinel-1 acquisitions.  
+These histograms were then used to remove candidate blob features in the real Sentinel-1 InSAR deformation maps that are likely due to tropospheric noise artifacts.
+
+We also processed 81 descending Sentinel-1 scenes for path 85 (frames 483–493) (Figure \ref{fig:study-area}, red box) acquired between November 2014 and January 2019 as described in \cite{Staniewicz2020InsarRevealsComplex} using the the same GPS station TXKM as the reference location. Following the same processing strategy, we estimated three cumulative deformation maps spanning November 2014 to January 2017, January 2018, and January 2019. We characterized the tropospheric noise from InSAR data, and identified deformation features in the cumulative deformation maps that are likely real.
+
+\section{Results}
+\label{sec:results}
+%\subsection{Tropospheric Noise Power Spectra}
+
+The strength of the tropospheric turbulence noise estimated for path 78 varies by over an order of magnitude (Figure \ref{fig:results-noise}). Example noise maps are shown for the SAR acquisitions on dates 2017-12-12 (Figure \ref{fig:results-noise}a), 2018-09-14 (Figure \ref{fig:results-noise}c), and 2017-06-15 (Figure \ref{fig:results-noise}c), which illustrate days of weak, medium, and strong tropospheric noise. Each map contains turbulence features ranging from a few kilometers up to tens of kilometers in diameter.  
+We measured the peak amplitude of all 84 noise maps, where the peak is defined as the maximum of the absolute values of all pixels (Figure \ref{fig:results-noise}d). 
+For example, the peak amplitudes from (Figure \ref{fig:results-noise}(a), (b) and (c) are 1.8 cm, 3.2 cm, and 12.6 cm, respectively.  Approximately 50\% of SAR acquisitions have quiet atmospheric conditions with a peak noise level under 4 cm, 35\% have moderate turbulence, with a peak between 4-10 cm, and $\sim$15\% of the SAR acquisitions have strong tropospheric noise peaks of 11-15 cm. 
+
+Since InSAR measure deformation relative to a reference point, for each noise map, we re-referenced the noise maps to the center pixel and took the mean absolute value of the noise vs. distance to the reference (Figure \ref{fig:results-noise}(e)). The majority of acquisitions show a roughly square root growth of noise vs. distance to the reference, with a flattening of noise at ranges $>60-70$ km. The strongest noise days show a sharper rise of noise strength at short distances from the reference, and show longer length scales before flattening.
+
+
+The 1D PSDs for the 84 tropospheric turbulence noise maps give an alternative view of the distribution of noise power (Figure \ref{fig:results-noise}(f). For most spatial frequencies, the PSDs decay following the -8/3 power law described in previous studies \cite{Hanssen2001RadarInterferometryData, Onn2006ModelingWaterVapor}. This slope flattens at the lowest frequencies, due to the quadratic phase removal, as well as at the highest frequencies, where pixel-level variations begin to dominate tropospheric fluctuations.
+
+
+
+\begin{figure*}[hbt!]
+\centering 
+\includegraphics[width=0.98\linewidth]{paper2/figures/figure5_noise_path78.png}
+%\includegraphics[width=0.98\linewidth]{paper2/figures/figure5_noise_path78.pdf}
+\caption{Estimated tropospheric turbulence noise examples for path 78 SAR acquisitions on (a) 2017-12-12, (b) 2018-09-14, and (c) 2017-06-15.
+(d) Histogram of peak absolute value for 84 estimated noise maps from path 78. The values from panels (a), (b) and (c) are 1.8 cm, 3.2 cm, and 12.6 cm, respectively. 
+(e). Root mean squared value of noise vs distance from reference point for each noise map. Color lines represent the calculated noise curves for panels (a), (b), and (c).
+(f) 1D PSDs for 84 SAR acquisitions from path 78 (gray lines), bold color lines correspond to example dates, and bold black line corresponds to the mean PSD. 
+}
+\label{fig:results-noise}
+\end{figure*}
+
+
+%\subsection{Simulated tropospheric turbulence noise and Uncertainty Quantification}
+
+Using the mean 1D PSD shown in Figure \ref{fig:results-noise}(f), we simulated instances of tropospheric turbulence.
+%(Figure \ref{fig:results-kde}(a-c)). The noise instances are spatially isotropic and contain many $\sim$3 cm blob-like features ranging from several km up to $\sim$100 km in length. 
+As outlined in Section \ref{sec:site}, we computed LOS deformation maps from 29 noise instances, and we recorded all detected noise features. The resulting histograms of ($g$ vs. $r$ and $\bar{d}$ vs. $r$) were smoothed using a kernel density estimate (KDE) \cite{Scott2015MultivariateDensityEstimation} to create 2D empirical probability density functions (PDFs) (Figure \ref{fig:results-kde}). The PDFs shows a high concentration of detected features with small radii ($r <$ 5 km) with many more low amplitude features found than high amplitude features. For the 29 SAR acquisition case, the features are unlikely to be larger 2 cm in deformation amplitude (Figure \ref{fig:results-kde}(d)) or have a filter response stronger than 0.7 (Figure \ref{fig:results-kde}(a)). As the number of SAR acquisitions increases to 52 (Figure \ref{fig:results-kde}(b,e)) and 84 (Figure \ref{fig:results-kde}(c,f)), the amplitudes of detected features decreases for all $r$.
+
+Note that the maximum and minimum $r$ of detected features in Figure \ref{fig:results-kde}(d-f) are limited by the choice of $\sigma_{max}, \sigma_{max}$ from our detection algorithm. By imposing the prior knowledge that oil and gas-production related deformation bowls are unlikely to be larger than 30-40 km across, $\sigma_{max}$ was set so that maximum radius $r$ was approximately 20 km. Thus, even though larger structures appear in the noise, these were not detected and recorded. Additionally, due to the averaging involved in computing the cumulative LOS deformation, the amplitudes of detected features shown in Figure \ref{fig:results-kde} are smaller than those appearing in the individual noise simulations.
+
+
+\begin{figure*}[hbt!]
+\centering 
+%\includegraphics[width=0.98\linewidth]{paper2/figures/figure_results_simulation_kde.png}
+\includegraphics[width=0.98\linewidth]{paper2/figures/figure_results_kde.pdf}
+\caption{
+Probability of detecting blobs of a given size $r$ and filter magnitude $g$ from tropospheric simulation. Turbulence images were simulated in equal number to the cumulative deformation map using (a) 29 SAR acquisitions, (b) 52 SAR acquisitions, and (c) 84 SAR acquisitions. The detection algorithm was run on each noise-simulated deformation map, and detections tallied into a 2D histogram. The PDF was created from the 2D histogram using a kernel density estimate (KDE) \cite{Scott2015MultivariateDensityEstimation}.
+(d-f) Same as top row, but the probabilities were calculated using the image magnitude $|\bar{d}|$.
+}
+\label{fig:results-kde}
+\end{figure*}
+
+%\subsection{West Texas Detected Deformation}
+
+Using the empirical PDFs, we determined the highest probability deformation features contained in the deformation maps derived from Sentinel-1 InSAR (Figure \ref{fig:results-detections}). For the deformation spanning Nov. 2014 - Jan. 2017 (Figure \ref{fig:results-detections}a) using 29 SAR acquisitions. 
+We kept detections that have $ > $95\% confidence for the given radius in both the filter magnitude PDF (Figure \ref{fig:results-kde}a) and the image magnitude PDF (Figure \ref{fig:results-kde}d).
+We found 57 deformation features ranging from $\sim$1 km to 20 km in radius. This number increases to 147 features through Jan. 2018 (Figure \ref{fig:results-detections}b) and 268 features through Jan. 2019 (Figure \ref{fig:results-detections}c). Note that the increasing number of detections is due to a larger number of SAR acquisitions, which mitigates the noise and increases confidence, and also due to an increasing rate of deformation coinciding with peak oil production \cite{Staniewicz2020InsarRevealsComplex}.
+
+The detected features are clustered into areas within the Midland Basin to the east and the Delaware Basin to the west, with little to no deformation features in the Central Basin Platform. In the Midland Basin, oil production has led to many small (~3-5 km) subsidence bowls with amplitudes of 1-4 cm and areas of 1-3 cm of uplift due to wastewater injection.
+Similarly, in the central and northern sections of the Delaware Basin, oil production has created several $\sim10$ km-wide subsidence bowl with amplitudes of 4-8 cm. In the southern portion of the Delaware Basin, linear features resulting from the cluster of earthquakes are detected with high confidence  in the most recent deformation map.
+
+
+\begin{figure*}[hbt!]
+\centering 
+%\includegraphics[width=0.98\linewidth]{paper2/figures/figure_results_detections_vert.png}
+\includegraphics[width=0.98\linewidth]{paper2/figures/figure_results_blobs_path78.png}
+\caption{
+Detections for ascending path 78 with $ > $95\% confidence for the cumulative deformation from (a) Nov. 2014 - Jan 2017, using 29 SAR acquisitions, (b) Nov. 2014 - Jan 2018, using 52 SAR acquisitions,  (c) Nov. 2014 - Jan 2019, using 84 SAR acquisitions. Red indicates ground deformation toward the satellite (uplift or west), blue indicates motion away from the satellite. More detections are found as time goes on due to 1) a greater number of SAR acquisitions for stacking, leading to greater detection confidence, and 2) increased oil production and wastewater injection, lead to more subsidence and uplift. 
+Dark outlined shapes from west to east show locations of the Delaware Basin, Central Basin Platform, and Midland Basin.
+}
+\label{fig:results-detections}
+\end{figure*}
+
+
+
+\section{Discussion}
+\label{sec:discussion}
+
+
+
+\subsection{Effects of Residual Deformation on Spectrum and Simulations}
+\label{subsec:discussion-residual-deformation}
+We find that the residual deformation term $  \frac{1}{N-1}  \sum  \Delta d_{n,k} $ in Equation \eqref{eq:avg-ifg} does not significantly affect our simulated noise. We demonstrate this by comparing the 1D PSD of a noise estimate on a quiet atmospheric date (2018-09-04, Figure \ref{fig:discussion-residual-defo}a) to the PSD of the sum of the noise and the total cumulative deformation from Nov. 2014 - Jan. 2019 (Figure \ref{fig:discussion-residual-defo}b). When we estimate the PSD after adding the cumulative deformation, the resulting PSD is only slightly larger (Figure \ref{fig:discussion-residual-defo}c). This is because the total integrated power of the noise image is 3.5 cm$^2 $, while the total power of the deformation image is only 20\% of this (0.7 cm$^2 $). Since the residual deformation contribution in Equation \eqref{eq:avg-ifg}, $ \frac{1}{N-1}  \sum  \Delta d_{n,k} $, is much less than the total cumulative deformation, we conclude that this term in the tropospheric noise estimates has negligible effects on the ultimate detection confidences resulting from the simulations.
+
+\begin{figure*}[hbt!]
+\centering 
+% vertical version:
+\includegraphics[width=0.98\linewidth]{paper2/figures/figure_discussion_residual_defo.pdf}
+%\includegraphics[width=0.98\linewidth]{paper2/figures/figure_discussion_residual_defo_horizontal.pdf}
+\caption{
+(a) Estimated tropospheric noise of path 78 SAR acquisition on 2018-09-14. 
+(b) Cumulative LOS deformation of path 78 from Nov. 2014 to Jan. 2019.
+(c) 1D PSD of panel (a) (black), and 1D PSD of panels (a) and (b) (red) .
+}
+\label{fig:discussion-residual-defo}
+\end{figure*}
+
+
+\subsection{Comparison to Path 85 Detections}
+\label{subsec:discussion-path85}
+
+Due to the differences in acquisition times (7:50 p.m. local time for path 78, 6:55 a.m. for path 85), the turbulence is milder on average for path 85 (Figure \ref{fig:discussion-noise-85}). Similar to path 78 (shown in Figure \ref{fig:results-noise}(d)), approximately 50\% of SAR acquisitions have quiet atmospheric conditions with a peak noise level under 4 cm (Figure \ref{fig:discussion-noise-85}a). However, there are only two path 85 acquisitions with over 10 cm of peak noise, compared to 14 acquisitions for path 78. The difference in noise level is also apparent in the growth of RMS noise vs. distance to the reference point (Figure \ref{fig:discussion-noise-85}b). While the shape of the growth is similar for ascending and descending, the ascending path 78 has 50\% larger average noise at 50 km from the reference. Similarly, the average PSDs for path 78 and path 85 have similar shape (Figure \ref{fig:discussion-noise-85}b), but the mean power for path 78 is over 2 times larger at a spatial frequency of 0.1 cycles/km. We summarized the noise statistical differences by comparing 1) the mean variance of each noise map, 2) the largest variance of any map, 3) the mean peak amplitude of the noise map, and 4) the largest peak across all dates (Table \ref{tab:path85-compare}).
+
+
+
+
+\begin{figure*}[hbt!]
+\centering 
+\includegraphics[width=0.98\linewidth]{paper2/figures/figure_discussion_path85_plots.pdf}
+\caption{
+(a) Histogram of peak absolute value for 81 estimated noise maps from path 85. 
+(b) Root mean squared value of noise vs distance from reference point for path 85 estimated noise maps (gray lines). The mean of these lines (orange) is plotted for comparison with the mean of path 78 (purple).
+(c) 1D PSDs for 81 SAR acquisitions from path 85 (gray lines). The mean of path 85 (orange) smaller than the mean of path 78 (purple). 
+}
+\label{fig:discussion-noise-85}
+\end{figure*}
+
+
+\begin{table}
+\centering
+\caption{Summary of noise differences between path 85 and path 78}
+\begin{tabular}{lrr}
+\toprule
+{} &  Path 78 &  Path 85 \\
+\midrule
+Average Variance [cm$^2$]             &     1.38 &     0.78 \\
+Variance of Noisiest Date [cm$^2$] &    10.68 &     3.74 \\
+Average Peak Amplitude [cm]            &     5.36 &     4.58 \\
+Largest Peak Amplitude [cm]         &    15.81 &    13.72 \\
+%\midrule
+%Detected features with confidence $p<0.05$ & & \\
+%\midrule
+%Through Jan '17 & 48 & 58 \\
+%Through Jan '18 & 102 & 130 \\
+%Through Jan '19 & 256 & 343 \\
+\bottomrule
+\end{tabular}
+\label{tab:path85-compare}
+\end{table}
+
+
+
+
+Due to the lower noise of path 85, there are more detected features at a confidence level of p $< 0.05 $ (Figure \ref{fig:discussion-detections-85}). Our algorithm found similar numbers of total deformation candidates in path 78 and path 85 (between 1000-1500 per year); most of these candidates are faint noise artifacts and given a low confidence score. However, the smaller average tropospheric noise in path 85 means that the same feature will scored more confidently as a real deformation signal in path 85 than in path 78.  For example, while both path 78 and path 85 detect the significant deformation in the Delaware Basin due to oil production, there are several detections with magnitude $\sim1$cm in the path 85 image near wasterwater injection wells in the Central Basin Platform. 
+
+It is also worth noting that both paths show a large increase in the number of detections from 2016 though the end of 2018, coinciding with the overall rise in oil production within the Permian Basin (Figure \ref{fig:discussion-oil-blob-count}). While some of the increase in high confidence detections is due to the availability of more SAR acquisitions, the total oil production in the Permian Basin increase  $>60\%$, from an average daily production of 1.5 Mbbl / day in 2016 to 2.5 Mbbl / day in 2018. This led to a large number of subsidence and uplift bowls detected in the Midland and Delaware Basins.
+
+
+
+\begin{figure*}[hbt!]
+\centering 
+%\includegraphics[width=0.98\linewidth]{paper2/figures/figure_discussion_blobs_path85.png}
+\includegraphics[width=0.98\linewidth]{paper2/figures/figure_discussion_blobs_combined_path85.png}
+\caption{
+Detections for descending path 85 with $ > $95\% confidence for the cumulative deformation from (a) Nov. 2014 - Jan 2017, using 27 SAR acquisitions, (b) Nov. 2014 - Jan 2018, using 55 SAR acquisitions,  (c) Nov. 2014 - Jan 2019, using 81 SAR acquisitions. Red indicates ground deformation toward the satellite (uplift or east), blue indicates motion away from the satellite. Dark outlines show location of the Delaware Basin (center) and the Central Basin Platform (to the east).
+}
+\label{fig:discussion-detections-85}
+\end{figure*}
+
+
+\begin{figure}[hbt!]
+\centering 
+\includegraphics[width=0.98\linewidth]{paper2/figures/figure_discussion_oil_vs_blob_count.pdf}
+\caption{
+The average daily oil production for the Permian Basin for the years 2014-2018 (orange), along with the number of detected deformation features for path 85 (blue) and path 78 (green).
+}
+\label{fig:discussion-oil-blob-count}
+\end{figure}
+
+
+
+
 \subsection{Conclusions}
 
 
@@ -313,7 +716,7 @@ TODO 1. Random field 1. Gaussian random field 1. Power spectrum
 %% The style file, i.e., 'name.bst' for \bibliographystyle{name},
 %% can be any name.bst available in your TeX distribution.
 \bibliographystyle{plainnat}
-\makebibliography{insar,permian,detection,imagestuff,statistics}
+\makebibliography{blobs,insar,permian,detection,imagestuff,statistics}
 
 %% The Vita is optional, but must take no more than a single page if included.
 \begin{vita}
