@@ -29,8 +29,9 @@
 \usepackage{algorithm2e}
 \usepackage{booktabs}
 \usepackage{color}
-\usepackage{minted}
+%\usepackage{minted}
 \usepackage{epsfig}
+
 
 
 %\usepackage{cite}
@@ -123,6 +124,21 @@ Bootstrap:
 
 From "practictioners guide":
 A natural question for the practitioner is to ask  “ Why bootstrap in the linear regression case? Isn ’ t least - squares a well - established approach that  has  served  us  well  in  countless  applications? ”   The  answer  is  that  for  many  problems, least - squares regression has served us well and is always useful as  a first approach but is problematic when the residuals have heavy - tailed distributions or if even just a few outliers are present.
+
+
+
+\section{Tropospheric Noise}
+
+
+Tropospheric noise in InSAR consists of a stratified component, which correlates with topography \cite{Doin2009CorrectionsStratifiedTropospheric}, and a turbulent component that is random at time scales longer than a day \cite{Emardson2003NeutralAtmosphericDelay, Onn2006ModelingWaterVapor}. Previous studies have made advances in correcting for the stratified component using global atmospheric models \cite{Doin2009CorrectionsStratifiedTropospheric, Jolivet2014ImprovingInsarGeodesy, Cao2021AdvancedInsarTropospheric}, GPS zenith delay measurements \cite{Onn2006ModelingWaterVapor}, external measurements from sensors such as the Moderate Resolution Imaging Spectroradiometer (MODIS) \cite{Li2005InterferometricSyntheticAperture, Barnhart2013CharacterizingEstimatingNoise} or the Medium Resolution Imaging Spectrometer (MERIS)  \cite{Ding2008AtmosphericEffectsInsar}, as well as empirical methods using regressions on InSAR phase and elevation \cite{Zebker2021AccuracyModelFree, Murray2021ClusterBasedEmpirical}.
+
+Early efforts to correct or mitigate the turbulent atmospheric noise used a combination of high pass temporal filtering and low pass spatial filtering \cite{Ferretti2001PermanentScatterersSar, Berardino2002NewAlgorithmSurface}.
+%- but as \cite{Liu2012SatelliteRadarInterferometry} notes, gaps in the acquistion, or strong non-Gaussianity from, e.g., severe thunderstorms, break the assumptions of equal variance among APS dates that these filters require.
+Several research efforts have attempted to produce estimates of the atmospheric phase delay for each SAR acquisition directly from a time series of interferograms. \cite{Liu2012SatelliteRadarInterferometry} formulated the problem as a linear system using a network of small baseline interferograms. Since the problem of estimating both surface deformation and atmospheric delay is an ill-posed problem given only differential InSAR measurements, the authors assumed zero or known deformation of the study region, and they constrained the estimated troposphere to have zero mean. In an attempt to denoise time series of surface deformation, \cite{Tymofyeyeva2015MitigationAtmosphericPhase} averaged sets of redundant interferograms containing a common reference date, with an assumption of linear or slowly-varying deformation, and subtracted the estimated troposphere.
+
+%  \cite{Havazli2021DetectionThresholdEstimates} almost does what i'm doing (with some type of stratified atmo too), it's just a random multiplier, and it looks like it was almost all simulation
+An alternative approach to correcting for the tropospheric turbulence is to treat it as a stochastic noise source in time series analysis \cite{Simons2007InterferometricSyntheticAperture, Agram2015NoiseModelInsar} and estimate its covariance matrix either through auxiliary data sources \cite{Barnhart2013CharacterizingEstimatingNoise, Parker2015SystematicAssessmentAtmospheric} or directly from InSAR data \cite{Lohman2005SomeThoughtsUse}. While these approaches provide a measure of uncertainty in the deformation solution, the uncertainties are given for each pixel (or each model parameter), rather than for each visible deformation feature.
+
 
 \chapter{Permian Basin Background}
 
@@ -715,8 +731,10 @@ The average daily oil production for the Permian Basin for the years 2014-2018 (
 %% Insert the bibliography.
 %% The style file, i.e., 'name.bst' for \bibliographystyle{name},
 %% can be any name.bst available in your TeX distribution.
-\bibliographystyle{plainnat}
-\makebibliography{blobs,insar,permian,detection,imagestuff,statistics}
+%\bibliographystyle{plainnat}
+\bibliographystyle{unsrt}
+%\makebibliography{blobs,insar,permian,detection,imagestuff,statistics}
+\makebibliography{blobs}
 
 %% The Vita is optional, but must take no more than a single page if included.
 \begin{vita}
