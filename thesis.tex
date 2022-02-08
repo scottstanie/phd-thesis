@@ -71,7 +71,53 @@
 
 \chapter{Introduction}
 
-Your ETD must be correct in spelling and punctuation and presented in a consistent, structured format. A single, legible font must be used throughout, the only exceptions being in tables, figures, graphs, appendices, and supplemental files. Headings may be bolded and no more than 2 points larger than the rest of the text. The font size should be sufficient for the average person to read the document on a computer monitor without difficulty (12-pt is recommended.) Accuracy and consistency in presentation and form make your ETD a usable research tool for other readers.
+
+\section{Thesis Roadmap}
+
+Chapter 1 introduction
+Chapter 2 introduces the study area of the Permian Basin. (geology? tectonic background? previous data looks?)
+Chapter 3 gives background on SAR and InSAR
+Chapter 4 is noise sources, mitigation, time series and uncertainty quantification,
+  - TS
+  - UQ: WLS, bootstrap, external source. simulation
+Chapter 5 is the GRL Permian basin map (how to describe...)
+
+Chapter 6 is automatic detection of InSAR deformation in the presence of severe tropospheric noise
+Chapter 7 concludes and gives outlook
+
+%
+%	- Usually have 3 technical chapter.
+%Maybe… GRL paper. Then extend it with new result, longer period of time. Longer timeseries stuff. That might be new chapter. Then the automatic detection.
+%This CV one should go later.
+% Then maybe some appendix… GACOS, or maybe Tropo noise will be one early reiew side.
+%
+%
+%(ch 3 SAR, brief insar)
+%New TS will be new work.
+%But thie tropo may be noise sources.
+% Insar. Noise soruces. How to mitigate.
+%
+%
+%
+%Background of permian
+%Background of SAR/InSAR?
+%
+%Build up to where I last left off
+%Humphreys quote 'how do you know it's true'
+%Methods for UQ for generic timeseries
+%Problems with pixelwise
+%- Image of blob, with 8 mm cutoff, question which part you trust and not
+%- Leads into feature-wise uq
+%2nd paper
+%- CV blobs
+%- Biggest problem is noise cutoff, whats shape, what can appear
+%- How do you characterize atmo
+%- How simulate, get PDF
+%
+%Possible end?
+%- Compare to WLS uncertainty
+%- 'bootstrap', but problems with timeseries bootstrap
+
 
 
 \section{A Section}
@@ -79,6 +125,8 @@ Your ETD must be correct in spelling and punctuation and presented in a consiste
 This is the first line of the first section of the first chapter, but not the first line of the first chapter, which belongs to no section.
 
 \chapter{InSAR Background}
+
+
 
 \section{SAR Basics}
 
@@ -155,7 +203,8 @@ The success of shale development technologies \cite{Waters2006use} has opened up
 \begin{figure*}[hbt!]
 \centering
 \includegraphics[width=0.99\linewidth]{figures/supplement/figureS1-cisr-data.pdf}
-\caption{Shale development and induced seismicity in the Permian Basin. (a) Locations of oil production, enhanced oil recovery (EOR), and saltwater disposal (SWD) wells active in 2017. (b) Annual oil production volume on a 10-mile grid in 2017. (c) Permian region oil production rate as reported by the Texas Railroad Commission. (d) Locations of earthquake hypocenters detected by TexNet in 2017. The color and size of a circle indicates the estimated earthquake depth and magnitude. (e) Annual injection volume (including both SWD and EOR wells) on a 5-mile grid. (f) Permian region injection rate (including both SWD and EOR wells) as reported by the Texas Railroad Commission.
+\caption{Shale development and induced seismicity in the Permian Basin. 
+(a) Locations of oil production, enhanced oil recovery (EOR), and saltwater disposal (SWD) wells active in 2017. (b) Annual oil production volume on a 10-mile grid in 2017. (c) Permian region oil production rate as reported by the Texas Railroad Commission. (d) Locations of earthquake hypocenters detected by TexNet in 2017. The color and size of a circle indicates the estimated earthquake depth and magnitude. (e) Annual injection volume (including both SWD and EOR wells) on a 5-mile grid. (f) Permian region injection rate (including both SWD and EOR wells) as reported by the Texas Railroad Commission.
 }
 \label{fig:Permian}
 \end{figure*}
@@ -731,8 +780,8 @@ The average daily oil production for the Permian Basin for the years 2014-2018 (
 %% Insert the bibliography.
 %% The style file, i.e., 'name.bst' for \bibliographystyle{name},
 %% can be any name.bst available in your TeX distribution.
-%\bibliographystyle{plainnat}
-\bibliographystyle{unsrt}
+% \bibliographystyle{plainnat}
+% \bibliographystyle{unsrt}
 %\makebibliography{blobs,insar,permian,detection,imagestuff,statistics}
 \makebibliography{blobs}
 
