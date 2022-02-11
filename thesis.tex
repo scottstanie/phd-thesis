@@ -34,7 +34,7 @@
 
 
 
-%\usepackage{cite}
+\usepackage{cite}
 
 
 
@@ -49,14 +49,15 @@
 
 %% The dedication is optional and fills an entire page.
 \begin{dedication}
-  I dedicate this to Moxie
+
+
 \end{dedication}
 
 %% The acknowledgments, abstract, and table(s) of contents/tables/figures pages are numbered with roman numerals.
 
 %% The acknowledgments is optional and fills an entire page.
 \begin{acknowledgments}
-  Many thanks to Moxie
+
 \end{acknowledgments}
 
 %% The abstract is required.
@@ -72,18 +73,81 @@
 \chapter{Introduction}
 
 
+
+%1.1: intro of GRL is well written. 
+%- insar can be used, but challenging in many ways...
+%- 1.2 here my contributions allows us to solve
+%- 1.1 is about talkign about west texas, and why it's hard.
+%- contributions is about how we nail that problem
+
+
+\section{Problem Background}
+\label{sec:chap1-problem}
+
+
+The Permian Basin stretching from eastern New Mexico and covering most of West Texas has become the United States' largest producer of oil and gas over the past decade, largely due to advances in shale recovery technologies. Injection or withdrawal of fluids from the subsurface can induce earthquakes along existing faults
+
+
+\cite{Ellsworth2013, simpson1988two}, and an increased rate of low magnitude earthquakes have been observed along with the increase in hydrocarbon production in West Texas \cite{Ellsworth2013, Frohlich2016historical, atkinson2016hydraulic, Frohlich2019, Lomax2019, savvaidis2020induced, skoumal2020induced}. While petroleum production and wastewater injection volumes have been rising throughout the basin, the recently cataloged earthquakes are spatially clustered (\textit{Supporting Information S1}). One significant cluster is near Pecos, TX, where increased seismic activity began in 2009 and climbed to more than 2000 earthquakes in 2017 \cite{Frohlich2019}. To better understand the causes of these earthquakes and to assess the likelihood of infrastructure damage and safety concerns, the State of Texas funded the Texas Seismological Network (TexNet) to record earthquakes down to M2.0 across the state since 2017 \cite{Savvaidis2019}. TexNet seismic data will be most meaningful when combined with knowledge of the subsurface \cite{academy2017environmental, CouncilInduced2013}; however, measuring the subsurface at a basin-scale is both expensive and technically challenging.
+
+Interferometric Synthetic Aperture Radar (InSAR) has been routinely used for mapping surface deformation over wide areas with millimeter-to-centimeter accuracy \cite{Massonnet1993, burgmann2000synthetic}.  These surface deformation measurements can be used to derive information about Earth's subsurface, estimate the distribution of fault slip, and infer associated seismic risk \cite{Segall2010, Elliott2016, huang2017fault}. 
+
+
+
+Previous InSAR studies demonstrated the use of InSAR surface deformation data for understanding causes of induced seismicity; however, these studies only focused on study are
+as $ \sim $ 60-by-60km or smaller, and basin-wide InSAR surface deformation data with detailed uncertainty quantification are needed for assessing the likelihood of induced seismicity risk. Since InSAR tropospheric noise variance increases with the distance away from the reference point \cite{Emardson2003}, it is difficult to expand the InSAR spatial coverage to the entire Permian basin while retaining millimeter level accuracy. 
+
+In this study, we show that the increasing quantity and quality of Sentinel-1 SAR data allows us to average thousands of interferograms and mitigate strong tropospheric noise. 
+Additionally, we developed an outlier detection algorithm that removes InSAR measurements corrupted by severe tropospheric noise (e.g. storms and heat waves) and reduces InSAR measurement uncertainty by another factor of 2, down to 1-3 mm/year across the basin.
+
+Our results were validated by independent GPS measurements recorded at 13 permanent ground stations. The InSAR-observed subsidence patterns over the Pecos area can be modeled as dip-slip over multiple normal faults and discretized cylindrical reservoir compaction. Our InSAR deformation maps are now available through the Center for Integrated Seismicity Research (CISR) for the broader scientific community. This dataset, when combined with physics-based reservoir and fault modeling, can produce insights into the causes of induced seismicity. Furthermore, these surface deformation data products can be used to assess the areal effectiveness of the oil and gas production, a measure for estimating which regions of a reservoir are being depleted most quickly. InSAR techniques now provide a low-cost method to assist oil and gas operations and risk management at a basin-scale.
+
+
+\section{Contributions}
+\label{sec:chap1-contributions}
+
+
+
+The contributions of this thesis center around developing methods to produce long term, reliable surface deformation maps over large areas containing severe tropospheric noise. The methods have been applied to the Permian Basin region in West Texas to observe surface deformation caused by oil and gas production, wastewater injection, and earthquakes.
+
+
+The main contributions are summarized as follows:
+
+\begin{enumerate}
+
+\item made time series software to ingest geocoded SLCs and produce deformation map, decomp into ENU, verify with GPS
+
+\item developed outlier removal algo for stacking interferograms to create estimates of linear defo rate with large tropo noise
+\item made new time series smoothing for robust, nonparametric long term deoforamtion extraction
+\item created computer vision algo to auto detect defo signals of many shapes and sizes in large defo maps
+\item created method for estimating uncertainty of visual features in insar maps which is easily uncerstandable by non-insar experts using deformation products
+\end{enumerate}
+
+
 \section{Thesis Roadmap}
+\label{sec:chap1-roadmap}
 
-Chapter 1 introduction
-Chapter 2 introduces the study area of the Permian Basin. (geology? tectonic background? previous data looks?)
-Chapter 3 gives background on SAR and InSAR
-Chapter 4 is noise sources, mitigation, time series and uncertainty quantification,
-  - TS
-  - UQ: WLS, bootstrap, external source. simulation
-Chapter 5 is the GRL Permian basin map (how to describe...)
+In Chapter 2, we introduce the scientific background of the induced seismicity problem. We review previous studies on the increase in low magnitude earthquakes over the past decade, which has coincided with the boom of oil and gas production in the Permian Basin. We present the case for new high-quality observational datasets to better inform efforts to mitigate induced seismicity.
 
-Chapter 6 is automatic detection of InSAR deformation in the presence of severe tropospheric noise
-Chapter 7 concludes and gives outlook
+In Chapter 3, we introduce principles of interferometric synthetic aperture radar. We start with a review of synthetic aperture radar (SAR) image formation. We derive how the phase difference between two SAR images acquired at different times can be used to infer surface deformation. We show how the use of geocoded single-look complex (SLC) products enables a simple InSAR processing workflow. We outline common InSAR noise sources and how to combine many interferograms to solve for a time series of surface deformation. Finally, we describe how to decompose deformation from multiple satellite geometries into horizontal and vertical components.
+
+
+In Chapter 4, we present a simple yet effective time series method for creating cumulative surface deformation maps over large regions with severe tropospheric noise. We use the method to create yearly deformation maps over the oil-producing region of the Permian Basin. The automated outlier removal enabled ~2 mm/year in the presence of ~15 cm of tropospheric noise.
+
+
+In Chapter 5, we expand our robust time series methods to account for non-linear deformation. We introduce a method to extract nonlinear deformation over long time series using non-parametric LOWESS smoothing. We demonstrate the methods ability to mitigate large tropospheric noise outliers on synthetic data. We present yearly cumulative and differential maps for 7 years of surface deformation over the Permian Basin, where a variety of anthropogenic causes have led to both local and large-scale surface deformation patterns.
+
+
+In Chapter 6, we demonstrate methods for automatically detecting surface deformation signals in InSAR maps. We present a computer vision algorithm based on Laplacian of Gaussian filters. We show how the tropospheric noise levels can be estimated estimated from InSAR data and used to simulate new instances of noise. We use these simulations to calculate a confidence levels for automatically detected signals in large InSAR deformation maps.
+
+
+Finally, we conclude in Chapter 7 with discussions of possible directions of future research.
+
+
+
+
+
+
 
 %
 %	- Usually have 3 technical chapter.
@@ -120,9 +184,6 @@ Chapter 7 concludes and gives outlook
 
 
 
-\section{A Section}
-
-This is the first line of the first section of the first chapter, but not the first line of the first chapter, which belongs to no section.
 
 \chapter{InSAR Background}
 
@@ -142,6 +203,12 @@ This is the first line of the first section of the first chapter, but not the fi
 
 
 - There may be more SAR satellites launched in the next 5 years than cumulatively before this
+
+
+
+The advantages long wavelengths offer in terms of penetration come with compensating drawbacks. The resolution a sensor depends on the wavelength and on the size of its aperture—the mirror or lens in the case of a camera or a telescope, the antenna in a radar. If you lengthen the wavelength, you increase the size of the aperture you need in order to achieve a given resolution. To produce detailed images with radar requires a very large aperture indeed—far larger than anything a single spacecraft can offer.
+
+> Synthetic-aperture radar (SAR) provides a way round that problem. Satellites move at quite a clip—typically, in low orbit, around 25,000kph. By taking all the echoes a radar satellite gets from a given target as it passes over it—and processing them into a single image, SAR produces a result as precise as if it had been made using a single aperture as wide across as the distance the satellite travelled while gathering the data—tens of hundreds of kilometres (see diagram).
 
 \section{InSAR}
 
@@ -780,7 +847,7 @@ The average daily oil production for the Permian Basin for the years 2014-2018 (
 %% Insert the bibliography.
 %% The style file, i.e., 'name.bst' for \bibliographystyle{name},
 %% can be any name.bst available in your TeX distribution.
-% \bibliographystyle{plainnat}
+ \bibliographystyle{plainnat}
 % \bibliographystyle{unsrt}
 %\makebibliography{blobs,insar,permian,detection,imagestuff,statistics}
 \makebibliography{blobs}
