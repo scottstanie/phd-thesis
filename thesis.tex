@@ -396,23 +396,12 @@ or space description), the random process can be a Gaussian process, but
 have the same power-law exponent.
 
 LAST QUESTIONs: - BIGGEST UNKNOWN: Hanssen says the structure
-functions/SMV is \(\rho^{5/3}\), which means in never levels off, and he
-says the covariance function doesn't exist\ldots{} - Does this imply
-that it can't be a Gaussian field? - \textbf{ANSWER}: most places seem
-to say that fractional brownian motion is still a Gaussian field
-(Brownian sheet having covariance = min(s, t)) - \textbf{TODO} This
-means it has stationary increments, but isn't 2nd order
-stationary\ldots{} I thought other places said ``Gaussian random fields
-are 2nd order stationary (and sometimes strictly stationary under some
-condition)'' - or does out limit study area + ramp removal mean in
-practice it levels off\ldots{} - if a random field is Gaussian, does
-it's structure func/SMV have to be gaussian?\ldots{}. NO. thats related
-to the Covariance FUNCTION\ldots{} aka, the covariance of the Gaussian
-variables at a given distance apart! the further away, the different the
-covariance is\ldots{} but the entire process is still only characterized
-by it's mean (assumed 0), and covariance function (related to the
-structure function) - SO, a power-law SMV is fine for a Gaussian
-process. and it will have a power law power-spectrum by FT:
+functions/SMV is \(\rho^{5/3}\), which means in never levels off, and he says the covariance function doesn't exist\ldots{} - Does this imply that it can't be a Gaussian field? - \textbf{ANSWER}: most places seem to say that fractional brownian motion is still a Gaussian field (Brownian sheet having covariance = min(s, t)) - 
+
+\textbf{TODO} This means it has stationary increments, but isn't 2nd order stationary\ldots I thought other places said ``Gaussian random fields are 2nd order stationary (and sometimes strictly stationary under some condition)'' - or does out limit study area + ramp removal mean in practice it levels off\ldots{} - if a random field is Gaussian, does it's structure func/SMV have to be gaussian?\ldots{}. 
+
+NO. Thats related to the Covariance FUNCTION\ldots aka, the covariance of the Gaussian variables at a given distance apart! the further away, the different the
+covariance is\ldots but the entire process is still only characterized by it's mean (assumed 0), and covariance function (related to the structure function) - SO, a power-law SMV is fine for a Gaussian process. and it will have a power law power-spectrum by FT:
 https://math.stackexchange.com/questions/2173780/computing-fourier-transform-of-power-law
 
 \begin{itemize}
@@ -447,7 +436,6 @@ The power spectrum is useful to recognize scaling properties of the data or to d
 \end{quote}
 
 TODO 1. Random field 1. Gaussian random field 1. Power spectrum
-
 
 
 
@@ -837,6 +825,20 @@ The average daily oil production for the Permian Basin for the years 2014-2018 (
 \label{fig:discussion-oil-blob-count}
 \end{figure}
 
+\subsubsection{Radial average vs 1D line}
+
+If a 2D random field $\phi(x, y)$ has Fourier transform $\Phi(k_x, k_x)$, we can express the field in the spatial domain in terms of its frequency domain representation:
+\begin{gather}
+    \phi(x, y) =  \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} \Phi(k_x, k_y) e ^{j 2 \pi (\bm{x} \cdot \bm{k}) } \, d k_x \,d k_y \\
+   \phi(r, \theta) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} \Phi(r_k, \theta_k) e ^{j 2 \pi (r r_k \cos \theta_k ) } r_k \, d r_k \,d \theta_k
+\end{gather}
+where $\bm{x} = [x \quad y]^T$ and $\bm{k} = [k_x \quad k_y]^T$, $r = \sqrt{x^2 + y^2}$,  $r_k = \sqrt{k_x^2 + k_y^2}$, $\theta = \arctan \frac{y}{x}$, and $\theta_k = \arctan \frac{k_y}{k_x}$.
+
+If we assume the field $\Phi(k_x, k_y)$ is isotropic and radially symmetric, it is only a function or $r$, so $\Phi(r_k, \theta_k) = \Phi(r_k) $.
+
+....TODO...
+
+If the power spectrum is a power law, $\Phi(r_k) = C \frac{1}{r_k}^\beta$. 
 
 
 
