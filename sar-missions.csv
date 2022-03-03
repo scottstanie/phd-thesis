@@ -1,26 +1,36 @@
-﻿Seasat,L,US/DoD,1978
-ERS‑1,C,ESA,1992–1996
-JERS‑1,L,JAXA,1992–1998
-RADARSAT‑1,C,CSA,1995–2013
-ERS‑2,C,ESA,1996–2011
-SRTM,"C,X",NASA,2000
-ENVISAT,C,ESA,2002–2011
-ALOS,L,JAXA,2006–2011
-RADARSAT‑2,C,CSA,2007–present
-TerraSAR‑X,X,DLR,2007–present
-COSMO‑SkyMed,X,ASI,2007–present
-TanDEM‑X,X,DLR,2010–present
-ALOS‑2,L,JAXA,2014–present
-Sentinel‑1,C,ESA,2014–present
-SAOCOM,L,CONAE/ASI,2017–present
-NISAR,L,NASA/ISRO,2023 (Planned)
-ALOS‑4,L,JAXA,2022 (planned)
-,,,
-,,,
-Source: https://doi.org/10.1186/s40623-021-01363-x,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
+﻿Satellite,Mission,Band,Agency,Nation,Launched,Ended,Site,Swath Width (km),Freely Available,Satellite Revisit Time (days)
+Seasat,Seasat,L,DoD,USA,1978-06-26,1978-10-10,https://directory.eoportal.org/web/eoportal/satellite-missions/s/seasat,,Yes,n/a
+ERS‑1,ERS,C,ESA,Europe,1991-07-17,2000-03-10,https://directory.eoportal.org/web/eoportal/satellite-missions/e/ers-1#launch,,Yes,35
+JERS‑1,JERS-1,L,JAXA,Japan,1992-02-11,1998-10-11,https://directory.eoportal.org/web/eoportal/satellite-missions/j/jers-1,,Yes,44
+SIR-C/X-SAR,SIR,C/X,NASA/DLR,USA,1994-04-09,1994-04-20,https://directory.eoportal.org/web/eoportal/satellite-missions/s/sir-c,15-90,Yes,n/a
+RADARSAT‑1,RADARSAT,C,CSA,Canada,1995-11-04,2013-05-09,https://directory.eoportal.org/web/eoportal/satellite-missions/r/radarsat-1,,Yes,24
+ERS‑2,ERS,C,ESA,Europe,1995-04-21,2011-09-05,https://directory.eoportal.org/web/eoportal/satellite-missions/e/ers-2,,Yes,35
+SRTM,SRTM,C/X,NASA,USA,2000-02-11,2000-02-22,https://earth.esa.int/web/eoportal/satellite-missions/s/srtm,,Yes,n/a
+ENVISAT,ENVISAT,C,ESA,Europe,2002-03-01,2012-05-09,https://directory.eoportal.org/web/eoportal/satellite-missions/e/envisat,,Yes,35
+ALOS,ALOS,L,JAXA,Japan,2006-01-24,2011-05-12,https://directory.eoportal.org/web/eoportal/satellite-missions/a/alos,70,Yes,46
+RADARSAT‑2,RADARSAT,C,CSA,Canada,2007-12-14,present,https://directory.eoportal.org/web/eoportal/satellite-missions/r/radarsat-2,,No,24
+TerraSAR-X,TerraSAR-X,X,DLR,Germany,2007-06-15,present,https://eoportal.org/web/eoportal/satellite-missions/t/terrasar-x,,No,11
+CSK-1,COSMO-SkyMed,X,ASI,Italy,2007-06-08,present,https://directory.eoportal.org/web/eoportal/satellite-missions/c-missions/cosmo-skymed,,No,5
+CSK-2,COSMO-SkyMed,X,ASI,Italy,2007-12-09,present,https://directory.eoportal.org/web/eoportal/satellite-missions/c-missions/cosmo-skymed,,No,5
+CSK-3,COSMO-SkyMed,X,ASI,Italy,2008-10-25,present,https://directory.eoportal.org/web/eoportal/satellite-missions/c-missions/cosmo-skymed,,No,5
+CSK-4,COSMO-SkyMed,X,ASI,Italy,2010-11-06,present,https://directory.eoportal.org/web/eoportal/satellite-missions/c-missions/cosmo-skymed,,No,5
+TanDEM-X,TanDEM-X,X,DLR,Germany,2010-06-21,present,https://directory.eoportal.org/web/eoportal/satellite-missions/t/tandem-x,,No,11
+KOMPSAT-5,KOMPSAT,X,KARI,South Korea,2013-08-22,present,KOMPSAT-5 - eoPortal Directory - Satellite Missions,,No,28
+ALOS‑2,ALOS,L,JAXA,Japan,2014-05-24,present,https://directory.eoportal.org/web/eoportal/satellite-missions/a/alos-2,,No,14
+Sentinel‑1A,Sentinel-1,C,ESA,Europe,2014-04-03,present,https://directory.eoportal.org/web/eoportal/satellite-missions/c-missions/copernicus-sentinel-1,240,Yes,12
+Sentinel‑1B,Sentinel-1,C,ESA,Europe,2016-04-22,present,https://directory.eoportal.org/web/eoportal/satellite-missions/c-missions/copernicus-sentinel-1,240,Yes,12
+RISAT-1,RISAT,C,ISRO,India,2012-04-26,2017-03-31,https://directory.eoportal.org/web/eoportal/satellite-missions/r/risat-1,,No,25
+RISAT-2,RISAT,X,ISRO,India,2009-04-20,present,https://directory.eoportal.org/web/eoportal/satellite-missions/r/risat-2,,No,4
+RISAT-2B,RISAT,X,ISRO,India,2019-05-22,present,https://space.oscar.wmo.int/satellites/view/risat_2b,,No,4
+GF-3,Gaofen,C,CNSA,China,2016-08-09,present,"https://directory.eoportal.org/web/eoportal/satellite-missions/g/gaofen-3 , https://www.ncbi.nlm.nih.gov/labs/pmc/articles/PMC6864435/","100,130,500",No,29
+GF-3-02,Gaofen,C,CNSA,China,2021-11-19,present,https://everydayastronaut.com/gaofen-3-02-long-march-4b/,,No,4
+PAZ,PAZ,X,INTA,Spain,2018-02-22,present,https://earth.esa.int/eogateway/missions/paz,,No,1
+SAOCOM-1A,SAOCOM,L,CONAE,Argentina,2018-10-08,present,https://directory.eoportal.org/web/eoportal/satellite-missions/s/saocom,,No,
+SAOCOM-1B,SAOCOM,L,CONAE,Argentina,2020-08-30,present,https://directory.eoportal.org/web/eoportal/satellite-missions/s/saocom,,No,
+NISAR,NISAR,L,NASA/ISRO,USA,future,future,https://nisar.jpl.nasa.gov/,,Yes,12
+ALOS‑4,ALOS,L,JAXA,Japan,future,future,https://global.jaxa.jp/projects/sat/alos4/,,-,
+RCM-1,RCM,C,CSA,Canada,2019-06-12,present,https://directory.eoportal.org/web/eoportal/satellite-missions/r/rcm,,No,
+RCM-2,RCM,C,CSA,Canada,2019-06-12,present,https://directory.eoportal.org/web/eoportal/satellite-missions/r/rcm,,No,
+RCM-3,RCM,C,CSA,Canada,2019-06-12,present,https://directory.eoportal.org/web/eoportal/satellite-missions/r/rcm,,No,
+CSG-1,COSMO-SkyMed SG,X,ASI,Italy,2019-12-18,present,https://directory.eoportal.org/web/eoportal/satellite-missions/c-missions/cosmo-skymed-second-generation,,No,
+CSG-2,COSMO-SkyMed SG,X,ASI,Italy,2022-01-31,present,https://directory.eoportal.org/web/eoportal/satellite-missions/c-missions/cosmo-skymed-second-generation,,No,
