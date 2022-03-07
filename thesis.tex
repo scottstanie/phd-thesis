@@ -32,7 +32,7 @@
 \usepackage[noend]{algpseudocode}
 \usepackage{algorithm2e}
 \usepackage{booktabs}
-%\usepackage{color}
+\usepackage{color}
 %\usepackage{minted}
 \usepackage{epsfig}
 %\usepackage{apacite}
@@ -125,9 +125,6 @@ However, InSAR measurements contain many noise sources which pose serious challe
 While InSAR has the possibility of providing a key observable for basin-scale studies on induced seismicity and its mitigation, it is necessary to mitigate the severe noise and provide detailed uncertainty measures to stakeholders.
 
 
-%Certain induced earthquakes have occurred 10s of kilometers from the location of the injection well after the fluid migrated in the subsurface.
-
-%To better understand the causes of these earthquakes and to assess the likelihood of infrastructure damage and safety concerns, a detailed ....
 
 %the State of Texas funded the Texas Seismological Network (TexNet) to record earthquakes down to M2.0 across the state since 2017 \citep{Savvaidis2019TexnetStatewideSeismological}. 
 
@@ -148,7 +145,6 @@ While InSAR has the possibility of providing a key observable for basin-scale st
 
 % % - note: the "tropo noise from reference" makes no sense to non-expert. 
 
-% Previous InSAR studies demonstrated the use of InSAR surface deformation data for understanding causes of induced seismicity; however, these studies only focused on study areas approximately 60-by-60 km or smaller, and basin-wide InSAR surface deformation data with detailed uncertainty quantification are needed for assessing the likelihood of induced seismicity risk. Since InSAR tropospheric noise variance increases with the distance away from the reference point \citep{Emardson2003NeutralAtmosphericDelay}, it is difficult to expand the InSAR spatial coverage to the entire Permian basin while retaining millimeter level accuracy. 
 
 % - maybe review the missions... early are ERS... newer acquire data over large region
 % 		- maybe late r time to talk about this..
@@ -158,15 +154,7 @@ While InSAR has the possibility of providing a key observable for basin-scale st
 \label{sec:chap1-contributions}
 
 
-
 The contributions of this thesis center around designing scalable methods to produce reliable surface deformation maps over large regions. We have focused on the mitigation of strong atmospheric noise and the creation of uncertainty measures which are easy to interpret for non-expert stakeholders.
-
-%developing methods to produce reliable surface deformation maps over large regions, despite the presence of strong atmospheric noise. We have also focused on creating methods for quantifying uncertainty which are easy to interpret for non-expert stakeholders.
-
-%- goal : Design scalable insar algorithms to map defo over west texas with robust uncertainty quanty so non insar expert can use for their interpretation
-
-
-%The methods have been applied to the Permian Basin region in West Texas to observe surface deformation caused by oil and gas production, wastewater injection, and earthquakes.
 
 
 The contributions may be summarized as follows:
@@ -175,19 +163,7 @@ The contributions may be summarized as follows:
 
 \item We developed a Python-based InSAR time series analysis software to ingest geocoded SAR images, extract surface deformation, decompose multiple geometries into horizontal and vertical deformation, and verify results with permanent GPS stations.
 
-%\item We created an outlier removal algorithm to mitigate strong tropospheric noise during interferogram stacking. This enabled the creation of millimeter-accurate surface deformation maps of the oil-producing Permian Basin
-
 \item We performed a rigorous uncertainty analysis to identify the dominant noise source in the Permian Basin for Sentinel-1.  In the process, we developed a method to estimate the tropospheric noise and its power spectral density from InSAR data.
-
-
-%uncertainty quantification
-%- performed rig uncertain analysis...
-%-  ref point, decorr, strat..
-%-  identifeid tropo noise is dominant noise
-%-  came with way to est tropo noise from dat and est spetrum
-%-  identified non-gaussian dist for noise
-%-  maybe this is 2nd bullet...
-%-  we identified dom error in permian basin fo sent. we got characterisitics problem... THEN "we designed scalable TS algo....". that would make 4th point "what the map shows"
 
 
 \item We designed scalable, robust time series algorithms for tracking yearly changes of deformation over large regions.
@@ -220,9 +196,6 @@ In Chapter 6, we demonstrate methods for automatically detecting surface deforma
 
 
 Finally, we conclude in Chapter 7 with discussions of possible directions of future research.
-
-
-
 
 
 
@@ -263,7 +236,12 @@ Finally, we conclude in Chapter 7 with discussions of possible directions of fut
 
 
 \chapter{Permian Basin Background}
-\label{chap2}
+\label{CHAP:2}
+
+%
+%decadal survey.
+%quals talk.
+%supp chap 1
 
 The Permian Basin has provided oil and gas from conventional reservoirs since the early 1900s (cite? frohlich?).
 (Figure: Conventional vs EOR)
@@ -315,11 +293,11 @@ mechanically layered earth as a homogeneous half space, even though the stiffnes
 
 
 \chapter{InSAR Background}
-\label{chap3}
+\label{CHAP:3}
 
 
 \section{SAR Basics}
-\label{chap3-sar}
+\label{CHAP:3-sar}
 
 
 
@@ -366,17 +344,82 @@ While many large SAR constellations expect sub-hourly revisit time for any given
 
 \section{InSAR Principles}
 
+
+
+
+\section{InSAR Noise Sources}
+\label{sec:ch3-noise}
+
+\subsection{Tropospheric Noise}
+\label{sec:ch3-noise-tropo}
+
+Tropospheric noise in InSAR consists of a stratified component, which correlates with topography \citep{Doin2009CorrectionsStratifiedTropospheric}, and a turbulent component that is random at time scales longer than a day \citep{Emardson2003NeutralAtmosphericDelay, Onn2006ModelingWaterVapor}. Previous studies have made advances in correcting for the stratified component using global atmospheric models \citep{Doin2009CorrectionsStratifiedTropospheric, Jolivet2014ImprovingInsarGeodesy, Cao2021AdvancedInsarTropospheric}, GPS zenith delay measurements \citep{Onn2006ModelingWaterVapor}, external measurements from sensors such as the Moderate Resolution Imaging Spectroradiometer (MODIS) \citep{Li2005InterferometricSyntheticAperture, Barnhart2013CharacterizingEstimatingNoise} or the Medium Resolution Imaging Spectrometer (MERIS)  \citep{Ding2008AtmosphericEffectsInsar}, as well as empirical methods using regressions on InSAR phase and elevation \citep{Zebker2021AccuracyModelFree, Murray2021ClusterBasedEmpirical}.
+
+Early efforts to correct or mitigate the turbulent atmospheric noise used a combination of high pass temporal filtering and low pass spatial filtering \citep{Ferretti2001PermanentScatterersSar, Berardino2002NewAlgorithmSurface}.
+%- but as \citep{Liu2012SatelliteRadarInterferometry} notes, gaps in the acquistion, or strong non-Gaussianity from, e.g., severe thunderstorms, break the assumptions of equal variance among APS dates that these filters require.
+Several research efforts have attempted to produce estimates of the atmospheric phase delay for each SAR acquisition directly from a time series of interferograms. \citep{Liu2012SatelliteRadarInterferometry} formulated the problem as a linear system using a network of small baseline interferograms. Since the problem of estimating both surface deformation and atmospheric delay is an ill-posed problem given only differential InSAR measurements, the authors assumed zero or known deformation of the study region, and they constrained the estimated troposphere to have zero mean. In an attempt to denoise time series of surface deformation, \citep{Tymofyeyeva2015MitigationAtmosphericPhase} averaged sets of redundant interferograms containing a common reference date, with an assumption of linear or slowly-varying deformation, and subtracted the estimated troposphere.
+
+%  \citep{Havazli2021DetectionThresholdEstimates} almost does what i'm doing (with some type of stratified atmo too), it's just a random multiplier, and it looks like it was almost all simulation
+An alternative approach to correcting for the tropospheric turbulence is to treat it as a stochastic noise source in time series analysis \citep{Simons2007InterferometricSyntheticAperture, Agram2015NoiseModelInsar} and estimate its covariance matrix either through auxiliary data sources \citep{Barnhart2013CharacterizingEstimatingNoise, Parker2015SystematicAssessmentAtmospheric} or directly from InSAR data \citep{Lohman2005SomeThoughtsUse}. While these approaches provide a measure of uncertainty in the deformation solution, the uncertainties are given for each pixel (or each model parameter), rather than for each visible deformation feature.
+
+
+
+
+GACOS is an iterative tropospheric decomposition model that integrates global weather models and available GPS zenith delay measurements for estimating tropospheric noise in InSAR data \citep{Yu2018InterferometricSyntheticAperture}. Due to the limited spatial and temporal resolution of weather models and GPS data, GACOS is more effective in removing the stratified tropospheric noise \citep{Doin2009CorrectionsStratifiedTropospheric} than the random turbulent tropospheric noise \citep{Emardson2003NeutralAtmosphericDelay}. 
+We found that GACOS does not produce substantial corrections in most Sentinel-1 West Texas interferograms for areas outside the main area of interest (e.g. Figure \ref{fig:GACOS} (a)-(c)). 
+
+\textcolor{red}{Get an interferogram that works, and then show the one that doesn't}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{paper1-permian/figures/supplement/figureS4-gacos.pdf}		
+	\caption[GACOS tropospheric corrections]{(a) LOS measurements (in cm) of a descending interferogram (20150127-20150220) before the GACOS correction. (b) GACOS tropospheric correction (in cm) for the 20150127-20150220 interferogram \citep{Yu2018InterferometricSyntheticAperture}. (c) LOS measurements (in cm) of a descending interferogram (20150127 - 20150220) after the GACOS correction. (d) LOS measurements (in cm) of the 20150127-20150220 interferogram vs. the Digital Elevation Model (DEM).}
+	\label{fig:GACOS}
+\end{figure}
+
+
 \section{InSAR Time Series}
+\label{sec:ch3-insar-ts}
 
 stacking for avg rate
 
 SBAS linear system. doesn't need to be short baseline. just a way to solve for the phase at each date
 
-Phase linking approaches solve for this using an eptimization on each pixels time-covariance matrix.
+Phase linking approaches solve for this using an optimization on each pixels time-covariance matrix.
+
+
+\subsection{Uncertainty}
+\label{sec:ch3-eq-tropo}
+Several ways for uncertainty.
+
+jackknife (maybe look into the NSBAS/GIANT time series way they do it....). prob an underestimate, since this is *precision* of the estimator. often it's jsut precision of the noise+deformation phase. but we really want the defo phase.
+
+other is least squares propagation of covariance. difficult to calibrate without good atmo noise estimate, can underestimate/overestimate.
+
+one problem with daily time series: often uncertainty is a single number. but each day's atmo noise can vary by 10-20x.
+
+Even with temporal smoothing (example pic of that super storm cell), there can be many days with "blobs" of atmospheric noise which exceed real deformation.
+
+Chapter (2nd paper) will discus a third novel way using computer vision.
+
+
+Bootstrap:
+
+From "practictioners guide":
+A natural question for the practitioner is to ask  “ Why bootstrap in the linear regression case? Isn ’ t least - squares a well - established approach that  has  served  us  well  in  countless  applications? ”   The  answer  is  that  for  many  problems, least - squares regression has served us well and is always useful as  a first approach but is problematic when the residuals have heavy - tailed distributions or if even just a few outliers are present.
+
+IID assumption: doesn't hold for time series... still gives some estimate. maybe show example of how it overestimates, but that it's not bad because it's mostly accounting for tropo, and not for the phase UQ (cite Zwiebeck paper).
+
+
+%Problems with pixelwise
+%- Image of blob, with 8 mm cutoff, question which part you trust and not
+%- Leads into feature-wise uq
+
 
 
 \section{InSAR Line-of-sight Decomposition}
-An interferogram measures surface deformation between the two SAR acquisition times along the radar line-of-sight (LOS) direction \citep{Hanssen2001RadarInterferometryData}. The LOS deformation, $u_{LOS}$, can be written as: 
+\label{sec:ch3-insar-decomp}
+An interferogram measures surface deformation between the two SAR acquisition times along the radar line-of-sight (LOS) direction. The LOS deformation, $u_{LOS}$, can be written as: 
 \begin{align}
 	u_{LOS}= \alpha_{e} u_{e} + \alpha_{n} u_{n} + \alpha_{u} u_{u}
 \end{align}
@@ -386,7 +429,7 @@ where $u_{e}$, $u_{n}$ and $u_{u}$ are the east, north and up displacements, res
 
 \begin{figure}
 	\centering
-%	\includegraphics[width=\textwidth]{}
+	%	\includegraphics[width=\textwidth]{}
 	\caption{Line of sight convention used in this thesis for ascending (a) and descending (b) satellite geometries. Vector points from the satellite to the ground}
 	\label{fig:los-asc-desc}
 \end{figure}
@@ -423,64 +466,31 @@ Because Sentinel-1 satellites are operating in a near-polar orbit, the north loo
 \end{figure}
 
 
-\subsection{Uncertainty Propagation through LOS decomposition}
 
+
+\subsection{Uncertainty Propagation through LOS decomposition}
+\label{sec:ch3-decomp-uq-prop}
 Since the LOS decomposition is a linear operation, given two LOS uncertainties, we can use linear uncertainty propagation theory to determine the vertical/horizontal uncertainties.
 
+TODO: move this to appendix or not?
 
 
-
-\section{InSAR Noise Sources}
-\label{ch3-noise}
-
-\subsection{Tropospheric Noise}
-\label{ch3-noise-tropo}
-
-Tropospheric noise in InSAR consists of a stratified component, which correlates with topography \citep{Doin2009CorrectionsStratifiedTropospheric}, and a turbulent component that is random at time scales longer than a day \citep{Emardson2003NeutralAtmosphericDelay, Onn2006ModelingWaterVapor}. Previous studies have made advances in correcting for the stratified component using global atmospheric models \citep{Doin2009CorrectionsStratifiedTropospheric, Jolivet2014ImprovingInsarGeodesy, Cao2021AdvancedInsarTropospheric}, GPS zenith delay measurements \citep{Onn2006ModelingWaterVapor}, external measurements from sensors such as the Moderate Resolution Imaging Spectroradiometer (MODIS) \citep{Li2005InterferometricSyntheticAperture, Barnhart2013CharacterizingEstimatingNoise} or the Medium Resolution Imaging Spectrometer (MERIS)  \citep{Ding2008AtmosphericEffectsInsar}, as well as empirical methods using regressions on InSAR phase and elevation \citep{Zebker2021AccuracyModelFree, Murray2021ClusterBasedEmpirical}.
-
-Early efforts to correct or mitigate the turbulent atmospheric noise used a combination of high pass temporal filtering and low pass spatial filtering \citep{Ferretti2001PermanentScatterersSar, Berardino2002NewAlgorithmSurface}.
-%- but as \citep{Liu2012SatelliteRadarInterferometry} notes, gaps in the acquistion, or strong non-Gaussianity from, e.g., severe thunderstorms, break the assumptions of equal variance among APS dates that these filters require.
-Several research efforts have attempted to produce estimates of the atmospheric phase delay for each SAR acquisition directly from a time series of interferograms. \citep{Liu2012SatelliteRadarInterferometry} formulated the problem as a linear system using a network of small baseline interferograms. Since the problem of estimating both surface deformation and atmospheric delay is an ill-posed problem given only differential InSAR measurements, the authors assumed zero or known deformation of the study region, and they constrained the estimated troposphere to have zero mean. In an attempt to denoise time series of surface deformation, \citep{Tymofyeyeva2015MitigationAtmosphericPhase} averaged sets of redundant interferograms containing a common reference date, with an assumption of linear or slowly-varying deformation, and subtracted the estimated troposphere.
-
-%  \citep{Havazli2021DetectionThresholdEstimates} almost does what i'm doing (with some type of stratified atmo too), it's just a random multiplier, and it looks like it was almost all simulation
-An alternative approach to correcting for the tropospheric turbulence is to treat it as a stochastic noise source in time series analysis \citep{Simons2007InterferometricSyntheticAperture, Agram2015NoiseModelInsar} and estimate its covariance matrix either through auxiliary data sources \citep{Barnhart2013CharacterizingEstimatingNoise, Parker2015SystematicAssessmentAtmospheric} or directly from InSAR data \citep{Lohman2005SomeThoughtsUse}. While these approaches provide a measure of uncertainty in the deformation solution, the uncertainties are given for each pixel (or each model parameter), rather than for each visible deformation feature.
-
-
-
-
-\subsection{Uncertainty}
-
-Several ways for uncertainty.
-
-jackknife (maybe look into the NSBAS/GIANT time series way they do it....). prob an underestimate, since this is *precision* of the estimator. often it's jsut precision of the noise+deformation phase. but we really want the defo phase.
-
-other is least squares propagation of covariance. difficult to calibrate without good atmo noise estimate, can underestimate/overestimate.
-
-one problem with daily time series: often uncertainty is a single number. but each day's atmo noise can vary by 10-20x.
-
-Even with temporal smoothing (example pic of that super storm cell), there can be many days with "blobs" of atmospheric noise which exceed real deformation.
-
-Chapter (2nd paper) will discus a third novel way using computer vision.
-
-
-Bootstrap:
-
-From "practictioners guide":
-A natural question for the practitioner is to ask  “ Why bootstrap in the linear regression case? Isn ’ t least - squares a well - established approach that  has  served  us  well  in  countless  applications? ”   The  answer  is  that  for  many  problems, least - squares regression has served us well and is always useful as  a first approach but is problematic when the residuals have heavy - tailed distributions or if even just a few outliers are present.
 
 
 
 \chapter{Cumulative Surface Deformation over the Permian Basin with Automated Outlier Removal}
-\label{chap-4-GRL}
+\label{CHAP:4-GRL}
 
 \section{Introduction}
 
 
-%The Permian Basin, stretching from eastern New Mexico and covering most of West Texas, has become the United States' largest producer of oil and gas over the past decade due to advances in shale recovery technologies. Injection or withdrawal of fluids from the subsurface can induce earthquakes along existing faults \citep{Ellsworth2013InjectionInducedEarthquakes, Simpson1988TwoTypesReservoir}, and an increased rate of low magnitude earthquakes have been observed along with the increase in hydrocarbon production in West Texas \citep{Frohlich2016HistoricalReviewInduced, Atkinson2016HydraulicFracturingSeismicity, Frohlich2019OnsetCauseIncreased, Lomax2019ImprovingAbsoluteEarthquake, Savvaidis2020InducedSeismicityDelaware, Skoumal2020InducedSeismicityDelaware}. While petroleum production and wastewater injection volumes have been rising throughout the basin, the recently cataloged earthquakes are spatially clustered. One significant cluster is near Pecos, TX, where increased seismic activity began in 2009 and climbed to more than 2000 earthquakes in 2017 \citep{Frohlich2019OnsetCauseIncreased}. To better understand the causes of these earthquakes and to assess the likelihood of infrastructure damage and safety concerns, the State of Texas funded the Texas Seismological Network (TexNet) to record earthquakes down to M2.0 across the state since 2017 \citep{Savvaidis2019TexnetStatewideSeismological}. TexNet seismic data will be most meaningful when combined with knowledge of the subsurface \citep{Council2013InducedSeismicityPotential, TheAcademyofMedicine2017EnvironmentalCommunityImpacts}; however, measuring the subsurface at a basin-scale is both expensive and technically challenging.
+In this chapter, we 
 
-Interferometric Synthetic Aperture Radar (InSAR) has been routinely used for mapping surface deformation over wide areas with millimeter-to-centimeter accuracy \citep{Massonnet1993DisplacementFieldLanders, Buergmann2000SyntheticApertureRadar}.  These surface deformation measurements can be used to derive information about Earth's subsurface, estimate the distribution of fault slip, and infer associated seismic risk \citep{Segall2010EarthquakeVolcanoDeformation, Elliott2016RoleSpaceBased, Huang2017FaultGeometryInversion}. Within Texas, \cite{Shirzaei2016SurfaceUpliftTime} reported indications of surface uplift due to wastewater injection near a 2012 M4.8 earthquake, though limited validation for the ALOS data was available at this site near Timpson, TX \cite{Semple2017IncompleteInventorySuspected}. \cite{Kim2018AssociationLocalizedGeohazards} detected multiple deformation bowls within the Delaware Basin related to wastewater injection, $CO_2$ injection, and hydrocarbon production using Sentinel-1 InSAR data. \cite{Zheng2019WastewaterLeakageWest} incorporated InSAR-derived surface deformation data into a poroelastic model to analyze the geomechanical processes near an uplift signal in northern West Texas. They discovered that the observed surface deformation was likely caused by injection well leakages, rather than pressure increases at the planned injection depth, and the leaks may have contributed to freshwater contamination. More recently, \cite{Deng2020SurfaceDeformationInduced} used ascending Sentinel-1 LOS measurements to infer pore pressure change and Coulomb failure stress change at three sites in the southern Delaware Basin. They suggested that certain groups of earthquakes are likely induced by fluid injection, but noted that local rock structure and media properties are key controls on the area's susceptibility to induced seismicity.
+Within Texas, \cite{Shirzaei2016SurfaceUpliftTime} reported indications of surface uplift due to wastewater injection near a 2012 M4.8 earthquake, though limited validation for the ALOS data was available at this site near Timpson, TX \cite{Semple2017IncompleteInventorySuspected}. \cite{Kim2018AssociationLocalizedGeohazards} detected multiple deformation bowls within the Delaware Basin related to wastewater injection, $CO_2$ injection, and hydrocarbon production using Sentinel-1 InSAR data. \cite{Zheng2019WastewaterLeakageWest} incorporated InSAR-derived surface deformation data into a poroelastic model to analyze the geomechanical processes near an uplift signal in northern West Texas. They discovered that the observed surface deformation was likely caused by injection well leakages, rather than pressure increases at the planned injection depth, and the leaks may have contributed to freshwater contamination. More recently, \cite{Deng2020SurfaceDeformationInduced} used ascending Sentinel-1 LOS measurements to infer pore pressure change and Coulomb failure stress change at three sites in the southern Delaware Basin. They suggested that certain groups of earthquakes are likely induced by fluid injection, but noted that local rock structure and media properties are key controls on the area's susceptibility to induced seismicity.
 
-Previous InSAR studies demonstrated the use of InSAR surface deformation data for understanding causes of induced seismicity; however, these studies only focused on study areas $ \sim $ 60-by-60km or smaller, and basin-wide InSAR surface deformation data with detailed uncertainty quantification are needed for assessing the likelihood of induced seismicity risk. Since InSAR tropospheric noise variance increases with the distance away from the reference point \citep{Emardson2003NeutralAtmosphericDelay}, it is difficult to expand the InSAR spatial coverage to the entire Permian basin while retaining millimeter level accuracy. In this study, we show that the increasing quantity and quality of Sentinel-1 SAR data allows us to average thousands of interferograms and mitigate strong tropospheric noise. Additionally, we developed an outlier detection algorithm that removes InSAR measurements corrupted by severe tropospheric noise (e.g. storms and heat waves) and reduces InSAR measurement uncertainty by another factor of 2, down to 1-3 mm/year across the basin. Our results were validated by independent GPS measurements recorded at 13 permanent ground stations. The InSAR-observed subsidence patterns over the Pecos area can be modeled as dip-slip over multiple normal faults and discretized cylindrical reservoir compaction. Our InSAR deformation maps are now available through the Center for Integrated Seismicity Research (CISR) for the broader scientific community. This dataset, when combined with physics-based reservoir and fault modeling, can produce insights into the causes of induced seismicity. Furthermore, these surface deformation data products can be used to assess the areal effectiveness of the oil and gas production, a measure for estimating which regions of a reservoir are being depleted most quickly. InSAR techniques now provide a low-cost method to assist oil and gas operations and risk management at a basin-scale.
+Previous InSAR studies demonstrated the use of InSAR surface deformation data for understanding causes of induced seismicity; however, these studies only focused on study areas $ \sim $ 60-by-60km or smaller, and basin-wide InSAR surface deformation data with detailed uncertainty quantification are needed for assessing the likelihood of induced seismicity risk. Since InSAR tropospheric noise variance increases with the distance away from the reference point \citep{Emardson2003NeutralAtmosphericDelay}, it is difficult to expand the InSAR spatial coverage to the entire Permian basin while retaining millimeter level accuracy. 
+
+In this chapter, we show that the increasing quantity and quality of Sentinel-1 SAR data allows us to average thousands of interferograms and mitigate strong tropospheric noise. Additionally, we developed an outlier detection algorithm that removes InSAR measurements corrupted by severe tropospheric noise (e.g. storms and heat waves) and reduces InSAR measurement uncertainty by another factor of 2, down to 1-3 mm/year across the basin. Our results were validated by independent GPS measurements recorded at 13 permanent ground stations. The InSAR-observed subsidence patterns over the Pecos area can be modeled as dip-slip over multiple normal faults and discretized cylindrical reservoir compaction. Our InSAR deformation maps are now available through the Center for Integrated Seismicity Research (CISR) for the broader scientific community. This dataset, when combined with physics-based reservoir and fault modeling, can produce insights into the causes of induced seismicity. Furthermore, these surface deformation data products can be used to assess the areal effectiveness of the oil and gas production, a measure for estimating which regions of a reservoir are being depleted most quickly. InSAR techniques now provide a low-cost method to assist oil and gas operations and risk management at a basin-scale.
 
 \section{Methods}
 \subsection{InSAR data processing strategy}
@@ -505,14 +515,15 @@ An interferogram measures surface deformation that occurred between the two SAR 
 	v_{avg} = \frac{\sum_{i \in G} d_i}{\sum_{i \in G} t_i}
 	\label{eq:stacking}
 \end{equation}
-where $G$ is a subset of interferograms that were formed using two SAR scenes acquired within the time period $T$. The LOS measurement (in cm) and the temporal baseline of the $i^{th}$ interferogram in $G$ are written as $d_i$ and $ t_i $ respectively. Comparable LOS velocity estimates can be produced using the Small Baseline Subset (SBAS) approach \citep{Berardino2002NewAlgorithmSurface} with a constant velocity (linear deformation) model (TODO: \textit{Supporting Information S5}).
+where $G$ is a subset of interferograms that were formed using two SAR scenes acquired within the time period $T$. The LOS measurement (in cm) and the temporal baseline of the $i^{th}$ interferogram in $G$ are written as $d_i$ and $ t_i $ respectively. In Section \ref{sec:method-compare}, we show that comparable LOS velocity estimates can be produced using the Small Baseline Subset (SBAS) approach \citep{Berardino2002NewAlgorithmSurface} with a constant velocity (linear deformation) model.
 
 In this study, we solved for the average LOS velocities over three periods of interest: Nov. 2014 to Jan. 2017, Nov. 2014 to Jan. 2018, and Nov. 2014 to Jan. 2019. Over each period $T_j$, we computed the cumulative LOS surface deformation over this period as the product of $v_{avg,j}$ and $T_j$. We also solved for the vertical and eastward deformation in the region where path 78 and 85 overlap ( \textit{Supporting Information S2}). To account for the large variation in look angle within one Sentinel-1 Interferometric Wide (IW) swath image, we used the LOS unit vector at each pixel location Figure \ref{fig:los-map})) in the LOS decomposition.
 
 
-\section{A comparison between stacking and InSAR time series methods}
+\subsection{A comparison between stacking and InSAR time series methods}
 \label{sec:method-compare}
-If data error treatments and deformation model assumptions are valid, we can derive meaningful and comparable deformation solutions using different InSAR time series analysis methods. To investigate how InSAR measurement noise influences the LOS deformation solutions, we compared the results derived from (1) the stacking method, (2) a Small BAseline Subset (SBAS) linear deformation (constant velocity) model with $L_1$ and $L_2$-norm penalty functions, and (3) unregularized and regularized SBAS deformation time series. 
+%If data error treatments and deformation model assumptions are valid, we can derive meaningful and comparable deformation solutions using different InSAR time series analysis methods. 
+To investigate how InSAR measurement noise influences the LOS deformation solutions, we compared the results derived from (1) the stacking method, (2) a Small BAseline Subset (SBAS) linear deformation (constant velocity) model with $L_1$ and $L_2$-norm penalty functions, and (3) unregularized and regularized SBAS deformation time series. 
 
 For the remainder of this section, we assume there are $M$ small-baseline interferograms that were generated from $N$ SAR scenes acquired over a period of interest. The stacking method from \cite{Sandwell1998PhaseGradientApproach} that we employed in this study solves for the average velocity over the study period. Similarly, the SBAS linear deformation model solves for the average velocity $ v_{avg} $ over this period at each pixel of interest as \citep{Berardino2002NewAlgorithmSurface}:
 \begin{equation}
@@ -552,15 +563,7 @@ where $ \lambda $ is the radar wavelength and $ \Delta d_{LOS} $ is the surface 
 %\label{sec:noise-quant}
 
 
-Tropospheric noise $\Delta \phi_{tropo}$ consists of a stratified component that correlates with topography \citep{Doin2009CorrectionsStratifiedTropospheric} and a turbulent component that is random at time scales longer than one day \citep{Emardson2003NeutralAtmosphericDelay}. We checked for a stratified tropospheric noise component using the Generic Atmospheric Correction Online Service (GACOS), and we found that the stratified tropospheric errors in our Sentinel-1 data are minimal (Figure \ref{fig:GACOS}).  GACOS is an iterative tropospheric decomposition model that integrates global weather models and available GPS zenith delay measurements for estimating tropospheric noise in InSAR data \citep{Yu2018InterferometricSyntheticAperture}. Due to the limited spatial and temporal resolution of weather models and GPS data, GACOS is more effective in removing the stratified tropospheric noise \citep{Doin2009CorrectionsStratifiedTropospheric} than the random turbulent tropospheric noise \citep{Emardson2003NeutralAtmosphericDelay}. We found that GACOS does not produce substantial corrections in most Sentinel-1 West Texas interferograms (e.g. Figure \ref{fig:GACOS} (a)-(c)). This is because the oil-producing region of the Permian Basin is relatively flat, and we observed little correlation between InSAR LOS measurements and the Digital Elevation Model (DEM) data (e.g. Figure \ref{fig:GACOS} (d)). We thus concluded that the stratified tropospheric noise was minimal in our study region.
-
-
-\begin{figure}
-	\centering
-	\includegraphics[width=\textwidth]{paper1-permian/figures/supplement/figureS4-gacos.pdf}		
-	\caption[GACOS tropospheric corrections]{(a) LOS measurements (in cm) of a descending interferogram (20150127-20150220) before the GACOS correction. (b) GACOS tropospheric correction (in cm) for the 20150127-20150220 interferogram \citep{Yu2018InterferometricSyntheticAperture}. (c) LOS measurements (in cm) of a descending interferogram (20150127 - 20150220) after the GACOS correction. (d) LOS measurements (in cm) of the 20150127-20150220 interferogram vs. the Digital Elevation Model (DEM).}
-	\label{fig:GACOS}
-\end{figure}
+As described in Chapter \ref{sec:ch3-noise-tropo}, tropospheric noise $\Delta \phi_{tropo}$ consists of a stratified component that correlates with topography \citep{Doin2009CorrectionsStratifiedTropospheric} and a turbulent component that is random at time scales longer than one day \citep{Emardson2003NeutralAtmosphericDelay}. We checked for a stratified tropospheric noise component using the Generic Atmospheric Correction Online Service (GACOS), and we found that the stratified tropospheric errors in our Sentinel-1 data are minimal. This is because the oil-producing region of the Permian Basin is relatively flat, and we observed little correlation between InSAR LOS measurements and the Digital Elevation Model (DEM) data (e.g. Figure \ref{fig:GACOS} (d)). 
 
 
 
@@ -587,7 +590,7 @@ We labeled $u_{k,n}$ (for all $n$) as outlier measurements if $\bar{u}_k > \math
 \end{equation}
 where $x_m$ is the $m^{th}$ data sample. 
 
-To evaluate the performance of our InSAR processing strategy, we projected GPS data recorded at 13 control stations onto the LOS directions to use as ground truth. The differences between InSAR and GPS inferred average LOS velocities were used as a measure of the uncertainty in the InSAR surface deformation solutions (\textit{Supporting Information S4}). We found that stacking reduces the impact of random Gaussian turbulent noise by $ \sim \sqrt{N} $, where $ N $ is the number of SAR acquisitions. The outlier removal algorithm further reduces the uncertainty in the LOS velocity estimates by a factor of 2, down to 1-3 mm/year across the basin. For example, the average InSAR velocity along the ascending LOS direction between Nov. 2014 and Jan. 2018 shows a root mean square (RMS) error of 3.4 mm/year before the outlier removal, and 1.5 mm/year after the outlier removal. The presence of InSAR measurement outliers resulted in long-wavelength artifacts ($ \sim $100km and greater) in the cumulative deformation solutions (e.g. Figure \ref{fig:outliers} (d)), which were automatically mitigated through the pixel-based outlier removal algorithm (e.g. Figure \ref{fig:outliers} (e)). Additionally, we compared InSAR LOS deformation solutions as derived from (1) the stacking method, (2) a SBAS linear deformation model with $L_1$ and $L_2$-norm penalty functions, and (3) unregularized and regularized SBAS deformation time series (\textit{Supporting Information S5}). These InSAR time series algorithms can be implemented using software packages such as Generic InSAR Analysis Toolbox (GIAnT) \cite{agram2013new}, STAMPS \cite{hooper2012recent}, and LiCSBAS \cite{morishita2020licsbas}. Removing the detected outliers leads to more accurate and consistent surface deformation solutions in all three cases.
+To evaluate the performance of our InSAR processing strategy, we projected GPS data recorded at 13 control stations onto the LOS directions to use as ground truth. The differences between InSAR and GPS inferred average LOS velocities were used as a measure of the uncertainty in the InSAR surface deformation solutions (Section \ref{sec:error-quant}). We found that stacking reduces the impact of random Gaussian turbulent noise by $ \sim \sqrt{N} $, where $ N $ is the number of SAR acquisitions. The outlier removal algorithm further reduces the uncertainty in the LOS velocity estimates by a factor of 2, down to 1-3 mm/year across the basin. For example, the average InSAR velocity along the ascending LOS direction between Nov. 2014 and Jan. 2018 shows a root mean square (RMS) error of 3.4 mm/year before the outlier removal, and 1.5 mm/year after the outlier removal. The presence of InSAR measurement outliers resulted in long-wavelength artifacts ($ \sim $100km and greater) in the cumulative deformation solutions (e.g. Figure \ref{fig:outliers} (d)), which were automatically mitigated through the pixel-based outlier removal algorithm (e.g. Figure \ref{fig:outliers} (e)). Additionally, we compared InSAR LOS deformation solutions as derived from (1) the stacking method, (2) a SBAS linear deformation model with $L_1$ and $L_2$-norm penalty functions, and (3) unregularized and regularized SBAS deformation time series (\textit{Supporting Information S5}). These InSAR time series algorithms can be implemented using software packages such as Generic InSAR Analysis Toolbox (GIAnT) \cite{agram2013new}, STAMPS \cite{hooper2012recent}, and LiCSBAS \cite{morishita2020licsbas}. Removing the detected outliers leads to more accurate and consistent surface deformation solutions in all three cases.
 
 
 \subsection{InSAR LOS velocity estimation errors using the stacking method}
@@ -667,7 +670,7 @@ In the northern Delaware Basin, where large volumes of oil production and wastew
 
 
 \subsection{Implications for geomechanical modeling}
-Based on fault plane solutions derived from recent seismic activity and the faulting stress regime interpretations \cite{LundSnee2018}, the Pecos area is in a normal faulting regime. We employed an elastic dislocation model \cite{Okada1992} to demonstrate that the presence of dip-slip normal faults can produce the observed linear subsidence patterns in this area (Figure \ref{fig:model} (a)). We solved for the dip angle, depth, width along the dip direction, and slip magnitude of four normal faults by best fitting the forward model to InSAR vertical deformation observations, minimizing the sum of squared residuals, and maximizing the r-squared values \cite{Du1992} (\textit{Supporting Information S6}). The optimal solution suggests that the depth of the faults ranges from 0.9 km to 1.5 km, which is shallower than most of the TexNet recorded earthquakes (2-6 km in depth). Possible explanations for this discrepancy include: (1) the existence of aseismic fault slippage being responsible for the observed surface deformation \cite{mcgarr2018injection}; (2) bias in earthquake depth estimation in the TexNet catalog \cite{Lomax2019}; (3) systematic modeling errors associated with representing a mechanically layered earth as a homogeneous half space \cite{Du1992}. 
+Based on fault plane solutions derived from recent seismic activity and the faulting stress regime interpretations \citep{LundSnee2018StateStressPermian}, the Pecos area is in a normal faulting regime. We employed an elastic dislocation model \citep{Okada1992InternalDeformationDue} to demonstrate that the presence of dip-slip normal faults can produce the observed linear subsidence patterns in this area (Figure \ref{fig:model} (a)). We solved for the dip angle, depth, width along the dip direction, and slip magnitude of four normal faults by best fitting the forward model to InSAR vertical deformation observations, minimizing the sum of squared residuals, and maximizing the r-squared values \citep{Du1992ComparisonVariousInversion} (Appendix \ref{appen:okada}). The optimal solution suggests that the depth of the faults ranges from 0.9 km to 1.5 km, which is shallower than most of the TexNet recorded earthquakes (2-6 km in depth). Possible explanations for this discrepancy include: (1) the existence of aseismic fault slippage being responsible for the observed surface deformation \citep{McGarr2017WastewaterDisposalEarthquake}; (2) bias in earthquake depth estimation in the TexNet catalog \citep{Lomax2019ImprovingAbsoluteEarthquake}; (3) systematic modeling errors associated with representing a mechanically layered earth as a homogeneous half space \citep{Du1992ComparisonVariousInversion}. 
 
 
 
@@ -679,40 +682,37 @@ Based on fault plane solutions derived from recent seismic activity and the faul
 \end{figure}
 
 
-After removing the best-fit deformation associated with dip-slip faulting (Figure \ref{fig:model} (b)), there is still $\sim$ 2 cm residual subsidence in the Pecos area (e.g. Figure \ref{fig:model} (f)). Given that shallow groundwater production was minimal in this region for the time period of interest \cite{deng2020surface}, we introduced an elastic reservoir compaction model \cite{Geertsma1973} to our geomechanical analysis (\textit{Supporting Information S7}). We implemented two layers of multiple cylindrical reservoirs corresponding to reported locations and depths of well clusters in the Delaware Mountain Group (DMG) and Wolfcamp reservoirs, which account for most of the recent oil and gas production in the region. We discretized the DMG layer based on a cluster of production wells predominantly perforated over a depth range of 1.5-1.8 km. The Wolfcamp wells are completed over a depth range of 3-3.6 km. We employed an objective function inversion method to solve for the reservoir pressure depletion pattern that best fit the InSAR-observed subsidence (Figure \ref{fig:model} (c)) \cite{Du2001}.
+After removing the best-fit deformation associated with dip-slip faulting (Figure \ref{fig:model} (b)), there is still $\sim$ 2 cm residual subsidence in the Pecos area (e.g. Figure \ref{fig:model} (f)). Given that shallow groundwater production was minimal in this region for the time period of interest \citep{Deng2020SurfaceDeformationInduced}, we introduced an elastic reservoir compaction model \cite{Geertsma1973LandSubsidenceCompacting} to our geomechanical analysis (Appendix \ref{appen:model-compact}). We implemented two layers of multiple cylindrical reservoirs corresponding to reported locations and depths of well clusters in the Delaware Mountain Group (DMG) and Wolfcamp reservoirs, which account for most of the recent oil and gas production in the region. We discretized the DMG layer based on a cluster of production wells predominantly perforated over a depth range of 1.5-1.8 km. The Wolfcamp wells are completed over a depth range of 3-3.6 km. We employed an objective function inversion method to solve for the reservoir pressure depletion pattern that best fit the InSAR-observed subsidence (Figure \ref{fig:model} (c)) \citep{Du2001PoroelasticReservoirModel}.
 
-An important conclusion of this study is that both fault slip and reservoir inflation or compaction can produce observable surface deformation over an 80,000 square kilometer oil-producing region of the Permian Basin. The InSAR-observed subsidence patterns over the Pecos area can be modeled as slip over multiple faults and discretized cylindrical reservoir compaction (Figure \ref{fig:model} (d)-(f)). We note that InSAR subsidence data alone can constrain all pertinent fault and reservoir parameters in our normal faulting and reservoir compaction models. The InSAR observed cumulative surface deformation patterns, which show larger horizontal component than the model prediction, suggest that other factors, such as strike-slip faulting and heterogeneity in subsurface properties, may play a role. There have been extensive studies on how reservoir compaction and inflation as well as fault slippage alter stress fields in the subsurface and produce surface deformation \cite{Geertsma1973, Segall1992, Okada1992, Du1992,Vasco2005, Vasco2008, Khakim2012}. InSAR surface deformation can be combined with this knowledge to evaluate fluid recovery efficiency and monitor disposal wells at low cost. Furthermore, these high-quality geodetic measurements are readily available to complement the TexNet seismic catalog for assessing the likelihood of fault motion and induced earthquake risks in Texas.
-
-
+An important conclusion of this study is that both fault slip and reservoir inflation or compaction can produce observable surface deformation over an 80,000 square kilometer oil-producing region of the Permian Basin. The InSAR-observed subsidence patterns over the Pecos area can be modeled as slip over multiple faults and discretized cylindrical reservoir compaction (Figure \ref{fig:model} (d)-(f)). We note that InSAR subsidence data alone can constrain all pertinent fault and reservoir parameters in our normal faulting and reservoir compaction models. The InSAR observed cumulative surface deformation patterns, which show larger horizontal component than the model prediction, suggest that other factors, such as strike-slip faulting and heterogeneity in subsurface properties, may play a role. There have been extensive studies on how reservoir compaction and inflation as well as fault slippage alter stress fields in the subsurface and produce surface deformation \citep{Geertsma1973LandSubsidenceCompacting,Segall1992InducedStressesDue,Okada1992InternalDeformationDue,Du1992ComparisonVariousInversion,Vasco2005UseQuasiStatic,Vasco2008ReservoirMonitoringCharacterization,Khakim2012GeomechanicalModelingInsar}. InSAR surface deformation can be combined with this knowledge to evaluate fluid recovery efficiency and monitor disposal wells at low cost. Furthermore, these high-quality geodetic measurements are readily available to complement the TexNet seismic catalog for assessing the likelihood of fault motion and induced earthquake risks in Texas.
 
 
 
 
-\chapter{Atmospheric Noise Analysis and Simulation}
-\label{chap:atmo-noise}
 
+\chapter{Robust Time Series Methods for Long-term Nonlinear Deformation}
+\label{CHAP:5-atmo-noise}
 
+%Ideas:
+%
+%- comparison of ways people have tried to correct for troposphere
+%
+%- plots/images of possible views into the single day atmosphere.
+% -- modis
+% -- HRRR, ECMWF
+% --  GOES
+% -- insar averaging
+% 
+% axes of comparison:
+% - resolution
+% - time availability
+% - spatial availibility
+% - sensitivity to phase propation delay
+% 
+% 
+% SEASONAL plots...
+% 
 
-Ideas:
-
-- comparison of ways people have tried to correct for troposphere
-
-- plots/images of possible views into the single day atmosphere.
- -- modis
- -- HRRR, ECMWF
- --  GOES
- -- insar averaging
- 
- axes of comparison:
- - resolution
- - time availability
- - spatial availibility
- - sensitivity to phase propation delay
- 
- 
- SEASONAL plots...
- 
- Note
 
 
 \chapter{Automatic Detection of InSAR Surface Deformation Signals In the Presence Severe Tropospheric Noise}
@@ -721,14 +721,7 @@ Ideas:
 
 \section{Methods}
 \label{sec:methods}
-%\subsection{Overview}
-%\textcolor{red}{We need to summarize three subsections in a paragraph.}
 
-%\textcolor{red}{[We will discuss Section 1 and 2.A on Wedenesday. It is awkward to say "initial goal". What is the final goal? I think your algorithm has two major component (A and B/C). An important thing to note is A alone cannot be used to detect deformation.]}.The initial goal of our algorithm is to automatically detect all surface deformation signals in InSAR maps. We approach this using a filter-based computer vision algorithm that can search over many image scales to find spatially coherent image features.  \textcolor{red}{[Maybe avoid using "false alarm", Most of times, it is not a big deal for the surface to move a few cm]}
-%Second, we wish to calculate a probability of false positive for each detection. Since only the distribution of noise is required to calculate a false positive probability, and not the distribution of the signals of interest, we incorporate a careful tropospheric noise analysis of each SAR acquisition over our study area. This allows is to simulate realistic tropospheric turbulence noise and determine the frequency that certain artifacts of a given size and magnitude could be detected by the computer vision algorithm. We then keep only the candidate deformation detections in our InSAR maps which have very low probability of being tropospheric noise artifacts.
-% \textcolor{red}{The transition between the two components is not very smooth. The way it currently reads like we developed an algorithm to detect deformation signals. However, it actually does not work, because there is noise. It is rather confusing because to InSAR expert tropospheric noise is not the only noise source and we are single-mined on that. Those designs need to be articulated carefully. The two components are rather decoupled.}
-
-%\textcolor{red}{An overview of the algorithm is not a list of what you did, but the overall ideas behind the algorithm design. The first part of the algorithm is to detect blob-like features, which can be signal and noise. And the second part is you figure out a way to UQ and remove the noise blobs. I think the way you describe how the computer vision algorithm works is great. We need to figure out how to talk about the noise estimation without a list of what we did. Also, it is a good idea to finish talk about part 1, before move to part 2.}
 
 \subsection{Automatic Feature Detection}
 \label{subsec:methods-1-log}
@@ -740,17 +733,12 @@ There have been many computer vision algorithms that were designed to automatica
 	K^{(m)}_{ij} = \left(\frac{(i - l)^2 + (j - l)^2 - 2\sigma_m^2}{2 \pi \sigma_m^4}\right) \, e^{-\frac{ (i - l)^2 + (j - l)^2}{2 \sigma_m^2}} \label{eq:log-kernel}
 \end{equation}
 where pixel indices $ij  \in \left\lbrace 0, 1, \ldots, 2l \right\rbrace$. The unit of $\sigma_m$ is given in pixels, which can be scaled to meters based on the pixel spacing of the InSAR deformation map $M$.
-% and $l$ is a kernel size chosen to be sufficiently larger than $\sigma_n$ such that the edge pixels approach 0. 
-%is a matrix of size $ (2l + 1, 2l + 1) $ whose value in the $i$th row and $j$th column is given by
-%The kernel is derived by taking spatial second derivatives of a Gaussian smoothing kernel, then normalizing with an extra factor of $\sigma_n^2$ so that kernels with both small and large $\sigma_n$ produce comparable filter responses. 
 
-%Each kernel is sensitive to deformation features which roughly match the radius of the kernel. The radius $ r_n $ of a circularly symmetric feature with the highest sensitivity to kernel $K^{(n)}$ can be calculated as $ r_n = \sqrt{2}\sigma_n $.
 
 We generate a set of LoG kernels $K^{(1)}, K^{(2)}, \ldots$ with progressively larger $\sigma_m$ (Figure \ref{fig:log-kernel}), and calculate the $m^{th}$ filter response $ L^{(m)} $ as:
 \begin{equation}
 	L^{(m)} = M \ast K^{(m)}  \label{eq:log-layer-conv}
 \end{equation}
-%However, this operation is computationally expensive for larger kernels; thus, the filtering is carried out in the Fourier domain.
 Here $*$ denotes the 2D discrete convolution, which is typically computed using the Fast Fourier Transform (FFT) algorithm because of its superior computational efficiency \cite{Szeliski2022ComputerVision}.
 
 
@@ -777,9 +765,6 @@ To demonstrate how to estimate the size of an unknown deformation feature from t
 	%
 \end{figure}
 
-%Paragraph 3 : Ghost blob removal
-%To obtain the final detection results, we add two additional steps to remove undesirable detection candidates. 
-% (Figure \ref{fig:log-response}e, bottom right).% (Figure \ref{fig:log-response}e, upper right).
 In the case that two candidate blobs have more than 50\% overlapping area, the blob with a smaller size is discarded. 
 Additionally, the LoG filter may falsely flag ghost blobs at the edges of real deformation features. This is because deformation features with strong curvature at the center also contain a strong opposite-signed curvature near the border \cite{Lindeberg1998FeatureDetectionAutomatic}. To remove those false positives, we use the distance from the candidate blob's center location to the nearest deformation amplitude extremum as a measure. If this distance is close to the blob radius, the detection is likely a ghost blob. In our test case, we discarded blobs with local extremum distances larger than 75$\%$ of the blob radius, which effectively removed all visible false positives near the edge of real deformation features.
 
@@ -792,53 +777,51 @@ Here the weight $w_{kk}$ equals $\exp\left[-(r_{kk} / r_k)^2\right]$, where $r_{
 We can exclude undesired deformation features by setting magnitude thresholds on $|g_k|$ and $|\bar{d_k}|$ based on users' interest. Furthermore, we need to determine whether a detected deformation feature has a signal magnitude above the noise level of the InSAR deformation map, which is the focus of the following method sections. 
 
 
-\begin{algorithm} [htb]
+\begin{algorithm}
 	\caption{LoG Based Deformation Feature Detection}\label{algo:blobs}
 	\SetAlgoLined
 	\KwIn{2D InSAR deformation map $M$}
 	\KwResult{For each $k \in {1, \ldots, N_d}$ detections, the algorithm outputs the blob center location $ (i_k,j_k) $, the blob radius $ r_k $, the filter response magnitude $|g_k|$ at the extreme point, the deformation magnitude $|\bar{d_k}|$ }
-	
 	
 	// Calculate filter responses:\\
 	\ForEach{$ \sigma_m \in \left\lbrace \sigma_{min} \ldots \sigma_{max}\right\rbrace $}{
 		%$L^{(n)} = \mathcal{F}^{-1} \left[ \mathcal{F} M \cdot  \mathcal{F} K^{(n)} \right] $
 		$ L^{(m)} = M \ast K^{(m)}  $
 		%$\nabla^2_{norm} L(\cdot, \cdot, \sigma) \gets I(\cdot, \cdot) * \nabla^2_{norm} G(\cdot,\cdot, \sigma)$
-	}
-	
+	}	
 	// Find candidate blobs from local extrema:\\
 	\For{$ (i, j, m) \in  L $}{
 		\If{$L[i, j, m] $ is local extremum }{
 			% \If{$\det \mathcal{H}_{norm} L(x,y,\sigma ) $ is local extremum }{
-				Compute $ r = \sqrt{2}\sigma_m $ \\
-				Add $ (i, j, r) $ to list of candidate detections
-			}
+			Compute $ r = \sqrt{2}\sigma_m $ \\
+			Add $ (i, j, r) $ to list of candidate detections
 		}
-		// Prune blobs with overlap:\\
-		\ForEach{$ b_1 := (i_1, j_1, r_1), b2 := (i_2, j_2, r_2) \in $ candidates}{
-			%	Form circle of radius $ r_i $ around $ (i_1, j_1) $\\
-			\If{ Overlap$( b_1, b_2 ) > 0.5 $  }{
-				Remove smaller of $ b_1, b_2 $
-			}
+	}
+	// Prune blobs with overlap:\\
+	\ForEach{$ b_1 := (i_1, j_1, r_1), b2 := (i_2, j_2, r_2) \in $ candidates}{
+		%	Form circle of radius $ r_i $ around $ (i_1, j_1) $\\
+		\If{ Overlap$( b_1, b_2 ) > 0.5 $  }{
+			Remove smaller of $ b_1, b_2 $
 		}
-		
-		// Prune edge blob false positives:\\
-		\ForEach{$ b_k := (i_k, j_k, \sigma_k) \in $ candidates}{
-			Find coordinates $(u, v)$ of local max of $M$ within
-			radius $r_k$ around $ (i_k, j_k) $
-			\\
-			\If{ $\sqrt{(x - u)^2 + (y - v)^2} > 0.75 $  }{
-				Discard $ b_k $
-			}
-		}
-		// Prune with thresholds $ \gamma_g, \gamma_d $:\\
-		\ForEach{$ b_k := (i_k, j_k, r_k,|g_k|, |\bar{d_k}|) \in $ candidates}{
-			\If{ $ |g_k| <  \gamma_g $ \text{or} $ |\bar{d_k}| <  \gamma_d $  }{
-				Discard $ b_k $
-			}
-		}
-	\end{algorithm}
+	}
 	
+	// Prune edge blob false positives:\\
+	\ForEach{$ b_k := (i_k, j_k, \sigma_k) \in $ candidates}{
+		Find coordinates $(u, v)$ of local max of $M$ within
+		radius $r_k$ around $ (i_k, j_k) $
+		\\
+		\If{ $\sqrt{(x - u)^2 + (y - v)^2} > 0.75 $  }{
+			Discard $ b_k $
+		}
+	}
+	// Prune with thresholds $ \gamma_g, \gamma_d $:\\
+	\ForEach{$ b_k := (i_k, j_k, r_k,|g_k|, |\bar{d_k}|) \in $ candidates}{
+		\If{ $ |g_k| <  \gamma_g $ \text{or} $ |\bar{d_k}| <  \gamma_d $  }{
+			Discard $ b_k $
+		}
+	}
+\end{algorithm}
+
 	
 	
 \subsection{Tropospheric Noise Spectrum}
@@ -853,10 +836,9 @@ Consider an interferogram formed using two SAR scenes acquired at times $t_1$ an
 where $ \lambda $ is the radar wavelength, $\alpha_1$ and $\alpha_2$ represent the tropospheric delay at the two SAR acquisition times $t_1$ and $t_2$, and $\Delta d_{1,2} $ is the Line-Of-Sight (LOS) deformation ($d_2-d_1$) between $t_1$ and $t_2$. The unit of $\lambda$, $\alpha_1$, $\alpha_2$, and $\Delta d_{1,2} $ is in centimeters. 
 
 Given $N$ SAR acquisitions, we can estimate the tropospheric noise on the $n^{th}$ SAR acquisition date by averaging $N-1$ interferograms that share the common reference SAR scene $n$ \cite{Tymofyeyeva2015MitigationAtmosphericPhase}:
-\begin{multline}
-	\bar{\alpha}_n = \frac{\lambda}{4 \pi} \frac{1}{N-1} \left(\sum_{k=1, k \neq n}^{N} \phi_{k,n}\right)  \\
-	=  \alpha_n  + \frac{1}{N-1} \left( \sum_{k=1, k \neq n}^{N}  \Delta d_{k,n} - \sum_{k=1, k \neq n}^{N}  \alpha_k  \right)  \label{eq:avg-ifg} 
-\end{multline}
+\begin{equation}
+	\bar{\alpha}_n = \frac{\lambda}{4 \pi} \frac{1}{N-1} \left(\sum_{k=1, k \neq n}^{N} \phi_{k,n}\right)  =  \alpha_n  + \frac{1}{N-1} \left( \sum_{k=1, k \neq n}^{N}  \Delta d_{k,n} - \sum_{k=1, k \neq n}^{N}  \alpha_k  \right)  \label{eq:avg-ifg} 
+\end{equation}
 %Note that the interferograms are all formed with $k$ as the reference date; any interferogram which was processed using $k$ as the secondary is multiplied by $-1$ before averaging. 
 Because tropospheric turbulence noise is uncorrelated in time for scales longer than one day \cite{Emardson2003NeutralAtmosphericDelay, Onn2006ModelingWaterVapor}, the term $ \frac{1}{N-1} \sum \alpha_k \rightarrow 0$ when  when $N$ is sufficiently large. 
 Under the assumption that $ \frac{1}{N-1} \sum \Delta d_{k,n} $ is relatively small comparing to $\alpha_n$, we compute $ \bar{\alpha}_n $ at each pixel to obtain a tropospheric turbulence noise map $A^{(n)}$ for the $n^{th}$ SAR acquisition date over the entire study area. In Section \ref{sec:results:path78}, we further discuss the impact of the deformation signals on our tropospheric noise analysis.
@@ -875,7 +857,7 @@ We plot the 1D PSD on a log-log scale, which rolls off following a power law at 
 
 
 
-\begin{figure}[hbt!]
+\begin{figure}
 	\centering 
 	%\includegraphics[width=0.98\linewidth]{figures/figure3_psd_radial.pdf}
 	\includegraphics[width=0.98\linewidth]{paper2/figures/figure3_psd_radial.png}
@@ -903,9 +885,17 @@ Similarly, we generate many synthetic InSAR data sets that share the same noise 
 
 We tested our deformation detection algorithm on over an 80,000 $km^2$ oil-producing region in the Permian Basin, West Texas.  As described in \cite{Staniewicz2020InsarRevealsComplex}, we processed 84 ascending Sentinel-1 scenes (Path 78, Frames 94–104) acquired between November 2014 and January 2019 (Figure \ref{fig:study-area}). We imposed no maximum spatial baseline and a maximum temporal baseline of 800 days for interferogram selection, resulting in 2550 multi-looked interferograms with 120 m pixel spacing.  We used the GPS station TXKM as the reference location, where little surface deformation was observed over the study period (Figure \ref{fig:study-area}, yellow dot).
 
+%\begin{figure}[hbt!]
+%	\centering
+%	\includegraphics[width=0.96\linewidth]{paper1-permian/figures/figure4-east-vertical-6panel-labelled.pdf}
+%	\caption[Cumulative vertical and horizontal deformation]{(a) Cumulative vertical deformation between Nov. 2014 and Jan. 2019 over the region where Sentinel-1 path 78 and path 85 overlap. A zoomed-in view of Box A in the northern Delaware Basin and Box B in the southern Delaware Basin are shown in panel (b) and (c) respectively. (d) Cumulative eastward deformation between Nov. 2014 and Jan. 2019 over the region where Sentinel-1 path 78 and path 85 overlap. A zoomed-in view of Box A in the northern Delaware Basin and Box B in the southern Delaware Basin are shown in panel (e) and (f) respectively. In the southern Delaware Basin, the observed vertical and eastward deformation (panel (c) and (f)) show linear patterns along with earthquake hypocenters (gray dots) detected by TexNet in 2018.}
+%	\label{fig:insar-decomp2}
+%\end{figure}
 
 
-\begin{figure}[hbt!]
+
+%\begin{figure}[hbt!]
+\begin{figure}
 	\centering
 	%\includegraphics[width=0.9\linewidth]{figures/figure4-study-area.pdf}
 	\includegraphics[width=0.96\linewidth]{paper2/figures/figure4-study-area.png}
@@ -914,8 +904,6 @@ We tested our deformation detection algorithm on over an 80,000 $km^2$ oil-produ
 	}
 	\label{fig:study-area}
 \end{figure}
-
-
 
 
 We employed a stacking approach \cite{Sandwell1998PhaseGradientApproach, Staniewicz2020InsarRevealsComplex} to calculate the average LOS velocity $v_{avg}$ at each ground pixel over a time period of interest $ T $ as
@@ -943,9 +931,9 @@ We also processed 81 descending Sentinel-1 scenes (Path 85 Frames 483–493) acq
 %\subsection{Tropospheric Noise Power Spectra}
 Figure \ref{fig:results-noise} (a)-(c) shows three estimated tropospheric noise maps for Sentinel-1 Path 78 acquisitions 2017-12-12, 2018-09-14, and 2017-06-15. We observe blob-like turbulence features ranging from a few kilometers up to tens of kilometers in diameter, and the magnitude of the tropospheric turbulence noise varies substantially on different days (Figure \ref{fig:results-noise} (d)). For example, the maximum absolute tropospheric noise observed on 2017-12-12, 2018-09-14, and 2017-06-15 are 1.8 cm, 3.2 cm, and 12.6 cm, respectively. Overall, $\sim$ 50\% of Path 78 scenes were acquired under quiet atmospheric conditions with a maximum noise level under 4 cm. Approximately, 35\% scenes were acquired under moderate turbulence conditions (a maximum noise level of 4-10 cm), and 15\% scenes were acquired under strong turbulent noise conditions (a maximum noise level of 11-15 cm). 
 
-\begin{figure}[hbt!]
+\begin{figure}
 	\centering 
-	\includegraphics[width=0.9\linewidth]{paper2/figures/figure5_noise_path78.png}
+	\includegraphics[width=.99\linewidth]{paper2/figures/figure5_noise_path78.png}
 	%\includegraphics[width=0.98\linewidth]{figures/figure5_noise_path78.pdf}
 	\caption[InSAR-estimated tropospheric turbulence noise maps for Path 78]{
 		InSAR-estimated tropospheric turbulence noise maps for three Path 78 SAR acquisitions: (a) 2017-12-12 (up to 1.8 cm noise), (b) 2018-09-14 (up to 3.2 cm noise), and (c) 2017-06-15  (up to 12.6 cm noise).
@@ -970,7 +958,7 @@ Note that the maximum and minimum sizes of detected features in Figure \ref{fig:
 \begin{figure}[hbt!]
 	\centering 
 	%\includegraphics[width=0.98\linewidth]{figures/figure_results_simulation_kde.png}
-	\includegraphics[width=0.9\linewidth]{paper2/figures/figure_results_kde.pdf}
+	\includegraphics[width=0.98\linewidth]{paper2/figures/figure_results_kde.pdf}
 	\caption[Estimates of empirical tropospheric noise probability density]{ (a)-(c) Log Probability Density Function (PDF) of detecting tropospheric noise blobs as a function of feature size $r$ and filter response magnitude $|g|$ for three cumulative LOS deformation maps: November 2014 - January 2017 (29 SAR scenes from Path 78), November 2014 - January 2018 (52 SAR Scenes from Path 78), and November 2014 - January 2019 (84 SAR Scenes from Path 78).
 	(d)-(f) Log Probability Density Function (PDF) of detecting tropospheric noise blobs as a function of feature size $r$ and deformation magnitude $|d|$ for the same three cumulative LOS deformation maps.
 	Here the PDFs were generated from 2D histograms using a kernel density estimate (KDE) \cite{Scott2015MultivariateDensityEstimation}.
@@ -1129,6 +1117,7 @@ In this study, we developed a computer vision algorithm for automatically detect
 
 
 \section{Dislocation (Fault Slip) Model}
+\label{appen:okada}
 \cite{Okada1992InternalDeformationDue} derived the analytical surface displacement field due to a finite rectangular fault slip in an elastic half-space. The Okada solutions provide three cases of displacement on a fault: strike-slip, dip-slip, tensile opening. In this study, we focused on the dip-slip case, because the Pecos area is in a normal faulting regime \cite{LundSnee2018}.  The assumption of predominant dip-slip along normal faults is also supported by fault plane solutions (TexNet Earthquake Catalog). 
 
 Considering the case of dip slip on a finite rectangular fault (Figure \ref{fig:model-fault-geom}), the vertical surface displacement $u_z(x, y, 0)$ can be expressed as:
@@ -1203,7 +1192,7 @@ The best-fit fault parameters of the four faults are listed in Table \ref{tab:ge
 \pagebreak
 
 \section{ Cylindrical Reservoir Compaction/Subsidence Model}
-\label{sec:model-compact}
+\label{appen:model-compact}
 \cite{Geertsma1973LandSubsidenceCompacting} derived the surface displacement field due to a uniform pressure drop of a cylindrical reservoir at a depth $D$ (Figure \ref{fig:model-reservoir-geom}). Under the assumption that the reservoir radius $R$ is larger than the reservoir height $H$, the cylindrical reservoir deforms primarily in the vertical direction. The magnitude of the reservoir compaction $\Delta H$ due to a pressure drop $\Delta P$ can be written as:
 \begin{equation}
 	\Delta H = H c_m \Delta P
