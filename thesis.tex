@@ -238,10 +238,13 @@ Finally, we conclude in Chapter 7 with discussions of possible directions of fut
 \chapter{Permian Basin Background}
 \label{CHAP:2}
 
-%
-%decadal survey.
-%quals talk.
-%supp chap 1
+
+%1. Oil and gas production from horizontal drilling and fracking
+%2. Induced seismicity
+  %1. different theories of causes 
+  %2. difficulty in the Delaware basin case due to density
+%3. Difficulty of observing subsurface changes
+
 
 The Permian Basin has provided oil and gas from conventional reservoirs since the early 1900s (cite? frohlich?).
 (Figure: Conventional vs EOR)
@@ -273,7 +276,9 @@ TODO: need to look into recent mentone stuff. peters papers, recent skoumal pape
 
 
 
-The success of shale development technologies \citep{Waters2006use} has opened up vast shale resources for economically viable oil and gas production. Based on a recent assessment by the U.S. Geological Survey (USGS), the Wolfcamp shale in Texas' Permian Basin is the largest continuous oil field that has ever been discovered in the United States \citep{GaswirthAssessment2016}. As of 2017, there were over 130,000 active production wells, 23,041 active enhanced oil production (EOR) wells, and 3794 active saltwater disposal (SWD) wells in the Permian Basin (Figure \ref{fig:permian-oil-6panel} (a)). It has been recognized that injection or withdrawal of fluids from the subsurface can induce earthquakes along existing faults \citep{Ellsworth2013, simpson1988two}. While petroleum production and wastewater injection volumes have been rising throughout the basin, the recently cataloged earthquakes are spatially clustered (Figure \ref{fig:Permian} (b)-(f)). One significant cluster is near Pecos, TX, where increased seismic activity began in 2009. Subsequent activity has increased considerably, with more than 2000 earthquakes identified in 2017 \citep{Frohlich2019}.
+The success of shale development technologies \citep{Waters2006Spe103202Ms} has opened up vast shale resources for economically viable oil and gas production. Based on a recent assessment by the U.S. Geological Survey (USGS), the Wolfcamp shale in Texas' Permian Basin is the largest continuous oil field that has ever been discovered in the United States \citep{GaswirthAssessment2016} . As of 2017, there were over 130,000 active production wells, 23,041 active enhanced oil production (EOR) wells, and 3794 active saltwater disposal (SWD) wells in the Permian Basin (Figure \ref{fig:permian-oil-6panel} (a)). It has been recognized that injection or withdrawal of fluids from the subsurface can induce earthquakes along existing faults \citep{Ellsworth2013, simpson1988two}. While petroleum production and wastewater injection volumes have been rising throughout the basin, the recently cataloged earthquakes are spatially clustered (Figure \ref{fig:Permian} (b)-(f)). One significant cluster is near Pecos, TX, where increased seismic activity began in 2009. Subsequent activity has increased considerably, with more than 2000 earthquakes identified in 2017 \citep{Frohlich2019}.
+
+
 
 
 \begin{figure}[hbt!]
@@ -305,6 +310,18 @@ mechanically layered earth as a homogeneous half space, even though the stiffnes
 %The advantages long wavelengths offer in terms of penetration come with compensating drawbacks. The resolution a sensor depends on the wavelength and on the size of its aperture—the mirror or lens in the case of a camera or a telescope, the antenna in a radar. If you lengthen the wavelength, you increase the size of the aperture you need in order to achieve a given resolution. To produce detailed images with radar requires a very large aperture indeed—far larger than anything a single spacecraft can offer.
 
 %> Synthetic-aperture radar (SAR) provides a way round that problem. Satellites move at quite a clip—typically, in low orbit, around 25,000kph. By taking all the echoes a radar satellite gets from a given target as it passes over it—and processing them into a single image, SAR produces a result as precise as if it had been made using a single aperture as wide across as the distance the satellite travelled while gathering the data—tens of hundreds of kilometres (see diagram).
+
+
+
+
+\begin{figure}[hbt!]
+	\centering
+% TODO
+%	\includegraphics[width=0.99\linewidth]{figures/ch3-sar-geometry.pdf}
+	\caption{Acquisition geometry of imaging radar.
+	}
+	\label{fig:ch3-sar-geometry}
+\end{figure}
 
 
 
@@ -345,13 +362,97 @@ While many large SAR constellations expect sub-hourly revisit time for any given
 \section{InSAR Principles}
 
 
+Possible ways to introduce phase:
 
+- Do the InSAR geometry, get phase measure has diff of 2 phases.
+- Fringe frequency, but measure "flat earth", subtract that, leads to topography.
+%−2πa + φflat + φtopo + noises
+
+OR
+- 
 
 \section{InSAR Noise Sources}
 \label{sec:ch3-noise}
 
+The phase of an interferogram can be written as
+
+ \citep{Zebker1992DecorrelationInterferometricRadar, Zebker1994AccuracyTopographicMaps, Zebker1997AtmosphericEffectsInterferometric}
+\begin{equation}
+	\Delta \phi = \frac{4 \pi}{\lambda} \Delta d_{LOS} +  \Delta \phi_{orb} + \Delta \phi_{decor} + \Delta \phi_{unwrap}  + \Delta \phi_{dem} + \Delta \phi_{iono} + \Delta \phi_{tropo}  + \Delta \phi_{n}
+\end{equation}
+where $ \lambda $ is the radar wavelength and $ \Delta d_{LOS} $ is the surface deformation along the radar LOS direction. The noise terms include orbital errors, phase decorrelation, unwrapping errors, DEM inaccuracies, ionospheric and tropospheric artifacts, and other residual noise terms that are typically an order of magnitude smaller than the error terms listed here.
+
+
+\subsection{Anatomy of an Interferogram}
+
+While high signal to noise ratio (SNR) interferograms can be analyzed by simply ``counting the fringes'', as is the case for the first published Landers earthquake \cite{Massonnet1993DisplacementFieldLanders}, this is often the exception, rather than the rule.
+In many cases, a single interferogram will contain more visual noise features than signals, making it difficult for a non-expert InSAR user to interpret. 
+
+Hawaii example
+
+
+
+
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=1.0\textwidth]{figures/chapter3-sar/hawaii-example.pdf}
+	\caption[Sentinel-1 interferogram over Hawaii showing common noise sources, along with 2018 eruption deformation]{
+	(a) Sentinel-1 interferogram from April 20th, 2018 to May 2nd, 2018 over Hawaii, spanning the beginning of the 2018 eruption event.
+	Each colored phase cycle of $2\pi$ radians indicates a range change of 2.7 cm along the radar line-of-sight, which can be cause by either real surface deformation or a noise source.
+	(b) The dense fringes near the coase are caused by turbulent tropospheric noise (see Section \ref{sec:ch3-noise-tropo-strat}).
+	(c) Stratified tropospheric noise on the peak of Mauna Kea, the tallest peak on Hawaii at 4,207 m, causes a concentric ring pattern. This pattern is also visible on Mauna Loa in the center of the island, where the phase is strongly correlated with topographic height. See Section \ref{sec:ch3-noise-tropo-strat} for further details.
+	(d) An example of decorrelation noise caused by the dense tropical rain forests on windward side of the island (e).
+	(f) Real deformation of $ \sim 40 $cm around the Pu'u '\=O'\=o volcanic cone to the east of K'\=ilauea. In this case, the ground was subsiding down and to the southeast as magma flowed away from Pu'u '\=O'\=o.
+%		The signal of interest in this interferograms, the collapse of the Pu'u '\=O'\=o caldera
+	(g) An aerial photo of Pu'u '\=O'\=o shows the caldera collapse on April, 30th, 2018 after magma migrated eastward underground (image source: HVO / USGS)
+ }
+	\label{fig:sar-hawaii-example}
+\end{figure}
+
+Two days after the interferogram on May 4, a  M$_w$ 6.9 earthquake struck the south flank of the Lower East Rift Zone, just south of the zoom.
+
+
+% at the Sentinel-1  The windward side of the island contains many dense tropical rain forests. These areas show Heavy decorrelation noise at the Sentinel-1 C-band wavelength of 5.5 cm.
+
+%brief fissure eruption occurred on the west flank of the Puʻu ʻŌʻō cone on April 30, 20181. Over the next few days, earthquakes migrated eastward into the LERZ and rift-normal displacements were recorded by GPS instruments, signaling large-scale injection of magma downrift of Puʻu ʻŌʻō. Magma reached the surface in Leilani Estates subdivision on May 3, marking the onset of the LERZ eruption (Fig. 1a)
+
+%1. Table: noise, specific to ifg or SAR, max variance?, common?
+
+
+%2. Figure: Hawaii, showing Stratified, Turbulence, decorr, defo
+
+
+%3. ? Figure: unwrap error? DEM error? iono noise? orb ramp?
+
 \subsection{Tropospheric Noise}
 \label{sec:ch3-noise-tropo}
+
+%Ideas:
+%
+%- comparison of ways people have tried to correct for troposphere
+%
+%- plots/images of possible views into the single day atmosphere.
+% -- modis
+% -- HRRR, ECMWF
+% --  GOES
+% -- insar averaging
+% 
+% axes of comparison:
+% - resolution
+% - time availability
+% - spatial availibility
+% - sensitivity to phase propation delay
+% 
+% 
+% SEASONAL plots...
+% 
+
+\subsubsection{Turbulent Tropospheric Noise}
+\label{sec:ch3-noise-tropo-turb}
+
+\subsubsection{Stratified Tropospheric Noise}
+\label{sec:ch3-noise-tropo-strat}
+
 
 Tropospheric noise in InSAR consists of a stratified component, which correlates with topography \citep{Doin2009CorrectionsStratifiedTropospheric}, and a turbulent component that is random at time scales longer than a day \citep{Emardson2003NeutralAtmosphericDelay, Onn2006ModelingWaterVapor}. Previous studies have made advances in correcting for the stratified component using global atmospheric models \citep{Doin2009CorrectionsStratifiedTropospheric, Jolivet2014ImprovingInsarGeodesy, Cao2021AdvancedInsarTropospheric}, GPS zenith delay measurements \citep{Onn2006ModelingWaterVapor}, external measurements from sensors such as the Moderate Resolution Imaging Spectroradiometer (MODIS) \citep{Li2005InterferometricSyntheticAperture, Barnhart2013CharacterizingEstimatingNoise} or the Medium Resolution Imaging Spectrometer (MERIS)  \citep{Ding2008AtmosphericEffectsInsar}, as well as empirical methods using regressions on InSAR phase and elevation \citep{Zebker2021AccuracyModelFree, Murray2021ClusterBasedEmpirical}.
 
@@ -429,8 +530,9 @@ where $u_{e}$, $u_{n}$ and $u_{u}$ are the east, north and up displacements, res
 
 \begin{figure}
 	\centering
+	% TODO
 	%	\includegraphics[width=\textwidth]{}
-	\caption{Line of sight convention used in this thesis for ascending (a) and descending (b) satellite geometries. Vector points from the satellite to the ground}
+	\caption[Line of sight convention]{Line of sight convention used in this thesis for ascending (a) and descending (b) satellite geometries. Vector points from the satellite to the ground}
 	\label{fig:los-asc-desc}
 \end{figure}
 
@@ -551,7 +653,7 @@ After removing InSAR outlier measurements associated with extreme local weather 
 
 \subsection{Errors in InSAR surface deformation estimates}
 \label{sec:errors} 
-The phase of an interferogram can be written as \citep{Zebker1992DecorrelationInterferometricRadar, Zebker1994AccuracyTopographicMaps, Zebker1997AtmosphericEffectsInterferometric}
+As outlined in Section \ref{sec:ch3-noise}, the phase of an interferogram can be written as \citep{Zebker1992DecorrelationInterferometricRadar, Zebker1994AccuracyTopographicMaps, Zebker1997AtmosphericEffectsInterferometric}
 \begin{equation}
 	\Delta \phi = \frac{4 \pi}{\lambda} \Delta d_{LOS} +  \Delta \phi_{orb} + \Delta \phi_{decor} + \Delta \phi_{unwrap}  + \Delta \phi_{dem} + \Delta \phi_{iono} + \Delta \phi_{tropo}  + \Delta \phi_{n}
 \end{equation}
@@ -693,25 +795,16 @@ An important conclusion of this study is that both fault slip and reservoir infl
 \chapter{Robust Time Series Methods for Long-term Nonlinear Deformation}
 \label{CHAP:5-atmo-noise}
 
-%Ideas:
-%
-%- comparison of ways people have tried to correct for troposphere
-%
-%- plots/images of possible views into the single day atmosphere.
-% -- modis
-% -- HRRR, ECMWF
-% --  GOES
-% -- insar averaging
-% 
-% axes of comparison:
-% - resolution
-% - time availability
-% - spatial availibility
-% - sensitivity to phase propation delay
-% 
-% 
-% SEASONAL plots...
-% 
+
+%1. Limitations of stacking to long time series
+%2. Robust Time Series Methods
+  %1. Regularization (Supplement from GRL)
+  %2. LOWESS smoothing
+  %3. Synthetic Example
+%4. 7 Year Time Series for the Permian Basin
+  %1. Comparison to GPS
+  %2. Anthropogenic Caused Deformation Patterns
+
 
 
 
@@ -1144,7 +1237,7 @@ The best-fit fault parameters of the four faults are listed in Table \ref{tab:ge
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{paper1-permian/figures/supplement/figureS6-fault-geom.pdf}
-	\caption[A finite rectangular fault model from \cite{Okada1992}]{A finite rectangular fault model from \cite{Okada1992}. Here $U_2$ is the magnitude of dip slip (positive in reverse fault direction), $\delta$ is the dip angle, $Z$ is the depth to the top of the fault, $c$ is the depth to the bottom of the fault, $L$ is the length along the strike direction, and $W$ is the width along the dip direction.}
+	\caption[A finite rectangular fault model from \cite{Okada1992InternalDeformationDue}]{A finite rectangular fault model from \cite{Okada1992InternalDeformationDue}. Here $U_2$ is the magnitude of dip slip (positive in reverse fault direction), $\delta$ is the dip angle, $Z$ is the depth to the top of the fault, $c$ is the depth to the bottom of the fault, $L$ is the length along the strike direction, and $W$ is the width along the dip direction.}
 	\label{fig:model-fault-geom}
 \end{figure}
 
