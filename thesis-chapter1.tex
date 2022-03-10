@@ -1,0 +1,122 @@
+
+\chapter{Introduction}
+
+
+\section{Problem Background}
+\label{sec:chap1-problem}
+
+%- what is the permian basin
+%- why important
+%- why people care about it
+%- roger spent lots of time to convince why it's hard (complicated cross section structures). it's nothing to do with his work! but you show you really understand the problem and wha you're working with
+%- the most important before contribution is to try to illustrate why it's a hard problem
+%- not only we focused on techcnial, and work on problem that matters, but dont forget why **insar over west texas is hard**
+
+
+%- first paragraph: convince it's super important problem. why perimain basin matters, and what's the problem
+%- have wells, inducsed seismicity, rate hasskyrocket, mention one year has more than CA.
+%- also btw, this is difficult. not all wells induce. some wells opearate fine, no issues, some wells have delayed, and keep having EQs about stop.
+%- even people without background should find intersting, even without texas background.
+%- people in general like to hear problems, and where people are stuck, and why they care to work on.
+%- Natl academy science report shold have highlights to take.
+%- ESI proposal: use from that
+
+The Permian Basin, stretching from eastern New Mexico and covering most of West Texas (Figure \ref{fig:permian-overview}a), has become the United States' largest producer of oil and gas over the past decade. The region's production began to take off in the late 2000s, largely due to advances in horizontal drilling and multi-stage hydraulic fracturing.
+Since that time, the basin also experienced an increased rate of low magnitude earthquakes \citep{Frohlich2016HistoricalReviewInduced, Atkinson2016HydraulicFracturingSeismicity, Frohlich2019OnsetCauseIncreased, Lomax2019ImprovingAbsoluteEarthquake, Savvaidis2020InducedSeismicityDelaware, Skoumal2020InducedSeismicityDelaware} (Figure \ref{fig:permian-overview}b).
+
+
+Since the 1920s, researchers have recognized that injection or withdrawal of fluids from the subsurface can induce earthquakes along existing faults \citep{Council2013InducedSeismicityPotential, Simpson1988TwoTypesReservoir, Ellsworth2013InjectionInducedEarthquakes}.  Induced earthquakes near oil production and wastewater injection wells have been recently observed in the Central and Eastern United States in Arkansas, Ohio, Oklahoma, Texas, as well as other countries including Canada, China, and Italy \citep{Foulger2018GlobalReviewHuman}.  In Texas, despite rising volumes of production and wastewater injection throughout the Permian Basin, the recently cataloged earthquakes are spatially clustered. The vast majority of production and injection wells experience no nearby seismic activity; however, the earthquake clusters within Texas contained over 200 earthquakes of magnitude 3.0 or greater in 2021, second only to California in the contiguous United States.
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\columnwidth]{figures/permian-overview-eqs-oil.pdf}
+	\caption[Permian Basin oil production and earthquakes]{
+		(a) Location of Permian Basin within Texas. The subbasins colored within the Permian Basin are (from west to east) the Delaware Basin (green), Central Basin Platform (cyan), and Midland Basin (purple).
+		(b) Yearly number of magnitude 3 or larger earthquakes recorded within Texas since 2000 (blue line), and average daily oil production per year for Permian Basin wells in Texas (red line).
+		Earthquakes retrieved from USGS at \url{https://earthquake.usgs.gov} . Oil Production data retrieved from the Texas Railroad Commission's production query system at \url{https://www.rrc.texas.gov} .
+	}
+	\label{fig:permian-overview}
+\end{figure}
+
+
+
+%One significant cluster is near Pecos, TX, where increased seismic activity began in 2009 and climbed to more than 2000 earthquakes in 2017 \citep{Frohlich2019OnsetCauseIncreased}. 
+
+Understanding the causes of induced earthquakes be challenging, as there is limited knowledge of the locations of subsurface faults and the ways in which petroleum operations affect pore pressure \cite{Hennings2021StabilityFaultSystems}. Additionally, the Permian Basin contains many possible mechanisms which can trigger earthquakes, including oil and gas production, wastewater injection, hydraulic fracturing, and groundwater withdrawal, all operating in a geologically-complex region \cite{Smye2021VariationsVerticalStress}.
+Although detailed measurement of the subsurface is infeasible across the $\sim$200,000 km$^2$ Permian Basin, the spaceborne remote sensing technique known as Interferometric Synthetic Aperture Radar (InSAR) can measure of deformation of Earth's surface over wide areas with millimeter-to-centimeter accuracy \citep{Massonnet1993DisplacementFieldLanders, Buergmann2000SyntheticApertureRadar}. These surface deformation measurements can be used to derive information about Earth's subsurface, locate previously unknown faults, estimate the distribution of fault slip, and infer associated seismic risk \citep{Segall2010EarthquakeVolcanoDeformation, Elliott2016RoleSpaceBased, Huang2017FaultGeometryInversion}.
+However, InSAR measurements contain many noise sources which pose serious challenges for attempts at routine processing over large areas. Specifically, errors from atmospheric noise can be over 10x as large as the deformation signals of interest.
+While InSAR has the possibility of providing a key observable for basin-scale studies on induced seismicity and its mitigation, it is necessary to mitigate the severe noise and provide detailed uncertainty measures to stakeholders.
+
+
+
+%the State of Texas funded the Texas Seismological Network (TexNet) to record earthquakes down to M2.0 across the state since 2017 \citep{Savvaidis2019TexnetStatewideSeismological}. 
+
+%TexNet seismic data will be most meaningful when combined with knowledge of the subsurface \citep{Council2013InducedSeismicityPotential, TheAcademyofMedicine2017EnvironmentalCommunityImpacts}; however, measuring the subsurface at a basin-scale is both expensive and technically challenging.
+
+
+% next parag: 
+% - to understand: need detailed character of subsurface. but, this is super hard to get basin wide. also, geologiy is very complex.
+% - and remote sense can help with charactteriztion.
+% - when what insar is and sdoes
+% - (cut the other cases)
+
+
+% - then why it's hard... noone has mapped over entire basin.
+% - if we wanna demo we're truly an expert, need to convince it's hard.
+% - takeaway: insar intersting sensor to answer problems we outlined. but even with intersting advantages, still hard. more data creates it's own new problems.
+% 
+
+% % - note: the "tropo noise from reference" makes no sense to non-expert. 
+
+
+% - maybe review the missions... early are ERS... newer acquire data over large region
+% 		- maybe late r time to talk about this..
+
+
+\section{Contributions}
+\label{sec:chap1-contributions}
+
+
+The contributions of this thesis center around designing scalable methods to produce reliable surface deformation maps over large regions. We have focused on the mitigation of strong atmospheric noise and the creation of uncertainty measures which are easy to interpret for non-expert stakeholders.
+
+
+The contributions may be summarized as follows:
+
+\begin{enumerate}
+	
+	\item We developed a Python-based InSAR time series analysis software to ingest geocoded SAR images, extract surface deformation, decompose multiple geometries into horizontal and vertical deformation, and verify results with permanent GPS stations.
+	
+	\item We performed a rigorous uncertainty analysis to identify the dominant noise source in the Permian Basin for Sentinel-1.  In the process, we developed a method to estimate the tropospheric noise and its power spectral density from InSAR data.
+	
+	
+	\item We designed scalable, robust time series algorithms for tracking yearly changes of deformation over large regions.
+	
+	\item We created millimeter-level accurate maps of cumulative surface deformation that are available online for analysis. These maps contain many subsidence and uplift features near oil and gas production, as well as linear patterns near clusters of seismic activity.
+	
+	
+	\item We created a computer vision algorithm to automatically detect surface deformation signals of unknown sizes in large InSAR maps. The detection algorithm produces uncertainty estimates for each visual feature in the InSAR data.
+	
+	
+	
+\end{enumerate}
+
+
+\section{Thesis Roadmap}
+\label{sec:chap1-roadmap}
+
+In Chapter 2, we introduce the scientific background of the induced seismicity problem. We review the oil and gas production boom of the last decade within the Permian Basin, as well as previous studies on the increase in low magnitude earthquakes during this time. We present the case for new high-quality observational datasets to better inform efforts to mitigate induced seismicity.
+
+In Chapter 3, we introduce principles of InSAR. We start with a review of synthetic aperture radar (SAR) image formation. We derive how the phase difference between two SAR images acquired at different times can be used to infer surface deformation. We show how the use of geocoded single-look complex (SLC) products enables a simple InSAR processing workflow. We outline common InSAR noise sources and how to combine many interferograms to solve for a time series of surface deformation. Finally, we describe how to decompose deformation from multiple satellite geometries into horizontal and vertical components.
+
+
+In Chapter 4, we present a simple yet effective time series method for creating cumulative surface deformation maps over large regions with severe tropospheric noise. We use the method to create yearly deformation maps over the oil-producing region of the Permian Basin. The method incorporates an automated outlier detection and removal algorithm, which enabled ~2 mm/year agreement with GPS measurements in the presence of $\sim$15 cm of tropospheric noise.
+
+
+In Chapter 5, we expand our robust time series methods to account for non-linear deformation. We introduce a method to extract nonlinear deformation over long time series using non-parametric LOWESS smoothing. We demonstrate the method's ability to mitigate strong tropospheric noise on synthetic data. We use the method on Sentinel-1 data to create yearly cumulative and differential surface deformation maps for 2015-2021 over the Permian Basin, where a variety of anthropogenic causes have led to local and large-scale deformation patterns.
+
+
+In Chapter 6, we demonstrate methods for automatically detecting surface deformation signals in InSAR maps. We present a computer vision algorithm based on Laplacian of Gaussian filters. We show how the tropospheric noise levels can be estimated from InSAR data, and we use these estimates to simulate new instances of noise. We create confidence measures based on the simulations for automatically detected signals in real InSAR maps.
+
+
+Finally, we conclude in Chapter 7 with discussions of possible directions of future research.

@@ -1,0 +1,283 @@
+
+\chapter{InSAR Background}
+\label{CHAP:3}
+
+
+\section{SAR Basics}
+\label{CHAP:3-sar}
+
+
+
+
+%The advantages long wavelengths offer in terms of penetration come with compensating drawbacks. The resolution a sensor depends on the wavelength and on the size of its aperture—the mirror or lens in the case of a camera or a telescope, the antenna in a radar. If you lengthen the wavelength, you increase the size of the aperture you need in order to achieve a given resolution. To produce detailed images with radar requires a very large aperture indeed—far larger than anything a single spacecraft can offer.
+
+%> Synthetic-aperture radar (SAR) provides a way round that problem. Satellites move at quite a clip—typically, in low orbit, around 25,000kph. By taking all the echoes a radar satellite gets from a given target as it passes over it—and processing them into a single image, SAR produces a result as precise as if it had been made using a single aperture as wide across as the distance the satellite travelled while gathering the data—tens of hundreds of kilometres (see diagram).
+
+
+
+
+\begin{figure}[hbt!]
+	\centering
+	% TODO
+	%	\includegraphics[width=0.99\linewidth]{figures/ch3-sar-geometry.pdf}
+	\caption{Acquisition geometry of imaging radar.
+	}
+	\label{fig:ch3-sar-geometry}
+\end{figure}
+
+
+
+\subsection{SAR Constellations}
+
+
+Figure \ref{fig:sar-missions} shows a timeline of SAR missions that have been launched by governments and space agencies since 1990. Not included in the figure is Seasat, launched in 1978 by NASA, which was the first demonstration of an earth-observing SAR mission with interferometric capability \cite{Born1979SeasatMissionOverview, Gabriel1989MappingSmallElevation}. Note that the only ongoing mission providing freely available data is the Sentinel-1 mission run by the European Space Agency (ESA); however, the future launch of the NISAR ISRO SAR mission (NISAR) will also provide global L-band SAR coverage \cite{Rosen2015NasaIsroSar}.
+
+
+In the past four yeaars, the first wave small SAR satellites have been launched by private companies (Figure \ref{fig:sar-private-const}). Finland's Iceye was the first company to launch a SAR SmallSat (a satellites weighing under 180 kg) in January 2018, while Capella Space had their first launch in December, 2018. Seven other companies have since launched at least 1 SAR satellite, and in the next five years, there are plans to launch over 500 additional SAR SmallSats \cite{Kulu2021SatelliteConstellations2021}.
+While many large SAR constellations expect sub-hourly revisit time for any given point on earth \cite{Stringham2019CapellaXband}, only the large government SAR missions, such as Sentinel-1, ALOS, and NISAR, explicitly plan for consistent global coverage in their mission objectives. However, the possibility of daily or hourly InSAR revisit times opens many new applications previously not possible with the 6-12 day revisit times of large SAR missions  \cite{IceyeAgu2021}(Iceye AGU 2021) \cite{Taylor2021RemoteSensingMountain}.
+
+
+
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=1.1\textwidth]{figures/chapter3-sar/sar-missions.pdf}
+	\caption[Timeline of government SAR missions]{Timeline of government-sponsored SAR missions since 1990. Bar lengths indicate life span of mission. Bars which intersect the right edge indicate ongoing missions.
+		Colors indicate the space agency operating the mission.
+		Missions which provide data free of charge to the general public (as of May 2022) are marked with blue stars.
+		Vertical sections of the timeline are divided by the radar frequency of the sensor, showing (from top to bottom) the X-band, C-band, and L-band missions.
+		Note that SIR-C/X-SAR and SRTM were equipped with both C- and X-band sensors.}
+	\label{fig:sar-missions}
+\end{figure}
+
+
+
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=1.0\textwidth]{figures/chapter3-sar/sar-private-constellations.pdf}
+	\caption[Private sector SAR constellations]{SAR constellations run by private companies, showing the number of currently launched satellites (blue) stacked under the number of future planned launches (gold). Note the broken y-axis scale, as two companies 
+		%	(China Electronics Technology Group and PredaSAR) 
+		are planning constellations of 96 satellites.
+	}
+	\label{fig:sar-private-const}
+\end{figure}
+
+
+
+\section{InSAR Principles}
+
+
+Possible ways to introduce phase:
+
+- Do the InSAR geometry, get phase measure has diff of 2 phases.
+- Fringe frequency, but measure "flat earth", subtract that, leads to topography.
+%−2πa + φflat + φtopo + noises
+
+OR
+- 
+
+\section{InSAR Noise Sources}
+\label{sec:ch3-noise}
+
+The phase of an interferogram can be written as
+
+\citep{Zebker1992DecorrelationInterferometricRadar, Zebker1994AccuracyTopographicMaps, Zebker1997AtmosphericEffectsInterferometric}
+\begin{equation}
+	\Delta \phi = \frac{4 \pi}{\lambda} \Delta d_{LOS} +  \Delta \phi_{orb} + \Delta \phi_{decor} + \Delta \phi_{unwrap}  + \Delta \phi_{dem} + \Delta \phi_{iono} + \Delta \phi_{tropo}  + \Delta \phi_{n}
+\end{equation}
+where $ \lambda $ is the radar wavelength and $ \Delta d_{LOS} $ is the surface deformation along the radar LOS direction. The noise terms include orbital errors, phase decorrelation, unwrapping errors, DEM inaccuracies, ionospheric and tropospheric artifacts, and other residual noise terms that are typically an order of magnitude smaller than the error terms listed here.
+
+
+\subsection{Anatomy of an Interferogram}
+
+While high signal to noise ratio (SNR) interferograms can be analyzed by simply ``counting the fringes'', as is the case for the first published Landers earthquake \cite{Massonnet1993DisplacementFieldLanders}, this is often the exception, rather than the rule.
+In many cases, a single interferogram will contain more visual noise features than signals, making it difficult for a non-expert InSAR user to interpret. 
+
+Hawaii example
+
+
+
+
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=1.0\textwidth]{figures/chapter3-sar/hawaii-example.pdf}
+	\caption[Sentinel-1 interferogram over Hawaii showing common noise sources, along with 2018 eruption deformation]{
+		(a) Sentinel-1 interferogram from April 20th, 2018 to May 2nd, 2018 over Hawaii, spanning the beginning of the 2018 eruption event.
+		Each colored phase cycle of $2\pi$ radians indicates a range change of 2.7 cm along the radar line-of-sight, which can be caused by real surface deformation or a noise source.
+		(b) The dense fringes near the coast are caused by turbulent tropospheric noise (see Section \ref{sec:ch3-noise-tropo-strat}).
+		(c) Stratified tropospheric noise on the peak of Mauna Kea, the tallest peak on Hawaii at 4,207 m, causes a concentric ring pattern. This pattern is also visible on Mauna Loa in the center of the island, where the phase is strongly correlated with topographic height. See Section \ref{sec:ch3-noise-tropo-strat} for further details.
+		(d) An example of decorrelation noise caused by dense tropical rain forests (e) located on windward side of the island.
+		(f) Real deformation of $ \sim 40 $cm around the Pu'u '\=O'\=o volcanic cone to the east of K'\=ilauea. In this case, the ground was subsiding down and to the southeast as magma flowed away from Pu'u '\=O'\=o.
+		%		The signal of interest in this interferograms, the collapse of the Pu'u '\=O'\=o caldera
+		(g) An aerial photo of Pu'u '\=O'\=o shows the caldera collapse on April, 30th, 2018 after magma migrated eastward underground (image source: HVO / USGS).
+	}
+	\label{fig:sar-hawaii-example}
+\end{figure}
+
+Two days after the interferogram on May 4, a  M$_w$ 6.9 earthquake struck the south flank of the Lower East Rift Zone, just south of the zoom.
+
+
+% at the Sentinel-1  The windward side of the island contains many dense tropical rain forests. These areas show Heavy decorrelation noise at the Sentinel-1 C-band wavelength of 5.5 cm.
+
+%brief fissure eruption occurred on the west flank of the Puʻu ʻŌʻō cone on April 30, 20181. Over the next few days, earthquakes migrated eastward into the LERZ and rift-normal displacements were recorded by GPS instruments, signaling large-scale injection of magma downrift of Puʻu ʻŌʻō. Magma reached the surface in Leilani Estates subdivision on May 3, marking the onset of the LERZ eruption (Fig. 1a)
+
+%1. Table: noise, specific to ifg or SAR, max variance?, common?
+
+
+%2. Figure: Hawaii, showing Stratified, Turbulence, decorr, defo
+
+
+%3. ? Figure: unwrap error? DEM error? iono noise? orb ramp?
+
+\subsection{Tropospheric Noise}
+\label{sec:ch3-noise-tropo}
+
+%Ideas:
+%
+%- comparison of ways people have tried to correct for troposphere
+%
+%- plots/images of possible views into the single day atmosphere.
+% -- modis
+% -- HRRR, ECMWF
+% --  GOES
+% -- insar averaging
+% 
+% axes of comparison:
+% - resolution
+% - time availability
+% - spatial availibility
+% - sensitivity to phase propation delay
+% 
+% 
+% SEASONAL plots...
+% 
+
+\subsubsection{Turbulent Tropospheric Noise}
+\label{sec:ch3-noise-tropo-turb}
+
+\subsubsection{Stratified Tropospheric Noise}
+\label{sec:ch3-noise-tropo-strat}
+
+
+Tropospheric noise in InSAR consists of a stratified component, which correlates with topography \citep{Doin2009CorrectionsStratifiedTropospheric}, and a turbulent component that is random at time scales longer than a day \citep{Emardson2003NeutralAtmosphericDelay, Onn2006ModelingWaterVapor}. Previous studies have made advances in correcting for the stratified component using global atmospheric models \citep{Doin2009CorrectionsStratifiedTropospheric, Jolivet2014ImprovingInsarGeodesy, Cao2021AdvancedInsarTropospheric}, GPS zenith delay measurements \citep{Onn2006ModelingWaterVapor}, external measurements from sensors such as the Moderate Resolution Imaging Spectroradiometer (MODIS) \citep{Li2005InterferometricSyntheticAperture, Barnhart2013CharacterizingEstimatingNoise} or the Medium Resolution Imaging Spectrometer (MERIS)  \citep{Ding2008AtmosphericEffectsInsar}, as well as empirical methods using regressions on InSAR phase and elevation \citep{Zebker2021AccuracyModelFree, Murray2021ClusterBasedEmpirical}.
+
+Early efforts to correct or mitigate the turbulent atmospheric noise used a combination of high pass temporal filtering and low pass spatial filtering \citep{Ferretti2001PermanentScatterersSar, Berardino2002NewAlgorithmSurface}.
+%- but as \citep{Liu2012SatelliteRadarInterferometry} notes, gaps in the acquistion, or strong non-Gaussianity from, e.g., severe thunderstorms, break the assumptions of equal variance among APS dates that these filters require.
+Several research efforts have attempted to produce estimates of the atmospheric phase delay for each SAR acquisition directly from a time series of interferograms. \citep{Liu2012SatelliteRadarInterferometry} formulated the problem as a linear system using a network of small baseline interferograms. Since the problem of estimating both surface deformation and atmospheric delay is an ill-posed problem given only differential InSAR measurements, the authors assumed zero or known deformation of the study region, and they constrained the estimated troposphere to have zero mean. In an attempt to denoise time series of surface deformation, \citep{Tymofyeyeva2015MitigationAtmosphericPhase} averaged sets of redundant interferograms containing a common reference date, with an assumption of linear or slowly-varying deformation, and subtracted the estimated troposphere.
+
+%  \citep{Havazli2021DetectionThresholdEstimates} almost does what i'm doing (with some type of stratified atmo too), it's just a random multiplier, and it looks like it was almost all simulation
+An alternative approach to correcting for the tropospheric turbulence is to treat it as a stochastic noise source in time series analysis \citep{Simons2007InterferometricSyntheticAperture, Agram2015NoiseModelInsar} and estimate its covariance matrix either through auxiliary data sources \citep{Barnhart2013CharacterizingEstimatingNoise, Parker2015SystematicAssessmentAtmospheric} or directly from InSAR data \citep{Lohman2005SomeThoughtsUse}. While these approaches provide a measure of uncertainty in the deformation solution, the uncertainties are given for each pixel (or each model parameter), rather than for each visible deformation feature.
+
+
+
+
+GACOS is an iterative tropospheric decomposition model that integrates global weather models and available GPS zenith delay measurements for estimating tropospheric noise in InSAR data \citep{Yu2018InterferometricSyntheticAperture}. Due to the limited spatial and temporal resolution of weather models and GPS data, GACOS is more effective in removing the stratified tropospheric noise \citep{Doin2009CorrectionsStratifiedTropospheric} than the random turbulent tropospheric noise \citep{Emardson2003NeutralAtmosphericDelay}. 
+We found that GACOS does not produce substantial corrections in most Sentinel-1 West Texas interferograms for areas outside the main area of interest (e.g. Figure \ref{fig:GACOS} (a)-(c)). 
+
+\textcolor{red}{Get an interferogram that works, and then show the one that doesn't}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{paper1-permian/figures/supplement/figureS4-gacos.pdf}		
+	\caption[GACOS tropospheric corrections]{(a) LOS measurements (in cm) of a descending interferogram (20150127-20150220) before the GACOS correction. (b) GACOS tropospheric correction (in cm) for the 20150127-20150220 interferogram \citep{Yu2018InterferometricSyntheticAperture}. (c) LOS measurements (in cm) of a descending interferogram (20150127 - 20150220) after the GACOS correction. (d) LOS measurements (in cm) of the 20150127-20150220 interferogram vs. the Digital Elevation Model (DEM).}
+	\label{fig:GACOS}
+\end{figure}
+
+
+\section{InSAR Time Series}
+\label{sec:ch3-insar-ts}
+
+stacking for avg rate
+
+SBAS linear system. doesn't need to be short baseline. just a way to solve for the phase at each date
+
+Phase linking approaches solve for this using an optimization on each pixels time-covariance matrix.
+
+
+\subsection{Uncertainty}
+\label{sec:ch3-eq-tropo}
+Several ways for uncertainty.
+
+jackknife (maybe look into the NSBAS/GIANT time series way they do it....). prob an underestimate, since this is *precision* of the estimator. often it's jsut precision of the noise+deformation phase. but we really want the defo phase.
+
+other is least squares propagation of covariance. difficult to calibrate without good atmo noise estimate, can underestimate/overestimate.
+
+one problem with daily time series: often uncertainty is a single number. but each day's atmo noise can vary by 10-20x.
+
+Even with temporal smoothing (example pic of that super storm cell), there can be many days with "blobs" of atmospheric noise which exceed real deformation.
+
+Chapter (2nd paper) will discus a third novel way using computer vision.
+
+
+Bootstrap:
+
+From "practictioners guide":
+A natural question for the practitioner is to ask  “ Why bootstrap in the linear regression case? Isn ’ t least - squares a well - established approach that  has  served  us  well  in  countless  applications? ”   The  answer  is  that  for  many  problems, least - squares regression has served us well and is always useful as  a first approach but is problematic when the residuals have heavy - tailed distributions or if even just a few outliers are present.
+
+IID assumption: doesn't hold for time series... still gives some estimate. maybe show example of how it overestimates, but that it's not bad because it's mostly accounting for tropo, and not for the phase UQ (cite Zwiebeck paper).
+
+
+%Problems with pixelwise
+%- Image of blob, with 8 mm cutoff, question which part you trust and not
+%- Leads into feature-wise uq
+
+
+
+\section{InSAR Line-of-sight Decomposition}
+\label{sec:ch3-insar-decomp}
+An interferogram measures surface deformation between the two SAR acquisition times along the radar line-of-sight (LOS) direction. The LOS deformation, $u_{LOS}$, can be written as: 
+\begin{align}
+	u_{LOS}= \alpha_{e} u_{e} + \alpha_{n} u_{n} + \alpha_{u} u_{u}
+\end{align}
+where $u_{e}$, $u_{n}$ and $u_{u}$ are the east, north and up displacements, respectively. The radar look vector $\alpha = [\alpha_e, \alpha_n, \alpha_u]$ can be calculated from the known imaging geometry at every pixel location. This varies significantly across the basin due to the $ \sim$250 km wide Sentinel swath (Figure \ref{fig:los-map}). 
+
+
+
+\begin{figure}
+	\centering
+	% TODO
+	%	\includegraphics[width=\textwidth]{}
+	\caption[Line of sight convention]{Line of sight convention used in this thesis for ascending (a) and descending (b) satellite geometries. Vector points from the satellite to the ground}
+	\label{fig:los-asc-desc}
+\end{figure}
+
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=.98\textwidth]{paper1-permian/figures/supplement/figureS2-los.pdf}
+	\caption[East, north, and vertical coefficients of Sentinel-1 LOS vectors]{East, north, and vertical coefficients of the LOS unit vector of all Sentinel-1 path 78 and path 85 pixels. Positive LOS direction points away from the satellite to the ground.}
+	\label{fig:los-map}
+\end{figure}
+
+In regions where InSAR data are available from two LOS directions, we can decompose the ground motion into its eastward and vertical components.
+To perform the decomposition, we first write $u_{asc}$ and $u_{desc}$ in terms of $u_e$, $u_n$ and $u_u$:
+\begin{align}
+	u_{asc} &= \alpha_{a,e} u_{e} + \alpha_{a,n} u_{n} + \alpha_{a,u} u_{u}\\
+	u_{desc} &= \alpha_{d,e} u_{e} + \alpha_{d,n} u_{n} + \alpha_{d,u} u_{u}
+\end{align}
+We can express $u_e$ and $u_u$ as:
+\begin{align}
+	u_{e} &\approx  \frac{1}{\beta}  \left[\alpha_{d,u}  u_{asc} - \alpha_{a,u} u_{desc} \right] \\
+	u_{u} &\approx  \frac{1}{\beta}  \left[\alpha_{a,e} u_{desc} - \alpha_{d,e}  u_{asc}  \right] 
+\end{align}
+where  $ \beta = {\alpha_{a,e} \alpha_{d,u}- \alpha_{d,e} \alpha_{a,u}} $.
+
+Because Sentinel-1 satellites are operating in a near-polar orbit, the north look coefficients $\alpha_{a,n}$ and $\alpha_{d,n}$ are both relatively small. Ignoring 1 cm northward motion in $u_n$ only leads to $\sim$ 0.1-0.2 mm error in $u_e$ and $\sim$ 1 mm error in $u_u$ at most locations. \cite{Kim2018AssociationLocalizedGeohazards} detected several localized deformation features within the Delaware Basin related to wastewater injection, CO2 injection, and hydrocarbon production using Sentinel-1 InSAR data.  Our LOS decomposition results are consistent with their study at these locations. For example, in a 12 km x 12 km region centered on a wastewater injection well, we observed $\sim$ 5.5 cm of uplift and $\sim$1.2 cm of east-west motion between November 2014 and April 2017 (Figure \ref{fig:injection-kim-lu}). 
+
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{paper1-permian/figures/supplement/figureS3-injection-kim-lu.pdf}
+	\caption[Vertical and horizontal deformation near Winkler County, TX]{Cumulative surface deformation between November 2014 and April 2017 due to wastewater injection in Winkler County, TX. The horizontal motion here is $\sim$ 20\% of the vertical motion, with up to $\sim$ 5.5 cm of uplift and $\sim$ 1.2 cm of east-west motion. This localized deformation feature was originally reported in \cite{Kim2018AssociationLocalizedGeohazards}.}
+	\label{fig:injection-kim-lu}
+\end{figure}
+
+
+
+
+\subsection{Uncertainty Propagation through LOS decomposition}
+\label{sec:ch3-decomp-uq-prop}
+Since the LOS decomposition is a linear operation, given two LOS uncertainties, we can use linear uncertainty propagation theory to determine the vertical/horizontal uncertainties.
+
+TODO: move this to appendix or not?
+
+
