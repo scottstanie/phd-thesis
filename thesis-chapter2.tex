@@ -16,8 +16,8 @@
 %2. difficulty in the Delaware basin case due to density
 %3. Difficulty of observing subsurface changes
 
-Texas has been a leading producer of oil and gas for over a century \citep{Frohlich2016HistoricalReviewInduced, TheAcademyofMedicine2017EnvironmentalCommunityImpacts}. It became the nation's largest producer of crude oil after the first successful vertical well was drilled south of Beaumont, TX in 1901. These ``conventional'' wells were the primary mode of production in multiple large oil fields across the state. It wasn't until the early 2000s that advances horizontal drilling and hydraulic fracturing (also known as fracking, Figure \ref{fig:oil-drilling}) opened up vast new shale resources which were previously unworkable \citep{Waters2006Spe103202Ms}. 
-For example, the Wolfcamp shale in Texas' Permian Basin is the largest continuous oil field that has ever been discovered in the United States, containing 20 billion barrels of oil and 16 trillion cubic feet of gas \citep{Gaswirth2016AssessmentUndiscoveredContinuous}. While areas of the Wolfcamp shale in the Midland Basin have been traditionally developed using vertical wells, the ability to extend subsurface drilling horizontally (Figure \ref{fig:oil-drilling}a) and increase production using enhanced oil recovery (EOR, Figure \ref{fig:oil-drilling}d)
+Texas has been a leading producer of oil and gas for over a century \citep{Frohlich2016HistoricalReviewInduced, TheAcademyofMedicine2017EnvironmentalCommunityImpacts}. It became the nation's largest producer of crude oil after the first successful vertical well was drilled south of Beaumont, TX in 1901. These ``conventional'' wells were the primary mode of production in multiple oil fields across the state. It wasn't until the early 2000s that advances horizontal drilling and hydraulic fracturing (also known as fracking, Figure \ref{fig:oil-drilling}) opened up vast new shale resources which were previously unworkable \citep{Waters2006Spe103202Ms}. 
+For example, the Wolfcamp shale in Texas' Permian Basin is the largest continuous oil field that has ever been discovered in the United States, containing 20 billion barrels of oil and 16 trillion cubic feet of gas \citep{Gaswirth2016AssessmentUndiscoveredContinuous}. While areas of the Wolfcamp shale in the Midland Basin have been traditionally developed using vertical wells, the ability to extend subsurface drilling horizontally (Figure \ref{fig:oil-drilling}b) and increase production using enhanced oil recovery (EOR, Figure \ref{fig:oil-drilling}d)
 allowed many new areas to be economically viable for oil and gas production.
 
 %Figure \ref{fig:oil-drilling} shows a simplified diagram of the operation techniques of horizontal drilling, hydraulic fracturing, wastewater disposal, and enhanced oil recovery.
@@ -43,13 +43,12 @@ allowed many new areas to be economically viable for oil and gas production.
 
 
 
-Despite the economic benefits that the new production technologies provided for Texas, concerns have been raised about possible environmental consequences to shale development including seismic activity
+Despite the economic benefits that the new production technologies provided for Texas, concerns have been raised about possible environmental consequences to shale development \citep{TheAcademyofMedicine2017EnvironmentalCommunityImpacts, Scanlon2020WillWaterIssues}. 
 %including injection of chemicals underground, water usage in semiarid areas and potential water contamination, and seismic activity
- \cite{TheAcademyofMedicine2017EnvironmentalCommunityImpacts, Scanlon2020WillWaterIssues}. 
 %For example, more than 30 billion bbl of wastewater have been disposed throughout the Permian Basin \cite{Lemons2019SpatiotemporalStratigraphicTrends} and future Wolfcamp shale development is expected to generate $\sim$300 billion bbl of produced water \cite{Smye2021VariationsVerticalStress,  Scanlon2020WillWaterIssues}.
 %Here we briefly review the  seismic activity induced from oil and gas production.
-It has been recognized that injection or withdrawal of fluids from the subsurface can induce earthquakes along existing faults \citep{Ellsworth2013InjectionInducedEarthquakes, Simpson1988TwoTypesReservoir}
-and that induced earthquakes are not limited to oil and gas operations \citep{Grigoli2017CurrentChallengesMonitoring, Foulger2018GlobalReviewHuman, Baan2017HumanInducedSeismicity}; they have also been associated with geothermal energy development \citep{Deichmann2009EarthquakesInducedStimulation}, mining operations \citep{Hasegawa1989InducedSeismicityMines}, water impoundment in reservoirs \citep{Talwani1997NatureReservoirInduced}, and CO$_2$ sequestration \citep{Gan2013GasInjectionMay}.
+One concern is the triggering of seismic activity, as it has been recognized that injection or withdrawal of fluids from the subsurface can induce earthquakes along existing faults \citep{Ellsworth2013InjectionInducedEarthquakes, Simpson1988TwoTypesReservoir}.
+Note that induced earthquakes are not limited to oil and gas operations \citep{Grigoli2017CurrentChallengesMonitoring, Foulger2018GlobalReviewHuman, Baan2017HumanInducedSeismicity}; they have also been associated with geothermal energy development \citep{Deichmann2009EarthquakesInducedStimulation}, mining operations \citep{Hasegawa1989InducedSeismicityMines}, water impoundment in reservoirs \citep{Talwani1997NatureReservoirInduced}, and CO$_2$ sequestration \citep{Gan2013GasInjectionMay}.
 
 
 
@@ -64,7 +63,20 @@ and that induced earthquakes are not limited to oil and gas operations \citep{Gr
 %During this time period, an increase in low magnitude earthquakes was observed. While West Texas had few seismic monitoring stations set up, one array near Lajitas, TX had been operating since 2000 \citep{Frohlich2019OnsetCauseIncreased}.
 
 
-An early conceptual for triggering earthquakes uses the Mohr-Coulomb failure criterion \citep{Hubbert1959RoleFluidPressure}.
+\begin{figure}
+	\centering
+	%	\includegraphics[width=\linewidth]{figures/chapter2-permian/mohr-circles.pdf}
+	\includegraphics[width=\linewidth]{figures/chapter2-permian/mohr-circles-toponly.pdf}
+	\includegraphics[width=\linewidth]{figures/chapter2-permian/ch2-injection-ellsworth.pdf}
+	\caption[Effects of pore pressure perturbations and poroelastic stress changes on fault failure]{
+		Effects of pore pressure perturbations and poroelastic stress changes on fault failure. Solid curves represent the initial stress state, and dashed curves represent the perturbed stress state. (a) Increased pore pressure reduces normal stress on the fault plane, moving the fault closer to the Coulomb failure criterion. (b) Poroelastic stresses increase differential stress. For both (a) and (b), pore pressure perturbations and stress changes, as well as the relative magnitude of changes, depend on parameters including time, distance, injection rate, diffusivity, and poroelastic parameters.
+		(Bottom) Schematic diagram for each mechanism causing injection-induced earthquakes.
+		(Top from \cite{Keranen2018InducedSeismicity}, bottom from \cite{Ellsworth2013InjectionInducedEarthquakes})
+	}
+	\label{fig:mohr-circles}
+\end{figure}
+
+One conceptual model for triggering earthquakes uses the Mohr-Coulomb failure criterion \citep{Hubbert1959RoleFluidPressure}.
 The critical shear stress $\tau_{critical}$ required to promote fault slippage can be written as
 \begin{equation}
 \tau_{critical} = \tau_0 + \mu (\sigma_n - P)
@@ -82,29 +94,17 @@ Alternatively, poroelastic effects from injection can change the loading conditi
 %Following \cite{Dahm2012RecommendationDiscriminationHuman}, we can classify these discrimination methodsin three main families: physics-based methods, statistics-based methods, and source parameters-basedmethods
 
 
-\begin{figure}
-	\centering
-%	\includegraphics[width=\linewidth]{figures/chapter2-permian/mohr-circles.pdf}
-	\includegraphics[width=\linewidth]{figures/chapter2-permian/mohr-circles-toponly.pdf}
-	\caption[Effects of pore pressure perturbations and poroelastic stress changes on fault failure]{
-	Effects of pore pressure perturbations and poroelastic stress changes on fault failure. Solid curves represent the initial stress state, and dashed curves represent the perturbed stress state. (a) Increased pore pressure reduces normal stress on the fault plane, moving the fault closer to the Coulomb failure criterion. (b) Poroelastic stresses increase differential stress. For each case, pore pressure perturbations and stress changes, as well as the relative magnitude of changes, depend on parameters including time, distance, injection rate, diffusivity, and poroelastic parameters.
-	(Figure from \cite{Keranen2018InducedSeismicity})
-	}
-	\label{fig:mohr-circles}
-\end{figure}
 
 
-In Texas, earthquakes have occurred in close association petroleum activities since 1925, but the rate of earthquakes in the last decade has increased over tenfold \citep{Frohlich2016HistoricalReviewInduced, Skoumal2020InducedSeismicityDelaware}.
+In Texas, earthquakes have occurred in close association with petroleum activities since 1925, but the rate of earthquakes in the last decade has increased over tenfold \citep{Frohlich2016HistoricalReviewInduced, Skoumal2020InducedSeismicityDelaware}.
 To better understand the causes of these earthquakes and to assess the likelihood of infrastructure damage and safety concerns, 
 the State of Texas funded the Texas Seismological Network (TexNet) to record earthquakes down to M2.0 across the state since 2017 \citep{Savvaidis2019TexnetStatewideSeismological}. 
-By that time, there were over 130,000 active production wells, 23,000 active enhanced oil production (EOR) wells, and nearly 3800 active saltwater disposal (SWD) wells in the Permian Basin (Figure \ref{fig:permian-oil-6panel} (a)).  
-The volumes of petroleum production (Figure \ref{fig:permian-oil-6panel} (b, c)) and wastewater injection (Figure \ref{fig:permian-oil-6panel} (e, f)) had been rising in many locations; however, the recently cataloged earthquakes are spatially clustered (Figure \ref{fig:permian-oil-6panel} (c)). One significant cluster is near Pecos, TX in the Delaware Basin, which experienced over 2000 earthquakes in 2017 \citep{Frohlich2019OnsetCauseIncreased}. 
+By that time, there were over 130,000 active production wells, 23,000 active EOR wells, and nearly 3800 active saltwater disposal (SWD) wells in the Permian Basin (Figure \ref{fig:permian-oil-6panel} (a)).  
+The volumes of petroleum production (Figure \ref{fig:permian-oil-6panel} (b, c)) and wastewater injection (Figure \ref{fig:permian-oil-6panel} (e, f)) have been rising in many locations; however, the recently cataloged earthquakes are spatially clustered (Figure \ref{fig:permian-oil-6panel} (c)). One significant cluster is near Pecos, TX in the Delaware Basin, which experienced over 2000 earthquakes in 2017 \citep{Frohlich2019OnsetCauseIncreased}. 
 %Subsequent activity has increased considerably, and the region experienced more than 2000 earthquakes in 2017. 
 
 
 %TexNet seismic data will be most meaningful when combined with knowledge of the subsurface \citep{Council2013InducedSeismicityPotential, TheAcademyofMedicine2017EnvironmentalCommunityImpacts}; however, measuring the subsurface at a basin-scale is both expensive and technically challenging.
-
-TODO: combine ellsworth picture with this
 
 \begin{figure}[hbt!]
 	\centering
@@ -134,19 +134,19 @@ TODO: combine ellsworth picture with this
 %
 
 
-% Intuitively, the spatial and temporal correlation between human activity and event occurrence may repre-sent a key parameter to discriminate between natural and anthropogenic seismicity, but unfortunately this isnot always the case. Indeed, many industrial operations involving subsurface fluid injection (e.g., wastewaterdisposal) can transmit pore pressure changes at large distance, causing earthquakes several kilometers awayfrom the industrial site.
+% Intuitively, the spatial and temporal correlation between human activity and event occurrence may represent a key parameter to discriminate between natural and anthropogenic seismicity, but unfortunately this isnot always the case. Indeed, many industrial operations involving subsurface fluid injection (e.g., wastewaterdisposal) can transmit pore pressure changes at large distance, causing earthquakes several kilometers awayfrom the industrial site.
 
 
-Attributing causation of earthquakes to individual wells may be impossible in many cases due to the proximity of many wells, but several studies have used spatio-temporal analyses to link hydraulic fracturing and wastewater injection to earthquakes \citep{Savvaidis2020InducedSeismicityDelaware, Skoumal2020InducedSeismicityDelaware, Grigoratos2020EarthquakesInducedWastewatera}.
-Without a detailed study involving multiple (fields? specialties? observations?), discriminating induced from natural seismicity, is extremely challenging \citep{Grigoli2017CurrentChallengesMonitoring, Dahm2012RecommendationDiscriminationHuman, Verdon2019ImprovedFrameworkDiscriminating,Frohlich2016HistoricalReviewInduced, Frohlich2016ReplyCommentA}.
+%Attributing causation of earthquakes to individual wells may be impossible in many cases due to the proximity of many wells, but 
 
+Several studies have used spatio-temporal analyses to link certain instances of wastewater injection and hydraulic fracturing to earthquakes \citep{Savvaidis2020InducedSeismicityDelaware, Skoumal2020InducedSeismicityDelaware, Grigoratos2020EarthquakesInducedWastewatera}, but attributing causation of earthquakes to individual wells and discriminating induced from natural seismicity is extremely challenging \citep{Grigoli2017CurrentChallengesMonitoring, Dahm2012RecommendationDiscriminationHuman, Verdon2019ImprovedFrameworkDiscriminating,Frohlich2016HistoricalReviewInduced, Frohlich2016ReplyCommentA}.
+%Without a detailed study involving multiple disciplines and observational datasets, 
 %Recent efforts have considerably improved the public knowledge of subsurface fault locations (Horne?), geological characterization \citep{Smye2021LithologyReservoirProperties, Smye2021VariationsVerticalStress}, pore pressure distribution and... fault system stability \citep{Hennings2021StabilityFaultSystems} 
+Understanding the nature and causes of earthquakes and how they are linked to certain production and disposal requires extensive knowledge of the subsurface.
+However, subsurface measurements of pore pressure changes can be difficult or impossible to collect at a regional scale, and permanent GPS stations are too sparse to provide a full picture of surface changes.
+InSAR surface deformation measurements provide a key observable, and they allow us to estimate locations of pressure build up from fluid injection, barriers to subsurface fluid flow, and unmapped faults. However, creating accurate maps of surface deformation using InSAR can be very challenging at the scale of the full Permian Basin.
 
-Since subsurface measurements of pore pressure changes can be difficult or impossible to collect at a regional scale, InSAR can provide a key observable to large-scale pressure build up from fluid injection, possibly showing where unmapped faults or flow barriers exist and where subsurface fluid has migrated.
-However, creating accurate maps of surface deformation using InSAR can be very challenging at larger scales. 
-In this thesis, ....
-
-
+In this thesis, we develop techniques for mitigating strong tropospheric noise to produce reliable surface deformation maps over large regions. These techniques are applicable to any large-scale deformation mapping, but they are critical to successfully detecting the centimeter-level changes occurring in the Permian Basin that are masked by 10s of centimeters of tropospheric noise. We begin in Chapter 3 by introducing the concepts required for mapping surface deformation over time using InSAR.
 
 
 
