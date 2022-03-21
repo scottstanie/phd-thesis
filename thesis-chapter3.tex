@@ -118,7 +118,7 @@ improves the range resolution to $\delta_r = \frac{c}{2 BW}$, where is the frequ
 
 Figure \ref{fig:ch3-range-compress} demonstrates the effect of using chirped waveforms on range resolution using an example chirp with parameters matching the ERS-1 satellite (Figure \ref{fig:ch3-range-compress}a).
 %The real part of an example chirp with parameters matching the ERS-1 satellite has an oscillation frequency which increases linearly over time (Figure \ref{fig:ch3-range-compress}a). 
-The chirp has a duration of $\tau \approx 37.12 \mu s$, a chirp slope $k$ of $4 \times 10^{11} Hz / s$, resulting in frequency bandwidth $BW = s \tau$ $\approx$15.5 MHz (Figure \ref{fig:ch3-range-compress}b). By correlating the transmitted chirp with its complex conjugate, we get the impulse response of a point scatter (Figure \ref{fig:ch3-range-compress}c). If a chirp with the same time duration had a smaller slope $s$ (Figure \ref{fig:ch3-range-compress}d), the bandwidth would shrink by the same proportion (Figure \ref{fig:ch3-range-compress}e), and the impulse response would also be more spread out (Figure \ref{fig:ch3-range-compress}f).
+The chirp has a duration of $\tau \approx 37.12 \mu s$, a chirp slope $k$ of $4 \times 10^{11} Hz / s$, resulting in frequency bandwidth $BW = k \tau$ $\approx$15.5 MHz (Figure \ref{fig:ch3-range-compress}b). By correlating the transmitted chirp with its complex conjugate, we get the impulse response of a point scatter (Figure \ref{fig:ch3-range-compress}c). If a chirp with the same time duration had a smaller slope $k$ (Figure \ref{fig:ch3-range-compress}d), the bandwidth would shrink by the same proportion (Figure \ref{fig:ch3-range-compress}e), and the impulse response would also be more spread out (Figure \ref{fig:ch3-range-compress}f).
 Thus, we see that using chirped waveforms reverses the original problem, as a pulse with larger bandwidth actually has better resolution than a shorter pulse.
 
 
@@ -131,52 +131,35 @@ Thus, we see that using chirped waveforms reverses the original problem, as a pu
 		(a) The real part of a linear frequency-modulated chirp with a duration of $\tau \approx 37.12 \mu s$ and a chirp slope $k = 4 \times 10^{11} Hz / s$.
 		(b) The magnitude of the Fourier transform of the chirp is approximately a rectangle function, which shows the chirp bandwidth $BW = k \tau$ $\approx 15.5$ MHz.
 		(c) Matched filtering of the returned echo from one point scatterer yields the impulse response, which shows the approximate 10 meters of range resolution (or $\sim$65 ns in time).
-		(d) For a chirp with the same slope $s$ and 1/3 the duration $\tau$ the frequency bandwidth is also cut by 1/3 (e), the corresponding impulse response (f) and range resolution is 3 times worse.
+		(d) For a chirp with the same slope $k$ and 1/3 the duration $\tau$ the frequency bandwidth is also cut by 1/3 (e), the corresponding impulse response (f) and range resolution is 3 times worse.
 	}
 	\label{fig:ch3-range-compress}
 \end{figure}
 
 
-In the azimuth direction, the size of the radar footprint determines which points can be distinguished on the ground from the return of one pulse. This footprint is determined by the antenna's angular beam width, which is $\lambda / L$ for a horn antenna, and the range $r$ to the target. The footprint size of $r \lambda / L$ is known as the \emph{real aperture radar} (RAR) resolution, and the earliest radar imaging platforms were limited to this resolution in azimuth. For an airborne platform with a 1 meter antenna imaging at C-band, this would be a $\sim$600 meter resolution. Note that for some current applications, such as military detection applications or wide-area ocean mapping \cite{Simons2007InterferometricSyntheticAperture}, this azimuth resolution is sufficient. However, the RAR resolution for spaceborne radars are on the order of 10s of kilometers, which is far too coarse for most applications.
-
-%
-%\begin{align}
-%\phi(t) &= \int 2 \pi f(t) dt \\
-%&= \pi k t^2 + 2 \pi f_c t + \phi_0
-%\end{align}
-%where $f_c$ is the center frequency of the chirp, and $\phi_0$ (which)
-%
-%Leave constant $\phi_0 = 0$
-%
-%Use this phase in a complex exponential:
-%$$
-%s(t) = \exp^{j * \phi(t)} \\
-%= \exp(j (\pi k t^2 + 2 \pi f_c t))
-%$$
-%for $t \in (-\tau/2, \tau/2)$.
-
-
-% in az, res is $r \lambda / l$, real aperture radar. build very big antenna, but infesible for spaceborne. The synthetic aperturre is a processing technique where, for each point on the ground, the refleted radar echoes are collected and focused to a point. Distinguish which echoes are from same point along the flight path by the doppler shift. The has the effect of building up a synthetic aperture equal to (twice?) the length of the swath length.
-% The phase history ends up forming a chirp, similar to the range, and can be focues using a matched filter.
+In the azimuth direction, the size of the radar footprint determines which ground points can be distinguished from the echo of one pulse;  this is known as the \emph{real aperture radar} (RAR) resolution. The footprint size can be written as $r \lambda / L$, which comes from the antenna's angular beam width of $\lambda / L$ and the range $r$ to the target. The earliest radar imaging platforms were limited to this resolution in azimuth. For an airborne platform with a 1 meter antenna imaging at C-band, this would be a $\sim$600 meter resolution. Note that for some applications, such as military detection applications or wide-area ocean mapping \cite{Simons2007InterferometricSyntheticAperture}, this azimuth resolution is sufficient; however, the RAR resolution for spaceborne radars are on the order of 10s of kilometers, which is far too coarse for most applications.
 
 
 %The advantages long wavelengths offer in terms of penetration come with compensating drawbacks. The resolution a sensor depends on the wavelength and on the size of its aperture—the mirror or lens in the case of a camera or a telescope, the antenna in a radar. If you lengthen the wavelength, you increase the size of the aperture you need in order to achieve a given resolution. To produce detailed images with radar requires a very large aperture indeed—far larger than anything a single spacecraft can offer.
 
 %> Synthetic-aperture radar (SAR) provides a way round that problem. Satellites move at quite a clip—typically, in low orbit, around 25,000kph. By taking all the echoes a radar satellite gets from a given target as it passes over it—and processing them into a single image, SAR produces a result as precise as if it had been made using a single aperture as wide across as the distance the satellite travelled while gathering the data—tens of hundreds of kilometres (see diagram).
-The resolution in azimuth can be greatly improved by creating a \emph{synthetic aperture}, which is a processing technique where, for each point on the ground, the reflected radar echoes are collected and coherently added to focus the image.
+The resolution in azimuth can be greatly improved by creating a \emph{synthetic aperture}, which is a technique that processes the reflected echoes coherently (i.e. using both magnitude and phase) to focus the image (Figure \ref{fig:ch3-synth-aper}).
 %where the energy from a series of pulse returns from a point target is coherently added.
-
-Coherent processing is possible by carefully tracking each target's phase history, $ \phi(t) $, which is related to the range $r(t)$ by $\phi(t) = -4 \pi r(t)$.
-
-range-Doppler algorithm \cite{Wu1976DigitalSystemProduce, CummingDigitalProcessingSeasat} or backprojection algorithm in the time domain.
-
+Coherent processing is possible by carefully tracking each target's phase history, $ \phi(t) $, which is related to the range to the target $r(t)$ by $\phi(t) = -\frac{4 \pi}{\lambda} r(t)$.
+There are multiple image formation algorithms which create this synthetic aperture and use the phase history. One of the first developed and most widely today used is the range-Doppler algorithm (RDA) \citep{Wu1976DigitalSystemProduce, Cumming1979DigitalProcessingSeasat}. 
+RDA uses the apparent shift in Doppler frequency due to the platform motion to create a matched filter in azimuth, similar to the matched filter used for range compression.
+%RDA is a frequency-domain algorithm, since it converts the phase history 
+%Which converts the range-compressed data into the frequency domain. 
+An alternative to RDA is time-domain backprojection \citep{Duersch2013BackprojectionSyntheticAperture}, which provides a more exact phase compensation at the cost of being more computationally expensive.
+The backproject algorithm collects the energy from every radar pulse containing a pixel after compensating for the range-dependent phase.
+The complex-valued radar image $I$ for the pixel at location $ (x, y) $ can be formed by summing over all pulses:
+\begin{equation}
+	I(x, y) = \sum_{k} s(r(x, y, k)) \exp[-j \frac{4 \pi}{\lambda} r(x, y, k)]
+\end{equation}
+where $r(x, y, k)$ is the range distance from the radar sensor to the point $ (x, y) $ at the time of the $k$th pulse, and $s(r)$ is the value of the returned pulse at the given range \citep{Zebker2018InsarMissionLevel}.
+Thus, if the radar imaging geometry is known precisely, the coherent summation can be performed to focus the SAR image and achieve a final azimuth resolution of
 %Processing all echoes coherently results in a fine resolution in the azimuth direction, which is equal to the resulting that would be attainable only by a real aperture of length $2 L_s$ \citep{Cumming2004DigitalProcessingSynthetic}.
-
-The phase of each return echo at a time $t$ is related to the range $r$ by $\phi(t) = -4 \pi r(t)$.
-By coherently adding all returned
-By keeping track of the range to each point
-
-
+%The phase of each return echo at a time $t$ is related to the range $r$ by $\phi(t) = -\frac{4 \pi}{\lambda} r(t)$.
 \begin{equation}
 	\delta_{az} = \frac{L}{2}
 \end{equation}
