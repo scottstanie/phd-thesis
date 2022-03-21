@@ -4,7 +4,7 @@
 
 In this chapter...
 
-%Simons: operating at microwave frequencies, synthetic aper- ture radar (SAR) systems provide unique images representing the electrical and geometrical proper- ties of a surface in nearly all weather conditions. Since they provide their own illumination, SARs can image in daylight or at night. 
+%Simons: operating at microwave frequencies, synthetic aperture radar (SAR) systems provide unique images representing the electrical and geometrical proper- ties of a surface in nearly all weather conditions. Since they provide their own illumination, SARs can image in daylight or at night. 
 
 %https://www.usgs.gov/observatories/yvo/news/insar-magic-deformation-camera-no-one-saw-coming
 %Tracking radars "ping" a target, record the reflected signal, and measure (1) how long it took for the ping's round trip, and (2) the frequency of the return signal. The travel time is a measure of distance to the target. The target's velocity can be determined from the frequency of the return signal, which differs from that of the transmitted signal as a result of the Doppler effect (this is the effect that makes a siren sound different when it is coming toward you versus moving away from you, for example). Air traffic control radars and police speed detectors work on this principle.
@@ -12,18 +12,18 @@ In this chapter...
 \section{Radar Imaging}
 \label{CHAP:3-radar}
 
-``Radar'' was originally an acronym for ``RAdio Detection And Ranging'' but it has since become ubiquitous enough enter the common vernacular. Unlike passive sensors that rely on illumination for outside sources, such as optical cameras, a radar is an active sensor that emits its own electromagnetic energy and detects their return. 
-This is one of the main advantages of radar, as it allows the sensor to operate equivalently during day or night.
-%While certain radars continuously emit energy and listen for the return echoes, in this thesis we consider only pulsed radars.
-In general, radars operate at the microwave frequencies (around between 1 GHz and 300 GHz, or wavelengths of 3 m to 1 mm), though the most commonly used frequencies for SAR sensor in earth-observing missions are L-band (wavelengths of $\sim$24 cm), C-band ($\sim$6 cm cm) and X-band ($\sim$3 cm).
-Since electromagnetic waves get scattered by objects that are roughly the size of their wavelength, this means that radars are not blocked by water droplets and may see through clouds.
-%Although much of the early radar technology development was done for military surveilance purposes
+``Radar'' was originally an acronym for ``RAdio Detection And Ranging'' but it has since become ubiquitous enough enter the common vernacular. Unlike passive sensors that rely on illumination for outside sources, such as optical cameras, a radar is an active sensor that emits its own electromagnetic energy. 
+As such, radars are able to operate both day and night, and generally operate at microwave frequencies that are not blocked by clouds (around between 1 GHz and 300 GHz, or wavelengths of 3 m to 1 mm).
+%The ability to operate both day and night is one of the main advantages of radar.
 
-
-At Goodyear in the 1950s, it was theorized that you could collect the series of energy pulses from a moving radar to form a two-dimensional image. Thus, the radar imaging technique known as synthetic aperture radar (SAR) was developed. 
+The original radars developed during World War 2 were for tracking the position of targets. In these systems, the range to the target is calculated from the round trip travel time of an electromagnetic pulse that is reflected off the target, and the angle is determined by the antenna pointing direction.
+%system emits pulses of electromagnetic energy and detects the time delay of their return, which can be converted to a range using the speed of light. 
+Later researchers developed imaging radar systems converted a series of radar pulses on a moving platform into a two-dimension image. Although these images originally had coarse resolution, research led by Carl Wiley at Goodyear in the 1950s resulted in the development of the radar imaging technique known as synthetic aperture radar (SAR) \citep{Wiley1954PulsedDopplerRadar, Wiley1985SyntheticApertureRadars}.
+%Since electromagnetic waves get scattered by objects that are roughly the size of their wavelength, this means that radars are not blocked by water droplets and may see through clouds.
+%At Goodyear in the 1950s, Carl Wiley developed the concept of the synthetic aperture \citep{Wiley1954PulsedDopplerRadar}, which was the start of the radar imaging technique known as synthetic aperture radar (SAR) \citep{Wiley1985SyntheticApertureRadars}.
 The first demonstration of a spaceborne earth-observing SAR mission with interferometric capability was Seasat, launched by NASA in 1978
-equipped with an L-band radar 
-\cite{Born1979SeasatMissionOverview, Gabriel1989MappingSmallElevation}.
+%equipped with an L-band radar 
+\citep{Born1979SeasatMissionOverview, Gabriel1989MappingSmallElevation}.
 Since that time, there have been dozens of mission launched by various space agencies, leading some to call the last decade ``the golden age of SAR'' \citep{Moreira2014GoldenAgeSpaceborne}.
 
 %Synthetic aperture radar (SAR) is a powerful radar imaging technique which works day and night through all weather conditions.
@@ -31,15 +31,6 @@ Since that time, there have been dozens of mission launched by various space age
 
 
 \subsection{Timeline of SAR Constellations}
-
-Figure \ref{fig:ch3-sar-missions} shows a timeline of SAR missions that have been launched by governments and space agencies since 1990. 
-During the 90s, the European Space Agency (ESA) launched two C-band SAR satellites: ERS-1 in 1991 and ERS-2 in 1995. The ERS-1 satellite provided the first practical demonstration of spaceborne InSAR's ability to capture surface deformation
-when \cite{Massonnet1993DisplacementFieldLanders} mapped the  surface deformationn pattern caused by the 1992 Landers, California earthquake. The first L-band SAR satellite, JERS-1 ,was launched by NASDA\footnote{Although JERS-1 is labeled as a JAXA mission in Figure \ref{fig:ch3-sar-missions}, it was run by NASDA at the time. In 2003, NASDA merged with two other Japanese space agencies, ISAS and NAL, to form JAXA.} in 1992, and the Canadian Space Agency (CSA) launched their own C-band mission, RADARSAT-1, in 1995.
-
-
-The most influential SAR within the science community has been the Sentinel-1 mission by ESA.
-Note that the only ongoing mission providing freely available data is Sentinel-1; however, the future launch of the NISAR ISRO SAR mission (NISAR) will also provide global L-band SAR coverage \citep{Rosen2015NasaIsroSar}.
-
 
 
 
@@ -55,10 +46,14 @@ Note that the only ongoing mission providing freely available data is Sentinel-1
 \end{figure}
 
 
-In the past four years, the first wave small SAR satellites have been launched by private companies (Figure \ref{fig:ch3-sar-private-const}). Finland's ICEYE was the first company to launch a SAR SmallSat (a satellites weighing under 180 kg) in January 2018, while Capella Space had their first launch in December, 2018. Seven other companies have since launched at least 1 SAR satellite, and in the next five years, there are plans to launch over 500 additional SAR SmallSats \citep{Kulu2021SatelliteConstellations2021}.
-While many large SAR constellations expect sub-hourly revisit time for any given point on earth \citep{Stringham2019CapellaXband}, only the large government SAR missions, such as Sentinel-1, ALOS, and NISAR, explicitly plan for consistent global coverage in their mission objectives. However, the possibility of daily or hourly InSAR revisit times opens many new applications previously not possible with the 6-12 day revisit times of large SAR missions  \citep{IceyeAgu2021}(Iceye AGU 2021) \cite{Taylor2021RemoteSensingMountain}.
+Figure \ref{fig:ch3-sar-missions} shows a timeline of SAR missions that have been launched by governments and space agencies since 1990. The missions are grouped vertically into the three most commonly used frequency bands for SAR sensors in earth-observing missions: L-band (wavelengths of $\sim$24 cm), C-band ($\sim$6 cm cm) and X-band ($\sim$3 cm).
+During the 90s, the European Space Agency (ESA) launched two C-band SAR satellites: ERS-1 in 1991 and ERS-2 in 1995. The ERS-1 satellite provided the first practical demonstration of spaceborne InSAR's ability to capture surface deformation
+when \cite{Massonnet1993DisplacementFieldLanders} mapped the  surface deformationn pattern caused by the 1992 Landers, California earthquake. The first L-band SAR satellite, JERS-1, was launched by NASDA\footnote{Although JERS-1 is labeled as a JAXA mission in Figure \ref{fig:ch3-sar-missions}, it was run by NASDA at the time. In 2003, NASDA merged with two other Japanese space agencies, ISAS and NAL, to form JAXA.} in 1992, and the Canadian Space Agency (CSA) launched their own C-band mission, RADARSAT-1, in 1995.
 
 
+The most influential SAR mission within the science community has been Sentinel-1 \citep{Torres2012GmesSentinel1}. First launched in 2014, the Sentinel-1 satellites acquire data using an imaging mode that allow them to image very large swaths ($\sim$240 km wide in the interferometry mode) \cite{Zan2006TopsarTerrainObservation}, allowing them revisit any point on Earth every 12 days. 
+Additionally, Sentinel is the first mission of it's kind to provide it's data for free, leading to a transition from using SAR and InSAR in opportunistic experiments to being able to operationally monitor nearly anywhere on Earth  \cite{Rosen2021ShiftingGround}.
+Currently Sentinel-1 is the only ongoing mission with open SAR data; however, the future launch of the NISAR ISRO SAR mission (NISAR) will also provide free L-band SAR data with global coverage \citep{Rosen2015NasaIsroSar}.
 
 
 \begin{figure}
@@ -73,17 +68,26 @@ While many large SAR constellations expect sub-hourly revisit time for any given
 
 
 
+The first small SAR SmallSats (satellites weighing under 180 kg) have been launched by private companies over the past four years (Figure \ref{fig:ch3-sar-private-const}). Finland's ICEYE had its first succesful launch in January 2018, while Capella Space had their first launch 11 months later. Seven other companies have since launched at least 1 SAR satellite, and in the next five years, there are plans to launch over 500 additional SAR SmallSats \citep{Kulu2021SatelliteConstellations2021}. While many large SAR constellations expect sub-hourly revisit time for any given point on earth \citep{Stringham2019CapellaXband}, only the large government SAR missions, such as Sentinel-1, ALOS, and NISAR, explicitly plan for consistent global coverage in their mission objectives. However, the possibility of daily or hourly InSAR revisit times opens many new applications previously not possible with the 6-12 day revisit times of large SAR missions \citep{YagueMartinez2021TowardsFrequentFlood, Taylor2021RemoteSensingMountain, Kitajima2021PotentialSarSmall}.
+
+
+
+
+
+
 \section{Synthetic Aperture Radar}
 \label{CHAP:3-sar}
 
 
-Synthetic aperture radar is an imaging technique that forms a two-dimensional image representing the electrical and geometrical properties of the scene \cite{Simons2007InterferometricSyntheticAperture}.
-%A synthetic aperture radar is a side-looking imaging radar mounting on a moving platform
-The imaging geometry for SAR is shown in Figure \ref{fig:ch3-sar-geometry}, which contains a side looking radar on a platform at height $h$ moving in the azimuth directory $x$. 
-The radar emits pulses at some frequency (called the \emph{pulse repetition frequency}, or PRF) in the range direction $y$.
+Synthetic aperture radar is an imaging technique that uses a pulsed radar mounted on a moving platform. A two-dimensional image is created by coherently processing the returned energy pulses. While the images are often displayed in grayscale and may appear similar to optical images, they represent the electrical and geometrical properties of the objects in the scene \cite{Simons2007InterferometricSyntheticAperture}.
+%To create a radar image, the energy scattered by points on the ground must be collected and focused in two dimensions.  The image represents the electrical and geometrical properties of the scene \cite{Simons2007InterferometricSyntheticAperture} 
+
+
+The SAR imaging geometry is shown in Figure \ref{fig:ch3-sar-geometry}. A side-looking radar on a platform at height $h$ moves in the azimuth directory $x$ at a velocity $v$.  The radar repeatedly emits pulses at some interval (called the \emph{pulse repetition interval}, or PRI) that travel in the range direction.
 %The illuminated portion of the ground has a swath width of $r \lambda / w$
-The width of the swath for normal stripmap operation is controlled by the antenna width, $w$, as $r \lambda / w$. Likewise, the size of the illuminated swath in the along track direction is $r \lambda / L$.
+%The width of the swath for stripmap operation is controlled by the antenna width, $w$, as $r \lambda / w$. Likewise, the size of the illuminated swath in the along track direction is $r \lambda / L$.
 The line of sight (LOS) vector is defined as the unit vector pointing from the radar antenna to a point in the illuminated ground swath.
+Each pulses illuminates a portion of the ground, known as the radar footprint.
 
 
 \begin{figure}
@@ -99,31 +103,23 @@ The line of sight (LOS) vector is defined as the unit vector pointing from the r
 \end{figure}
 
 % Resolution: shorter pulse better resolution, but also lowers SNR. To get around tradeoff, send long with LFM chip to high snr and fine resolution in range direction
-To create a radar image, the energy scattered by points on the ground must be collected and focused in two dimensions. In the range direction,...
+%
+
+The signal to noise ratio (SNR) of the system depends on the total energy transmitted.  SNR can be increased by either sending a higher peak power (which is often limited by design constraints) or sending a pulse of longer duration $\tau$. This presents a dilemma: sending pulses with a larger $\tau$ results in coarser range resolution $\delta_r$, where resolution is the ability to distinguish scatters illuminated by the same radar pulse. In the absence further processing, the resolution in range would is $\delta_r = \frac{c \tau}{2}$, where $c \approx 3 \times 10^8$ is the speed of light. Thus, a pulse with $\tau = 30 $ microseconds would have about a 4.5 km resolution.
+
+However, SAR systems usually transmit pulsed waveforms called \emph{chirps} whose frequency $f$ increases over time. For example, in a linear frequency moduled (LFM) chirp, the frequency can be written as 
+\begin{equation}
+	f(t) = k t
+\end{equation}
+where $k$ is the chirp slope (in Hz / s) and $-\tau / 2 < t < \tau/2$.
+These special waveforms allow the receiver to correlate the returned echoes with a \emph{matched filter}, or a replica of the transmitted chirp. The new range resolution after using the matched filter depends on the frequency bandwidth, $BW$, of the chirp:  $BW = f_{max} - f_{min}$.
+improves the range resolution to $\delta_r = \frac{c}{2 BW}$, where is the frequency bandwidth of the chirp. 
 
 
-$\tau = 37 \mu s$, or about 11 km in length by multiplying by the speed of light.
-
-
-
-$$
-\phi(t) = \int \omega(t) dt = \int 2 \pi f(t) dt \\
-= \int 2 \pi s t + 2 \pi f_c  dt \\
-\phi(t) = \pi k t^2 + 2 \pi f_c t + \phi_0
-$$
-where $k$ is the chirp slope (in Hz / s), $f_c$ is the center frequency of the chirp, and $\phi_0$ (which)
-
-Leave constant $\phi_0 = 0$
-
-Use this phase in a complex exponential:
-$$
-s(t) = \exp^{j * \phi(t)} \\
-= \exp(j (\pi k t^2 + 2 \pi f_c t))
-$$
-for $t \in (-\tau/2, \tau/2)$.
-
-
-Figure \ref{fig:ch3-range-compress} demonstrates the effect of bandwidth on range resulting. The real part of an example chirp with parameters matching those of the ERS-1 satellite has an oscillation frequency which increases linearly over time (Figure \ref{fig:ch3-range-compress}a). The chirp has a duration of $\tau \approx 37.12 \mu s$, a chirp slope $k$ of $4 \times 10^{11} Hz / s$, resulting in frequency bandwidth $BW = s \tau$ $\approx$15.5 MHz (Figure \ref{fig:ch3-range-compress}b). By correlating the transmitted chirp with its complex conjugate, we get the impulse response of a point scatter (Figure \ref{fig:ch3-range-compress}c). If a chirp with the same time duration had a smaller slope $s$ (Figure \ref{fig:ch3-range-compress}d), the bandwidth would shrink by the same proportion (Figure \ref{fig:ch3-range-compress}e), and the impulse response would also be more spread out (Figure \ref{fig:ch3-range-compress}f).
+Figure \ref{fig:ch3-range-compress} demonstrates the effect of using chirped waveforms on range resolution using an example chirp with parameters matching the ERS-1 satellite (Figure \ref{fig:ch3-range-compress}a).
+%The real part of an example chirp with parameters matching the ERS-1 satellite has an oscillation frequency which increases linearly over time (Figure \ref{fig:ch3-range-compress}a). 
+The chirp has a duration of $\tau \approx 37.12 \mu s$, a chirp slope $k$ of $4 \times 10^{11} Hz / s$, resulting in frequency bandwidth $BW = s \tau$ $\approx$15.5 MHz (Figure \ref{fig:ch3-range-compress}b). By correlating the transmitted chirp with its complex conjugate, we get the impulse response of a point scatter (Figure \ref{fig:ch3-range-compress}c). If a chirp with the same time duration had a smaller slope $s$ (Figure \ref{fig:ch3-range-compress}d), the bandwidth would shrink by the same proportion (Figure \ref{fig:ch3-range-compress}e), and the impulse response would also be more spread out (Figure \ref{fig:ch3-range-compress}f).
+Thus, we see that using chirped waveforms reverses the original problem, as a pulse with larger bandwidth actually has better resolution than a shorter pulse.
 
 
 \begin{figure}
@@ -132,15 +128,33 @@ Figure \ref{fig:ch3-range-compress} demonstrates the effect of bandwidth on rang
 	\includegraphics[width=0.99\linewidth]{figures/chapter3-sar/radar-chirp-bandwidth-ers.pdf}
 %		\includegraphics[width=0.99\linewidth]{figures/chapter3-sar/radar-chirp-bandwidth-ers2.pdf}
 	\caption[Range resolution from chirp compression]{
-		(a) The real part of a linear frequency-modulated chirp with. a duration of $\tau \approx 37.12 \mu s$, a chirp slope $k$ of $4 \times 10^{11} Hz / s$.
-		(b) The magnitude of the Fourier transform of the chirp is approximately a rectangle function with bandwidth $BW = k \tau$ $\approx$15.5 MHz.
-		(c) Correlation the transmitted chirp with a replica of the chirp yields the impulse response.
-		(d) For a chirp with the same time duration and half of the frequency bandwidth (e), the corresponding impulse response (f) is not as sharp, resulting in a worse range resolution.
+		(a) The real part of a linear frequency-modulated chirp with a duration of $\tau \approx 37.12 \mu s$ and a chirp slope $k = 4 \times 10^{11} Hz / s$.
+		(b) The magnitude of the Fourier transform of the chirp is approximately a rectangle function, which shows the chirp bandwidth $BW = k \tau$ $\approx 15.5$ MHz.
+		(c) Matched filtering of the returned echo from one point scatterer yields the impulse response, which shows the approximate 10 meters of range resolution (or $\sim$65 ns in time).
+		(d) For a chirp with the same slope $s$ and 1/3 the duration $\tau$ the frequency bandwidth is also cut by 1/3 (e), the corresponding impulse response (f) and range resolution is 3 times worse.
 	}
 	\label{fig:ch3-range-compress}
 \end{figure}
 
-The resolution in the azimuth direction is determined by
+
+In the azimuth direction, the size of the radar footprint determines which points can be distinguished on the ground from the return of one pulse. This footprint is determined by the antenna's angular beam width, which is $\lambda / L$ for a horn antenna, and the range $r$ to the target. The footprint size of $r \lambda / L$ is known as the \emph{real aperture radar} (RAR) resolution, and the earliest radar imaging platforms were limited to this resolution in azimuth. For an airborne platform with a 1 meter antenna imaging at C-band, this would be a $\sim$600 meter resolution. Note that for some current applications, such as military detection applications or wide-area ocean mapping \cite{Simons2007InterferometricSyntheticAperture}, this azimuth resolution is sufficient. However, the RAR resolution for spaceborne radars are on the order of 10s of kilometers, which is far too coarse for most applications.
+
+%
+%\begin{align}
+%\phi(t) &= \int 2 \pi f(t) dt \\
+%&= \pi k t^2 + 2 \pi f_c t + \phi_0
+%\end{align}
+%where $f_c$ is the center frequency of the chirp, and $\phi_0$ (which)
+%
+%Leave constant $\phi_0 = 0$
+%
+%Use this phase in a complex exponential:
+%$$
+%s(t) = \exp^{j * \phi(t)} \\
+%= \exp(j (\pi k t^2 + 2 \pi f_c t))
+%$$
+%for $t \in (-\tau/2, \tau/2)$.
+
 
 % in az, res is $r \lambda / l$, real aperture radar. build very big antenna, but infesible for spaceborne. The synthetic aperturre is a processing technique where, for each point on the ground, the refleted radar echoes are collected and focused to a point. Distinguish which echoes are from same point along the flight path by the doppler shift. The has the effect of building up a synthetic aperture equal to (twice?) the length of the swath length.
 % The phase history ends up forming a chirp, similar to the range, and can be focues using a matched filter.
@@ -149,9 +163,24 @@ The resolution in the azimuth direction is determined by
 %The advantages long wavelengths offer in terms of penetration come with compensating drawbacks. The resolution a sensor depends on the wavelength and on the size of its aperture—the mirror or lens in the case of a camera or a telescope, the antenna in a radar. If you lengthen the wavelength, you increase the size of the aperture you need in order to achieve a given resolution. To produce detailed images with radar requires a very large aperture indeed—far larger than anything a single spacecraft can offer.
 
 %> Synthetic-aperture radar (SAR) provides a way round that problem. Satellites move at quite a clip—typically, in low orbit, around 25,000kph. By taking all the echoes a radar satellite gets from a given target as it passes over it—and processing them into a single image, SAR produces a result as precise as if it had been made using a single aperture as wide across as the distance the satellite travelled while gathering the data—tens of hundreds of kilometres (see diagram).
+The resolution in azimuth can be greatly improved by creating a \emph{synthetic aperture}, which is a processing technique where, for each point on the ground, the reflected radar echoes are collected and coherently added to focus the image.
+%where the energy from a series of pulse returns from a point target is coherently added.
+
+Coherent processing is possible by carefully tracking each target's phase history, $ \phi(t) $, which is related to the range $r(t)$ by $\phi(t) = -4 \pi r(t)$.
+
+range-Doppler algorithm \cite{Wu1976DigitalSystemProduce, CummingDigitalProcessingSeasat} or backprojection algorithm in the time domain.
+
+%Processing all echoes coherently results in a fine resolution in the azimuth direction, which is equal to the resulting that would be attainable only by a real aperture of length $2 L_s$ \citep{Cumming2004DigitalProcessingSynthetic}.
+
+The phase of each return echo at a time $t$ is related to the range $r$ by $\phi(t) = -4 \pi r(t)$.
+By coherently adding all returned
+By keeping track of the range to each point
 
 
-Processing all echoes during this time results in a fine resolution in the azimuth direction, which is equal to the resulting that would be attainable only by a real aperture of length $2 L_s$ \citep{Cumming2004DigitalProcessingSynthetic}.
+\begin{equation}
+	\delta_{az} = \frac{L}{2}
+\end{equation}
+The intuition behind this surprising result is that, unlike with RAR, a smaller physical antenna size $L$ leads to a wider beam width $\lambda / L$. This means means the same target is illuminated for a longer time and has more pulses to coherently process. Thus, the azimuth resolution will actually improve with a smaller antenna length.
 
 \begin{figure}
 	\centering
