@@ -151,19 +151,23 @@ RDA uses the apparent shift in Doppler frequency due to the platform motion to c
 %RDA is a frequency-domain algorithm, since it converts the phase history 
 %Which converts the range-compressed data into the frequency domain. 
 An alternative to RDA is time-domain backprojection \citep{Duersch2013BackprojectionSyntheticAperture}, which provides a more exact phase compensation at the cost of being more computationally expensive.
-The backproject algorithm collects the energy from every radar pulse containing a pixel after compensating for the range-dependent phase.
+The backprojection algorithm collects the energy from every radar pulse containing a pixel after compensating for the range-dependent phase.
 The complex-valued radar image $I$ for the pixel at location $ (x, y) $ can be formed by summing over all pulses:
 \begin{equation}
-	I(x, y) = \sum_{k} s(r(x, y, k)) \exp[-j \frac{4 \pi}{\lambda} r(x, y, k)]
+	I(x, y) = \sum_{k} s(r(x, y, k)) e^{-j \frac{4 \pi}{\lambda} r(x, y, k)}
 \end{equation}
-where $r(x, y, k)$ is the range distance from the radar sensor to the point $ (x, y) $ at the time of the $k$th pulse, and $s(r)$ is the value of the returned pulse at the given range \citep{Zebker2018InsarMissionLevel}.
-Thus, if the radar imaging geometry is known precisely, the coherent summation can be performed to focus the SAR image and achieve a final azimuth resolution of
+where $j = \sqrt{-1}$, $r(x, y, k)$ is the range distance from the radar sensor to the point $ (x, y) $ at the time of the $k$th pulse, and $s(r)$ is the value of the returned pulse at the given range \citep{Zebker2018InsarMissionLevel}.
+Thus, if the radar imaging geometry is known precisely, the coherent summation can be performed to focus the SAR image.
+
+For any of the image formation methods, the final achievable azimuth resolution $\delta_{az}$ is
 %Processing all echoes coherently results in a fine resolution in the azimuth direction, which is equal to the resulting that would be attainable only by a real aperture of length $2 L_s$ \citep{Cumming2004DigitalProcessingSynthetic}.
 %The phase of each return echo at a time $t$ is related to the range $r$ by $\phi(t) = -\frac{4 \pi}{\lambda} r(t)$.
 \begin{equation}
 	\delta_{az} = \frac{L}{2}
 \end{equation}
-The intuition behind this surprising result is that, unlike with RAR, a smaller physical antenna size $L$ leads to a wider beam width $\lambda / L$. This means means the same target is illuminated for a longer time and has more pulses to coherently process. Thus, the azimuth resolution will actually improve with a smaller antenna length.
+Note the this final resolution is independent of wavelength, range or platform speed,
+Normal spaceborne satellites have antennas on the order of 5-10 meters, resulting in a $\delta_{az} $ between 2.5-5 meters.
+The intuition behind this surprising result is that, unlike with RAR, a smaller physical antenna size $L$ leads to a wider angular beam width $ \lambda / L$. This means that a given target is illuminated for a longer time, leading to a greater number of pulses to coherently process. Thus, the azimuth resolution will actually improve with a smaller antenna size.
 
 \begin{figure}
 	\centering
@@ -178,17 +182,22 @@ The intuition behind this surprising result is that, unlike with RAR, a smaller 
 
 
 
-\section{InSAR Principles}
+\section{SAR Interferometry}
 
+SAR interferometry (or InSAR) refers to a broad class of applications that exploit the phase difference between two SAR images to derive new information; the most common applications are generating topography maps \cite{Graham1974SyntheticInterferometerRadar, Zebker1986TopographicMappingInterferometric, Gabriel1989MappingSmallElevation} and detecting surface deformation (\cite{Li1990StudiesMultibaselineSpaceborne, Massonnet1993DisplacementFieldLanders, Rosen2000SyntheticApertureRadar}). For topography mapping, two SAR antennas separated by a distance in the across-track direction are operating simultaneously (Figure \ref{fig:ch3-insar-geometry}a). The baseline causes the two radars to view the same point on the ground with a slight change in angle, which causes a difference in phase.
+This phase difference is related to a geometrical path difference between the two radars which changes with topography. Thus, with precise knowledge of the viewing geometry, the phase can be converted to an altitude for each point in the SAR images 
+The phase difference can be thought of as a third measurement, in addition to the location in the azimuth and range directions, that allows a reconstruction of the 3D location of the point \cite{Simons2007InterferometricSyntheticAperture}.
 
-Possible ways to introduce phase:
-
-- Do the InSAR geometry, get phase measure has diff of 2 phases.
-- Fringe frequency, but measure "flat earth", subtract that, leads to topography.
-%−2πa + φflat + φtopo + noises
-
-OR
-- ...
+In repeat-pass InSAR (sometimes called \emph{differential} InSAR, or DInSAR), the same radar platform flies over an area and acquires a SAR images at two different times $t_1$ and $t_2$. Figure \ref{fig:ch3-insar-geometry}b). Assuming that the topography is known and can be removed from the phase measurement, the InSAR phase measures and changes to the ground between times $t_1$ and $t_2$.
+%
+%Possible ways to introduce phase:
+%
+%- Do the InSAR geometry, get phase measure has diff of 2 phases.
+%- Fringe frequency, but measure "flat earth", subtract that, leads to topography.
+%%−2πa + φflat + φtopo + noises
+%
+%OR
+%- ...
 
 
 \begin{figure}[hbt!]
