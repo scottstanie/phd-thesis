@@ -48,8 +48,7 @@ Since that time, there have been dozens of mission launched by various space age
 
 Figure \ref{fig:ch3-sar-missions} shows a timeline of SAR missions that have been launched by governments and space agencies since 1990. The missions are grouped vertically into the three most commonly used frequency bands for SAR sensors in earth-observing missions: L-band (wavelengths of $\sim$24 cm), C-band ($\sim$6 cm cm) and X-band ($\sim$3 cm).
 During the 90s, the European Space Agency (ESA) launched two C-band SAR satellites: ERS-1 in 1991 and ERS-2 in 1995. The ERS-1 satellite provided the first practical demonstration of spaceborne InSAR's ability to capture surface deformation
-when \cite{Massonnet1993DisplacementFieldLanders} mapped the  surface deformationn pattern caused by the 1992 Landers, California earthquake. The first L-band SAR satellite, JERS-1, was launched by NASDA\footnote{Although JERS-1 is labeled as a JAXA mission in Figure \ref{fig:ch3-sar-missions}, it was run by NASDA at the time. In 2003, NASDA merged with two other Japanese space agencies, ISAS and NAL, to form JAXA.} in 1992, and the Canadian Space Agency (CSA) launched their own C-band mission, RADARSAT-1, in 1995.
-
+when \cite{Massonnet1993DisplacementFieldLanders} mapped the  surface deformationn pattern caused by the 1992 Landers, California earthquake. The first L-band SAR satellite, JERS-1, was launched by NASDA\footnote{Although JERS-1 is labeled as a JAXA mission in Figure \ref{fig:ch3-sar-missions}, it was run by NASDA at the time. In 2003, NASDA merged with two other Japanese space agencies, ISAS and NAL, to form JAXA.} in 1992, and the Canadian Space Agency (CSA) launched their own C-band mission, RADARSAT-1, in 1995. In 2000, NASA flew the 11-day Shuttle Radar Topography Mission (SRTM) to generate the first high-resolution near-global topographical map of Earth \citep{Farr2007ShuttleRadarTopography}.
 
 The most influential SAR mission within the science community has been Sentinel-1 \citep{Torres2012GmesSentinel1}. First launched in 2014, the Sentinel-1 satellites acquire data using an imaging mode that allow them to image very large swaths ($\sim$240 km wide in the interferometry mode) \cite{Zan2006TopsarTerrainObservation}, allowing them revisit any point on Earth every 12 days. 
 Additionally, Sentinel is the first mission of it's kind to provide it's data for free, leading to a transition from using SAR and InSAR in opportunistic experiments to being able to operationally monitor nearly anywhere on Earth  \cite{Rosen2021ShiftingGround}.
@@ -83,7 +82,9 @@ Synthetic aperture radar is an imaging technique that uses a pulsed radar mounte
 %To create a radar image, the energy scattered by points on the ground must be collected and focused in two dimensions.  The image represents the electrical and geometrical properties of the scene \cite{Simons2007InterferometricSyntheticAperture} 
 
 
-The SAR imaging geometry is shown in Figure \ref{fig:ch3-sar-geometry}. A side-looking radar on a platform at height $h$ moves in the azimuth directory $x$ at a velocity $v$.  The radar repeatedly emits pulses at some interval (called the \emph{pulse repetition interval}, or PRI) that travel in the range direction.
+The SAR imaging geometry is shown in Figure \ref{fig:ch3-sar-geometry}. A side-looking radar on a platform 
+%at height $h$ 
+moves in the azimuth directory and repeatedly emits pulses at some interval (called the \emph{pulse repetition interval}, or PRI) that travel in the range direction.
 %The illuminated portion of the ground has a swath width of $r \lambda / w$
 %The width of the swath for stripmap operation is controlled by the antenna width, $w$, as $r \lambda / w$. Likewise, the size of the illuminated swath in the along track direction is $r \lambda / L$.
 The line of sight (LOS) vector is defined as the unit vector pointing from the radar antenna to a point in the illuminated ground swath.
@@ -93,7 +94,10 @@ Each pulses illuminates a portion of the ground, known as the radar footprint.
 \begin{figure}
 	\centering
 		\includegraphics[width=0.99\linewidth]{figures/chapter3-sar/ch3-sar-geometry.pdf}
-	\caption[Acquisition geometry of an imaging radar]{Acquisition geometry of an  imaging radar. A platform containing a radar instrument is moving with speed $v$ in the azimuth/along-track direction, $x$ at a height $h$.
+	\caption[Acquisition geometry of an imaging radar]{Acquisition geometry of an  imaging radar. A platform containing a radar instrument is moving 
+%		with speed $v$ 
+in the azimuth/along-track direction.
+%		 at a height $h$.
     The slant range $r$ to the ground point is measured along the line-of-sight (LOS) direction from the antenna to the ground.
    	The radar antenna here has length $L$ (in the azimuth direction) and width $w$.
    	As the radar sends out pulses, each one into an area on the ground called the beam ``footprint'' (oval shape). 
@@ -116,9 +120,9 @@ These special waveforms allow the receiver to correlate the returned echoes with
 improves the range resolution to $\delta_r = \frac{c}{2 BW}$, where is the frequency bandwidth of the chirp. 
 
 
-Figure \ref{fig:ch3-range-compress} demonstrates the effect of using chirped waveforms on range resolution using an example chirp with parameters matching the ERS-1 satellite (Figure \ref{fig:ch3-range-compress}a).
+Figure \ref{fig:ch3-range-compress} demonstrates the effect of using a chirp waveform on range resolution. An example chirp with parameters matching the ERS-1 satellite (Figure \ref{fig:ch3-range-compress}a)
 %The real part of an example chirp with parameters matching the ERS-1 satellite has an oscillation frequency which increases linearly over time (Figure \ref{fig:ch3-range-compress}a). 
-The chirp has a duration of $\tau \approx 37.12 \mu s$, a chirp slope $k$ of $4 \times 10^{11} Hz / s$, resulting in frequency bandwidth $BW = k \tau$ $\approx$15.5 MHz (Figure \ref{fig:ch3-range-compress}b). By correlating the transmitted chirp with its complex conjugate, we get the impulse response of a point scatter (Figure \ref{fig:ch3-range-compress}c). If a chirp with the same time duration had a smaller slope $k$ (Figure \ref{fig:ch3-range-compress}d), the bandwidth would shrink by the same proportion (Figure \ref{fig:ch3-range-compress}e), and the impulse response would also be more spread out (Figure \ref{fig:ch3-range-compress}f).
+has a duration of $\tau \approx 37.12 \mu s$ and chirp slope $k = 4 \times 10^{11} Hz / s$, resulting in frequency bandwidth $BW = k \tau$ $\approx$15.5 MHz (Figure \ref{fig:ch3-range-compress}b). By correlating the transmitted chirp with its complex conjugate, we get the impulse response of a point scatter (Figure \ref{fig:ch3-range-compress}c). If a chirp with the same time duration had a smaller slope $k$ (Figure \ref{fig:ch3-range-compress}d), the bandwidth would shrink by the same proportion (Figure \ref{fig:ch3-range-compress}e), and the impulse response would also be more spread out (Figure \ref{fig:ch3-range-compress}f).
 Thus, we see that using chirped waveforms reverses the original problem, as a pulse with larger bandwidth actually has better resolution than a shorter pulse.
 
 
@@ -142,6 +146,19 @@ In the azimuth direction, the size of the radar footprint determines which groun
 
 %The advantages long wavelengths offer in terms of penetration come with compensating drawbacks. The resolution a sensor depends on the wavelength and on the size of its aperture—the mirror or lens in the case of a camera or a telescope, the antenna in a radar. If you lengthen the wavelength, you increase the size of the aperture you need in order to achieve a given resolution. To produce detailed images with radar requires a very large aperture indeed—far larger than anything a single spacecraft can offer.
 
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\linewidth]{figures/chapter3-sar/ch3-synth-aper2.pdf}
+	\includegraphics[width=0.99\linewidth]{figures/chapter3-sar/ch3-sar-synthetic-aperture.pdf}
+	\caption[Concept of the synthetic aperture ]{Concept of the synthetic aperture.
+		(Top) One point on the ground is illuminated by a series of pulses. Pictured here are the footprints of the first and last pulses that illuminate the point. 
+		(Bottom) Side view of the pulses illuminating the target, forming a synthetic aperture of length $L_s$.
+	}
+	\label{fig:ch3-synth-aper}
+\end{figure}
+
+
 %> Synthetic-aperture radar (SAR) provides a way round that problem. Satellites move at quite a clip—typically, in low orbit, around 25,000kph. By taking all the echoes a radar satellite gets from a given target as it passes over it—and processing them into a single image, SAR produces a result as precise as if it had been made using a single aperture as wide across as the distance the satellite travelled while gathering the data—tens of hundreds of kilometres (see diagram).
 The resolution in azimuth can be greatly improved by creating a \emph{synthetic aperture}, which is a technique that processes the reflected echoes coherently (i.e. using both magnitude and phase) to focus the image (Figure \ref{fig:ch3-synth-aper}).
 %where the energy from a series of pulse returns from a point target is coherently added.
@@ -151,44 +168,56 @@ RDA uses the apparent shift in Doppler frequency due to the platform motion to c
 %RDA is a frequency-domain algorithm, since it converts the phase history 
 %Which converts the range-compressed data into the frequency domain. 
 An alternative to RDA is time-domain backprojection \citep{Duersch2013BackprojectionSyntheticAperture}, which provides a more exact phase compensation at the cost of being more computationally expensive.
-The backprojection algorithm collects the energy from every radar pulse containing a pixel after compensating for the range-dependent phase.
-The complex-valued radar image $I$ for the pixel at location $ (x, y) $ can be formed by summing over all pulses:
+The backprojection algorithm collects the energy from every radar pulse containing a pixel and compensates for the range-dependent phase.
+%To focus an image in azimuth using backprojection,
+The complex-valued radar image $I$ at pixel location $ (x, y) $ can be formed by summing over all pulses and compensating for a range-dependent phase term:
 \begin{equation}
-	I(x, y) = \sum_{k} s(r(x, y, k)) e^{-j \frac{4 \pi}{\lambda} r(x, y, k)}
+	I(x, y) = \sum_{k} s_k \left(t_k \right) e^{-j \frac{4 \pi}{\lambda} r_k(x, y)}
 \end{equation}
-where $j = \sqrt{-1}$, $r(x, y, k)$ is the range distance from the radar sensor to the point $ (x, y) $ at the time of the $k$th pulse, and $s(r)$ is the value of the returned pulse at the given range \citep{Zebker2018InsarMissionLevel}.
-Thus, if the radar imaging geometry is known precisely, the coherent summation can be performed to focus the SAR image.
+where $j = \sqrt{-1}$, $r_k(x, y)$ is the range distance from the radar sensor to the point $ (x, y) $ at the time of the $k$th pulse, $s_k(t_k)$ is the value of the $k$th range-compressed pulse at time $t_k = r_k(x, y) / c$, and $c$ is the speed of light \citep{Zebker2018InsarMissionLevel}.
+Thus, if the radar imaging geometry is known precisely so that $r_k$ can be computed for all pulses, the coherent summation can be performed for each pixel to focus the SAR image.
 
-For any of the image formation methods, the final achievable azimuth resolution $\delta_{az}$ is
+For all image formation methods, the final achievable azimuth resolution $\delta_{az}$ is
 %Processing all echoes coherently results in a fine resolution in the azimuth direction, which is equal to the resulting that would be attainable only by a real aperture of length $2 L_s$ \citep{Cumming2004DigitalProcessingSynthetic}.
 %The phase of each return echo at a time $t$ is related to the range $r$ by $\phi(t) = -\frac{4 \pi}{\lambda} r(t)$.
 \begin{equation}
 	\delta_{az} = \frac{L}{2}
 \end{equation}
-Note the this final resolution is independent of wavelength, range or platform speed,
+where $L$ is the physical antenna length in the azimuth direction.
+%Note the this final resolution is independent of wavelength, range or platform speed.
 Normal spaceborne satellites have antennas on the order of 5-10 meters, resulting in a $\delta_{az} $ between 2.5-5 meters.
 The intuition behind this surprising result is that, unlike with RAR, a smaller physical antenna size $L$ leads to a wider angular beam width $ \lambda / L$. This means that a given target is illuminated for a longer time, leading to a greater number of pulses to coherently process. Thus, the azimuth resolution will actually improve with a smaller antenna size.
-
-\begin{figure}
-	\centering
-	\includegraphics[width=0.8\linewidth]{figures/chapter3-sar/ch3-synth-aper2.pdf}
-	\includegraphics[width=0.99\linewidth]{figures/chapter3-sar/ch3-sar-synthetic-aperture.pdf}
-	\caption[Concept of the synthetic aperture ]{Concept of the synthetic aperture.
-	(Top) One point on the ground is illuminated by a series of pulses. Pictured here are the footprints of the first and last pulses that illuminate the point. 
-	(Bottom) Side view of the pulses illuminating the target, forming a synthetic aperture of length $L_s$.
-	}
-	\label{fig:ch3-synth-aper}
-\end{figure}
 
 
 
 \section{SAR Interferometry}
 
-SAR interferometry (or InSAR) refers to a broad class of applications that exploit the phase difference between two SAR images to derive new information; the most common applications are generating topography maps \cite{Graham1974SyntheticInterferometerRadar, Zebker1986TopographicMappingInterferometric, Gabriel1989MappingSmallElevation} and detecting surface deformation (\cite{Li1990StudiesMultibaselineSpaceborne, Massonnet1993DisplacementFieldLanders, Rosen2000SyntheticApertureRadar}). For topography mapping, two SAR antennas separated by a distance in the across-track direction are operating simultaneously (Figure \ref{fig:ch3-insar-geometry}a). The baseline causes the two radars to view the same point on the ground with a slight change in angle, which causes a difference in phase.
-This phase difference is related to a geometrical path difference between the two radars which changes with topography. Thus, with precise knowledge of the viewing geometry, the phase can be converted to an altitude for each point in the SAR images 
-The phase difference can be thought of as a third measurement, in addition to the location in the azimuth and range directions, that allows a reconstruction of the 3D location of the point \cite{Simons2007InterferometricSyntheticAperture}.
+Interferometric synthetic aperture radar (InSAR) refers to a broad class of applications that exploit the phase difference between two SAR images to obtain extra information beyond the 2D locations of points \citep{Bamler1998SyntheticApertureRadar}. The most common applications are generating topography maps \citep{Graham1974SyntheticInterferometerRadar, Zebker1986TopographicMappingInterferometric} and mapping surface deformation \citep{Goldstein1987InterferometricRadarMeasurement, Gabriel1989MappingSmallElevation, Li1990StudiesMultibaselineSpaceborne, Massonnet1993DisplacementFieldLanders, Rosen2000SyntheticApertureRadar}. For topography mapping, two SAR antennas separated by a distance in the across-track direction acquire images either simultaneously or at different times under the assumption that no ground deformation has occurred (Figure \ref{fig:ch3-insar-geometry-topo}). The baseline causes the two radars to view the same point on the ground with a slight change in angle, causing a difference in phase.
+This phase difference, $\Delta \phi$, is related to a difference in the geometrical path length between the two radars: $\Delta \phi = \frac{-4 \pi}{\lambda}(r_1 - 2_2)$. A different measured phase occurs when viewing flat Earth (Figure \ref{fig:ch3-insar-geometry-topo}a) vs. topography (Figure \ref{fig:ch3-insar-geometry-topo}b). Thus, with precise knowledge of the viewing geometry, the phase can be converted to an altitude for each point in the SAR images \cite{Simons2007InterferometricSyntheticAperture}. 
+%Note that the phase difference can be thought of as a third measurement (in addition to the location in the azimuth and range directions) that allows a reconstruction of the 3D location of each image point \cite{Simons2007InterferometricSyntheticAperture}.
 
-In repeat-pass InSAR (sometimes called \emph{differential} InSAR, or DInSAR), the same radar platform flies over an area and acquires a SAR images at two different times $t_1$ and $t_2$. Figure \ref{fig:ch3-insar-geometry}b). Assuming that the topography is known and can be removed from the phase measurement, the InSAR phase measures and changes to the ground between times $t_1$ and $t_2$.
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.99\linewidth]{figures/chapter3-sar/ch3-insar-geometry-topo.pdf}
+	\caption[InSAR imaging geometry for topography mapping]{InSAR imaging geometry for topography mapping.
+		(a) Two SAR images, $S_1$ and $S_2$, are acquired with a slight separation, resulting in a different geometric path length to each ground point, $r_1$ and $r_2$.
+	}
+	\label{fig:ch3-insar-geometry-topo}
+\end{figure}
+
+
+
+
+In repeat-pass InSAR (sometimes called \emph{differential} InSAR, or DInSAR), the same radar platform flies over an area and acquires a SAR images at two different times $t_1$ and $t_2$ (Figure \ref{fig:ch3-insar-geometry-defo}). Assuming that the topography is known and can be removed from the phase measurement, the InSAR phase measures range change,  $r_2 - r_1$ between the two times. In the repeat pass setup, a small spatial baseline between the satellite at the two times is desired, while the topography application is more sensitive when the baseline is larger.
+
+
+\begin{equation}
+	z_{1,2} = S_1 S_2^{*} = |S_1||S_2| e^{\phi_2 - \phi_1}
+\end{equation}
+where $S_k = |S_k| e^{-j 4 \pi / \lambda r_k}$
+
 %
 %Possible ways to introduce phase:
 %
@@ -200,13 +229,14 @@ In repeat-pass InSAR (sometimes called \emph{differential} InSAR, or DInSAR), th
 %- ...
 
 
-\begin{figure}[hbt!]
+\begin{figure}
 	\centering
-	% TODO
-	%	\includegraphics[width=0.99\linewidth]{figures/ch3-sar-geometry.pdf}
-	\caption{InSAR imaging geometry for topography or deformation mapping.
+	\includegraphics[width=0.99\linewidth]{figures/chapter3-sar/ch3-insar-geometry-defo.pdf}
+%	\includegraphics[width=0.99\linewidth]{figures/chapter3-sar/ch3-insar-geometry-defo-2col.pdf}
+	\caption[InSAR imaging geometry for deformation mapping]{InSAR imaging geometry for deformation mapping.
+		(a) Two SAR images, $S_1$ and $S_2$, are acquired at different times, before and after a ground deformation event. The change in range between times $t_1$ and $t_2$ results in a measured phase change $\Delta \phi =  \frac{-4 \pi}{\lambda}(r_2 - r_1)$.
 	}
-	\label{fig:ch3-insar-geometry}
+	\label{fig:ch3-insar-geometry-defo}
 \end{figure}
 
 
