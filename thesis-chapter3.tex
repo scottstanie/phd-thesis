@@ -159,20 +159,21 @@ In the azimuth direction, the size of the radar footprint determines which groun
 
 
 The resolution in azimuth is greatly improved by creating a \emph{synthetic aperture}, which is a technique that processes the reflected echoes coherently (i.e. using both magnitude and phase) to focus the image (Figure \ref{fig:ch3-synth-aper}).
-Coherent processing is possible by carefully tracking each target's phase history, $ \phi(t) $, which is related to the range to the target $r(t)$ by $\phi(t) = -\frac{4 \pi}{\lambda} r(t)$.
+Coherent processing is possible by carefully tracking each target's phase history, $ \phi(t) $, which is related to the range to the target $r(t)$ by $\phi(t) = \frac{4 \pi}{\lambda} r(t)$.
 There are multiple image formation algorithms which create this synthetic aperture and use the phase history. One of the first developed and most widely today used is the range-Doppler algorithm (RDA) \citep{Wu1976DigitalSystemProduce, Cumming1979DigitalProcessingSeasat}. 
-RDA uses the apparent shift in Doppler frequency due to the platform motion to create a matched filter in azimuth, similar to the matched filter used for range compression.
+RDA uses the apparent shift in Doppler frequency due to the platform motion to create a matched filter in azimuth, similar to the matched filter used for range compression \cite{Cumming2004DigitalProcessingSynthetic}.
 %RDA is a frequency-domain algorithm, since it converts the phase history 
 %Which converts the range-compressed data into the frequency domain. 
 An alternative to RDA is time-domain backprojection \citep{Duersch2013BackprojectionSyntheticAperture}, which provides a more exact phase compensation at the cost of being more computationally expensive.
 The backprojection algorithm collects the energy from every radar pulse containing a pixel and compensates for the range-dependent phase.
 %To focus an image in azimuth using backprojection,
-The complex-valued radar image $S$ (also known as a \emph{single-look complex} image, or SLC) at pixel location $ (x, y) $ can be formed by summing over all pulses and applying for a range-dependent phase term:
+The complex-valued radar image $S$ (also known as a \emph{single-look complex} image, or SLC) at pixel location $ (x, y) $ can be formed by summing over all pulses and applying for a range-dependent term to cancel the propagation phase:
 \begin{equation}
 	S(x, y) = \sum_{k} s_k \left(t_k \right) e^{j \frac{4 \pi}{\lambda} r_k(x, y)}
 \end{equation}
 where $j = \sqrt{-1}$, $r_k(x, y)$ is the range distance from the radar sensor to the point $ (x, y) $ at the time of the $k$th pulse, $s_k(t_k)$ is the value of the $k$th range-compressed pulse at time $t_k = r_k(x, y) / c$, and $c$ is the speed of light \citep{Zebker2018InsarMissionLevel}.
-Thus, if the radar imaging geometry is known precisely so that $r_k$ can be computed for all pulses, the coherent summation can be performed for each pixel to focus the SAR image.
+%While computationally expansive, backprojection has become more common recently due to advances in computing hardware and 
+If the radar imaging geometry is known precisely so that $r_k$ can be computed for all pulses, the coherent summation can be performed for each pixel to focus the SAR image.
 
 For all image formation methods, the final achievable azimuth resolution $\delta_{az}$ is
 %Processing all echoes coherently results in a fine resolution in the azimuth direction, which is equal to the resulting that would be attainable only by a real aperture of length $2 L_s$ \citep{Cumming2004DigitalProcessingSynthetic}.
@@ -190,9 +191,9 @@ The intuition behind this surprising result is that, unlike with RAR, a smaller 
 \section{SAR Interferometry}
 
 Interferometric synthetic aperture radar (InSAR) refers to a broad class of applications that exploit the phase difference between two SAR images to obtain extra information beyond the 2D locations of points \citep{Bamler1998SyntheticApertureRadar}. The most common applications are generating topography maps \citep{Graham1974SyntheticInterferometerRadar, Zebker1986TopographicMappingInterferometric} and mapping surface deformation \citep{Goldstein1987InterferometricRadarMeasurement, Gabriel1989MappingSmallElevation, Li1990StudiesMultibaselineSpaceborne, Massonnet1993DisplacementFieldLanders, Rosen2000SyntheticApertureRadar}. 
-The InSAR measurement is made after precisely coregistering two SLC images $S_1$ and $S_2$. The phase measurement $I_{1,2}$ is formed by multiplying the first SLC $S_1$ by the complex conjugate of the second $S_2$: 
+The InSAR measurement is made after precisely coregistering and resampling two SLC images $S_1$ and $S_2$ to the same coordinates. The phase measurement $I_{1,2}$ is formed by multiplying the first SLC $S_1$ by the complex conjugate of the second $S_2$: 
 \begin{equation}
-	I_{1,2} = S_1 S_2^{*} = A_1 A_2 e^{\phi_1 - \phi_2}  \label{eq:insar-conj-mult}
+	I_{1,2} = S_1 S_2^{*} = A_1 A_2 e^{j \left(\phi_1 - \phi_2 \right)}  \label{eq:insar-conj-mult}
 \end{equation}
 where $S_k = A_k e^{j \phi_k}$, $A_k$ is the amplitude of the $k$th image, and the phase $\phi_k = -\frac{4 \pi}{\lambda} r_k$. The image $I$ is called an \emph{interferogram},  and the quantity $\Delta \phi = \phi_1 - \phi_2$ is the interferometric phase.
 
@@ -217,17 +218,13 @@ This means that $\Delta \phi$ changes based on whether the satellites are viewin
 \end{figure}
 
 
-In repeat-pass InSAR (sometimes called \emph{differential} InSAR, or DInSAR), a radar platform acquires two SAR images over an area acquired at different times, $t_1$ and $t_2$ (Figure \ref{fig:ch3-insar-geometry-defo}). Assuming that the topography is known and can be removed from the phase measurement, the remaining InSAR phase $\Delta \phi$ at each pixel measures the change in range $r_2 - r_1$ between the two times:
+In repeat-pass InSAR (sometimes called \emph{differential} InSAR, or DInSAR), a radar platform acquires two SAR images over an area acquired at different times, $t_1$ and $t_2$ (Figure \ref{fig:ch3-insar-geometry-defo}). Assuming that the topography is known and can be removed from the phase measurement, the remaining InSAR phase at each pixel measures the change in range along the radar LOS direction:
 \begin{equation}
 	\Delta \phi = \frac{4 \pi}{\lambda}(r_2 - r_1)   \label{eq:insar-phase}
 \end{equation} 
 %In the repeat pass setup, a small spatial baseline between the satellite at the two times is desired, while the topographic mapping application is more sensitive when the baseline is larger.
-Since the measurement uses the phase of the propagated waves, it is wrapped between $0$ and $2\pi$;
-% the measurement contains some unknown number of cycles between the radar platform and surface, but the absolute number of cycles is not known.
-%two dimensional phase unwrapping must be performed to convert this measurement to a 
-the $2\pi$ ambiguities must be resolved using \emph{phase unwrapping} to obtain the whole phase at each point
-\cite{Goldstein1988SatelliteRadarInterferometry, Chen2001TwoDimensionalPhase}.
-However, the absolute number of $2\pi$ cycles from the ground to satellite is not known, which means an unwrapped interferogram represents the surface deformation relative to some point which is assumed to be constant.
+Since the measurement uses the phase of the propagated radar waves, it is only known modulo $0$ and $2\pi$; the process of obtaining the full continuous phase is known as \emph{phase unwrapping}
+\cite{Goldstein1988SatelliteRadarInterferometry, Chen2001TwoDimensionalPhase}. Note that even after phase unwrapping, the absolute number of $2\pi$ cycles from the radar to the ground is not known; thus, an unwrapped interferogram represents the surface deformation relative to some point which is assumed to be constant.
 Additionally, the description of the interferometric phase in Equation \eqref{eq:insar-phase} assumes no noise; in reality there are numerous noise sources which affect either the phase of an individual SAR acquisition phases or the phase difference between a pair of images.
 
 % Coherence?
@@ -251,21 +248,49 @@ Additionally, the description of the interferometric phase in Equation \eqref{eq
 %(maybe systematic for DEM/orbital,)
 %thermal noise
 %
-The phase of an interferogram can be written as
-\citep{Zebker1992DecorrelationInterferometricRadar, Zebker1994AccuracyTopographicMaps, Zebker1997AtmosphericEffectsInterferometric}
+After removing phase contributions from topography and satellite geometry, the phase each pixel in an interferogram can be written as:
+%\citep{Zebker1992DecorrelationInterferometricRadar, Zebker1994AccuracyTopographicMaps, Zebker1997AtmosphericEffectsInterferometric, Hooper2006PersistentScatterRadar, Agram2010PersistentScattererInterferometry}
 \begin{equation}
-	\Delta \phi = \frac{4 \pi}{\lambda} (r_2 - r_1) +  \Delta \phi_{orb} + \Delta \phi_{decor} + \Delta \phi_{unwrap}  + \Delta \phi_{dem} + \Delta \phi_{iono} + \Delta \phi_{tropo}  + \Delta \phi_{n}
+	\Delta \phi = \frac{4 \pi}{\lambda} \Delta_r +  \Delta \phi_{orb} + \Delta \phi_{dem} + \Delta \phi_{decor} + \Delta \phi_{unwrap} + \Delta \phi_{iono} + \Delta \phi_{tropo}  + \Delta \phi_{n}  
+%	\Delta \phi = \frac{4 \pi}{\lambda} \Delta_r +  \Delta \phi_{orb} +  \Delta \phi_{orb} +  \Delta \phi_{atmo} + \Delta \phi_{decor} + \Delta \phi_{n}  
+	\label{eq:noise-terms}
 \end{equation}
-where $ \lambda $ is the radar wavelength and $ \Delta d_{LOS} $ is the surface deformation along the radar LOS direction. The noise terms include orbital errors, phase decorrelation, unwrapping errors, DEM inaccuracies, ionospheric and tropospheric artifacts, and other residual noise terms that are typically an order of magnitude smaller than the error terms listed here.
+where $ \lambda $ is the radar wavelength and $ \Delta r $ is the surface deformation along the radar LOS direction. 
+
+%The noise terms are summarized in Table \ref{tab:ch3-noises}.
+The first two terms, $ \Delta \phi_{orb} $ and $ \Delta \phi_{dem} $, represent systematic errors resulting from imprecise knowledge of the platform's orbital position or topographic height. Orbital errors usually appear as a planar phase ramp in stripmap acquisitions, and were commonly encountered for ERS-1 or ENVISAT data; however they rately appear in Sentinel-1 data due to it's high precision orbit determination \cite{Fattahi2014InsarUncertaintyDue}. Errors in the DEM result in an incorrect topograph phase removal and create a spatial baseline-dependent phase error \cite{Fattahi2013DemErrorCorrection}. These errors are generally in Sentinel-1 data due to the tight control of the repeat orbit tube.
+%Here the noise terms here are divided into systematic errors, $ \Delta \phi_{sys} $, atmospheric propagation effects, $ \Delta \phi_{sys} $, phase decorrelation noise, $ \Delta \phi_{decor} $, and other smaller residual noise terms including thermal noise, $ \Delta \phi_{n} $.
+
+Decorrelation errors, $ \Delta \phi_{decor} $, arise from a loss of coherence of the phase between $S_1$ and $S_2$ \cite{Zebker1992DecorrelationInterferometricRadar}. 
+The correlation can be estimated from the complex coherence $\gamma $ of the interferogram \cite{Bamler1998SyntheticApertureRadar}
+\begin{equation}
+	\gamma = \frac{\left\langle S_1 S_2* \right\rangle }{\sqrt{\left\langle S_1 S_1* \right\rangle^2 \left\langle S_2 S_2* \right\rangle^2}}
+\end{equation}
+where $ \left\langle \cdot \right\rangle  $ denotes an ensemble average, which, in practice, is estimated using an average of pixels over some spatial window.
+The magnitude of this quantity $ \rho = |\gamma | $ is called the \emph{correlation} (or sometimes called the coherence), and ranges from $ 0 $, indicating a complete loss of signal coherence, to $ 1 $, indicating perfectly correlated radar echoes.
+When the correlation is very low, the phase unwrapping processing may fail and produce patches of pixels which have $2 \pi$ offsets from the correct value. These are known as phase unwrapping errors, $ \Delta \phi_{unwrap}  $.
+
+% include orbital errors, phase decorrelation, unwrapping errors, DEM inaccuracies, ionospheric and tropospheric artifacts,
+% and other residual noise terms that are typically an order of magnitude smaller than the error terms listed here.
+%\begin{table}
+%\begin{longtable}[]{@{}llcc@{}}
+%	\toprule
+%	Noise Symbol & Name & InSAR or SAR & asdf\tabularnewline
+%	\midrule
+%	\endhead
+%	\phi_{orb} & & &\tabularnewline
+%	\bottomrule
+%\end{longtable}
+%\end{table}
 
 
+%\subsection{Anatomy of an Interferogram}
 
-\subsection{Anatomy of an Interferogram}
-
-While high signal to noise ratio (SNR) interferograms can be analyzed by simply ``counting the fringes'', as is the case for the first published Landers earthquake \cite{Massonnet1993DisplacementFieldLanders}, this is often the exception, rather than the rule.
-In many cases, a single interferogram will contain more visual noise features than signals, making it difficult for a non-expert InSAR user to interpret. 
-
-Hawaii example
+In high signal to noise ratio (SNR) interferograms (e.g. for large magnitude events like the 1992 Landers, CA earthquake \cite{Massonnet1993DisplacementFieldLanders}), one can estimate the change in range caused by a deformation event by simply ``counting the fringes'' and multiplying by $\lambda/2$. However, it is more common for an interferogram to contain many visual features corresponding to noise terms in Equation \eqref{eq:noise-terms}. These noise sources can make interpretation difficult for inexperienced InSAR users, but they can often be visually identified.
+% are as large or larger than 
+%, this is often the exception, rather than the rule.
+%In many cases, a single interferogram will contain more visual noise features than signals, making it difficult for a non-expert InSAR user to interpret. 
+To illustrate this, Figure \ref{fig:ch3-sar-hawaii-example} shows a Sentinel-1 interferogram from April 20th, 2018 to May 2nd, 2018 over the Big Island of Hawaii. This time period spans the beginning of the 2018 Kilauea eruption event.
 
 
 
@@ -283,7 +308,7 @@ Hawaii example
 		%		The signal of interest in this interferograms, the collapse of the Pu'u '\=O'\=o caldera
 		(g) An aerial photo of Pu'u '\=O'\=o shows the caldera collapse on April, 30th, 2018 after magma migrated eastward underground (image source: HVO / USGS).
 	}
-	\label{fig:sar-hawaii-example}
+	\label{fig:ch3-hawaii-example}
 \end{figure}
 
 Two days after the interferogram on May 4, a  M$_w$ 6.9 earthquake struck the south flank of the Lower East Rift Zone, just south of the zoom.
