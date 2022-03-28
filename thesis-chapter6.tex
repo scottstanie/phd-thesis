@@ -4,6 +4,9 @@
 %\section{Review of Automatic Deformation Detection for InSAR}
 
 
+
+%In this chapter, we demonstrate methods for automatically detecting surface deformation signals in InSAR maps. We present a computer vision algorithm based on Laplacian of Gaussian filters. We show how the tropospheric noise levels can be estimated from InSAR data, and we use these estimates to simulate new instances of noise. We create confidence measures based on the simulations for automatically detected signals in real InSAR maps.
+
 With the launch of Sentinel-1, acquiring 250-km wide swaths of data every 6-12 days, several groups developed automated processing chains for producing regional or global databases of surface deformation using short-baseline interferograms.
 Several of these were applied to monitor volcano deformation \cite{Meyer2015IntegratingSarDerived, Valade2019TowardsGlobalVolcano, Lazecky2020LicsarAutomaticInsar}.
 Due to the large quantity of data, the early automatic detectors used pixel-wise metrics, such as changes to coherence \cite{Meyer2015IntegratingSarDerived}, thresholds on deformation velocity \cite{Raspini2018ContinuousSemiAutomatic, Bekaert2020InsarBasedDetection} or receiver operating characteristic cumulative sum control charts \cite{Albino2020AutomatedMethodsDetecting}. Other pixel-wise approaches have processed individual time series using dimensionality reduction or feature mapping mapping techniques, such as t-SNE \cite{Kerkhof2020IndividualScattererModel} or Long Short-term Memory Autoencoders (LSTM-AE) \cite{Ansari2021InsarDisplacementTime}, followed by density-based clustering algorithms.
