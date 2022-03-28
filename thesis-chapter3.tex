@@ -2,7 +2,7 @@
 \chapter{InSAR Background}
 \label{CHAP:3}
 
-In this chapter...
+%In this chapter...
 
 %Simons: operating at microwave frequencies, synthetic aperture radar (SAR) systems provide unique images representing the electrical and geometrical proper- ties of a surface in nearly all weather conditions. Since they provide their own illumination, SARs can image in daylight or at night. 
 
@@ -201,7 +201,7 @@ where $S_k = A_k e^{j \phi_k}$, $A_k$ is the amplitude of the $k$th image, and t
 For topography mapping, two SAR antennas are separated by a distance in the across-track direction and each acquires a SAR image images either simultaneously or at different times under the assumption that no ground deformation has occurred (Figure \ref{fig:ch3-insar-geometry-topo}). The baseline causes the two radars to view the same point on the ground with a slight change in angle.
 The difference in phase, $\Delta \phi$, between $S_1$ and $S_2$ is related to the difference in the geometrical path length from each radar to the ground.
 %: $\Delta \phi = \frac{-4 \pi}{\lambda}(r_1 - r_2)$. 
-This means that $\Delta \phi$ changes based on whether the satellites are viewing flat ground (Figure \ref{fig:ch3-insar-geometry-topo}a) or topography (Figure \ref{fig:ch3-insar-geometry-topo}b). Thus, with precise knowledge of the viewing geometry, the height of the topography can be inferred from the interferometric phase for each point in the interferogram \cite{Simons2007InterferometricSyntheticAperture}. 
+This means that $\Delta \phi$ changes based on whether the satellites are viewing flat ground (Figure \ref{fig:ch3-insar-geometry-topo}a) or topography (Figure \ref{fig:ch3-insar-geometry-topo}b). Thus, with precise knowledge of the viewing geometry, the height of the topography can be inferred from the interferometric phase for each point in the interferogram \citep{Simons2007InterferometricSyntheticAperture}. 
 %Note that the phase difference can be thought of as a third measurement (in addition to the location in the azimuth and range directions) that allows a reconstruction of the 3D location of each image point \cite{Simons2007InterferometricSyntheticAperture}.
 
 
@@ -224,7 +224,7 @@ In repeat-pass InSAR (sometimes called \emph{differential} InSAR, or DInSAR), a 
 \end{equation} 
 %In the repeat pass setup, a small spatial baseline between the satellite at the two times is desired, while the topographic mapping application is more sensitive when the baseline is larger.
 Since the measurement uses the phase of the propagated radar waves, it is only known modulo $0$ and $2\pi$; the process of obtaining the full continuous phase is known as \emph{phase unwrapping}
-\cite{Goldstein1988SatelliteRadarInterferometry, Chen2001TwoDimensionalPhase}. Note that even after phase unwrapping, the absolute number of $2\pi$ cycles from the radar to the ground is not known; thus, an unwrapped interferogram represents the surface deformation relative to some point which is assumed to be constant.
+\citep{Goldstein1988SatelliteRadarInterferometry, Chen2001TwoDimensionalPhase}. Note that even after phase unwrapping, the absolute number of $2\pi$ cycles from the radar to the ground is not known; thus, an unwrapped interferogram represents the surface deformation relative to some point which is assumed to be constant.
 Additionally, the description of the interferometric phase in Equation \eqref{eq:insar-phase} assumes no noise; in reality there are numerous noise sources which affect either the phase of an individual SAR acquisition phases or the phase difference between a pair of images.
 
 % Coherence?
@@ -258,17 +258,30 @@ After removing phase contributions from topography and satellite geometry, the p
 where $ \lambda $ is the radar wavelength and $ \Delta r $ is the surface deformation along the radar LOS direction. 
 
 %The noise terms are summarized in Table \ref{tab:ch3-noises}.
-The first two terms, $ \Delta \phi_{orb} $ and $ \Delta \phi_{dem} $, represent systematic errors resulting from imprecise knowledge of the platform's orbital position or topographic height. Orbital errors usually appear as a planar phase ramp in stripmap acquisitions, and were commonly encountered for ERS-1 or ENVISAT data; however they rately appear in Sentinel-1 data due to it's high precision orbit determination \cite{Fattahi2014InsarUncertaintyDue}. Errors in the DEM result in an incorrect topograph phase removal and create a spatial baseline-dependent phase error \cite{Fattahi2013DemErrorCorrection}. These errors are generally in Sentinel-1 data due to the tight control of the repeat orbit tube.
+The first two terms, $ \Delta \phi_{orb} $ and $ \Delta \phi_{dem} $, represent systematic errors resulting from imprecise knowledge of the platform's orbital position or topographic height. Orbital errors usually appear as a planar phase ramp in stripmap acquisitions, and were commonly encountered for ERS-1 or ENVISAT data; however they rarely appear in Sentinel-1 data due to it's high precision orbit determination \citep{Fattahi2014InsarUncertaintyDue}. Errors in the DEM result in an incorrect topographic phase removal and create a spatial baseline-dependent phase error \citep{Fattahi2013DemErrorCorrection}. These errors are generally in Sentinel-1 data due to the tight control of the repeat orbit tube.
 %Here the noise terms here are divided into systematic errors, $ \Delta \phi_{sys} $, atmospheric propagation effects, $ \Delta \phi_{sys} $, phase decorrelation noise, $ \Delta \phi_{decor} $, and other smaller residual noise terms including thermal noise, $ \Delta \phi_{n} $.
 
-Decorrelation errors, $ \Delta \phi_{decor} $, arise from a loss of coherence of the phase between $S_1$ and $S_2$ \cite{Zebker1992DecorrelationInterferometricRadar}. 
+Decorrelation errors, $ \Delta \phi_{decor} $, arise from a loss of coherence of the phase between $S_1$ and $S_2$ due to changes in the surface dielectric properties or scattering characteristics \citep{Zebker1992DecorrelationInterferometricRadar, Michaelides2019AlgorithmEstimatingCorrecting, Ansari2018EfficientHighPrecision}. 
 The correlation can be estimated from the complex coherence $\gamma $ of the interferogram \cite{Bamler1998SyntheticApertureRadar}
 \begin{equation}
-	\gamma = \frac{\left\langle S_1 S_2* \right\rangle }{\sqrt{\left\langle S_1 S_1* \right\rangle^2 \left\langle S_2 S_2* \right\rangle^2}}
+	\gamma = \frac{\left\langle S_1 S_2^{*} \right\rangle }{\sqrt{\left\langle S_1 S_1^{*} \right\rangle^2 \left\langle S_2 S_2^{*} \right\rangle^2}}
 \end{equation}
-where $ \left\langle \cdot \right\rangle  $ denotes an ensemble average, which, in practice, is estimated using an average of pixels over some spatial window.
+where $ S_2^{*} $ is the complex conjugate of $ S_2 $ and $ \left\langle \cdot \right\rangle  $ denotes the statistical expectation operator. The expectation is defined as an ensemble average, but in practice it is estimated using some spatial window of pixels. 
 The magnitude of this quantity $ \rho = |\gamma | $ is called the \emph{correlation} (or sometimes called the coherence), and ranges from $ 0 $, indicating a complete loss of signal coherence, to $ 1 $, indicating perfectly correlated radar echoes.
+%Decorrealtion 
 When the correlation is very low, the phase unwrapping processing may fail and produce patches of pixels which have $2 \pi$ offsets from the correct value. These are known as phase unwrapping errors, $ \Delta \phi_{unwrap}  $.
+%Note that because the angle of $\gamma$ is the interferometric phase, $\gamma$ may be considered the primary interferometric observable \citep{Michaelides2020QuantifyingPermafrostProcesses}.
+Note that although decorrelation is one of the most common noise sources for deformation mapping, the presence of decorrelation can be considered a signal (e.g. for coherent change detection \citep{Simons2007InterferometricSyntheticAperture, Jung2016CoherentChangeDetection}).
+
+%TODO: Better intro sentence about index of refraction?
+The propagation of radar waves through the atmospheric can produce errors due to the ionosphere, $\Delta \phi_{iono}$ \citep{Gray2000InfluenceIonosphericElectron}, or the troposphere, $\Delta \phi_{tropo}$ \citep{Zebker1997AtmosphericEffectsInterferometric}. Since the ionosphere is a dispersive  medium, the phase effects are dependent on radar frequency, 
+%with the index of refraction varying as $ \propto \frac{1}{f^2} $ \citep{Meyer2006PotentialLowFrequency}. 
+%This means that 
+with the effect at C-band being approximately 1/16 the effect at L-band \citep{Liang2019IonosphericCorrectionInsar}. Additionally, the dependence on frequency enables mitigation techniques which split the radar spectrum into sub-bands to determine the ionospheric phase shifts \cite{Rosen2010MeasurementMitigationIonosphere}.
+Tropospheric noise $\Delta \phi_{tropo}$ arises from changes to pressure, temperature, or water vapor content in the neutral atmosphere.
+%, which lead to changes in the index of refraction. 
+Since tropospheric noise is the dominant noise for the study area of this thesis, the noise is further detailed in Section \ref{sec:ch3-noise-tropo}.
+
 
 % include orbital errors, phase decorrelation, unwrapping errors, DEM inaccuracies, ionospheric and tropospheric artifacts,
 % and other residual noise terms that are typically an order of magnitude smaller than the error terms listed here.
@@ -284,16 +297,9 @@ When the correlation is very low, the phase unwrapping processing may fail and p
 %\end{table}
 
 
-%\subsection{Anatomy of an Interferogram}
+\subsection{Visual Example of Common Noise Sources}
 
-In high signal to noise ratio (SNR) interferograms (e.g. for large magnitude events like the 1992 Landers, CA earthquake \cite{Massonnet1993DisplacementFieldLanders}), one can estimate the change in range caused by a deformation event by simply ``counting the fringes'' and multiplying by $\lambda/2$. However, it is more common for an interferogram to contain many visual features corresponding to noise terms in Equation \eqref{eq:noise-terms}. These noise sources can make interpretation difficult for inexperienced InSAR users, but they can often be visually identified.
-% are as large or larger than 
-%, this is often the exception, rather than the rule.
-%In many cases, a single interferogram will contain more visual noise features than signals, making it difficult for a non-expert InSAR user to interpret. 
-To illustrate this, Figure \ref{fig:ch3-sar-hawaii-example} shows a Sentinel-1 interferogram from April 20th, 2018 to May 2nd, 2018 over the Big Island of Hawaii. This time period spans the beginning of the 2018 Kilauea eruption event.
-
-
-
+In high signal to noise ratio (SNR) interferograms (e.g. for large magnitude earthquakes such as \cite{Massonnet1993DisplacementFieldLanders}), one can estimate the deformation magnitude by simply ``counting the fringes'' and multiplying by $\lambda/2$. However, it is more common for an interferogram to contain many visual features corresponding to noise terms in Equation \eqref{eq:noise-terms}. These noise sources can often be visually identified, but they can add considerable difficulty for inexperienced InSAR users.
 
 \begin{figure}[!htbp]
 	\centering
@@ -311,11 +317,18 @@ To illustrate this, Figure \ref{fig:ch3-sar-hawaii-example} shows a Sentinel-1 i
 	\label{fig:ch3-hawaii-example}
 \end{figure}
 
-Two days after the interferogram on May 4, a  M$_w$ 6.9 earthquake struck the south flank of the Lower East Rift Zone, just south of the zoom.
+To illustrate this, Figure \ref{fig:ch3-hawaii-example} shows a Sentinel-1 interferogram of the Big Island of Hawaii from April 20th, 2018 to May 2nd, 2018. 
+Because much of Hawaii is a tropical island (?), there are large changes to the tropospheric water vapor content from, leading to turbulent tropospheric noise (Figure \ref{fig:ch3-hawaii-example}b). 
+Additionally, the 
+This time period spans the beginning of the 2018 Kilauea eruption event.
+
+The windward side of the island contains many dense tropical rain forests (Figure \ref{fig:ch3-hawaii-example}e). These areas show heavy decorrelation at the Sentinel-1 C-band wavelength of 5.5 cm (Figure \ref{fig:ch3-hawaii-example}d).
 
 
-% at the Sentinel-1  The windward side of the island contains many dense tropical rain forests. These areas show Heavy decorrelation noise at the Sentinel-1 C-band wavelength of 5.5 cm.
+%Two days after the interferogram on May 4, a  M$_w$ 6.9 earthquake struck the south flank of the Lower East Rift Zone, just south of the zoom.
 
+
+% at the Sentinel-1  
 %brief fissure eruption occurred on the west flank of the Puʻu ʻŌʻō cone on April 30, 20181. Over the next few days, earthquakes migrated eastward into the LERZ and rift-normal displacements were recorded by GPS instruments, signaling large-scale injection of magma downrift of Puʻu ʻŌʻō. Magma reached the surface in Leilani Estates subdivision on May 3, marking the onset of the LERZ eruption (Fig. 1a)
 
 %1. Table: noise, specific to ifg or SAR, max variance?, common?
@@ -347,13 +360,7 @@ Two days after the interferogram on May 4, a  M$_w$ 6.9 earthquake struck the so
 % 
 % 
 % SEASONAL plots...
-% 
 
-\subsubsection{Turbulent Tropospheric Noise}
-\label{sec:ch3-noise-tropo-turb}
-
-\subsubsection{Stratified Tropospheric Noise}
-\label{sec:ch3-noise-tropo-strat}
 
 
 Tropospheric noise in InSAR consists of a stratified component, which correlates with topography \citep{Doin2009CorrectionsStratifiedTropospheric}, and a turbulent component that is random at time scales longer than a day \citep{Emardson2003NeutralAtmosphericDelay, Onn2006ModelingWaterVapor}. Previous studies have made advances in correcting for the stratified component using global atmospheric models \citep{Doin2009CorrectionsStratifiedTropospheric, Jolivet2014ImprovingInsarGeodesy, Cao2021AdvancedInsarTropospheric}, GPS zenith delay measurements \citep{Onn2006ModelingWaterVapor}, external measurements from sensors such as the Moderate Resolution Imaging Spectroradiometer (MODIS) \citep{Li2005InterferometricSyntheticAperture, Barnhart2013CharacterizingEstimatingNoise} or the Medium Resolution Imaging Spectrometer (MERIS)  \citep{Ding2008AtmosphericEffectsInsar}, as well as empirical methods using regressions on InSAR phase and elevation \citep{Zebker2021AccuracyModelFree, Murray2021ClusterBasedEmpirical}.
@@ -365,6 +372,9 @@ Several research efforts have attempted to produce estimates of the atmospheric 
 %  \citep{Havazli2021DetectionThresholdEstimates} almost does what i'm doing (with some type of stratified atmo too), it's just a random multiplier, and it looks like it was almost all simulation
 An alternative approach to correcting for the tropospheric turbulence is to treat it as a stochastic noise source in time series analysis \citep{Simons2007InterferometricSyntheticAperture, Agram2015NoiseModelInsar} and estimate its covariance matrix either through auxiliary data sources \citep{Barnhart2013CharacterizingEstimatingNoise, Parker2015SystematicAssessmentAtmospheric} or directly from InSAR data \citep{Lohman2005SomeThoughtsUse}. While these approaches provide a measure of uncertainty in the deformation solution, the uncertainties are given for each pixel (or each model parameter), rather than for each visible deformation feature.
 
+
+\subsubsection{Stratified Tropospheric Noise}
+\label{sec:ch3-noise-tropo-strat}
 
 
 
@@ -379,6 +389,12 @@ We found that GACOS does not produce substantial corrections in most Sentinel-1 
 	\caption[GACOS tropospheric corrections]{(a) LOS measurements (in cm) of a descending interferogram (20150127-20150220) before the GACOS correction. (b) GACOS tropospheric correction (in cm) for the 20150127-20150220 interferogram \citep{Yu2018InterferometricSyntheticAperture}. (c) LOS measurements (in cm) of a descending interferogram (20150127 - 20150220) after the GACOS correction. (d) LOS measurements (in cm) of the 20150127-20150220 interferogram vs. the Digital Elevation Model (DEM).}
 	\label{fig:GACOS}
 \end{figure}
+
+
+
+\subsubsection{Turbulent Tropospheric Noise}
+\label{sec:ch3-noise-tropo-turb}
+
 
 
 \section{InSAR Time Series}
@@ -446,7 +462,8 @@ where $u_{e}$, $u_{n}$ and $u_{u}$ are the east, north and up displacements, res
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=.98\textwidth]{paper1-permian/figures/supplement/figureS2-los.pdf}
-	\caption[East, north, and vertical coefficients of Sentinel-1 LOS vectors]{East, north, and vertical coefficients of the LOS unit vector of all Sentinel-1 path 78 and path 85 pixels. Positive LOS direction points away from the satellite to the ground.}
+	\caption[East, north, and vertical coefficients of Sentinel-1 LOS vectors]{East, north, and vertical coefficient of the LOS unit vector of all Sentinel-1 path 78 and path 85 pixels. Positive LOS direction points away from the satellite to the ground.
+	TODO: Somehow make it so ascending has positive east, descending has negative, west}
 	\label{fig:los-map}
 \end{figure}
 
@@ -463,7 +480,8 @@ We can express $u_e$ and $u_u$ as:
 \end{align}
 where  $ \beta = {\alpha_{a,e} \alpha_{d,u}- \alpha_{d,e} \alpha_{a,u}} $.
 
-Because Sentinel-1 satellites are operating in a near-polar orbit, the north look coefficients $\alpha_{a,n}$ and $\alpha_{d,n}$ are both relatively small. Ignoring 1 cm northward motion in $u_n$ only leads to $\sim$ 0.1-0.2 mm error in $u_e$ and $\sim$ 1 mm error in $u_u$ at most locations. \cite{Kim2018AssociationLocalizedGeohazards} detected several localized deformation features within the Delaware Basin related to wastewater injection, CO2 injection, and hydrocarbon production using Sentinel-1 InSAR data.  Our LOS decomposition results are consistent with their study at these locations. For example, in a 12 km x 12 km region centered on a wastewater injection well, we observed $\sim$ 5.5 cm of uplift and $\sim$1.2 cm of east-west motion between November 2014 and April 2017 (Figure \ref{fig:injection-kim-lu}). 
+Because Sentinel-1 satellites are operating in a near-polar orbit, the north look coefficients $\alpha_{a,n}$ and $\alpha_{d,n}$ are both relatively small. Ignoring 1 cm northward motion in $u_n$ only leads to $\sim$ 0.1-0.2 mm error in $u_e$ and $\sim$ 1 mm error in $u_u$ at most locations. 
+TODO: REPHRASE THIS \cite{Kim2018AssociationLocalizedGeohazards} detected several localized deformation features within the Delaware Basin related to wastewater injection, CO2 injection, and hydrocarbon production using Sentinel-1 InSAR data.  Our LOS decomposition results are consistent with their study at these locations. For example, in a 12 km x 12 km region centered on a wastewater injection well, we observed $\sim$ 5.5 cm of uplift and $\sim$1.2 cm of east-west motion between November 2014 and April 2017 (Figure \ref{fig:injection-kim-lu}). 
 
 
 
