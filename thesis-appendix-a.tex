@@ -13,7 +13,7 @@ Considering the case of dip slip on a finite rectangular fault (Figure \ref{fig:
 \end{equation}
 where $U_2$ is the magnitude of dip slip. The rest of terms on the right are determined by fault geometry parameters: the fault dip angle ($\delta$), the depth to the top of the fault ($Z$), the fault width along the dip direction ($W$), and the fault length along the strike direction ($L$). 
 
-We located four faults based on InSAR observations, and assumed a uniform slip on each fault. We estimated the best-fit fault parameters for each fault independently by minimizing the objective function \cite{Du1992}:
+We located four faults based on InSAR observations, and assumed a uniform slip on each fault. We estimated the best-fit fault parameters for each fault independently by minimizing the objective function \citep{Du1992ComparisonVariousInversion}:
 \begin{equation}
 	\arg \min_{U_{2,i}} \left \| \mathbf{G_i}U_{2,i}-\mathbf{d_i} \right \|^2_{2}  
 	\label{eq:model-obj-1}
@@ -98,7 +98,7 @@ where $ A(\rho,\eta) = R\int_{0}^{\infty}e^{-D\alpha}J_{1}(\alpha R)J_{0}(\alpha
 	{u_{z}}^{max} = 2(1-\nu)\Delta H(1-\frac{\eta}{\sqrt{1+\eta^{2}}})
 \end{equation}
 
-The best-fit compaction in the cylindrical reservoirs were determined by minimizing the objective function \cite{Du2001}:
+The best-fit compaction in the cylindrical reservoirs were determined by minimizing the objective function \citep{Du2001PoroelasticReservoirModel}:
 \begin{equation}
 	\arg \min_{\mathbf{\Delta H}} =\left \| \mathbf{G_R}\mathbf{\Delta H}-\mathbf{d_r} \right \|^2+\beta ^2\left \| \mathbf{H_L}\mathbf{\Delta H}-\mathbf{d_0} \right \|^2  \label{eq:model-obj-2}
 \end{equation}
