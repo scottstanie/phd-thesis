@@ -1,0 +1,150 @@
+
+
+%\section{Radial average vs 1D line}
+%
+%If a 2D random field $\phi(x, y)$ has Fourier transform $\Phi(k_x, k_x)$, we can express the field in the spatial domain in terms of its frequency domain representation:
+%\begin{gather}
+%    \phi(x, y) =  \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} \Phi(k_x, k_y) e ^{j 2 \pi (\bm{x} \cdot \bm{k}) } \, d k_x \,d k_y \\
+%   \phi(r, \theta) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} \Phi(r_k, \theta_k) e ^{j 2 \pi (r r_k \cos \theta_k ) } r_k \, d r_k \,d \theta_k
+%\end{gather}
+%where $\bm{x} = [x \quad y]^T$ and $\bm{k} = [k_x \quad k_y]^T$, $r = \sqrt{x^2 + y^2}$,  $r_k = \sqrt{k_x^2 + k_y^2}$, $\theta = \arctan \frac{y}{x}$, and $\theta_k = \arctan \frac{k_y}{k_x}$.
+%
+%If we assume the field $\Phi(k_x, k_y)$ is isotropic and radially symmetric, it is only a function or $r$, so $\Phi(r_k, \theta_k) = \Phi(r_k) $.
+%
+%....TODO...
+%
+%If the power spectrum is a power law, $\Phi(r_k) = C \frac{1}{r_k}^\beta$. 
+
+
+
+
+%\section{Disambiguating terms from fractal surfaces, Gaussian random
+	%	fields, and power
+	%	laws}
+%\label{disambiguating-terms-from-fractal-surfaces-gaussian-random-fields-and-power-laws}
+%
+%Part that I wanted to write down:
+%
+%Another way to consider fractals: If you generate white or pink noise, unlike human speech or music, it will sound the same at any speed.
+%
+%Note on Brownian motion being an integral of white noise.
+%For any complex sinusoid $x(t) = e^{j2 \pi f t}$ of frequency $f$, the effect in the frequency domain can found by noting that 
+%
+%\begin{equation}
+%	\int x(t) \, dt = \frac{1}{j 2 \pi f} e^{j2\pi f t} = \frac{1}{j 2 \pi f} x(t)
+%\end{equation}
+%
+%Since integration is linear and time invariant, we can think of it as an LTI filter $h$ with frequency response $H_i(f) = \frac{1}{j 2 \pi f} $, which has a $|1/f|$ magnitude response, or $|1/f^2|$ in power.
+%
+%A white noise process $w(t)$ can be defined as having a flat power spectral density (PSD) $S_W(f) = \sigma^2$. Integrating white noise results in the PSD being shaped into $S_W(f) H_i(f) = \sigma / f^2$.
+%
+%\textbf{Driving question}:
+%
+%Is the fractal atmospheric surface (a type of spatially correlated
+%noise), which has a power-law power spectrum of
+%
+%\[S(f) = (1/f)^{\beta}\] also a Gaussian random field?
+%
+%The three related subjects are\ldots{} - Gaussian Fields - Fractal
+%surfaces - Power-law power spectra Can all three be present? Or are some
+%mutually exclusive?
+%
+%\textbf{POSSIBLE SUMMARY ANSWER}
+%
+%Yes, the surface can be 1. fractal, since the structure function (aka
+%semi-variogram) of the atmospheric delay has a power-law form (Hanssen,
+%Eq 4.7.10) \footnote{Hanssen, Ramon F. Radar interferometry: data
+	%	interpretation and error analysis. Vol. 2. Springer Science \&
+	%	Business Media, 2001.} :
+%
+%\[D_s(\rho) \sim \rho^{5/3}\]
+%
+%\begin{enumerate}
+%	
+%	\item
+%	A Gaussian field, since by (Cressie, 1993) Eq. 5.5.1 \footnote{Cressie,
+	%		Noel. Statistics for spatial data. John Wiley \& Sons, 2015.},
+%\end{enumerate}
+%
+%More generally, a fractional Brownian motion in \(R^d\) is a Gaussian
+%process \(Z(\cdot)\) characterized by a covariance function of the form
+%with
+%
+%\[C(s, t) = \frac{1}{2}\left(s^{2H} + t^{2H} + |s-t|^{2H}\right)\]
+%
+%and a variogram of the form
+%
+%\[E[(Z(s + h) - Z(s))^2] \propto ||h||^{2H}\] So, for the Hanssen
+%structure fucntion, \(H=5/6\)
+%
+%\begin{enumerate}
+%	\def\labelenumi{\arabic{enumi}.}
+%	\setcounter{enumi}{2}
+%	
+%	\item
+%	A signal power law power spectrum \(S(k)\) of the form (Hanssen Eq.
+%	4.7.12)
+%\end{enumerate}
+%
+%\[P(k) = P_0 \left(f/f_0\right)^{-\beta}\] where \(P_0\) is the power at
+%reference frequency \(f_0\) and \(\beta\) is called the \emph{spectral
+	%	index}. The structure function of a signal with this power spectrum can
+%be written, using the same \(\beta\), as
+%\[D_{\phi}(\rho) \propto \rho^{\beta-1}\] which means that if the
+%structure function exponent is \(5/3\), then \(\beta=8/3\) for the
+%spectrum slope.
+%
+%
+%(NOTE: This integral is why the vertical-line average has a slope that's 1 less than the isotropic k slope: \url{https://www.wolframalpha.com/input/?i=integral+of+1+%2F+%28x%5E2+%2B+y%5E2%29+dy+from+-c+to+c}
+%Start with $1 / r^2 = 1/(x^2 + y^2)$.
+%Then change to x/y from polar, integrate over y. it tends to 1/x for large x.
+%
+%My confusion earlier: thinking that the frequency content of the signal
+%was doing to dictate the amplitude distribution in space (or time for
+%1D)\ldots{} In the same way that noise can be white (a
+%frequency/spectrum description) and either uniform or Gaussian (a time
+%or space description), the random process can be a Gaussian process, but
+%have the same power-law exponent.
+%
+%LAST QUESTIONs: - BIGGEST UNKNOWN: Hanssen says the structure
+%functions/SMV is \(\rho^{5/3}\), which means in never levels off, and he says the covariance function doesn't exist\ldots{} - Does this imply that it can't be a Gaussian field? - \textbf{ANSWER}: most places seem to say that fractional brownian motion is still a Gaussian field (Brownian sheet having covariance = min(s, t)) - 
+%
+%\textbf{TODO} This means it has stationary increments, but isn't 2nd order stationary\ldots I thought other places said ``Gaussian random fields are 2nd order stationary (and sometimes strictly stationary under some condition)'' - or does out limit study area + ramp removal mean in practice it levels off\ldots{} - if a random field is Gaussian, does it's structure func/SMV have to be gaussian?\ldots{}. 
+%
+%NO. Thats related to the Covariance FUNCTION\ldots aka, the covariance of the Gaussian variables at a given distance apart! the further away, the different the
+%covariance is\ldots but the entire process is still only characterized by it's mean (assumed 0), and covariance function (related to the structure function) - SO, a power-law SMV is fine for a Gaussian process. and it will have a power law power-spectrum by FT:
+%https://math.stackexchange.com/questions/2173780/computing-fourier-transform-of-power-law
+%
+%\begin{itemize}
+%	
+%	\item
+%	I thought that Gaussian processes had have Gaussian Fourier
+%	transforms\ldots{}
+%	
+%	\begin{itemize}
+	%		
+	%		\item
+	%		answer? the power spectrum relates to the FT of the covariance
+	%		function of a (second order stationary process) (or, with different
+	%		terms, ACF <->PSD)
+	%	\end{itemize}
+%	\item
+%	so i think ``fractal'' descriptions are orthogonal to both ``Gaussian
+%	process'' and ``Power spectrum'' shape\ldots{} they might just be 3
+%	completely separate axes, where none imply others
+%\end{itemize}
+%
+%\hypertarget{definitions}{%
+	%	\section{Definitions}\label{definitions}}
+%
+%%From \citep{Hanssen2001} this, I don't see \citept{Hanssen2001} what the difference is \citepp{Hanssen2001} , 4.7 intro: 
+%
+%\begin{quote}
+%	
+%	The behavior of atmospheric signal in radar interferograms can be mathematically described using several interrelated measures such as the power spectrum, the covariance function, the structure function, and the fractal dimension.
+%	
+%	The power spectrum is useful to recognize scaling properties of the data or to distinguish different scaling regimes.
+%\end{quote}
+%
+%TODO 1. Random field 1. Gaussian random field 1. Power spectrum
+%

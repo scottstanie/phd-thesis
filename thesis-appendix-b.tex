@@ -1,0 +1,15 @@
+
+\chapter{InSAR Uncertainty in overlapping region of vertical decomposition}
+
+%Given a 1 cm uncertainty in 3 LOS deformation maps,
+%
+%- the vertical, and horizontal uncertainty
+%- uncertainty from merging two paths, accounting for dependence of middle path
+%- reduction in uncertainty from blending
+
+\section{Differences from including full covariance model for estimating deformation}
+
+Several previous studies have developed InSAR covariance models which include the spatial correlations between pixels (intra-interferograms covariances, \citep{Lohman2005SomeThoughtsUse, Simons2007InterferometricSyntheticAperture}) as well as full covariances matrix for stacks of interferograms \citep{Agram2015NoiseModelInsar, Jolivet2018MultipixelTimeSeries}. This have been used to invert for geophysical parameters for interest in, for example, fault slip models \citep{Lohman2005SomeThoughtsUse, Jolivet2018MultipixelTimeSeries} or volcanic reservoir inflation (?). In this appendix, we compare differences in estimated surface deformation and average velocity that arise from including or ignoring inter-pixel or cross-interferogram correlations vs. assuming independence.
+
+
+%SBAS aims at reconstructing the phase with great accuracy, including the effect of propagation delays. The dictionary approach aims at directly providing a geophysical interpretation of the interferometric phase in space and time. In a case where all pixels are unwrapped with no disconnected subsets, reconstructing the phase using the SBAS approach and then fitting it with a parameterized function of time is equivalent to solving the dictionary approach. In such case, the NSBAS approach would not provide any advantage.
