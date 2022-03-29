@@ -10,7 +10,7 @@
 %Tracking radars "ping" a target, record the reflected signal, and measure (1) how long it took for the ping's round trip, and (2) the frequency of the return signal. The travel time is a measure of distance to the target. The target's velocity can be determined from the frequency of the return signal, which differs from that of the transmitted signal as a result of the Doppler effect (this is the effect that makes a siren sound different when it is coming toward you versus moving away from you, for example). Air traffic control radars and police speed detectors work on this principle.
 
 \section{Radar Imaging}
-\label{CHAP:3-radar}
+\label{sec:ch3-radar}
 
 ``Radar'' was originally an acronym for ``RAdio Detection And Ranging'' but it has since become ubiquitous enough enter the common vernacular. Unlike passive sensors that rely on illumination for outside sources, such as optical cameras, a radar is an active sensor that emits its own electromagnetic energy. 
 As such, radars are able to operate both day and night, and generally operate at microwave frequencies that are not blocked by clouds (around between 1 GHz and 300 GHz, or wavelengths of 3 m to 1 mm).
@@ -31,7 +31,7 @@ Since that time, there have been dozens of mission launched by various space age
 
 
 \subsection{Timeline of SAR Constellations}
-
+\label{sec:ch3-history}
 
 
 \begin{figure}
@@ -77,7 +77,7 @@ The first small SAR SmallSats (satellites weighing under 180 kg) have been launc
 
 
 \section{Synthetic Aperture Radar}
-\label{CHAP:3-sar}
+\label{sec:ch3-sar}
 
 
 Synthetic aperture radar is an imaging technique that uses a radar mounted on a moving platform. A two-dimensional image is created by coherently processing the returned energy from transmitted pulses. While the images are often displayed in grayscale and may appear similar to optical images, they represent the electrical and geometrical properties of the objects in the scene \cite{Simons2007InterferometricSyntheticAperture}.
@@ -159,7 +159,10 @@ In the azimuth direction, the size of the radar footprint determines which groun
 
 
 The resolution in azimuth is greatly improved by creating a \emph{synthetic aperture}, which is a technique that processes the reflected echoes coherently (i.e. using both magnitude and phase) to focus the image (Figure \ref{fig:ch3-synth-aper}).
-Coherent processing is possible by carefully tracking each target's phase history, $ \phi(t) $, which is related to the range to the target $r(t)$ by $\phi(t) = \frac{4 \pi}{\lambda} r(t)$.
+Coherent processing is possible by carefully tracking each target's phase history, $ \phi(t) $, which is related to the range to the target $r(t)$ 
+\begin{equation}
+\phi(t) = -\frac{4 \pi}{\lambda} r(t)  \label{eq:ch3-phase-range}
+\end{equation}
 There are multiple image formation algorithms which create this synthetic aperture and use the phase history. One of the first developed and most widely today used is the range-Doppler algorithm (RDA) \citep{Wu1976DigitalSystemProduce, Cumming1979DigitalProcessingSeasat}. 
 RDA uses the apparent shift in Doppler frequency due to the platform motion to create a matched filter in azimuth, similar to the matched filter used for range compression \cite{Cumming2004DigitalProcessingSynthetic}.
 %RDA is a frequency-domain algorithm, since it converts the phase history 
@@ -267,21 +270,23 @@ The correlation can be estimated from the complex coherence $\gamma $ of the int
 	\gamma = \frac{\left\langle S_1 S_2^{*} \right\rangle }{\sqrt{\left\langle S_1 S_1^{*} \right\rangle^2 \left\langle S_2 S_2^{*} \right\rangle^2}}
 \end{equation}
 where $ S_2^{*} $ is the complex conjugate of $ S_2 $ and $ \left\langle \cdot \right\rangle  $ denotes the statistical expectation operator. The expectation is defined as an ensemble average, but in practice it is estimated using some spatial window of pixels. 
-The magnitude of this quantity $ \rho = |\gamma | $ is called the \emph{correlation} (or sometimes called the coherence), and ranges from $ 0 $, indicating a complete loss of signal coherence, to $ 1 $, indicating perfectly correlated radar echoes.
+The magnitude of this quantity $ \rho = |\gamma | $ is called the \emph{correlation} (or sometimes called the coherence), and varies from $ 0 $, indicating a complete loss of signal coherence, to $ 1 $, indicating perfectly correlated radar echoes.
 %Decorrealtion 
 When the correlation is very low, the phase unwrapping processing may fail and produce patches of pixels which have $2 \pi$ offsets from the correct value. These are known as phase unwrapping errors, $ \Delta \phi_{unwrap}  $.
 %Note that because the angle of $\gamma$ is the interferometric phase, $\gamma$ may be considered the primary interferometric observable \citep{Michaelides2020QuantifyingPermafrostProcesses}.
-Note that although decorrelation is one of the most common noise sources for deformation mapping, the presence of decorrelation can be considered a signal (e.g. for coherent change detection \citep{Simons2007InterferometricSyntheticAperture, Jung2016CoherentChangeDetection}).
 
-%TODO: Better intro sentence about index of refraction?
-The propagation of radar waves through the atmospheric can produce errors due to the ionosphere, $\Delta \phi_{iono}$ \citep{Gray2000InfluenceIonosphericElectron}, or the troposphere, $\Delta \phi_{tropo}$ \citep{Zebker1997AtmosphericEffectsInterferometric}. Since the ionosphere is a dispersive  medium, the phase effects are dependent on radar frequency, 
+
+
+Phase errors can arise from variations in the index of refraction from due to heterogeneities in the ionosphere, $\Delta \phi_{iono}$ \citep{Gray2000InfluenceIonosphericElectron}, or the troposphere, $\Delta \phi_{tropo}$ \citep{Zebker1997AtmosphericEffectsInterferometric}. Since the ionosphere is a dispersive medium, the phase effects are dependent on radar frequency, 
 %with the index of refraction varying as $ \propto \frac{1}{f^2} $ \citep{Meyer2006PotentialLowFrequency}. 
 %This means that 
-with the effect at C-band being approximately 1/16 the effect at L-band \citep{Liang2019IonosphericCorrectionInsar}. Additionally, the dependence on frequency enables mitigation techniques which split the radar spectrum into sub-bands to determine the ionospheric phase shifts \cite{Rosen2010MeasurementMitigationIonosphere}.
-Tropospheric noise $\Delta \phi_{tropo}$ arises from changes to pressure, temperature, or water vapor content in the neutral atmosphere.
+with the effect at C-band being approximately 1/16 the effect at L-band \citep{Liang2019IonosphericCorrectionInsar}. Additionally, the dependence on frequency enables mitigation techniques which split the radar spectrum into sub-bands to calculate phase corrections \cite{Rosen2010MeasurementMitigationIonosphere}.
+Tropospheric noise, $\Delta \phi_{tropo}$, arises from changes to pressure, temperature, or water vapor content in the neutral atmosphere.
 %, which lead to changes in the index of refraction. 
-Since tropospheric noise is the dominant noise for the study area of this thesis, the noise is further detailed in Section \ref{sec:ch3-noise-tropo}.
+Since tropospheric noise is the dominant noise for the West Texas study of Chapters \ref{CHAP:4-GRL}-\ref{CHAP:6-blob}, the noise is further detailed in Section \ref{sec:ch3-noise-tropo}.
 
+
+Although these effects have been presented as noise sources for the application of deformation monitoring, they can be the signal of interest in other InSAR applications. For example, the presence of decorrelation indicates a change to the scattering surface properties and can be used for coherent change detection \citep{Simons2007InterferometricSyntheticAperture, Jung2016CoherentChangeDetection}, and the phase variations from the troposphere have been used for atmospheric mapping and meteorological purposes \citep{Hanssen1999HighResolutionWater, Liu2012SatelliteRadarInterferometry}.
 
 % include orbital errors, phase decorrelation, unwrapping errors, DEM inaccuracies, ionospheric and tropospheric artifacts,
 % and other residual noise terms that are typically an order of magnitude smaller than the error terms listed here.
@@ -299,32 +304,39 @@ Since tropospheric noise is the dominant noise for the study area of this thesis
 
 \subsection{Visual Example of Common Noise Sources}
 
-In high signal to noise ratio (SNR) interferograms (e.g. for large magnitude earthquakes such as \cite{Massonnet1993DisplacementFieldLanders}), one can estimate the deformation magnitude by simply ``counting the fringes'' and multiplying by $\lambda/2$. However, it is more common for an interferogram to contain many visual features corresponding to noise terms in Equation \eqref{eq:noise-terms}. These noise sources can often be visually identified, but they can add considerable difficulty for inexperienced InSAR users.
+In high signal to noise ratio (SNR) interferograms (e.g. for large magnitude earthquakes such as \cite{Massonnet1993DisplacementFieldLanders}), one can estimate the deformation magnitude by simply ``counting the fringes'' (i.e. visually estimating the number of $ 2 \pi $ cycles) and multiplying by $\lambda/2$. However, it is more common for an interferogram to contain many visual features corresponding to noise terms in Equation \eqref{eq:noise-terms}. These noise sources can often be visually identified by InSAR experts, but they can add considerable difficulty for newer users without background knowledge of the study area.
 
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=1.0\textwidth]{figures/chapter3-sar/hawaii-example.pdf}
 	\caption[Sentinel-1 interferogram over Hawaii showing common noise sources, along with 2018 eruption deformation]{
-		(a) Sentinel-1 interferogram from April 20th, 2018 to May 2nd, 2018 over Hawaii, spanning the beginning of the 2018 eruption event.
+		(a) Sentinel-1 interferogram (ascending path 124) from April 20th, 2018 to May 2nd, 2018 over Hawaii, spanning the beginning of the 2018 K'\=ilauea eruption.
 		Each colored phase cycle of $2\pi$ radians indicates a range change of 2.7 cm along the radar line-of-sight, which can be caused by real surface deformation or a noise source.
-		(b) The dense fringes near the coast are caused by turbulent tropospheric noise (see Section \ref{sec:ch3-noise-tropo-strat}).
+		(b) The dense fringes near the coast are caused by turbulent tropospheric noise (see Section \ref{sec:ch3-noise-tropo-turb}).
 		(c) Stratified tropospheric noise on the peak of Mauna Kea, the tallest peak on Hawaii at 4,207 m, causes a concentric ring pattern. This pattern is also visible on Mauna Loa in the center of the island, where the phase is strongly correlated with topographic height. See Section \ref{sec:ch3-noise-tropo-strat} for further details.
 		(d) An example of decorrelation noise caused by dense tropical rain forests (e) located on windward side of the island.
-		(f) Real deformation of $ \sim 40 $cm around the Pu'u '\=O'\=o volcanic cone to the east of K'\=ilauea. In this case, the ground was subsiding down and to the southeast as magma flowed away from Pu'u '\=O'\=o.
+		(f) Real deformation of $ \sim 30-40 $cm around the Pu'u '\=O'\=o volcanic cone to the east of K'\=ilauea. In this case, the ground was subsiding down and to the southeast as magma flowed away from Pu'u '\=O'\=o.
 		%		The signal of interest in this interferograms, the collapse of the Pu'u '\=O'\=o caldera
 		(g) An aerial photo of Pu'u '\=O'\=o shows the caldera collapse on April, 30th, 2018 after magma migrated eastward underground (image source: HVO / USGS).
 	}
 	\label{fig:ch3-hawaii-example}
 \end{figure}
 
-To illustrate this, Figure \ref{fig:ch3-hawaii-example} shows a Sentinel-1 interferogram of the Big Island of Hawaii from April 20th, 2018 to May 2nd, 2018. 
-Because much of Hawaii is a tropical island (?), there are large changes to the tropospheric water vapor content from, leading to turbulent tropospheric noise (Figure \ref{fig:ch3-hawaii-example}b). 
-Additionally, the 
-This time period spans the beginning of the 2018 Kilauea eruption event.
+To illustrate several common noise sources, Figure \ref{fig:ch3-hawaii-example} shows a Sentinel-1 interferogram of the Big Island of Hawaii from April 20th, 2018 to May 2nd, 2018. 
+This time period spans the beginning of the 2018 Kilauea eruption during which a large subsidence event occurred from subsurface magma flow. However, the diversity in weather conditions and topography lead to many noise sources in most interferograms of Hawaii.
+For example, the coastal region in Figure \ref{fig:ch3-hawaii-example}b contains dense fringes which could be mistaken as deformation, but in fact is due to turbulent tropospheric noise (further explained in Section \ref{sec:ch3-noise-tropo-turb}).
+The large elevation changes on Mauna Loa and Mauna Kea in the center of the island lead to stratified tropospheric noise (see Section \ref{sec:ch3-noise-tropo-strat}) which creates a concentric ring pattern that is the same shape as a subsidence bowl (Figure \ref{fig:ch3-hawaii-example}c).
+An example of decorrelation noise occurs on the windward side of the island (Figure \ref{fig:ch3-hawaii-example}d), which contains many dense tropical rain forests (Figure \ref{fig:ch3-hawaii-example}e). 
 
-The windward side of the island contains many dense tropical rain forests (Figure \ref{fig:ch3-hawaii-example}e). These areas show heavy decorrelation at the Sentinel-1 C-band wavelength of 5.5 cm (Figure \ref{fig:ch3-hawaii-example}d).
+Finally, a real deformation feature of $ \sim 30-40 $ cm occurred near the Pu'u '\=O'\=o volcanic cone (Figure \ref{fig:ch3-hawaii-example}f).
+In this case, the ground subsided down and to the southeast as magma flowed away from Pu'u '\=O'\=o (Figure \ref{fig:ch3-hawaii-example}g).
+One can estimate the magnitude of deformation by counting the number of cycles in the interferogram in the zoomed-in region of Figure \ref{fig:ch3-hawaii-example}f and multiplying by 2.7 cm.
+However, even this analysis can be difficult due to the high spatial frequency of the fringes.
+In this case, the deformation magnitude can be verified using nearby permanent GPS stations.
 
+%These areas show heavy decorrelation at the Sentinel-1 C-band wavelength of 5.5 cm (Figure \ref{fig:ch3-hawaii-example}d). 
 
+%
 %Two days after the interferogram on May 4, a  M$_w$ 6.9 earthquake struck the south flank of the Lower East Rift Zone, just south of the zoom.
 
 
@@ -334,12 +346,8 @@ The windward side of the island contains many dense tropical rain forests (Figur
 %1. Table: noise, specific to ifg or SAR, max variance?, common?
 
 
-%2. Figure: Hawaii, showing Stratified, Turbulence, decorr, defo
 
-
-%3. ? Figure: unwrap error? DEM error? iono noise? orb ramp?
-
-\subsection{Tropospheric Noise}
+\section{Tropospheric Noise}
 \label{sec:ch3-noise-tropo}
 
 %Ideas:
@@ -361,19 +369,33 @@ The windward side of the island contains many dense tropical rain forests (Figur
 % 
 % SEASONAL plots...
 
+The conversion between two-way distance from ground to satellite and InSAR in Equation \eqref{eq:ch3-phase-range} assumes that the electromagnetic signals travel though a homogeneous medium with constant velocity. In reality, they travel through the spatially inhomogenous atmosphere with variable index of refraction $n$, where $n$ relates to the phase velocity $v$ by $n = c/v$ \citep{Zebker1997AtmosphericEffectsInterferometric, Hanssen2001RadarInterferometryData, Liu2012SatelliteRadarInterferometry}.  Since $n$ is always real and slightly greater than $1$ for Earth's neutral atmosphere, it is more common to describe fluctuations using the \emph{refractivity} $N = 10^{6}(n - 1)$, which is the additional refractive index beyond unity.
+Writing $N$ as $N(x,y,z)$ to emphasize the 3D variation, we can express the excess delay $D$ caused by the propagation through the atmosphere as
+\begin{equation}
+	D = 10^{-6} \int_{s} N(x, y, z) ds
+\end{equation}
+where $ds$ is the incremental slant length along the radar line of sight. The excess delay adds an additional phase of $\phi = - \frac{4 \pi}{\lambda} D$ to an SLC acquired with the given atmospheric conditions.
+%, and each interferogram contains a phase difference of two SLCs (i.e. the phase contains the difference from two atmospheric conditions).
+
+The refractivity of the troposphere is commonly decomposed into a hydrostatic, wet, and liquid component \citep{Hanssen2001RadarInterferometryData, Bekaert2015StatisticalComparisonInsar}:
+\begin{equation}
+	N = \left(k_1 \frac{P}{T} \right)_{\text{hyd}} + \left( k_2^{'} \frac{e}{T} + k_3  \frac{e}{T^2}   \right)_{\text{wet}} + \left(k_4 W \right)_{\text{liquid}}
+\end{equation}
+where $ P $ is the total atmospheric pressure in hPa, $ T $ is the atmospheric temperature in Kelvin,  $ e $ is the partial pressure of water vapor in hPa, and W is the liquid water content of clouds in g/m$^3 $ 
+The coefficients $ k_1, k_2^{'}, k_3 $ and $ k_4 $ are constants estimated from meteorological data, commonly taken to be $ k_1 = 77.6$ , $ k_2^{'} = 23.3 $, $ k_3= 3.75 \cdot 10^5 $, and $ k_4 = 1.45 $ from \cite{Smith1953ConstantsEquationAtmospheric} and \cite{Solheim1999PropagationDelaysInduced}.
 
 
-Tropospheric noise in InSAR consists of a stratified component, which correlates with topography \citep{Doin2009CorrectionsStratifiedTropospheric}, and a turbulent component that is random at time scales longer than a day \citep{Emardson2003NeutralAtmosphericDelay, Onn2006ModelingWaterVapor}. Previous studies have made advances in correcting for the stratified component using global atmospheric models \citep{Doin2009CorrectionsStratifiedTropospheric, Jolivet2014ImprovingInsarGeodesy, Cao2021AdvancedInsarTropospheric}, GPS zenith delay measurements \citep{Onn2006ModelingWaterVapor}, external measurements from sensors such as the Moderate Resolution Imaging Spectroradiometer (MODIS) \citep{Li2005InterferometricSyntheticAperture, Barnhart2013CharacterizingEstimatingNoise} or the Medium Resolution Imaging Spectrometer (MERIS)  \citep{Ding2008AtmosphericEffectsInsar}, as well as empirical methods using regressions on InSAR phase and elevation \citep{Zebker2021AccuracyModelFree, Murray2021ClusterBasedEmpirical}.
-
-Early efforts to correct or mitigate the turbulent atmospheric noise used a combination of high pass temporal filtering and low pass spatial filtering \citep{Ferretti2001PermanentScatterersSar, Berardino2002NewAlgorithmSurface}.
-%- but as \citep{Liu2012SatelliteRadarInterferometry} notes, gaps in the acquistion, or strong non-Gaussianity from, e.g., severe thunderstorms, break the assumptions of equal variance among APS dates that these filters require.
-Several research efforts have attempted to produce estimates of the atmospheric phase delay for each SAR acquisition directly from a time series of interferograms. \citep{Liu2012SatelliteRadarInterferometry} formulated the problem as a linear system using a network of small baseline interferograms. Since the problem of estimating both surface deformation and atmospheric delay is an ill-posed problem given only differential InSAR measurements, the authors assumed zero or known deformation of the study region, and they constrained the estimated troposphere to have zero mean. In an attempt to denoise time series of surface deformation, \citep{Tymofyeyeva2015MitigationAtmosphericPhase} averaged sets of redundant interferograms containing a common reference date, with an assumption of linear or slowly-varying deformation, and subtracted the estimated troposphere.
-
-%  \citep{Havazli2021DetectionThresholdEstimates} almost does what i'm doing (with some type of stratified atmo too), it's just a random multiplier, and it looks like it was almost all simulation
-An alternative approach to correcting for the tropospheric turbulence is to treat it as a stochastic noise source in time series analysis \citep{Simons2007InterferometricSyntheticAperture, Agram2015NoiseModelInsar} and estimate its covariance matrix either through auxiliary data sources \citep{Barnhart2013CharacterizingEstimatingNoise, Parker2015SystematicAssessmentAtmospheric} or directly from InSAR data \citep{Lohman2005SomeThoughtsUse}. While these approaches provide a measure of uncertainty in the deformation solution, the uncertainties are given for each pixel (or each model parameter), rather than for each visible deformation feature.
+Although absolute delays decrease at lower altitudes as the signal travels through more of the atmosphere, an interferogram always measures a \emph{difference} of delays from two SAR acquisitions, and hence difference of refractivity. This means that although the hydrostatic delay is of the order of a few meters and the wet delay is $ \sim10$s of centimeters, phase artifacts in interferograms are more commonly caused by the spatial variations of the wet component of refractivity \citep{Zebker1997AtmosphericEffectsInterferometric, Hanssen2001RadarInterferometryData}. Additionally, the liquid component can cause several centimeters of delay in the presence of tall cumulonimbus thunder clouds which have a small ($< 10$km) spatial extent \citep{Liu2012SatelliteRadarInterferometry}.
+%The hydrostatic delay is of the order of a few meters (Bevis et al., 1996) and the wet delay is usually not larger than 0.3 m (Elgered, 1982).
+%The delay caused by droplets depends on the cloud type..
+%ccording to Eq. (2.2.10) and the values of W listed in Tab. 2.1, significant delay up to 3 cm can be caused by the liquid water in vertical clouds, i.e., cumulonimbus (thunder clouds), which usually have a relatively limited horizontal size (< 10 km) and a large vertical extent and liquid water content. These clouds are typically generated by thermal convection or frontal lifting (Stull, 1995; Hanssen, 2001) \cite{Liu2012SatelliteRadarInterferometry}.
 
 
-\subsubsection{Stratified Tropospheric Noise}
+For the purposes of InSAR analysis, noise from tropospheric delay variations is usually divided into a stratified component, which correlates with topography \citep{Doin2009CorrectionsStratifiedTropospheric}, and a turbulent component that is random at time scales longer than a day \citep{Emardson2003NeutralAtmosphericDelay, Onn2006ModelingWaterVapor}. 
+
+
+
+\subsection{Stratified Tropospheric Noise}
 \label{sec:ch3-noise-tropo-strat}
 
 
@@ -392,9 +414,24 @@ We found that GACOS does not produce substantial corrections in most Sentinel-1 
 
 
 
-\subsubsection{Turbulent Tropospheric Noise}
+\subsection{Turbulent Tropospheric Noise}
 \label{sec:ch3-noise-tropo-turb}
 
+
+\subsection{Mitigation of Tropospheric Noise}
+\label{sec:ch3-noise-tropo-miotigate}
+
+Previous studies have made advances in correcting for the stratified component using global atmospheric models \citep{Doin2009CorrectionsStratifiedTropospheric, Jolivet2014ImprovingInsarGeodesy, Cao2021AdvancedInsarTropospheric}, GPS zenith delay measurements \citep{Onn2006ModelingWaterVapor}, external measurements from sensors such as the Moderate Resolution Imaging Spectroradiometer (MODIS) \citep{Li2005InterferometricSyntheticAperture, Barnhart2013CharacterizingEstimatingNoise} or the Medium Resolution Imaging Spectrometer (MERIS)  \citep{Ding2008AtmosphericEffectsInsar}, as well as empirical methods using regressions on InSAR phase and elevation \citep{Zebker2021AccuracyModelFree, Murray2021ClusterBasedEmpirical}.
+
+Early efforts to correct or mitigate the turbulent atmospheric noise used a combination of high pass temporal filtering and low pass spatial filtering \citep{Ferretti2001PermanentScatterersSar, Berardino2002NewAlgorithmSurface}.
+%- but as \citep{Liu2012SatelliteRadarInterferometry} notes, gaps in the acquistion, or strong non-Gaussianity from, e.g., severe thunderstorms, break the assumptions of equal variance among APS dates that these filters require.
+Several research efforts have attempted to produce estimates of the atmospheric phase delay for each SAR acquisition directly from a time series of interferograms. \citep{Liu2012SatelliteRadarInterferometry} formulated the problem as a linear system using a network of small baseline interferograms. Since the problem of estimating both surface deformation and atmospheric delay is an ill-posed problem given only differential InSAR measurements, the authors assumed zero or known deformation of the study region, and they constrained the estimated troposphere to have zero mean. In an attempt to denoise time series of surface deformation, \citep{Tymofyeyeva2015MitigationAtmosphericPhase} averaged sets of redundant interferograms containing a common reference date, with an assumption of linear or slowly-varying deformation, and subtracted the estimated troposphere.
+
+%  \citep{Havazli2021DetectionThresholdEstimates} almost does what i'm doing (with some type of stratified atmo too), it's just a random multiplier, and it looks like it was almost all simulation
+An alternative approach to correcting for the tropospheric turbulence is to treat it as a stochastic noise source in time series analysis \citep{Simons2007InterferometricSyntheticAperture, Agram2015NoiseModelInsar} and estimate its covariance matrix either through auxiliary data sources \citep{Barnhart2013CharacterizingEstimatingNoise, Parker2015SystematicAssessmentAtmospheric} or directly from InSAR data \citep{Lohman2005SomeThoughtsUse}. 
+%While these approaches provide a measure of uncertainty in the deformation solution, the uncertainties are given for each pixel (or each model parameter), rather than for each visible deformation feature.
+
+In Chapters \ref{CHAP:4-GRL} and \ref{CHAP:5-robust-ts}, we 
 
 
 \section{InSAR Time Series}
