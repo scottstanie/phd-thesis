@@ -231,17 +231,27 @@ Additionally, the description of the interferometric phase in Equation \eqref{eq
 %(maybe systematic for DEM/orbital,)
 %thermal noise
 %
-After removing phase contributions from topography and satellite geometry, the phase each pixel in an interferogram can be written as:
+After removing phase contributions from topography and satellite geometry, the phase at each pixel in an interferogram formed from SLCs $S_1$ and $S_2$ can be written:
 %\citep{Zebker1992DecorrelationInterferometricRadar, Zebker1994AccuracyTopographicMaps, Zebker1997AtmosphericEffectsInterferometric, Hooper2006PersistentScatterRadar, Agram2010PersistentScattererInterferometry}
 \begin{equation}
-	\Delta \phi = \frac{4 \pi}{\lambda} \Delta r +  \Delta \phi_{orb} + \Delta \phi_{dem} + \Delta \phi_{decor} + \Delta \phi_{unwrap} + \Delta \phi_{iono} + \Delta \phi_{tropo}  + \Delta \phi_{n}  
+	\Delta \phi_{1, 2} = \frac{4 \pi}{\lambda} \Delta r + \alpha_2 - \alpha_1 + \Delta \phi_{iono} + \Delta \phi_{orb} + \Delta \phi_{dem} + \Delta \phi_{decor} + \Delta \phi_{unwrap} + \Delta \phi_{scat} + \Delta \phi_{n}  
 %	\Delta \phi = \frac{4 \pi}{\lambda} \Delta_r +  \Delta \phi_{orb} +  \Delta \phi_{orb} +  \Delta \phi_{atmo} + \Delta \phi_{decor} + \Delta \phi_{n}  
 	\label{eq:noise-terms}
 \end{equation}
 where $ \lambda $ is the radar wavelength and $ \Delta r $ is the surface deformation along the radar LOS direction. 
 
-%The noise terms are summarized in Table \ref{tab:ch3-noises}.
-The first two terms, $ \Delta \phi_{orb} $ and $ \Delta \phi_{dem} $, represent systematic errors resulting from imprecise knowledge of the platform's orbital position or topographic height. Orbital errors usually appear as a planar phase ramp in stripmap acquisitions. Although these were common to see in ERS-1 or ENVISAT data, they rarely appear in Sentinel-1 data due to it's high precision orbit determination \citep{Fattahi2014InsarUncertaintyDue}. Errors in the DEM used to remove the topographic phase result in a spatial baseline-dependent phase error \citep{Fattahi2013DemErrorCorrection}. These errors often small in Sentinel-1 data due to the tight control of the repeat orbit tube, but can be significant in mountains or regions with sharp topography changes.
+The $\alpha_i$ terms represent the excess delay introduced by the neutral atmosphere on the $i$th day.
+Tropospheric noise, $\Delta \phi_{tropo} \triangleq \alpha_2 - \alpha_1 $, arises from differences in pressure, temperature, or water vapor content between the two radar acquisitions \citep{Zebker1997AtmosphericEffectsInterferometric}.
+%, which lead to changes in the index of refraction. 
+Since tropospheric noise is the dominant noise for the West Texas study of Chapters \ref{CHAP:4-GRL}-\ref{CHAP:6-blob}, the noise is further detailed in Section \ref{sec:ch3-noise-tropo}.
+
+
+Phase errors can also arise from variations in the index of refraction from due to ionospheric heterogeneities \citep{Gray2000InfluenceIonosphericElectron}. Since the ionosphere is a dispersive medium, the phase effects  $\Delta \phi_{iono}$ are dependent on radar frequency, with the effect at C-band being approximately 1/16 the effect at L-band \citep{Liang2019IonosphericCorrectionInsar}. Additionally, the dependence on frequency enables mitigation techniques which split the radar spectrum into sub-bands to calculate phase corrections \cite{Rosen2010MeasurementMitigationIonosphere}.
+%with the index of refraction varying as $ \propto \frac{1}{f^2} $ \citep{Meyer2006PotentialLowFrequency}. 
+%This means that 
+
+
+The terms $ \Delta \phi_{orb} $ and $ \Delta \phi_{dem} $ represent systematic errors resulting from imprecise knowledge of the platform's orbital position or topographic height. Orbital errors usually appear as a planar phase ramp in stripmap acquisitions. Although these were common to see in ERS-1 or ENVISAT data, they rarely appear in Sentinel-1 data due to it's high precision orbit determination \citep{Fattahi2014InsarUncertaintyDue}. Errors in the DEM used to remove the topographic phase result in a spatial baseline-dependent phase error \citep{Fattahi2013DemErrorCorrection}. These errors often small in Sentinel-1 data due to the tight control of the repeat orbit tube, but can be significant in mountains or regions with sharp topography changes.
 
 Decorrelation errors, $ \Delta \phi_{decor} $, arise from a loss of coherence of the phase between $S_1$ and $S_2$ due to changes in the surface dielectric properties or scattering characteristics \citep{Zebker1992DecorrelationInterferometricRadar, Michaelides2019AlgorithmEstimatingCorrecting, Ansari2018EfficientHighPrecision}. 
 The correlation can be estimated from the complex coherence $\gamma $ of the interferogram \cite{Bamler1998SyntheticApertureRadar}
@@ -256,13 +266,11 @@ When the correlation is very low, the phase unwrapping processing may fail and p
 
 
 
-Phase errors can arise from variations in the index of refraction from due to heterogeneities in the ionosphere, $\Delta \phi_{iono}$ \citep{Gray2000InfluenceIonosphericElectron}, or the troposphere, $\Delta \phi_{tropo}$ \citep{Zebker1997AtmosphericEffectsInterferometric}. Since the ionosphere is a dispersive medium, the phase effects are dependent on radar frequency, 
-%with the index of refraction varying as $ \propto \frac{1}{f^2} $ \citep{Meyer2006PotentialLowFrequency}. 
-%This means that 
-with the effect at C-band being approximately 1/16 the effect at L-band \citep{Liang2019IonosphericCorrectionInsar}. Additionally, the dependence on frequency enables mitigation techniques which split the radar spectrum into sub-bands to calculate phase corrections \cite{Rosen2010MeasurementMitigationIonosphere}.
-Tropospheric noise, $\Delta \phi_{tropo}$, arises from changes to pressure, temperature, or water vapor content in the neutral atmosphere.
-%, which lead to changes in the index of refraction. 
-Since tropospheric noise is the dominant noise for the West Texas study of Chapters \ref{CHAP:4-GRL}-\ref{CHAP:6-blob}, the noise is further detailed in Section \ref{sec:ch3-noise-tropo}.
+
+The term $ \Delta \phi_{scat} $ represents phase introduced by changes to the surface and subsurface scattering properties. This term is separated from the random decorrelation noise since it has recently been shown that systematic, non-random effects can occur from changes to subsurface dielectric properties (e.g. from changes to soil moisture) \citep{Zan2014SarInterferometricModel, Zan2015PhaseInconsistenciesMultiple, Zwieback2016InfluenceSoilMoisture, Michaelides2020QuantifyingPermafrostProcesses}.
+Although this term is noise for the application of deformation monitoring
+\citep{Michaelides2019AlgorithmEstimatingCorrecting, Ansari2021StudySystematicBias}, other recent efforts have attempted to use this term to invert for changes to soil moisture \citep{Zwieback2017SoilMoistureEstimation, Zan2018VegetationSoilMoisture}. 
+Finally, $ \Delta \phi_n $ represents other residual noise terms, including thermal noise from the radar antenna system, that are typically an order of magnitude smaller than the other errors listed.
 
 
 Although these effects have been presented as noise sources for the application of deformation monitoring, they can be the signal of interest in other InSAR applications. For example, the presence of decorrelation indicates a change to the scattering surface properties and can be used for coherent change detection \citep{Simons2007InterferometricSyntheticAperture, Jung2016CoherentChangeDetection}, and the phase variations from the troposphere have been used for atmospheric mapping and meteorological purposes \citep{Hanssen1999HighResolutionWater, Liu2012SatelliteRadarInterferometry}.
@@ -363,7 +371,7 @@ The refractivity of the troposphere is commonly decomposed into a hydrostatic, w
 where $ P $ is the total atmospheric pressure in hPa, $ T $ is the atmospheric temperature in Kelvin,  $ e $ is the partial pressure of water vapor in hPa, and W is the liquid water content of clouds in g/m$^3 $ 
 The coefficients $ k_1, k_2^{'}, k_3 $ and $ k_4 $ are constants estimated from laboratory measurements, commonly taken to be $ k_1 = 77.6$ , $ k_2^{'} = 23.3 $, $ k_3= 3.75 \cdot 10^5 $, and $ k_4 = 1.45 $ from \cite{Smith1953ConstantsEquationAtmospheric} and \cite{Solheim1999PropagationDelaysInduced}.
 %Although absolute delays decrease at lower altitudes as the signal travels through more of the atmosphere, an interferogram always measures a \emph{difference} of delays from two SAR acquisitions, and hence difference of refractivity. This means that although the hydrostatic delay is of the order of a few meters and the wet delay is $ \sim10$s of centimeters, phase artifacts in interferograms are more commonly caused by the spatial variations of the wet component of refractivity \citep{Zebker1997AtmosphericEffectsInterferometric, Hanssen2001RadarInterferometryData}. 
-The hydrostatic delay, caused by dry air pressure and temperature, is on the order of a few meters; however, it varies slowly laterally and it is often assumed to be vertically stratified (i.e. varying only with elevation) for areas smaller than $100 \times 100$ km \citep{Doin2009CorrectionsStratifiedTropospheric}.
+The hydrostatic delay is on the order of a few meters; however, it varies slowly laterally and it is often assumed to be vertically stratified (i.e. varying only with elevation) for areas smaller than $100 \times 100$ km \citep{Doin2009CorrectionsStratifiedTropospheric}.
 The wet component, caused by variations in water vapor content, is smaller in absolute terms ($ \sim10$s of centimeters) but has significant lateral variations at short length scales. The delay from the liquid component is often negligible (1-2 millimeters or less) but can be several centimeters in the presence of tall cumulonimbus clouds \citep{Liu2012SatelliteRadarInterferometry}.
 For the purposes of InSAR analysis, noise from tropospheric delay is usually divided into a stratified component, which correlates with height \citep{Hanssen2001RadarInterferometryData, Doin2009CorrectionsStratifiedTropospheric}, and a turbulent component that is random at time scales longer than a day \citep{Emardson2003NeutralAtmosphericDelay, Onn2006ModelingWaterVapor}. 
 
