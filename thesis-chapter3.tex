@@ -436,11 +436,11 @@ While these correction methods show promise in certain study areas, the spatial 
 \section{InSAR Time Series}
 \label{sec:ch3-insar-ts}
 
-stacking for avg rate
+- stacking
 
-SBAS linear system. doesn't need to be short baseline. just a way to solve for the phase at each date
+- SBAS linear system (doesn't need to be short baseline, just a way to solve for the phase at each date)
 
-Phase linking approaches solve for this using an optimization on each pixels time-covariance matrix.
+- mention phase linking approaches solve for this using an optimization on each pixels time-covariance matrix.
 
 
 % Yunjun thesis: the vector of interferometric phase residual that does not fulfill the zero phase closure of interferogram triplets. It includes the decorrelation noise, phase contribution due to the change of dielectric properties of ground scatterers such as soil moisture (De Zan et al., 2014; Morrison et al., 2011), processing inconsistency such as filtering, multilooking, coregistration and interpolation errors (Agram and Simons, 2015; Hanssen, 2001), and/or phase-unwrapping errors.
@@ -517,7 +517,7 @@ We can express $u_e$ and $u_u$ as:
 where  $ \beta = {\alpha_{a,e} \alpha_{d,u}- \alpha_{d,e} \alpha_{a,u}} $.
 
 Because Sentinel-1 satellites are operating in a near-polar orbit, the north look coefficients $\alpha_{a,n}$ and $\alpha_{d,n}$ are both relatively small. Ignoring 1 cm northward motion in $u_n$ only leads to $\sim$ 0.1-0.2 mm error in $u_e$ and $\sim$ 1 mm error in $u_u$ at most locations. 
-TODO: REPHRASE THIS \cite{Kim2018AssociationLocalizedGeohazards} detected several localized deformation features within the Delaware Basin related to wastewater injection, CO2 injection, and hydrocarbon production using Sentinel-1 InSAR data.  Our LOS decomposition results are consistent with their study at these locations. For example, in a 12 km x 12 km region centered on a wastewater injection well, we observed $\sim$ 5.5 cm of uplift and $\sim$1.2 cm of east-west motion between November 2014 and April 2017 (Figure \ref{fig:injection-kim-lu}). 
+%TODO: REPHRASE THIS \cite{Kim2018AssociationLocalizedGeohazards} detected several localized deformation features within the Delaware Basin related to wastewater injection, CO2 injection, and hydrocarbon production using Sentinel-1 InSAR data.  Our LOS decomposition results are consistent with their study at these locations. For example, in a 12 km x 12 km region centered on a wastewater injection well, we observed $\sim$ 5.5 cm of uplift and $\sim$1.2 cm of east-west motion between November 2014 and April 2017 (Figure \ref{fig:injection-kim-lu}). 
 
 
 
@@ -530,11 +530,11 @@ TODO: REPHRASE THIS \cite{Kim2018AssociationLocalizedGeohazards} detected severa
 
 
 
-
-\subsection{Uncertainty Propagation through LOS decomposition}
-\label{sec:ch3-decomp-uq-prop}
-Since the LOS decomposition is a linear operation, given two LOS uncertainties, we can use linear uncertainty propagation theory to determine the vertical/horizontal uncertainties.
-
-TODO: move this to appendix or not?
-
+%
+%\subsection{Uncertainty Propagation through LOS decomposition}
+%\label{sec:ch3-decomp-uq-prop}
+%Since the LOS decomposition is a linear operation, given two LOS uncertainties, we can use linear uncertainty propagation theory to determine the vertical/horizontal uncertainties.
+%
+%TODO: move this to appendix or not?
+%
 
