@@ -260,7 +260,7 @@ The correlation can be estimated from the complex coherence $\gamma $ of the int
 where $ S_2^{*} $ is the complex conjugate of $ S_2 $ and $ \left\langle \cdot \right\rangle  $ denotes the statistical expectation operator. The expectation is defined as an ensemble average, but in practice it is estimated using some spatial window of pixels. 
 The magnitude of this quantity $ \rho = |\gamma | $ is called the \emph{correlation} (or sometimes called the coherence), and varies from $ 0 $, indicating a complete loss of signal coherence, to $ 1 $, indicating perfectly correlated radar echoes.
 %Decorrealtion 
-When the correlation is very low, the phase unwrapping processing may fail and produce patches of pixels which have $2 \pi$ offsets from the correct value. These are known as phase unwrapping errors, $ \Delta \phi_{unwrap}  $.
+When the correlation is very low, the phase unwrapping processing may fail and produce patches of pixels which have $2 \pi$ offsets from the correct value. These are known as phase unwrapping errors, $ \Delta \phi_{unwrap}  $. For study areas which regularly have strong decorrelation (e.g. agricultural areas), the technique known as persistent scatterer interferometry is used to overcome decorrelation by locating the phase-stable pixels which maintain coherence over long periods of time \citep{Ferretti2001PermanentScatterersSar, Agram2010PersistentScattererInterferometry, Hooper2006PersistentScatterRadar}.
 %Note that because the angle of $\gamma$ is the interferometric phase, $\gamma$ may be considered the primary interferometric observable \citep{Michaelides2020QuantifyingPermafrostProcesses}.
 
 
@@ -426,7 +426,7 @@ The $\sim 5$ km storm cells are too small for the GMAO weather model to predict,
 	\centering
 	\includegraphics[width=1.0\textwidth]{figures/chapter3-sar/figure_tropo_correct_storm.pdf}
 	\caption[West Texas tropospheric correction for thunderstorm]{
-		(a) Weather conditions visible from the GOES-16 weather satellite on July 23rd, 2019 at the same time as the Sentinel-1 acquisition
+		(a) Weather conditions visible from the GOES satellite on July 23rd, 2019 at the same time as the Sentinel-1 acquisition
 		(b) Unwrapped interferogram from Jan. 12, 2019 to July 23, 2019. Blue indicates an increase in relative LOS delay
 		(c) Tropospheric correction predicted from delays computed by the GMAO weather model.
 		(d) Corrected interferogram (panel (b) - panel (c))
@@ -440,7 +440,7 @@ The second example illustrates strong tropospheric noise resulting from a low-pr
 	\centering
 	\includegraphics[width=1.0\textwidth]{figures/chapter3-sar/figure_tropo_correct_wave.pdf}
 	\caption[West Texas tropospheric correction attempt for pressure front]{
-		(a) Weather conditions visible from the GOES-16 weather satellite on May 29th, 2018 at the same time as the Sentinel-1 acquisition.
+		(a) Weather conditions visible from the GOES satellite on May 29th, 2018 at the same time as the Sentinel-1 acquisition.
 		(b) Unwrapped interferogram from Jan. 5, 2018 to May 29, 2018. Blue indicates an increase in relative LOS delay.
 		(c) Tropospheric correction predicted from delays computed by the GMAO weather model.
 		(d) Corrected interferogram (panel (b) - panel (c))
@@ -467,9 +467,12 @@ While these correction methods show promise in certain study areas, the spatial 
 \section{InSAR Time Series}
 \label{sec:ch3-insar-ts}
 
+There are many techniques which fall under the umbrella of ``InSAR time series analysis``, or ``multi-temporal InSAR annalysis''.
+
 - stacking
 
 - SBAS linear system (doesn't need to be short baseline, just a way to solve for the phase at each date)
+%\citep{Schmidt2003TimeDependentLand} and \citep{Berardino2002NewAlgorithmSurface}.
 
 - mention phase linking approaches solve for this using an optimization on each pixels time-covariance matrix.
 
@@ -480,7 +483,7 @@ While these correction methods show promise in certain study areas, the spatial 
 
 
 
-
+%Since the turbulence noise cannot regularly be corrected, the noise statistics can be estimated.... \citep{Emardson2003NeutralAtmosphericDelay, Lohman2005SomeThoughtsUse}.
 %Early efforts to correct or mitigate the turbulent atmospheric noise used a combination of high pass temporal filtering and low pass spatial filtering \citep{Ferretti2001PermanentScatterersSar, Berardino2002NewAlgorithmSurface}.
 %- but as \citep{Liu2012SatelliteRadarInterferometry} notes, gaps in the acquistion, or strong non-Gaussianity from, e.g., severe thunderstorms, break the assumptions of equal variance among APS dates that these filters require.
 %Several research efforts have attempted to produce estimates of the atmospheric phase delay for each SAR acquisition directly from a time series of interferograms. \citep{Liu2012SatelliteRadarInterferometry} formulated the problem as a linear system using a network of small baseline interferograms. Since the problem of estimating both surface deformation and atmospheric delay is an ill-posed problem given only differential InSAR measurements, the authors assumed zero or known deformation of the study region, and they constrained the estimated troposphere to have zero mean. In an attempt to denoise time series of surface deformation, \citep{Tymofyeyeva2015MitigationAtmosphericPhase} averaged sets of redundant interferograms containing a common reference date, with an assumption of linear or slowly-varying deformation, and subtracted the estimated troposphere. 
