@@ -460,50 +460,82 @@ For deformation signals which occur as a transient event
 %(which includes all processes quicker than one SAR acquisition interval) 
 or with a constant rate, stacking consists of averaging multiple interferograms (possibly with different weights for each interferogram) which all contain the deformation signal \citep{Simons2007InterferometricSyntheticAperture, Zheng2019ImagingCascadiaSlow}. 
 %Stacking approaches are the simplest conceptually and the earliest developed to mitigate tropospheric noise. 
-For example, suppose an earthquake occurred at a known date, and a set of $M$ interferograms are formed from $N$ SAR acquisitions (where $ N/2 \leq M \leq (N + 1)N / 2 $) which all span the earthquake. To estimate the coseismic deformation $\theta$ at each pixel of the interferograms, the simplest stacking solution is
+For example, suppose an earthquake occurred at a known date, and we would like to estimate the coseismic displacement $\theta$ that occurred using a set of $M$ interferograms which all span the earthquake date. For each ground pixel location, we can collect the phase differences measurements into a vector $\bm{\Delta \phi} \in \mathbb{R}^{M} $.
+%\begin{equation}
+%	\bm{\Delta \phi} = \left[ \Delta \phi_{1,2}, \Delta \phi_{1,3} , \ldots  \right]^T
+%\end{equation}
+To estimate the $\theta$, the simplest stacking solution is
 \begin{equation}
-	\theta = \frac{\lambda }{4 \pi} \frac{1}{M} \sum_i^M \Delta \phi_i ,
+	\theta = \frac{\lambda }{4 \pi} \frac{1}{M} \sum_i^M \bm{\Delta \phi}_i ,
 	\label{eq:ch3-stacking-1}
 \end{equation}
-where $\Delta \phi_i$ is phase the $i^{th}$ interferogram, and the factor $  \frac{\lambda }{4 \pi} $ converts the phase from radians to centimeters.
+%consists of the $M$ phase differences for one ground pixel location, 
+where $\bm{\Delta \phi}_i$ is $i$th element of the vector, and the factor $  \frac{\lambda }{4 \pi} $ converts the phase from radians to centimeters.
 For constant rate ground deformation, one approach based on \citep{Sandwell1998PhaseGradientApproach} to calculate the average LOS velocity $v_{avg}$ of each ground pixel is to compute
 \begin{equation}
 %	v_{avg} = \frac{\lambda }{4 \pi} \frac{\sum_{i \in G} d_i}{\sum_{i \in G} t_i}
-	v_{avg} = \frac{\lambda }{4 \pi} \frac{\sum_i \Delta \phi_i}{\sum_i t_i}
+	v_{avg} = \frac{\lambda }{4 \pi} \frac{\sum_i \bm{\Delta \phi}_i}{\sum_i \bm{\Delta t}_i }
 	\label{eq:ch3-stacking-2}
 \end{equation}
-where $\Delta \phi_i$ is phase the $i^{th}$ interferogram and $ t_i $ is the temporal baseline (i.e. time span between SAR acquisitions) of the interferogram.
-%where $G$ is a subset of interferograms that were formed using two SAR scenes acquired within the time period.
-% The LOS measurement (in cm) and the temporal baseline of the $i^{th}$ interferogram in $G$ are written as $d_i$ and $ t_i $ respectively
-Note that this method relies on the assumption that the noise sources are uncorrelated (or weakly correlated) over time, as has been shown for tropospheric turbulence \citep{Emardson2003NeutralAtmosphericDelay}.
+where $ \bm{\Delta t}_i $ is the temporal baseline of the interferogram (i.e. the time span $t_k - t_j$  for interferogram $ \Delta \phi_{j, k} $). %between SAR acquisitions at $t_j$ and $t_k$
+%As noted by \cite{Simons2007InterferometricSyntheticAperture}, this method is equivalent to converting the interferogram measurements to rates and performing an averaging weighted by the respective time span.
 
-The Small Baseline Subset (SBAS) approach from \cite{Berardino2002NewAlgorithmSurface} formulates a linear estimation problem to solve for the phase at each SAR acquisition.
-Given a set of M interferograms that have been unnwrapped and zero-referenced to a common location, the measurement vector
-\begin{equation}
-	\bm{\Delta \phi} = \left[ \Delta \phi_1 \ldots \Delta \phi_M \right]^T
-\end{equation}
-consists of the $M$ interferogram measurements for one ground pixel location. 
-The goal is to solve for the unknown phase values $ \bm{\phi} $ which are contain the total LOS delay for each SAR acquisition. Note that each element $\phi_i$ consists of all elements of Equation \eqref{eq:ch3-insar-noise-terms} which affect the phase of a SAR acquisition (as opposed to individual interferogram noise terms); this includes the deformation phase, $\frac{4 \pi}{\lambda} \Delta r$, as well as the atmospheric delay terms, $\alpha_i$.
-%The $\iota$
-% unknown phase values associated with the deformation (AND DELAY! refer to the noise equationn)
-%Accordingly, the expression (6) defines a system of equations in unknowns that may be organized in the following matrix representation
-
-%Note that \cite{Berardino2002NewAlgorithmSurface} solves each pixel independently, making parallel implementations straight forward.
-
-
-
-%- SBAS linear system (doesn't need to be short baseline, just a way to solve for the phase at each date)
-%\citep{Schmidt2003TimeDependentLand} and \citep{Berardino2002NewAlgorithmSurface}.
-%In practical cases, as for the European Remote Sensing (ERS) satellites ERS-1 and ERS-2 sensors, the available acquisitions are generally distributed in small baseline (SB) subsets, separated by large “baselines”; accordingly, only one deformation time series for each subset can be easily obtained... ..the limitation to exploit all the available acquisitions for the generation of an overall deformation time-series is evident
-%...demonstrated that small man-made features remain very correlated over time [14], [15], although interferograms over these areas only show pointwise information.
-% ``Additionally, an atmospheric phase artifacts filtering operation is carried out on the computed space–time deformation measurements following the lines of the solution developed for the PS technique [16], [17]; in our case, the filtering operation takes benefit from the high spatial density of the imaged pixels''
-% REFER TO CHAPTER 5 at this line
 
 
 % Yunjun thesis: the vector of interferometric phase residual that does not fulfill the zero phase closure of interferogram triplets. It includes the decorrelation noise, phase contribution due to the change of dielectric properties of ground scatterers such as soil moisture (De Zan et al., 2014; Morrison et al., 2011), processing inconsistency such as filtering, multilooking, coregistration and interpolation errors (Agram and Simons, 2015; Hanssen, 2001), and/or phase-unwrapping errors.
 
 %An alternative objective function to solve equation (2.1) is minimizing the L2-norm of the residual of phase velocity of adjacent acquisitions (equation (16) in Berardino et al. (2002)). Optimizations with both objective functions give nearly identical solutions for a fully connected network
 
+
+
+The Small Baseline Subset (SBAS) approach from \cite{Berardino2002NewAlgorithmSurface} formulates a linear estimation problem to solve for the phase at each SAR acquisition.
+Suppose that the $M$ interferograms are formed from $N$ SAR acquisitions, where $ \frac{N}{2} \leq M \leq \frac{N(N - 1)}{2} $, and all interferograms have been unnwrapped and zero-referenced to a common location.
+To solve for the LOS phase delay for each SAR acquisition $ \bm{\phi} = \left[\phi_0, \phi_1, \ldots, \phi_{N-1} \right]^T $, 
+%we organize the system of equations as
+we write the functional model of the linear system as
+\begin{equation}
+	\bm{A \phi} = \bm{\Delta \phi} + \bm{\epsilon} . \label{eq:ch3-sbas-A}
+\end{equation}
+where  $\bm{A}$ is the system design matrix, and $ \bm{\epsilon}  $ is the vector of interferogram-specific noise sources (e.g. $ \Delta \phi_{decor}, \Delta \phi_{unwrap}, \Delta \phi_{scat}, \Delta \phi_{n} $ from Equation \eqref{eq:ch3-insar-noise-terms}).
+The matrix $\bm{A}$ is an incidence-like matrix where the row corresponding to measurement $ \Delta \phi_{j,k} \triangleq \phi_k - \phi_j $ has $1$ in the $k$th column and $-1$ in the $j$th column.
+% (for all $j>0$).
+Since interferograms are relative measurements, the first date's phase cannot be constrained and is conventionally taken to be $\phi_0 = 0$. Therefore we omit the first column of the $ \bm{A} $ matrix containing $-1$ entries corresponnding to $\phi_0$, leaving $N-1$ remaining terms in the unknown vector $ \bm{\phi} = \left[\phi_1, \ldots, \phi_{N-1} \right]^T $.
+When $ \bm{A} $ is full column rank, the solution for $ \bm{\phi} $ can be obtained through least squares, $ \bm{\phi} = (\bm{A}^T \bm{A})^{-1}\bm{A}^T \bm{\Delta \phi}
+ $, equivalent to minimizing the $L_2$ norm of the residual vector $\norm{\bm{A \phi} - \bm{\Delta \phi}}^2_2 $.
+
+A common alternative to Equation \eqref{eq:ch3-sbas-A} is to solve for the phase velocity between each SAR acquisition $\bm{v} = [v_1, \ldots, v_{N-1}]^T$ where $ v_i = (\phi_i - \phi_{i-1})/(t_i - t_{i-1} ) $.
+The linear system is now written as
+\begin{equation}
+	\bm{B v} = \bm{\Delta \phi} + \bm{\epsilon}, \label{eq:ch3-sbas-B}
+\end{equation}
+where the row of $\bm{B}$
+corresponding to measurement $ \Delta \phi_{j,k} $ has $t_i - t_{i-1}$ in the $i$th column for $j < i \leq k$ and 0 elsewhere. 
+After solving Equation \eqref{eq:ch3-sbas-B}, $ \bm{v} $ is integrated to obtain $ \bm{\phi} $.
+
+The rationale behind solving for $\bm{v}$ was that for early sensors such as ERS-1 and ERS-2, the available acquisitions were often contained subsets of images with small spatial baselines that were separated from other groups by either large temporal or spatial baselines. 
+When $\bm{\Delta \phi}$ contains isolated subsets of interferograms, $A$ is not full column rank and Equation \eqref{eq:ch3-sbas-A} is solved with a pseudo-inverse $A^{\dagger}$ using the singular value decomposition (SVD) \citep{Strang2006LinearAlgebraIts}. The SVD approach for rank-deficient systems produces a minimum norm solution vector; the authors of \cite{Berardino2002NewAlgorithmSurface} found that minimizing the norm of the velocity vector $ \bm{v} $ produced more physically plausible deformation results than minimizing the norm of $ \bm{\phi} $. We note that for recent missions like Sentinel-1 whose orbit is tightly controlled, it is often possible to create a connected network of interferograms. This means matrix $ \bm{A} $ is full rank and can be solved with least squares, and the formulations of Equations \eqref{eq:ch3-sbas-A} and \eqref{eq:ch3-sbas-B} lead to the same end result.
+
+
+Each element $\phi_i$ consists of all terms in Equation \eqref{eq:ch3-insar-noise-terms} which affect the phase of a SAR acquisition and all interferograms containing that acquisition (as opposed to interferogram-specific noise terms); this includes the deformation phase, $\frac{4 \pi}{\lambda} \Delta d$, as well as the atmospheric delay terms, $\alpha_i$.
+Since the deformation is usually the quantity of interest, there are several approaches to separating $ \Delta d $ from $\Delta \alpha$.
+If a functional model of deformation is known to exist (e.g. linear, transient jumps \citep{Chen20142010SlowSlip, Fielding2017SurfaceDeformationNorth}, seasonal variations \citep{Murray2018ShortLivedPause}, or a combination \citep{Riel2018QuantifyingGroundDeformation}), a model fit can be performed on the noisy $ \Delta \phi $ time series to extract the deformation parameters of interest.
+Alternatively, the authors of \cite{Berardino2002NewAlgorithmSurface} used spatial and temporal filters on $\bm{\Delta \phi}$, relying on the fact that the turbulent component of $\Delta \alpha$ is uncorrelated in time \citep{Emardson2003NeutralAtmosphericDelay} while most deformation sources show strong temporal correlation.
+These filters are expanded upon and compared in Chapter \ref{CHAP:5-robust-ts}, where a new robust filter is presented to separate deformation from atmospheric noise.
+
+% ``Additionally, an atmospheric phase artifacts filtering operation is carried out on the computed space–time deformation measurements following the lines of the solution developed for the PS technique [16], [17]; in our case, the filtering operation takes benefit from the high spatial density of the imaged pixels''
+% REFER TO CHAPTER 5 at this line
+%Note that this method relies on the assumption that the noise sources are uncorrelated (or weakly correlated) over time, as has been shown for tropospheric turbulence \citep{Emardson2003NeutralAtmosphericDelay}.
+
+
+%%%% weightingn vector? %%% weighted least squares compare
+
+%% Appendix showing A/B? and maybe cumulative vector C? %%
+
+%Note that \cite{Berardino2002NewAlgorithmSurface} solves each pixel independently, making parallel implementations straight forward.
+
+
+
+%\citep{Schmidt2003TimeDependentLand} and \citep{Berardino2002NewAlgorithmSurface}.
 
 
 %Since the turbulence noise cannot regularly be corrected, the noise statistics can be estimated.... \citep{Emardson2003NeutralAtmosphericDelay, Lohman2005SomeThoughtsUse}.
