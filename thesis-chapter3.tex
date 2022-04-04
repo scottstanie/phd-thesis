@@ -203,7 +203,7 @@ This means that $\Delta \phi$ changes based on whether the satellites are viewin
 \end{figure}
 
 
-In repeat-pass InSAR (sometimes called \emph{differential} InSAR, or DInSAR), a radar platform acquires two SAR images over an area acquired at different times, $t_1$ and $t_2$ (Figure \ref{fig:ch3-insar-geometry-defo}). Assuming that the topography is known and can be removed from the phase measurement, the remaining InSAR phase at each pixel measures the change in range along the radar LOS direction:
+In repeat-pass InSAR (sometimes called \emph{differential} InSAR, or DInSAR or DIfSAR)), a radar platform acquires two SAR images over an area acquired at different times, $t_1$ and $t_2$ (Figure \ref{fig:ch3-insar-geometry-defo}). Assuming that the topography is known and can be removed from the phase measurement, the remaining InSAR phase at each pixel measures the change in range along the radar LOS direction:
 \begin{equation}
 	\Delta \phi = \frac{4 \pi}{\lambda}(r_2 - r_1)   \label{eq:insar-phase}
 \end{equation} 
@@ -289,6 +289,7 @@ Although these effects have been presented as noise sources for the application 
 
 
 \subsection{Visual Example of Common Noise Sources}
+\label{sec:ch3-noise-example}
 
 In high signal to noise ratio (SNR) interferograms (e.g. for large magnitude earthquakes such as \cite{Massonnet1993DisplacementFieldLanders}), one can estimate the deformation magnitude by simply ``counting the fringes'' (i.e. visually estimating the number of $ 2 \pi $ cycles) and multiplying by $\lambda/2$. However, it is more common for an interferogram to contain many visual features corresponding to noise terms in Equation \eqref{eq:noise-terms}. These noise sources can often be visually identified by InSAR experts, but they can add considerable difficulty for newer users without background knowledge of the study area.
 
@@ -390,6 +391,7 @@ For the purposes of InSAR analysis, noise from tropospheric delay is usually div
 %Figure- GOES for storm cloud, and for weather front. Maybe there is where cite the reason why can't correct always.
 
 
+
 Previous studies have made advances in correcting for the stratified component of tropospheric noise.  Several empirical approaches have been developed to fit linear or power-law relationships between the unwrapped phase and elevation of coherent pixels within unnwrapped interferograms \citep{Elliott2008InsarSlipRate, Lauknes2011InsarTroposphericStratification, Bekaert2015SpatiallyVariablePower, Zebker2021AccuracyModelFree, Murray2021ClusterBasedEmpirical}. Under the assumption that the deformation does not correlate with topography, these approaches can be effective and simple to implement. For example, Figure \ref{fig:ch3-hawaii-strat} shows the unwrapped interferograms from the area on top of Mauna Kea indicated in Figure \ref{fig:ch3-hawaii-example}c. Although the interferogram appears to show a bowl shape deformation (Figure \ref{fig:ch3-hawaii-strat}a), the phase is actually closely correlated with the topography (Figure \ref{fig:ch3-hawaii-strat}b-c). Fitting and removing a linear trend from the phase vs. elevation plot mitigates the stratified atmospheric noise in this case. However, these approaches can be less effective in regions with multiple weather patterns where the phase-elevation correlation can vary dramatically in space \cite{Murray2021ClusterBasedEmpirical}.
 
 \begin{figure}[!h]
@@ -403,20 +405,17 @@ Previous studies have made advances in correcting for the stratified component o
 	\label{fig:ch3-hawaii-strat}
 \end{figure}
 
-%But limitations....
-
-%Turbulence not captured by weather models
-
 
 Many efforts have advanced stratified noise correction using auxiliary sources of data, including global atmospheric models (GAMs) \citep{Doin2009CorrectionsStratifiedTropospheric, Jolivet2011SystematicInsarTropospheric, Jolivet2014ImprovingInsarGeodesy, Cao2021AdvancedInsarTropospheric}, GPS zenith delay measurements \citep{Onn2006ModelingWaterVapor, Yu2017GenerationRealTime}, and external satellite measurements from sensors such as the Moderate Resolution Imaging Spectroradiometer (MODIS) \citep{Li2005InterferometricSyntheticAperture, Barnhart2013CharacterizingEstimatingNoise} or the Medium Resolution Imaging Spectrometer (MERIS)  \citep{Ding2008AtmosphericEffectsInsar}.
 Several authors have attempted to create off-the-shelf correction services or toolboxes from these data sources. For example,	
 \cite{Yu2018GenericAtmosphericCorrection} combined information from GAMs and available GPS zenith delay measurements to create the Generic Atmospheric Correction Online Service (GACOS) for estimating tropospheric noise in InSAR data. \cite{Maurer2021RaiderRaytracingAtmospheric} created a library for ray-tracing the LOS paths through GAM-predicted delays to create correction products.
+
 %Due to the limited spatial and temporal resolution of weather models and GPS data, GACOS is more effective in removing the stratified tropospheric noise \citep{Doin2009CorrectionsStratifiedTropospheric} than the random turbulent tropospheric noise \citep{Emardson2003NeutralAtmosphericDelay}. 
 %We found that GACOS does not produce substantial corrections in most Sentinel-1 West Texas interferograms for areas outside the main area of interest (e.g. Figure \ref{fig:GACOS} (a)-(c)).
 
 
 Below we illustrate correction attempts for two Sentinel-1 (path 78) interferograms over West Texas using GAM predictions (Figures \ref{fig:ch3-tropo-correct-wave}, \ref{fig:ch3-tropo-correct-storm}). 
-The corrections are produced by the Raytracing Atmospheric Delay Estimation for Radar (RAiDER) library \citep{Maurer2021RaiderRaytracingAtmospheric}, which generates a troposphere correction product from a user-selected GAM. Here we use NASA's Global Modeling and Assimilation Office (GMAO) reanalysis weather models, which are interpolated by the RAiDER library to the same pixel spacing as the interferograms ($\sim$ 500 m here). We also compare the weather conditions that are visible at the secondary SAR acquisition time \footnote{For both Figures \ref{fig:ch3-tropo-correct-wave}, \ref{fig:ch3-tropo-correct-storm}, the earlier SAR acquisition time occurs during winter, which is at after sunset for West Texas. Most of the tropospheric noise in these winter-summer interferograms comes from the summer SAR acquisition.} using the Geostationary Operational Environmental Satellites (GOES).
+The corrections are produced by the Raytracing Atmospheric Delay Estimation for Radar (RAiDER) library \citep{Maurer2021RaiderRaytracingAtmospheric}, which generates a troposphere correction product from a user-selected GAM. Here we use NASA's Global Modeling and Assimilation Office (GMAO) reanalysis weather models, which are interpolated by the RAiDER library to the same pixel spacing as the interferograms ($\sim$ 500 m here). We also compare the weather conditions that are visible at the secondary SAR acquisition time \footnote{For both Figures \ref{fig:ch3-tropo-correct-wave}, \ref{fig:ch3-tropo-correct-storm}, the earlier SAR acquisition time occurs during winter, which is after sunset for Sentinel-1 path 78 over West Texas. Most of the tropospheric noise in these winter-to-summer interferograms comes from the summer SAR acquisition.} using the Geostationary Operational Environmental Satellites (GOES).
 
 In the first example, the secondary acquisition of the interferogram contains a summer thunderstorm (Figure \ref{fig:ch3-tropo-correct-storm}a). The tall cumulonimbus clouds create areas of excess delay of $>10$ cm to the interferogram over short scale lengths (under 5 km, Figure \ref{fig:ch3-tropo-correct-storm}b). 
 Note that the different imaging geometries of the Sentinel-1 satellites in low Earth orbit and the GOES satellites in geostationary orbit mean the pixels of Figure \ref{fig:ch3-tropo-correct-storm}a and Figure \ref{fig:ch3-tropo-correct-storm}b do not fully align, but cover approximately the same area.
@@ -467,14 +466,17 @@ While these correction methods show promise in certain study areas, the spatial 
 \section{InSAR Time Series}
 \label{sec:ch3-insar-ts}
 
-There are many techniques which fall under the umbrella of ``InSAR time series analysis``, or ``multi-temporal InSAR annalysis''.
+%There are many techniques which fall under the umbrella of InSAR time series techniques, (sometimes called ``multi-temporal InSAR'' or MT-InSAR).
+Since many noise sources cannot be distinguished from deformation in a single interferogram (e.g. Figure \ref{fig:ch3-hawaii-example}), it is common to analyze multiple interferograms to quantify and mitigate InSAR noise sources.
+InSAR time series techniques (sometimes called ``multi-temporal InSAR'' or MT-InSAR) are a class of methods for extracting information about the temporal evolution of surface deformation or other geophysical parameters of interest.  Most multi-temporal methods have generally been classified as belonging to one of the following categories: 1) stacking \citep{Zebker1997AtmosphericEffectsInterferometric, Sandwell1998PhaseGradientApproach}, 2) small-baseline approach \citep{Berardino2002NewAlgorithmSurface}, or 3) persistent-scatterer (PS) \citep{Ferretti2001PermanentScatterersSar, Hooper2006PersistentScatterRadar}. In the past decade, a fourth category of ``phase-linking`` approaches have been based on analysis of the complex covariance matrix of SAR image stacks \citep{Guarnieri2008ExploitationTargetStatistics, Ferretti2011NewAlgorithmProcessing, Ansari2018EfficientHighPrecision}. In the following section, we focus on (1) and (2).
+
+%only be determined with a series of interferograms from SAR acquisitions over time,
+
 
 - stacking
 
 - SBAS linear system (doesn't need to be short baseline, just a way to solve for the phase at each date)
 %\citep{Schmidt2003TimeDependentLand} and \citep{Berardino2002NewAlgorithmSurface}.
-
-- mention phase linking approaches solve for this using an optimization on each pixels time-covariance matrix.
 
 
 % Yunjun thesis: the vector of interferometric phase residual that does not fulfill the zero phase closure of interferogram triplets. It includes the decorrelation noise, phase contribution due to the change of dielectric properties of ground scatterers such as soil moisture (De Zan et al., 2014; Morrison et al., 2011), processing inconsistency such as filtering, multilooking, coregistration and interpolation errors (Agram and Simons, 2015; Hanssen, 2001), and/or phase-unwrapping errors.
