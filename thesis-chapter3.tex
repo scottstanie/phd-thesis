@@ -178,9 +178,10 @@ The intuition behind this surprising result is that, unlike with RAR, a smaller 
 Interferometric synthetic aperture radar (InSAR) refers to a broad class of applications that exploit the phase difference between two SAR images to obtain extra information beyond the 2D locations of points \citep{Bamler1998SyntheticApertureRadar}. The most common applications are generating topography maps \citep{Graham1974SyntheticInterferometerRadar, Zebker1986TopographicMappingInterferometric} and mapping surface deformation \citep{Goldstein1987InterferometricRadarMeasurement, Gabriel1989MappingSmallElevation, Li1990StudiesMultibaselineSpaceborne, Massonnet1993DisplacementFieldLanders, Rosen2000SyntheticApertureRadar}. 
 The InSAR measurement is made after precisely coregistering and resampling two SLC images $S_1$ and $S_2$ to the same coordinates. The phase measurement $I_{1,2}$ is formed by multiplying the first SLC $S_1$ by the complex conjugate of the second $S_2$: 
 \begin{equation}
-	I_{1,2} = S_1 S_2^{*} = A_1 A_2 e^{j \left(\phi_1 - \phi_2 \right)}  \label{eq:insar-conj-mult}
+%	I_{1,2} = S_1 S_2^{*} = A_1 A_2 e^{j \left(\phi_1 - \phi_2 \right)}  \label{eq:insar-conj-mult}
+I_{1,2} = S_1 S_2^{*} = A_1 A_2 e^{j \Delta \phi_{1,2}}  \label{eq:insar-conj-mult}
 \end{equation}
-where $S_k = A_k e^{j \phi_k}$, $A_k$ is the amplitude of the $k$th image, and the phase $\phi_k = -\frac{4 \pi}{\lambda} r_k$. The image $I$ is called an \emph{interferogram},  and the quantity $\Delta \phi = \phi_1 - \phi_2$ is the interferometric phase.
+where $S_k = A_k e^{j \phi_k}$, $A_k$ is the amplitude of the $k$th image, and the phase $\phi_k = -\frac{4 \pi}{\lambda} r_k$. The image $I$ is called an \emph{interferogram},  and the quantity $\Delta \phi_{1,2} \triangleq  \phi_1 - \phi_2$ is the interferometric phase.
 
 
 For topography mapping, two SAR antennas are separated by a distance in the across-track direction and each acquires a SAR image simultaneously\footnote{The acquisitions can also be at different times, under the assumption that no ground deformation has occurred.} (Figure \ref{fig:ch3-insar-geometry-topo}). The baseline causes the two radars to view the same point on the ground with a slight change in angle.
@@ -205,12 +206,12 @@ This means that $\Delta \phi$ changes based on whether the satellites are viewin
 
 In repeat-pass InSAR (sometimes called \emph{differential} InSAR, or DInSAR or DIfSAR)), a radar platform acquires two SAR images over an area acquired at different times, $t_1$ and $t_2$ (Figure \ref{fig:ch3-insar-geometry-defo}). Assuming that the topography is known and can be removed from the phase measurement, the remaining InSAR phase at each pixel measures the change in range along the radar LOS direction:
 \begin{equation}
-	\Delta \phi = \frac{4 \pi}{\lambda}(r_2 - r_1)   \label{eq:insar-phase}
+	\Delta \phi_{1,2} = \frac{4 \pi}{\lambda}(r_2 - r_1)   \label{eq:ch3-insar-phase-0noise}
 \end{equation} 
 %In the repeat pass setup, a small spatial baseline between the satellite at the two times is desired, while the topographic mapping application is more sensitive when the baseline is larger.
 Since the measurement uses the phase of the propagated radar waves, it is only known modulo $2\pi$; the process of obtaining the full continuous phase is known as \emph{phase unwrapping}
 \citep{Goldstein1988SatelliteRadarInterferometry, Chen2001TwoDimensionalPhase}. Note that even after phase unwrapping, the absolute number of $2\pi$ cycles from the radar to the ground is not known; thus, an unwrapped interferogram represents the surface deformation \emph{relative} to some point which is assumed to be zero.
-Additionally, the description of the interferometric phase in Equation \eqref{eq:insar-phase} assumes no noise; in reality there are numerous noise sources which affect either the phase of an individual SAR acquisitions or the phase difference between pairs of images.
+Additionally, the description of the interferometric phase in Equation \eqref{eq:ch3-insar-phase-0noise} assumes no noise; in reality there are numerous noise sources which affect either the phase of an individual SAR acquisitions or the phase difference between pairs of images.
 
 
 
@@ -219,7 +220,7 @@ Additionally, the description of the interferometric phase in Equation \eqref{eq
 	\includegraphics[width=0.9\linewidth]{figures/chapter3-sar/ch3-insar-geometry-defo.pdf}
 %	\includegraphics[width=0.99\linewidth]{figures/chapter3-sar/ch3-insar-geometry-defo-2col.pdf}
 	\caption[InSAR imaging geometry for deformation mapping]{InSAR imaging geometry for deformation mapping.
-		(a) Two SAR images, $S_1$ and $S_2$, are acquired at different times, before and after a ground deformation event. After removing the contribution from topography, the change in range between times $t_1$ and $t_2$ results in a measured phase change $\Delta \phi =  \frac{4 \pi}{\lambda}(r_2 - r_1)$.
+		(a) Two SAR images, $S_1$ and $S_2$, are acquired at different times, before and after a ground deformation event. After removing the contribution from topography, the change in range between times $t_1$ and $t_2$ results in a measured phase change $\Delta \phi_{1,2} =  \frac{4 \pi}{\lambda}(r_2 - r_1)$.
 	}
 	\label{fig:ch3-insar-geometry-defo}
 \end{figure}
@@ -234,10 +235,10 @@ Additionally, the description of the interferometric phase in Equation \eqref{eq
 After removing phase contributions from topography and satellite geometry, the phase at each pixel in an interferogram formed from SLCs $S_1$ and $S_2$ can be written as
 %\citep{Zebker1992DecorrelationInterferometricRadar, Zebker1994AccuracyTopographicMaps, Zebker1997AtmosphericEffectsInterferometric, Hooper2006PersistentScatterRadar, Agram2010PersistentScattererInterferometry}
 \begin{equation}
-	\Delta \phi_{1, 2} = \frac{4 \pi}{\lambda} \Delta r + \alpha_2 - \alpha_1 + \Delta \phi_{iono} + \Delta \phi_{orb} + \Delta \phi_{dem} + \Delta \phi_{decor} + \Delta \phi_{unwrap} + \Delta \phi_{scat} + \Delta \phi_{n}  ,
-	\label{eq:noise-terms}
+	\Delta \phi_{1, 2} = \frac{4 \pi}{\lambda} \left( \Delta d_{1,2} + \alpha_2 - \alpha_1 \right) + \Delta \phi_{iono} + \Delta \phi_{orb} + \Delta \phi_{dem} + \Delta \phi_{decor} + \Delta \phi_{unwrap} + \Delta \phi_{scat} + \Delta \phi_{n}  ,
+	\label{eq:ch3-insar-noise-terms}
 \end{equation}
-where $ \lambda $ is the radar wavelength and $ \Delta r $ is the surface deformation along the radar LOS direction. 
+where $ \lambda $ is the radar wavelength and $ \Delta d_{1,2} $ is the surface deformation between $S_1$ and $S_2$ along the radar LOS direction. 
 
 The $\alpha_i$ terms represent the excess delay introduced by the neutral atmosphere on the $i$th day.
 Tropospheric noise, $\Delta \phi_{tropo} \triangleq \alpha_2 - \alpha_1 $, arises from differences in pressure, temperature, or water vapor content between the two radar acquisitions \citep{Zebker1997AtmosphericEffectsInterferometric}.
@@ -337,24 +338,8 @@ In this case, the deformation magnitude can be verified using nearby permanent G
 \section{Tropospheric Noise}
 \label{sec:ch3-noise-tropo}
 
-%Ideas:
-%
-%- comparison of ways people have tried to correct for troposphere
-%
-%- plots/images of possible views into the single day atmosphere.
-% -- modis
-% -- HRRR, ECMWF
-% --  GOES
-% -- insar averaging
-% 
-% axes of comparison:
-% - resolution
-% - time availability
-% - spatial availibility
-% - sensitivity to phase propation delay
-% 
-% 
-% SEASONAL plots...
+
+% SEASONAL plots...??
 
 The conversion between phase two-way distance from ground to satellite in Equation \eqref{eq:ch3-phase-range} assumes that the electromagnetic waves travel though a homogeneous medium with constant velocity. In reality, they travel through a spatially inhomogenous atmosphere with variable index of refraction $n$, where $n$ relates to the phase velocity $v$ and speed of light in a vacuum $c$ by $n = c/v$ \citep{Zebker1997AtmosphericEffectsInterferometric, Hanssen2001RadarInterferometryData, Liu2012SatelliteRadarInterferometry}.  Since $n$ is always real and slightly greater than $1$ for Earth's neutral atmosphere, it is more common to describe fluctuations using the \emph{refractivity} $N = 10^{6}(n - 1)$, which is the additional refractive index beyond unity.
 Writing $N$ as $N(x,y,z)$ to emphasize the 3D variation, we can express the excess delay $D$ caused by the propagation through the atmosphere as
@@ -468,15 +453,51 @@ While these correction methods show promise in certain study areas, the spatial 
 
 %There are many techniques which fall under the umbrella of InSAR time series techniques, (sometimes called ``multi-temporal InSAR'' or MT-InSAR).
 Since many noise sources cannot be distinguished from deformation in a single interferogram (e.g. Figure \ref{fig:ch3-hawaii-example}), it is common to analyze multiple interferograms to quantify and mitigate InSAR noise sources.
-InSAR time series techniques (sometimes called ``multi-temporal InSAR'' or MT-InSAR) are a class of methods for extracting information about the temporal evolution of surface deformation or other geophysical parameters of interest.  Most multi-temporal methods have generally been classified as belonging to one of the following categories: 1) stacking \citep{Zebker1997AtmosphericEffectsInterferometric, Sandwell1998PhaseGradientApproach}, 2) small-baseline approach \citep{Berardino2002NewAlgorithmSurface}, or 3) persistent-scatterer (PS) \citep{Ferretti2001PermanentScatterersSar, Hooper2006PersistentScatterRadar}. In the past decade, a fourth category of ``phase-linking`` approaches have been based on analysis of the complex covariance matrix of SAR image stacks \citep{Guarnieri2008ExploitationTargetStatistics, Ferretti2011NewAlgorithmProcessing, Ansari2018EfficientHighPrecision}. In the following section, we focus on (1) and (2).
-
-%only be determined with a series of interferograms from SAR acquisitions over time,
+InSAR time series techniques (sometimes called ``multi-temporal InSAR'' or MT-InSAR) are a class of methods for extracting information about the temporal evolution of surface deformation or other geophysical parameters of interest.  Most multi-temporal methods have generally been classified as belonging to one of the following categories: 1) stacking (averaging) \citep{Zebker1997AtmosphericEffectsInterferometric, Sandwell1998PhaseGradientApproach}, 2) small-baseline approaches \citep{Berardino2002NewAlgorithmSurface}, or 3) persistent-scatterer (PS) methods \citep{Ferretti2001PermanentScatterersSar, Hooper2006PersistentScatterRadar}. In the past decade, a fourth category of ``phase-linking`` approaches have been popularized by the SqueeSAR algorithm \citep{Ferretti2011NewAlgorithmProcessing}; these are based on optimizations of decompositions of the complex covariance matrix of SAR image stacks \citep{Guarnieri2008ExploitationTargetStatistics, Ansari2018EfficientHighPrecision}. In the following section, we focus on (1) and (2).
 
 
-- stacking
+For deformation signals which occur as a transient event 
+%(which includes all processes quicker than one SAR acquisition interval) 
+or with a constant rate, stacking consists of averaging multiple interferograms (possibly with different weights for each interferogram) which all contain the deformation signal \citep{Simons2007InterferometricSyntheticAperture, Zheng2019ImagingCascadiaSlow}. 
+%Stacking approaches are the simplest conceptually and the earliest developed to mitigate tropospheric noise. 
+For example, suppose an earthquake occurred at a known date, and a set of $M$ interferograms are formed from $N$ SAR acquisitions (where $ N/2 \leq M \leq (N + 1)N / 2 $) which all span the earthquake. To estimate the coseismic deformation $\theta$ at each pixel of the interferograms, the simplest stacking solution is
+\begin{equation}
+	\theta = \frac{\lambda }{4 \pi} \frac{1}{M} \sum_i^M \Delta \phi_i ,
+	\label{eq:ch3-stacking-1}
+\end{equation}
+where $\Delta \phi_i$ is phase the $i^{th}$ interferogram, and the factor $  \frac{\lambda }{4 \pi} $ converts the phase from radians to centimeters.
+For constant rate ground deformation, one approach based on \citep{Sandwell1998PhaseGradientApproach} to calculate the average LOS velocity $v_{avg}$ of each ground pixel is to compute
+\begin{equation}
+%	v_{avg} = \frac{\lambda }{4 \pi} \frac{\sum_{i \in G} d_i}{\sum_{i \in G} t_i}
+	v_{avg} = \frac{\lambda }{4 \pi} \frac{\sum_i \Delta \phi_i}{\sum_i t_i}
+	\label{eq:ch3-stacking-2}
+\end{equation}
+where $\Delta \phi_i$ is phase the $i^{th}$ interferogram and $ t_i $ is the temporal baseline (i.e. time span between SAR acquisitions) of the interferogram.
+%where $G$ is a subset of interferograms that were formed using two SAR scenes acquired within the time period.
+% The LOS measurement (in cm) and the temporal baseline of the $i^{th}$ interferogram in $G$ are written as $d_i$ and $ t_i $ respectively
+Note that this method relies on the assumption that the noise sources are uncorrelated (or weakly correlated) over time, as has been shown for tropospheric turbulence \citep{Emardson2003NeutralAtmosphericDelay}.
 
-- SBAS linear system (doesn't need to be short baseline, just a way to solve for the phase at each date)
+The Small Baseline Subset (SBAS) approach from \cite{Berardino2002NewAlgorithmSurface} formulates a linear estimation problem to solve for the phase at each SAR acquisition.
+Given a set of M interferograms that have been unnwrapped and zero-referenced to a common location, the measurement vector
+\begin{equation}
+	\bm{\Delta \phi} = \left[ \Delta \phi_1 \ldots \Delta \phi_M \right]^T
+\end{equation}
+consists of the $M$ interferogram measurements for one ground pixel location. 
+The goal is to solve for the unknown phase values $ \bm{\phi} $ which are contain the total LOS delay for each SAR acquisition. Note that each element $\phi_i$ consists of all elements of Equation \eqref{eq:ch3-insar-noise-terms} which affect the phase of a SAR acquisition (as opposed to individual interferogram noise terms); this includes the deformation phase, $\frac{4 \pi}{\lambda} \Delta r$, as well as the atmospheric delay terms, $\alpha_i$.
+%The $\iota$
+% unknown phase values associated with the deformation (AND DELAY! refer to the noise equationn)
+%Accordingly, the expression (6) defines a system of equations in unknowns that may be organized in the following matrix representation
+
+%Note that \cite{Berardino2002NewAlgorithmSurface} solves each pixel independently, making parallel implementations straight forward.
+
+
+
+%- SBAS linear system (doesn't need to be short baseline, just a way to solve for the phase at each date)
 %\citep{Schmidt2003TimeDependentLand} and \citep{Berardino2002NewAlgorithmSurface}.
+%In practical cases, as for the European Remote Sensing (ERS) satellites ERS-1 and ERS-2 sensors, the available acquisitions are generally distributed in small baseline (SB) subsets, separated by large “baselines”; accordingly, only one deformation time series for each subset can be easily obtained... ..the limitation to exploit all the available acquisitions for the generation of an overall deformation time-series is evident
+%...demonstrated that small man-made features remain very correlated over time [14], [15], although interferograms over these areas only show pointwise information.
+% ``Additionally, an atmospheric phase artifacts filtering operation is carried out on the computed space–time deformation measurements following the lines of the solution developed for the PS technique [16], [17]; in our case, the filtering operation takes benefit from the high spatial density of the imaged pixels''
+% REFER TO CHAPTER 5 at this line
 
 
 % Yunjun thesis: the vector of interferometric phase residual that does not fulfill the zero phase closure of interferogram triplets. It includes the decorrelation noise, phase contribution due to the change of dielectric properties of ground scatterers such as soil moisture (De Zan et al., 2014; Morrison et al., 2011), processing inconsistency such as filtering, multilooking, coregistration and interpolation errors (Agram and Simons, 2015; Hanssen, 2001), and/or phase-unwrapping errors.

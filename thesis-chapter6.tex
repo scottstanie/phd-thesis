@@ -234,10 +234,10 @@ We tested our deformation detection algorithm on over an 80,000 $km^2$ oil-produ
 
 We employed a stacking approach \citep{Sandwell1998PhaseGradientApproach, Staniewicz2020InsarRevealsComplex} to calculate the average LOS velocity $v_{avg}$ at each ground pixel over a time period of interest $ T $ as
 \begin{equation}
-	v_{avg} = \frac{\sum_{i \in G} d_i}{\sum_{i \in G} t_i}
+	v_{avg} = \frac{\sum_{i \in G} \Delta  d_i}{\sum_{i \in G} t_i}
 	\label{eq:stacking-paper2}
 \end{equation}
-where $G$ is a subset of interferograms formed using two SAR scenes acquired within the time period $T$. The LOS measurement (in cm) and the temporal baseline of the $i^{th}$ interferogram in $G$ are written as $d_i$ and $ t_i $ respectively.
+where $G$ is a subset of interferograms formed using two SAR scenes acquired within the time period $T$. The LOS measurement (in cm) and the temporal baseline of the $i^{th}$ interferogram in $G$ are written as $\Delta d_i$ and $ t_i $ respectively.
 In this study, we used 29 SAR scenes acquired between November 2014 and January 2017 to solve for the average velocity during this period, and we computed the cumulative deformation as the average velocity times the total time span ($\sim 2$ years). Similarly, we used 52 SAR scenes acquired between November 2014 and January 2018, and 84 SAR scenes acquired between November 2014 to January 2019 to derive the cumulative deformation maps over these two study periods ($\sim 3$ and $4$ years).
 
 We estimated the tropospheric turbulence noise for each SAR acquisition date using all interferograms that contain this SAR scene based on Equation \eqref{eq:avg-ifg}. We removed a quadratic ramp in each noise map, and calculated the average 1D PSD of all 84 noise maps as described in \ref{subsec:methods-2-tropo-spectrum}.
