@@ -512,8 +512,8 @@ where the row of $\bm{B}$
 corresponding to measurement $ \Delta \phi_{j,k} $ has $t_i - t_{i-1}$ in the $i$th column for $j < i \leq k$ and 0 elsewhere. 
 After solving Equation \eqref{eq:ch3-sbas-B}, $ \bm{v} $ is integrated to obtain $ \bm{\phi} $.
 
-The rationale behind solving for $\bm{v}$ is that for early sensors such as ERS-1 and ERS-2, the acquisitions are often grouped as subsets of images with small spatial baselines that are separated from other groups by either large temporal or spatial baselines. 
-When $\bm{\Delta \phi}$ contains an isolated subset of interferograms, $A$ is not full column rank and Equation \eqref{eq:ch3-sbas-A} is solved with a pseudo-inverse $A^{\dagger}$ generated using the singular value decomposition (SVD) \citep{Strang2006LinearAlgebraIts}. The SVD approach for rank-deficient systems produces a minimum norm solution vector; the authors of \cite{Berardino2002NewAlgorithmSurface} found that minimizing the norm of the velocity vector $ \bm{v} $ produced more physically plausible deformation results than minimizing the norm of $ \bm{\phi} $. We note that for recent missions like Sentinel-1 whose orbit is tightly controlled, it is often possible to create a connected network of interferograms. This means matrix $ \bm{A} $ is full rank and can be solved with least squares, and the formulations of Equations \eqref{eq:ch3-sbas-A} and \eqref{eq:ch3-sbas-B} lead to the same end result.
+The rationale behind solving for $\bm{v}$ is that for early SAR satellites, such as ERS-1 and ERS-2, the acquisitions are often grouped as subsets of images with small spatial baselines that are separated from other groups by large temporal or spatial baselines. 
+When $\bm{\Delta \phi}$ contains an isolated subset of interferograms, $A$ is not full column rank and Equation \eqref{eq:ch3-sbas-A} is solved with a pseudo-inverse, $A^{\dagger}$, generated using the singular value decomposition (SVD) \citep{Strang2006LinearAlgebraIts}. The SVD approach for rank-deficient systems produces a minimum norm solution vector; the authors of \cite{Berardino2002NewAlgorithmSurface} found that minimizing the norm of the velocity vector $ \bm{v} $ produced more physically plausible deformation results than minimizing the norm of $ \bm{\phi} $. We note that for recent missions like Sentinel-1 with tightly controlled repeat orbits, it is often possible to create one connected network of interferograms. This means that the formulations of Equations \eqref{eq:ch3-sbas-A} and \eqref{eq:ch3-sbas-B} lead to the same result, and the system in Equation \eqref{eq:ch3-sbas-A} with full rank $ \bm{A} $ can be solved using least squares.
 
 
 Each element $\phi_i$ consists of all terms in Equation \eqref{eq:ch3-insar-noise-terms} which affect the phase of a SAR acquisition and all interferograms containing that acquisition (as opposed to interferogram-specific noise terms in $ \bm{\epsilon} $); this includes the deformation phase, $\frac{4 \pi}{\lambda} \Delta d$, as well as the atmospheric delay terms, $\alpha_i$.
@@ -524,7 +524,7 @@ These filters are expanded upon and compared in Chapter \ref{CHAP:5-robust-ts}, 
 
 
 %%%% weightingn vector? %%% weighted least squares compare
-%TODO: where am I going with this section? what does it look like to include it?
+
 
 %$ \bm{v} = (\bm{A}^T \bm{A})^{-1}\bm{A}^T \bm{\Delta \phi} $
 %As noted in \cite{Simons2007InterferometricSyntheticAperture}, 
