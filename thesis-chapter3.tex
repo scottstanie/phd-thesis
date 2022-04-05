@@ -453,14 +453,14 @@ While these correction methods show promise in certain study areas, the spatial 
 
 %There are many techniques which fall under the umbrella of InSAR time series techniques, (sometimes called ``multi-temporal InSAR'' or MT-InSAR).
 Since many noise sources cannot be distinguished from deformation in a single interferogram (e.g. Figure \ref{fig:ch3-hawaii-example}), it is common to analyze multiple interferograms to quantify and mitigate InSAR noise sources.
-InSAR time series techniques (sometimes called ``multi-temporal InSAR'' or MT-InSAR) are a class of methods for extracting information about the temporal evolution of surface deformation or other geophysical parameters of interest.  Most multi-temporal methods have generally been classified as belonging to one of the following categories: 1) stacking (averaging) \citep{Zebker1997AtmosphericEffectsInterferometric, Sandwell1998PhaseGradientApproach}, 2) small-baseline approaches \citep{Berardino2002NewAlgorithmSurface}, or 3) persistent-scatterer (PS) methods \citep{Ferretti2001PermanentScatterersSar, Hooper2006PersistentScatterRadar}. In the past decade, a fourth category of ``phase-linking`` approaches have been popularized by the SqueeSAR algorithm \citep{Ferretti2011NewAlgorithmProcessing}; these are based on optimizations of decompositions of the complex covariance matrix of SAR image stacks \citep{Guarnieri2008ExploitationTargetStatistics, Ansari2018EfficientHighPrecision}. In the following section, we focus on (1) and (2).
+InSAR time series techniques (sometimes called ``multi-temporal InSAR'' or MT-InSAR) are a class of methods for extracting information about the temporal evolution of surface deformation or other geophysical parameters of interest.  Most multi-temporal methods have generally been classified as belonging to one of the following categories: 1) stacking (averaging) \citep{Zebker1997AtmosphericEffectsInterferometric, Sandwell1998PhaseGradientApproach}, 2) small-baseline approaches \citep{Berardino2002NewAlgorithmSurface}, or 3) persistent-scatterer (PS) methods \citep{Ferretti2001PermanentScatterersSar, Hooper2006PersistentScatterRadar}. In the past decade, a fourth category of ``phase-linking`` approaches have been popularized by the SqueeSAR algorithm \citep{Ferretti2011NewAlgorithmProcessing}; these are based on optimizations or decompositions of the complex covariance matrix of SAR image stacks \citep{Guarnieri2008ExploitationTargetStatistics, Fornaro2015CaesarApproachBased, Ansari2018EfficientHighPrecision}. Methods (3) and (4) have shown success in extracting high-precision estimates of interferometric phase where decorrelation is the dominant noise source (e.g. in local, high-rate deformation, \citep{Tebaldini2010MethodsPerformancesMulti}); in the following section, we focus on (1) and (2).
 
 
 For deformation signals which occur as a transient event 
 %(which includes all processes quicker than one SAR acquisition interval) 
 or with a constant rate, stacking consists of averaging multiple interferograms (possibly with different weights for each interferogram) which all contain the deformation signal \citep{Simons2007InterferometricSyntheticAperture, Zheng2019ImagingCascadiaSlow}. 
 %Stacking approaches are the simplest conceptually and the earliest developed to mitigate tropospheric noise. 
-For example, suppose an earthquake occurred at a known date, and we would like to estimate the coseismic displacement $\theta$ that occurred using a set of $M$ interferograms which all span the earthquake date. For each ground pixel location, we can collect the phase differences measurements into a vector $\bm{\Delta \phi} \in \mathbb{R}^{M} $.
+For example, suppose an earthquake occurred at a known date, and we would like to estimate the coseismic displacement $\theta$ that occurred using a set of $M$ interferograms which all span the earthquake date. For each ground pixel, we can collect the phase difference measurements into a vector $\bm{\Delta \phi} \in \mathbb{R}^{M} $.
 %\begin{equation}
 %	\bm{\Delta \phi} = \left[ \Delta \phi_{1,2}, \Delta \phi_{1,3} , \ldots  \right]^T
 %\end{equation}
@@ -470,14 +470,14 @@ To estimate the $\theta$, the simplest stacking solution is
 	\label{eq:ch3-stacking-1}
 \end{equation}
 %consists of the $M$ phase differences for one ground pixel location, 
-where $\bm{\Delta \phi}_i$ is $i$th element of the vector, and the factor $  \frac{\lambda }{4 \pi} $ converts the phase from radians to centimeters.
+where $\bm{\Delta \phi}_i$ is $i$th element of the measurement vector, and the factor $  \frac{\lambda }{4 \pi} $ converts the phase from radians to centimeters.
 For constant rate ground deformation, one approach based on \citep{Sandwell1998PhaseGradientApproach} to calculate the average LOS velocity $v_{avg}$ of each ground pixel is to compute
 \begin{equation}
 %	v_{avg} = \frac{\lambda }{4 \pi} \frac{\sum_{i \in G} d_i}{\sum_{i \in G} t_i}
 	v_{avg} = \frac{\lambda }{4 \pi} \frac{\sum_i \bm{\Delta \phi}_i}{\sum_i \bm{\Delta t}_i }
 	\label{eq:ch3-stacking-2}
 \end{equation}
-where $ \bm{\Delta t}_i $ is the temporal baseline of the interferogram (i.e. the time span $t_k - t_j$  for interferogram $ \Delta \phi_{j, k} $). %between SAR acquisitions at $t_j$ and $t_k$
+where $ \bm{\Delta t}_i $ is the temporal baseline of the $i$th interferogram (i.e. the time span $t_k - t_j$  for interferogram $ \Delta \phi_{j, k} $). %between SAR acquisitions at $t_j$ and $t_k$
 %As noted by \cite{Simons2007InterferometricSyntheticAperture}, this method is equivalent to converting the interferogram measurements to rates and performing an averaging weighted by the respective time span.
 
 
@@ -629,9 +629,9 @@ where  $ \beta = {\alpha_{a,e} \alpha_{d,u}- \alpha_{d,e} \alpha_{a,u}} $.
 
 Because Sentinel-1 satellites are operating in a near-polar orbit, the north look coefficients $\alpha_{a,n}$ and $\alpha_{d,n}$ are both relatively small. Ignoring 1 cm northward motion in $u_n$ only leads to $\sim$ 0.1-0.2 mm error in $u_e$ and $\sim$ 1 mm error in $u_u$ at most locations. 
 
-To illustrate a decomposition, Figure \ref{fig:injection-kim-lu} shows a 12 km x 12 km region centered on a wastewater injection well. This region was found by \cite{Kim2018AssociationLocalizedGeohazards} to show injection-related uplift. We observe similar magnitude surface deformation toward the satellite in both ascending and descending tracks (Figure \ref{fig:injection-kim-lu} top). After decomposing the two geometries using the LOS vector at each pixel, we observed $\sim$ 5.5 cm of uplift and $\sim$1.2 cm of east-west motion between November 2014 and April 2017 (Figure \ref{fig:injection-kim-lu} bottom). 
+To illustrate a decomposition, Figure \ref{fig:injection-kim-lu} shows a 12 km x 12 km region centered on a wastewater injection well found by \cite{Kim2018AssociationLocalizedGeohazards} to show injection-related uplift. We observe similar magnitude deformation toward the satellite in both ascending and descending tracks (Figure \ref{fig:injection-kim-lu} top). After decomposing the two geometries using the LOS vector at each pixel, we observed $\sim$ 5.5 cm of uplift and $\sim$1.2 cm of east-west motion between November 2014 and April 2017 (Figure \ref{fig:injection-kim-lu} bottom). 
 
-%TODO: REPHRASE THIS \cite{Kim2018AssociationLocalizedGeohazards} detected several localized deformation features within the Delaware Basin related to wastewater injection, CO2 injection, and hydrocarbon production using Sentinel-1 InSAR data.  Our LOS decomposition results are consistent with their study at these locations. For example, in a 12 km x 12 km region centered on a wastewater injection well, we observed $\sim$ 5.5 cm of uplift and $\sim$1.2 cm of east-west motion between November 2014 and April 2017 (Figure \ref{fig:injection-kim-lu}). 
+% ORIGINAL:  \cite{Kim2018AssociationLocalizedGeohazards} detected several localized deformation features within the Delaware Basin related to wastewater injection, CO2 injection, and hydrocarbon production using Sentinel-1 InSAR data.  Our LOS decomposition results are consistent with their study at these locations. For example, in a 12 km x 12 km region centered on a wastewater injection well, we observed $\sim$ 5.5 cm of uplift and $\sim$1.2 cm of east-west motion between November 2014 and April 2017 (Figure \ref{fig:injection-kim-lu}). 
 
 
 
