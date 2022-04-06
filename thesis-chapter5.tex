@@ -5,19 +5,44 @@
 \label{CHAP:5-robust-ts}
 
 
-In this 
+In this chapter, present a method for robustly extracting slow-moving cumulative surface deformation from time series with large noise. 
+We perform a temporal smoothing using the robust locally weighted regression (LOWESS) method \cite{Cleveland1979RobustLocallyWeighted} on noisy surface deformation time-series derived using SBAS.
+The method extends the ideas behind the outlier-removal technique presented in Chapter \ref{CHAP:4-GRL}.
+Additionally, compared to the alternatives presenting in Section \ref{sec:ch4-method-compare}, the LOWESS smoothing most easily accounts for nonlinear deformation while also suppressing the 10-15 cm of tropospheric noise present in the summer SAR acquisitions. 
+We demonstrate the technique using synthetic time series and using three paths of Sentinel-1 data over the Permian Basin in West Texas. 
+The cumulative results show subtle basin-wide uplift features arising after 4-5 years of heavy sustained wastewater injection.
 
-Section \ref{sec:ch4-method-compare} compared the stacking method used in Chapter \ref{CHAP:4-GRL} with several alternatives .
+% compared the stacking method used in Chapter \ref{CHAP:4-GRL} with several alternatives .
 
-- Problem: 
-1. Longer time series, the linear assumption becomes less valid.  This is at odds with the balance of using more measurements to average out tropospheric noise
-2. Methods incorporating temporal smoothness constraints (Find a few. e.g. Karissa? other temp smooth solvers...) or temp lienar filtering methods get influenced by strong tropo days. Even with smoothing, there are anomalous bumps 
-	- can get interpreted as deformation if we assume that all movements remaining after filtering are due to the low-pass deformation
-	
+%- Problem: 
+%1. Longer time series, the linear assumption becomes less valid.  This is at odds with the balance of using more measurements to average out tropospheric noise
+%2. Methods incorporating temporal smoothness constraints (Find a few. e.g. Karissa? other temp smooth solvers...) or temp lienar filtering methods get influenced by strong tropo days. Even with smoothing, there are anomalous bumps 
+%	- can get interpreted as deformation if we assume that all movements remaining after filtering are due to the low-pass deformation
+%	
 
 \section{Methods}
 
 \section{Synthetic Example}
+
+
+
+\section{InSAR Processing for Sentinel-1}
+
+For Sentinel-1 path 78, we processed all interferograms with temporal baselines less than 500. Since every interferograms had less than 250 meter spatial baseline, we required no maximum spatial baseline threshold.  We unwrapped each interferogram using the Statistical-cost, Network-flow Algorithm for Phase Unwrapping (SNAPHU).
+We reduce long wavelength and stratified tropospheric noise by removing a combined planar phase ramp and linear phase vs. elevation relation \cite{Doin2009CorrectionsStratifiedTropospheric,Zebker2021AccuracyModelFree}. We used pixels around the GPS station TXKM as the reference location.
+We repeated this process for descending path 85 and ascending path 151. Since path 151 does not contain station TXKM, or any other GPS station near the center of the acquisition, we used the referencing technique presented in \cite{Zebker2021AccuracyModelFree} to fit and remove a phase-elevation trend from all high-coherence pixels in each interferogram. This method relies on the assumption that most pixels in each interferogram do not show significant deformation, which is valid for the large West Texas area containing the Guadalupe mountain range.
+%our signals deform slowly over time
+
+%FIGURE: 3 path study
+
+%For each pixel, we solved for the cumulative line of sight path delay for all SAR acquisition dates using the SBAS linear system.
+%The path delay consist of the true relative surface deformation on each date and a tropospheric noise component, which can lead to jumps of 10 cm or more between consecutive dates.
+%Since the atmospheric noise is correlated in space but uncorrelated in time, previous authors have isolated and mitigated the atmospheric noise by using a high pass temporal filter followed by a 2D spatial low pass filter
+%\cite{Ferretti2000NonlinearSubsidenceRate, Ferretti2001PermanentScatterersSar, Berardino2002NewAlgorithmSurface, Hooper2012RecentAdvancesSar}.
+%Here we perform a temporal smoothing using the robust locally weighted regression (LOWESS) method \cite{Cleveland1979RobustLocallyWeighted}. For each pixel, LOWESS performs multiple iterations of weighted linear regression at each point in the time series. The method weights nearby points more heavily than far away points. We use a window size such that at least two years of SAR acquisitions are weighted for each date, with more points considered during times of regular acquisitions.
+%Subsequent iterations use the residuals of the data points from the smoothed line to further deweight noisy acquisitions. Points with residuals larger than 6 times the median absolute residual are clipped to have 0 weight in future iterations. In this manner, the smoothing is robust to strong tropospheric turbulence noise that would otherwise leak into neighboring days using a moving average temporal filter. Additionally, since LOWESS assumes no underlying model, the smoothing can accommodate nonlinear deformation.
+%
+%To mitigate final residual long wavelength tropospheric noise, we remove quadratic ramp from the phase of each date in the time series (where we mask out pixels with $>$2 cm of estimated deformation to avoid removing deformation) \cite{Morishita2020LicsbasOpenSource}.
 
 \section{Results}
 
@@ -40,4 +65,7 @@ Section \ref{sec:ch4-method-compare} compared the stacking method used in Chapte
 %Problems with pixelwise uq
 %- Image of blob, with 8 mm cutoff, question which part you trust and not
 %- Leads into feature-wise uq
+
+
+
 
