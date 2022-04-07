@@ -67,11 +67,9 @@ The contributions may be summarized as follows:
 	
 	\item We performed a rigorous uncertainty analysis to identify the dominant noise source in the Permian Basin for Sentinel-1.  In the process, we developed a method to estimate the tropospheric noise and its power spectral density from InSAR data.
 	
-	
 	\item We designed scalable, robust time series algorithms for tracking yearly changes of deformation over large regions.
 	
 	\item We created millimeter-level accurate maps of cumulative surface deformation that are available online for analysis. These maps contain many subsidence and uplift features near oil and gas production, as well as linear patterns near clusters of seismic activity.
-	
 	
 	\item We created a computer vision algorithm to automatically detect surface deformation signals of unknown sizes in large InSAR maps. The detection algorithm produces uncertainty estimates for each visual feature in the InSAR data.
 	
@@ -83,9 +81,11 @@ The contributions may be summarized as follows:
 \section{Thesis Roadmap}
 \label{sec:chap1-roadmap}
 
-In Chapter \ref{CHAP:2}, we introduce the scientific background of the induced seismicity problem. We review the oil and gas production boom of the last decade within the Permian Basin, as well as previous studies on the increase in low magnitude earthquakes during this time. We present the case for new high-quality observational datasets to better inform efforts to mitigate induced seismicity.
 
-In Chapter \ref{CHAP:3}, we introduce principles of InSAR. We start with a review of synthetic aperture radar (SAR) image formation. We derive how the phase difference between two SAR images acquired at different times can be used to infer surface deformation. We show how the use of geocoded single-look complex (SLC) products enables a simple InSAR processing workflow. We outline common InSAR noise sources and how to combine many interferograms to solve for a time series of surface deformation. Finally, we describe how to decompose deformation from multiple satellite geometries into horizontal and vertical components.
+In Chapter \ref{CHAP:2}, we introduce the principles of InSAR. We start with a review of synthetic aperture radar (SAR) image formation. We show how the phase difference between two SAR images acquired at different times can be used to infer topography or surface deformation. We outline common InSAR noise sources, emphasizing the origins of tropospheric noise, and how to combine many interferograms to solve for a time series of surface deformation. We show how the use of geocoded single-look complex (SLC) products enables a simple InSAR processing workflow. Finally, we describe how to decompose deformation from multiple satellite geometries into horizontal and vertical components.
+
+
+In Chapter \ref{CHAP:3}, we introduce the scientific background of the induced seismicity problem. We review the oil and gas production boom of the last decade within the Permian Basin, as well as previous studies on the increase in low magnitude earthquakes during this time. We present the case for new high-quality observational datasets to better inform efforts to mitigate induced seismicity.
 
 
 In Chapter \ref{CHAP:4-GRL}, we present a simple yet effective time series method for creating cumulative surface deformation maps over large regions with severe tropospheric noise. We use the method to create yearly deformation maps over the oil-producing region of the Permian Basin. The method incorporates an automated outlier detection and removal algorithm, which enabled ~2 mm/year agreement with GPS measurements in the presence of $\sim$15 cm of tropospheric noise.
