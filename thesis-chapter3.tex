@@ -20,8 +20,8 @@
 \label{sec:ch3-oil}
 
 Texas has been a leading producer of oil and gas for over a century \citep{Frohlich2016HistoricalReviewInduced, TheAcademyofMedicine2017EnvironmentalCommunityImpacts}. It became the nation's largest producer of crude oil after the first successful vertical well was drilled south of Beaumont, TX in 1901. These ``conventional'' wells were the primary mode of production in multiple oil fields across the state. It wasn't until the early 2000s that advances horizontal drilling and hydraulic fracturing (also known as fracking, Figure \ref{fig:oil-drilling}) opened up vast new shale resources which were previously unworkable \citep{Waters2006Spe103202Ms}. 
-For example, the Wolfcamp shale in Texas' Permian Basin is the largest continuous oil field that has ever been discovered in the United States, containing 20 billion barrels of oil and 16 trillion cubic feet of gas \citep{Gaswirth2016AssessmentUndiscoveredContinuous}. While areas of the Wolfcamp shale in the Midland Basin have been traditionally developed using vertical wells, the ability to extend subsurface drilling horizontally (Figure \ref{fig:oil-drilling}b) and increase production using enhanced oil recovery (EOR, Figure \ref{fig:oil-drilling}d)
-allowed many new areas to be economically viable for oil and gas production.
+For example, the Wolfcamp shale in Texas' Permian Basin is the largest continuous oil field that has ever been discovered in the United States, containing 20 billion barrels of oil and 16 trillion cubic feet of gas \citep{Gaswirth2016AssessmentUndiscoveredContinuous}. While areas of the Wolfcamp shale in the Midland Basin have been traditionally developed using vertical wells, the ability to extend subsurface drilling horizontally (Figure \ref{fig:ch3-oil-drilling}b) and increase production using enhanced oil recovery (EOR, Figure \ref{fig:ch3-oil-drilling}d)
+allowed many new areas to be economically viable for oil and gas production (Figure \ref{fig:ch3-drilling-pads}).
 
 
 %Figure \ref{fig:oil-drilling} shows a simplified diagram of the operation techniques of horizontal drilling, hydraulic fracturing, wastewater disposal, and enhanced oil recovery.
@@ -39,7 +39,7 @@ allowed many new areas to be economically viable for oil and gas production.
 		(d) Enhanced oil recovery (EOR), an alternative to wastewater disposal, involves injecting the water back into the formation holding the oil and gas to sweep oil and gas toward the production well.
 		(Figure adapted from \citep{Rubinstein2015MythsFactsWastewater})
 	}
-	\label{fig:oil-drilling}
+	\label{fig:ch3-oil-drilling}
 \end{figure}
 
 %This report uses the term “shale” to describe organic rich formations containing natural gas (shale gas) and/or oil (tight oil) that require multiple hydraulic fractures, usually created from long wells drilled horizontally, to produce hydrocarbons profitablyThe term “tight oil” may include hybrid formations containing oil that has migrated into very tight rock. Many experts refer to shale gas and tight oil resources collectively as “unconventional.” \cite{TheAcademyofMedicine2017EnvironmentalCommunityImpacts}
@@ -55,7 +55,7 @@ allowed many new areas to be economically viable for oil and gas production.
 		(Source: XTO Energy)
 		(c) Water condensate pit used to store fresh water condensed from natural gas or other flowback fluids (photo source: Benjamin Lowy)
 	}
-	\label{fig:drilling-pads}
+	\label{fig:ch3-drilling-pads}
 \end{figure}
 
 
@@ -159,7 +159,6 @@ Several studies have used spatio-temporal analyses to link certain instances of 
 %Recent efforts have considerably improved the public knowledge of subsurface fault locations (Horne?), geological characterization \citep{Smye2021LithologyReservoirProperties, Smye2021VariationsVerticalStress}, pore pressure distribution and... fault system stability \citep{Hennings2021StabilityFaultSystems} 
 Understanding the nature and causes of earthquakes and how they are linked to certain production and disposal requires extensive knowledge of the subsurface.
 However, subsurface measurements of pore pressure changes can be difficult or impossible to collect at a regional scale.
-%, and permanent GPS stations are too sparse to provide a full picture of surface changes.
 
 
 \section{Available Geodetic Data}
@@ -179,37 +178,49 @@ However, subsurface measurements of pore pressure changes can be difficult or im
 \begin{figure}
 	\centering
 	\includegraphics[width=0.9\linewidth]{figures/chapter4-grl/figure1-study-area.pdf}
-	\caption[GPS and InSAR data coverage over the Permian Basin.]{GPS and InSAR data coverage over the Permian Basin. Yellow dots indicate GPS permanent stations. Teal and red boxes indicate ascending path 78 and descending path 85 paths of Sentinel 1 InSAR coverage, respectively. Each path contains over 80 SAR acquisitions, leading to over 3500 interferograms per path at 120 m pixel spacing.}
+	\caption[GPS and InSAR data coverage over the Permian Basin.]{GPS and InSAR data coverage over the Permian Basin. Yellow dots indicate GPS permanent stations. Teal and red boxes indicate ascending path 78 and descending path 85 paths of Sentinel 1 InSAR coverage, respectively. 
+%	Each path contains over 80 SAR acquisitions, leading to over 3500 interferograms per path at 120 m pixel spacing.
+}
 	\label{fig:paper1-study-area}
 \end{figure}
 
 
 
-The coverage of GPS permanent stations in West Texas is sparse, and there are 14 permanent GPS stations that recorded daily east, north, and up (ENU) surface deformation measurements (Figure \ref{fig:paper1-study-area}) \citep{Blewitt2018HarnessingGpsData}. After removing the common tectonic motion, all GPS stations showed little surface deformation (0-3 mm/year) between Nov. 2014 and Jan. 2019.
+%The coverage of GPS permanent stations in West Texas is sparse, and there are 14 permanent GPS stations that recorded daily east, north, and up (ENU) surface deformation measurements (Figure \ref{fig:paper1-study-area}) \citep{Blewitt2018HarnessingGpsData}. After removing the common tectonic motion, all GPS stations showed little surface deformation (0-3 mm/year) between Nov. 2014 and Jan. 2019.
+
+The coverage of GPS permanent stations in West Texas is sparse, and there are no stations in the Delaware Basin. At 14 stations in the Midland Basin and the Central Basin Platform, daily east, north, and up (ENU) surface deformation measurements were processed by the Nevada Geodetic Laboratory \citep{Blewitt2018HarnessingGpsData} (Figure \ref{fig:paper1-study-area}). After removing the common tectonic motion, little motion (0-3 mm/year) was observed at all GPS stations over the study period (Figure \ref{fig:ch3-gps}). Because energy-related injection and extraction activities often occur within deep and rigid subsurface formations, it has been common to assume little deformation can be detected at Earth's surface. 
+%Thus, the available permanent GPS stations are too sparse to provide a full picture of surface changes, 
 
 
+InSAR surface deformation measurements have much broader spatial coverage, and they provide a key observable to fill the gaps left by GPS. They allow us to estimate locations of pressure build up from fluid injection, barriers to subsurface fluid flow, and unmapped faults. However, creating accurate maps of surface deformation using InSAR can be very challenging at the scale of the full Permian Basin.
 
 
-InSAR surface deformation measurements provide a key observable, and they allow us to estimate locations of pressure build up from fluid injection, barriers to subsurface fluid flow, and unmapped faults. However, creating accurate maps of surface deformation using InSAR can be very challenging at the scale of the full Permian Basin.
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\linewidth]{figures/chapter3-permian/gps-txmc.pdf}
+	\caption[Example permanent GPS station measurements]{
+		Example measurements of (a) east, (b) north, and (c) vertical components of surface deformation from the permanent GPS station TXMC (Figure \ref{fig:paper1-study-area}).
+	}
+	\label{fig:ch3-gps}
+\end{figure}
 
 
-\subsection{InSAR processing strategy}
+\section{InSAR processing strategy}
 \label{sec:ch2-insar-processing}
 
 Using a geocoded SLC processor \citep{Zheng2017PhaseCorrectionSingle, Zebker2017UserFriendlyInsar} (Section \ref{sec:ch2-processing}), we processed 91 ascending (path 78, frames 94-104) and 82 descending (path 85, frames 483-493) Sentinel-1 scenes acquired between Nov. 2014 and Jan. 2019 (Figure \ref{fig:paper1-study-area}). We generated more than 7000 interferograms with 120 meter pixel spacing and a maximum temporal baseline of 800 days. No spatial baseline threshold was imposed in the interferogram formation. Because few decorrelation artifacts were presented, we were able to unwrap all interferograms without additional spatial filtering using the Statistical-cost, Network-flow Algorithm for Phase Unwrapping (SNAPHU) \citep{Chen2001TwoDimensionalPhase}. We removed long-wavelength phase ramps due to long-wavelength tropospheric noise, using a planar phase model. Comparable interferograms can be generated using other processors such as the InSAR Scientific Computing Environment (ISCE) \citep{Rosen2012InsarScientificComputing}. 
-We chose the GPS station TXKM as the reference point for both ascending and descending InSAR data, and we used the remaining 13 stations as controls to assess InSAR measurement uncertainty as described in Section \ref{sec:errors}
+We chose the GPS station TXKM as the reference point for both ascending and descending InSAR data, and we used the remaining 13 stations as controls to assess InSAR measurement uncertainty as described in Chapter \ref{CHAP:4-GRL}.
 
-
-As outlined in Section \ref{sec:ch2-noise}, an interferogram may include noise from many possible sources.
-%orbital errors, phase decorrelation, unwrapping errors, DEM inaccuracies, ionospheric and tropospheric artifacts, and other residual noise terms. 
-In our dataset, $\Delta \phi_{orb}$, $\Delta \phi_{decor}$, and $\Delta \phi_{unwrap}$ were either removed or were negligible. Because the relatively flat Permian Basin is located in the middle latitudes, $\Delta \phi_{dem}$ and $\Delta \phi_{iono}$ are not substantial \citep{Fattahi2013DemErrorCorrection, Liang2019IonosphericCorrectionInsar}. 
+As outlined in Section \ref{sec:ch2-noise}, interferograms may include noise from many possible sources. %orbital errors, phase decorrelation, unwrapping errors, DEM inaccuracies, ionospheric and tropospheric artifacts, and other residual noise terms. 
+In our West Texas data, interferograms showing signs of $\Delta \phi_{orb}$, $\Delta \phi_{decor}$, and $\Delta \phi_{unwrap}$ were either removed or were negligible. Because the Permian Basin is located in the middle latitudes and is relatively flat, $\Delta \phi_{iono}$ and $\Delta \phi_{dem}$  are not substantial \citep{Fattahi2013DemErrorCorrection, Liang2019IonosphericCorrectionInsar}. 
 %For the reminder of this section, we focused on evaluating and mitigating the impact of tropospheric noise on the West Texas Sentinel-1 data.
+As described in Section \ref{sec:ch2-noise-tropo}, tropospheric noise $\Delta \phi_{tropo}$ consists of a stratified component that correlates with topography \citep{Doin2009CorrectionsStratifiedTropospheric} and a turbulent component that is random at time scales longer than one day \citep{Emardson2003NeutralAtmosphericDelay}. We checked for a stratified tropospheric noise component using the Generic Atmospheric Correction Online Service (GACOS), and we found that the stratified tropospheric errors in our Sentinel-1 data are minimal.
+%This is because the oil-producing region of the Permian Basin is relatively flat, and we observed little correlation between InSAR LOS measurements and the Digital Elevation Model (DEM) data 
+%(see Section \ref{sec:ch3-noise-tropo-mitigate}).
 The dominant noise term for our West Texas Sentinel-1 data was tropospheric noise; evaluation and mitigation strategies are presented in Chapter \ref{CHAP:4-GRL} and \ref{CHAP:5-robust-ts}.
 
 
 %In this thesis, we develop techniques for mitigating strong tropospheric noise to produce reliable surface deformation maps over large regions. These techniques are applicable to any large-scale deformation mapping, but they are critical to successfully detecting the centimeter-level changes occurring in the Permian Basin that are masked by 10s of centimeters of tropospheric noise. 
-
-
 
 
 %Understanding the nature and causes of earthquakes and how they are linked to certain production and disposal wells requires extensive knowledge of the subsurface. InSAR surface deformation measurements allow us to estimate the distribution of fault slip at depth and infer the associated seismic risk \citep{Segall2010EarthquakeVolcanoDeformation, Huang2017FaultGeometryInversion}. Furthermore, measurements of reservoir inflation due to wastewater injection allows operators to assess pressure build-up in disposal aquifers and the associated triggered seismicity risk. It is also worth noting that oil recovery in shale wells is notoriously low \citep{Clark2009DeterminationRecoveryFactor}, and the performance of these wells varies significantly. InSAR can be employed to map subsurface fluid depletion and pressurization. These surface deformation observations, when coupled with reservoir compaction inversion modeling, can be used to assess the areal effectiveness of oil and gas extraction operations \citep{Du2001PoroelasticReservoirModel, Vasco2005UseQuasiStatic}. 
@@ -237,17 +248,17 @@ The dominant noise term for our West Texas Sentinel-1 data was tropospheric nois
 %\end{figure}
 %The success of shale development technologies \cite{Waters2006use} has opened up vast shale resources for economically viable oil and gas production. Based on a recent assess  ment by the U.S. Geological Survey (USGS), the Wolfcamp shale in Texas' Permian Basin is the largest continuous oil field that has ever been discovered in the United States \  cite{GaswirthAssessment2016}. As of 2017, there were over 130,000 active production wells, 23,041 active enhanced oil production (EOR) wells, and 3794 active saltwater dispos  al (SWD) wells in the Permian Basin (Figure \ref{fig:Permian} (a)). It has been recognized that injection or withdrawal of fluids from the subsurface can induce earthquakes a  long existing faults \cite{Ellsworth2013, simpson1988two}. While petroleum production and wastewater injection volumes have been rising throughout the basin, the recently cat  aloged earthquakes are spatially clustered (Figure \ref{fig:Permian} (b)-(f)). One significant cluster is near Pecos, TX, where increased seismic activity began in 2009. Subs  equent activity has increased considerably, with more than 2000 earthquakes identified in 2017 \cite{Frohlich2019}.
 %
-% Understanding the nature and causes of earthquakes and how they are linked to certain production and disposal wells requires extensive knowledge of the subsurface. InSAR surf  ace deformation measurements allow us to estimate the distribution of fault slip at depth and infer the associated seismic risk \cite{Segall2010, huang2017fault}. Furthermore  , measurements of reservoir inflation due to wastewater injection allows operators to assess pressure build-up in disposal aquifers and the associated triggered seismicity ri  sk. It is also worth noting that oil recovery in shale wells is notoriously low \cite{clark2009determination}, and the performance of these wells varies significantly. InSAR   can be employed to map subsurface fluid depletion and pressurization. These surface deformation observations, when coupled with reservoir compaction inversion modeling, can b  e used to assess the areal effectiveness of oil and gas extraction operations \cite{Du2001, Vasco2005}.
+% Understanding the nature and causes of earthquakes and how they are linked to certain production and disposal wells requires extensive knowledge of the subsurface. InSAR surf  ace deformation measurements allow us to estimate the distribution of fault slip at depth and infer the associated seismic risk \cite{Segall2010, huang2017fault}. Furthermore  , measurements of reservoir inflation due to wastewater injection allows operators to assess pressure build-up in disposal aquifers and the associated triggered seismicity risk. It is also worth noting that oil recovery in shale wells is notoriously low \cite{clark2009determination}, and the performance of these wells varies significantly. InSAR can be employed to map subsurface fluid depletion and pressurization. These surface deformation observations, when coupled with reservoir compaction inversion modeling, can be used to assess the areal effectiveness of oil and gas extraction operations \cite{Du2001, Vasco2005}.
 
 
 
 %%  \section*{Geodetic data in West Texas}
-% The coverage of GPS permanent stations in West Texas is sparse (Figure \ref{fig:study-area}). There are no stations in the Delaware Basin. At 14 stations in the Midland Basin   and the Central Basin Platform, daily east, north, and up (ENU) surface deformation measurements were processed by the Nevada Geodetic Laboratory \cite{Blewitt2018}. After r  emoving the common tectonic motion, little motion was observed at all GPS stations over the study period.
+% The coverage of GPS permanent stations in West Texas is sparse (Figure \ref{fig:study-area}). There are no stations in the Delaware Basin. At 14 stations in the Midland Basin and the Central Basin Platform, daily east, north, and up (ENU) surface deformation measurements were processed by the Nevada Geodetic Laboratory \cite{Blewitt2018}. After removing the common tectonic motion, little motion was observed at all GPS stations over the study period.
 % 
-% We processed 91 ascending (path 78) and 82 descending (path 85) Sentinel-1 scenes acquired between Nov. 2014 and Jan. 2019 (Figure \ref{fig:study-area}). We generated more th  an 7000 interferograms with 120 meter pixel spacing and a maximum temporal baseline of 800 days. Given that few decorrelation artifacts are present in these interferograms du  e to the lack of vegetation, we did not impose any spatial baseline threshold. Each interferogram, formed using two radar images from the same path, measures surface deformat  ion between the Sentinel-1 acquisition dates along the radar line-of-sight (LOS) direction. We selected all interferograms that were generated using SAR acquisitions within a   period of interest, and we estimated the average LOS deformation rate during this period by computing the ratio between the sum of all interferograms and the sum of their ti  me spans \cite{Sandwell1998}. A comparable solution can be derived using the Small Baseline method with a linear deformation model \cite{SBAS2002}. In the region where the tw  o paths overlap, we decomposed the eastward and vertical motion from the ascending and descending LOS solutions (\textit{Supporting Information}).
+% We processed 91 ascending (path 78) and 82 descending (path 85) Sentinel-1 scenes acquired between Nov. 2014 and Jan. 2019 (Figure \ref{fig:study-area}). We generated more th  an 7000 interferograms with 120 meter pixel spacing and a maximum temporal baseline of 800 days. Given that few decorrelation artifacts are present in these interferograms du  e to the lack of vegetation, we did not impose any spatial baseline threshold. Each interferogram, formed using two radar images from the same path, measures surface deformat  ion between the Sentinel-1 acquisition dates along the radar line-of-sight (LOS) direction. We selected all interferograms that were generated using SAR acquisitions within a period of interest, and we estimated the average LOS deformation rate during this period by computing the ratio between the sum of all interferograms and the sum of their time spans \cite{Sandwell1998}. A comparable solution can be derived using the Small Baseline method with a linear deformation model \cite{SBAS2002}. In the region where the two paths overlap, we decomposed the eastward and vertical motion from the ascending and descending LOS solutions (\textit{Supporting Information}).
 % 
-% Because InSAR only measures relative motion between ground pixels, we chose the GPS station TXKM to serve as a common reference for deformation measurements. Given that littl  e relative motion was observed at the remaining 13 GPS stations, we used these locations as controls. For example, at the GPS station TXMC, most interferograms indicate near   zero motion over their time spans, with no systematic bias and a standard deviation $\sigma$ of 7.2 cm (Figure \ref{fig:outliers} (a)). The spread of the LOS measurements is   likely caused by tropospheric turbulence that is approximately random at time scales longer than 1 day \citep{Emardson2003}, and local storms can produce $\pm$ 15 cm outliers   \cite{Bekaert2015statistical}. We observed similar noise distributions at all 13 GPS locations, and the tropospheric noise level increases linearly with the distance from th  e reference GPS station. At 40 km, $\sigma$ equals 3.7 cm. For every additional 50 km increase, $\sigma$ increases by 1.7 cm (Figure \ref{fig:outliers} (b)).
+% Because InSAR only measures relative motion between ground pixels, we chose the GPS station TXKM to serve as a common reference for deformation measurements. Given that little relative motion was observed at the remaining 13 GPS stations, we used these locations as controls. For example, at the GPS station TXMC, most interferograms indicate near   zero motion over their time spans, with no systematic bias and a standard deviation $\sigma$ of 7.2 cm (Figure \ref{fig:outliers} (a)). The spread of the LOS measurements is   likely caused by tropospheric turbulence that is approximately random at time scales longer than 1 day \citep{Emardson2003}, and local storms can produce $\pm$ 15 cm outliers   \cite{Bekaert2015statistical}. We observed similar noise distributions at all 13 GPS locations, and the tropospheric noise level increases linearly with the distance from th  e reference GPS station. At 40 km, $\sigma$ equals 3.7 cm. For every additional 50 km increase, $\sigma$ increases by 1.7 cm (Figure \ref{fig:outliers} (b)).
 %
-% Sentinel-1 satellites sample the Earth much more frequently in time compared to earlier InSAR missions. This allows us to average thousands of InSAR measurements and reduce t  he impact of random tropospheric noise \cite{Zebker1997}. However, the quality of InSAR measurements is heterogeneous. For example, local extreme weather events only impact c  ertain pixels on a few SAR acquisition dates. Finding an automated way to identify these outlier measurements from thousands of interferograms that cover a wide region with v  ery high spatial resolution is challenging, yet critical for further noise reduction.
+% Sentinel-1 satellites sample the Earth much more frequently in time compared to earlier InSAR missions. This allows us to average thousands of InSAR measurements and reduce the impact of random tropospheric noise \cite{Zebker1997}. However, the quality of InSAR measurements is heterogeneous. For example, local extreme weather events only impact certain pixels on a few SAR acquisition dates. Finding an automated way to identify these outlier measurements from thousands of interferograms that cover a wide region with very high spatial resolution is challenging, yet critical for further noise reduction.
 %
 %
