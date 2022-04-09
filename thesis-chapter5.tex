@@ -1,3 +1,8 @@
+%(1) Algorithm
+%(2) Time series result and validation
+%(3) Deformation maps
+%(4) Data now available for stakeholders, what people can do (brief discussion on Peter's work, we could use one of his figures I have).
+%
 
 
 
@@ -20,7 +25,29 @@ The cumulative results show subtle basin-wide uplift features arising after 4-5 
 %	- can get interpreted as deformation if we assume that all movements remaining after filtering are due to the low-pass deformation
 %	
 
-\section{Methods}
+\section{Algorithm}
+
+
+Each element $\phi_i$ consists of all terms in Equation \eqref{eq:ch2-insar-noise-terms} which affect the phase of a SAR acquisition and all interferograms containing that acquisition (as opposed to interferogram-specific noise terms in $ \bm{\epsilon} $); this includes the deformation phase, $\frac{4 \pi}{\lambda} \Delta d$, as well as the atmospheric delay terms, $\alpha_i$.
+Since deformation is usually the quantity of interest, there are several approaches to separating $ \Delta d $ from $\Delta \alpha$.
+If a functional model of deformation is known to exist (e.g. linear, transient jumps \citep{Chen20142010SlowSlip, Fielding2017SurfaceDeformationNorth}, seasonal variations \citep{Murray2018ShortLivedPause}, or a combination \citep{Riel2018QuantifyingGroundDeformation}), a model fit can be performed on the noisy $ \Delta \phi $ time series to extract the model parameters of interest.
+Alternatively, the authors of \cite{Berardino2002NewAlgorithmSurface} used spatial and temporal filters on $\bm{\Delta \phi}$, relying on the fact that the turbulent component of $\Delta \alpha$ is uncorrelated in time \citep{Emardson2003NeutralAtmosphericDelay} while most deformation sources show strong temporal correlation.
+These filters are expanded upon and compared in Chapter \ref{CHAP:5-robust-ts}, where a new robust filter is presented to separate deformation from atmospheric noise.
+
+
+%%%%% weightingn vector? %%% weighted least squares compare
+%
+%
+%%$ \bm{v} = (\bm{A}^T \bm{A})^{-1}\bm{A}^T \bm{\Delta \phi} $
+%%As noted in \cite{Simons2007InterferometricSyntheticAperture}, 
+%The least squares solution $ \bm{v} = (\bm{B}^T \bm{B})^{-1}\bm{B}^T \bm{\Delta \phi} $ (or minimum norm solution n $ \bm{v} = \bm{B}^{\dagger} \bm{\Delta \phi}$ ) from \cite{Berardino2002NewAlgorithmSurface} assume that all measurements in $\bm{\Delta \phi}$ have equal variance; subsequent authors have implemented a weighted least squares solution:
+%\begin{equation}
+%	%	\bm{\phi} = \bm{A}^{\dagger} \bm{\Delta \phi}
+%	%	\bm{\phi} = (\bm{A}^T \bm{\Sigma}^{-1} \bm{A})^{-1}\bm{A}^T \bm{\Sigma}^{-1} \bm{\Delta \phi}  \label{eq:ch2-sbas-wls}
+%	\bm{v} = (\bm{B}^T \bm{\Sigma}^{-1} \bm{B})^{-1}\bm{B}^T \bm{\Sigma}^{-1} \bm{\Delta \phi}  \label{eq:ch2-sbas-wls}
+%\end{equation}
+%where $ \bm{\Sigma} = \mathbb{E}[\bm{\epsilon} \bm{\epsilon}^T] $ is the measurement covariance matrix.
+
 
 \section{Synthetic Example}
 

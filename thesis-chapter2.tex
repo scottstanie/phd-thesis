@@ -183,6 +183,14 @@ I_{1,2} = S_1 S_2^{*} = A_1 A_2 e^{j \Delta \phi_{1,2}}  \label{eq:insar-conj-mu
 \end{equation}
 where $S_k = A_k e^{j \phi_k}$, $A_k$ is the amplitude of the $k$th image, and the phase $\phi_k = -\frac{4 \pi}{\lambda} r_k$. The image $I$ is called an \emph{interferogram},  and the quantity $\Delta \phi_{1,2} \triangleq  \phi_1 - \phi_2$ is the interferometric phase.
 
+%TODO: 
+TODO: summarize SRTM, and TANDEM X missions.
+%
+%maybe his topography stuff....
+%- summarize SRTM, and TANDEM X mission
+%- after into topo, can even mention missions to emphasize importance
+%- for radar interferometry... mostly mention berardino chapter.
+
 
 For topography mapping, two SAR antennas are separated by a distance in the across-track direction and each acquires a SAR image simultaneously\footnote{The acquisitions can also be at different times, under the assumption that no ground deformation has occurred.} (Figure \ref{fig:ch2-insar-geometry-topo}). The baseline causes the two radars to view the same point on the ground with a slight change in angle.
 The difference in phase $\Delta \phi$ between $S_1$ and $S_2$ is related to the difference in the geometrical path length from each radar to the ground.
@@ -296,7 +304,8 @@ In high signal to noise ratio (SNR) interferograms (e.g. for large magnitude ear
 
 \begin{figure}[!htbp]
 	\centering
-	\includegraphics[width=1.0\textwidth]{figures/chapter2-sar/hawaii-example.pdf}
+%	\includegraphics[width=1.0\textwidth]{figures/chapter2-sar/hawaii-example.pdf}
+	\includegraphics[width=1.0\textwidth]{figures/chapter2-sar/hawaii-example-small.pdf}
 	\caption[Sentinel-1 interferogram over Hawaii showing common noise sources, along with 2018 eruption deformation]{
 		(a) Sentinel-1 interferogram (ascending path 124) from April 20th, 2018 to May 2nd, 2018 over Hawaii, spanning the beginning of the 2018 K'\=ilauea eruption.
 		Each colored phase cycle of $2\pi$ radians indicates a range change of 2.7 cm along the radar line-of-sight, which can be caused by real surface deformation or a noise source.
@@ -453,7 +462,7 @@ While these correction methods show promise in certain study areas, the spatial 
 
 %There are many techniques which fall under the umbrella of InSAR time series techniques, (sometimes called ``multi-temporal InSAR'' or MT-InSAR).
 Since many noise sources cannot be distinguished from deformation in a single interferogram (e.g. Figure \ref{fig:ch2-hawaii-example}), it is common to analyze multiple interferograms to quantify and mitigate InSAR noise sources.
-InSAR time series techniques (sometimes called ``multi-temporal InSAR'' or MT-InSAR) are a class of methods for extracting information about the temporal evolution of surface deformation or other geophysical parameters of interest.  Most multi-temporal methods have generally been classified as belonging to one of the following categories: 1) stacking (averaging) \citep{Zebker1997AtmosphericEffectsInterferometric, Sandwell1998PhaseGradientApproach}, 2) small-baseline approaches \citep{Berardino2002NewAlgorithmSurface}, or 3) persistent-scatterer (PS) methods \citep{Ferretti2001PermanentScatterersSar, Hooper2006PersistentScatterRadar}. In the past decade, a fourth category of ``phase-linking`` approaches have been popularized by the SqueeSAR algorithm \citep{Ferretti2011NewAlgorithmProcessing}; these are based on optimizations or decompositions of the complex covariance matrix of SAR image stacks \citep{Guarnieri2008ExploitationTargetStatistics, Fornaro2015CaesarApproachBased, Ansari2018EfficientHighPrecision}. Methods (3) and (4) have shown success in extracting high-precision estimates of interferometric phase where decorrelation is the dominant noise source (e.g. in local, high-rate deformation, \citep{Tebaldini2010MethodsPerformancesMulti}); in the following section, we focus on (1) and (2).
+InSAR time series techniques (sometimes called ``multi-temporal InSAR'' or MT-InSAR) are a class of methods for extracting information about the temporal evolution of surface deformation or other geophysical parameters of interest.  Most multi-temporal methods have generally been classified as belonging to one of the following categories: 1) stacking (averaging) \citep{Zebker1997AtmosphericEffectsInterferometric, Sandwell1998PhaseGradientApproach}, 2) small-baseline approaches \citep{Berardino2002NewAlgorithmSurface}, or 3) persistent-scatterer (PS) methods \citep{Ferretti2001PermanentScatterersSar, Hooper2006PersistentScatterRadar}. In the past decade, a fourth category of ``phase-linking'' approaches have been popularized by the SqueeSAR algorithm \citep{Ferretti2011NewAlgorithmProcessing}; these are based on optimizations or decompositions of the complex covariance matrix of SAR image stacks \citep{Guarnieri2008ExploitationTargetStatistics, Fornaro2015CaesarApproachBased, Ansari2018EfficientHighPrecision}. Methods (3) and (4) have shown success in extracting high-precision estimates of interferometric phase where decorrelation is the dominant noise source (e.g. in local, high-rate deformation, \citep{Tebaldini2010MethodsPerformancesMulti}); in the following section, we focus on (1) and (2).
 
 
 For deformation signals which occur as a transient event 
@@ -499,7 +508,7 @@ we write the functional model of the linear system as
 where  $\bm{A}$ is the system design matrix, and $ \bm{\epsilon}  $ is the vector of interferogram-specific noise sources (e.g. $ \Delta \phi_{decor}, \Delta \phi_{unwrap}, \Delta \phi_{scat}, \Delta \phi_{n} $ from Equation \eqref{eq:ch2-insar-noise-terms}).
 The matrix $\bm{A}$ is an incidence-like matrix where the row corresponding to measurement $ \Delta \phi_{j,k} \triangleq \phi_k - \phi_j $ has $1$ in the $k$th column and $-1$ in the $j$th column.
 % (for all $j>0$).
-Since interferograms are relative measurements, the first date's phase cannot be constrained and is conventionally taken to be $\phi_0 = 0$. Therefore we omit the first column of the $ \bm{A} $ matrix containing $-1$ entries corresponnding to $\phi_0$, leaving $N-1$ remaining terms in the unknown vector $ \bm{\phi} = \left[\phi_1, \ldots, \phi_{N-1} \right]^T $.
+Since interferograms are relative measurements, the first date's phase cannot be constrained and is conventionally taken to be $\phi_0 = 0$. Therefore, we omit the first column of the $ \bm{A} $ matrix containing $-1$ entries corresponding to $\phi_0$, leaving $N-1$ remaining terms in the unknown vector $ \bm{\phi} = \left[\phi_1, \ldots, \phi_{N-1} \right]^T $.
 When $ \bm{A} $ is full column rank, the solution for $ \bm{\phi} $ can be obtained through least squares, $ \bm{\phi} = (\bm{A}^T \bm{A})^{-1}\bm{A}^T \bm{\Delta \phi}
  $, equivalent to minimizing the $L_2$ norm of the residual vector $\norm{\bm{A \phi} - \bm{\Delta \phi}}^2_2 $.
 
@@ -513,28 +522,10 @@ corresponding to measurement $ \Delta \phi_{j,k} $ has $t_i - t_{i-1}$ in the $i
 After solving Equation \eqref{eq:ch2-sbas-B}, $ \bm{v} $ is integrated to obtain $ \bm{\phi} $.
 
 The rationale behind solving for $\bm{v}$ is that for early SAR satellites, such as ERS-1 and ERS-2, the acquisitions are often grouped as subsets of images with small spatial baselines that are separated from other groups by large temporal or spatial baselines. 
-When $\bm{\Delta \phi}$ contains an isolated subset of interferograms, $A$ is not full column rank and Equation \eqref{eq:ch2-sbas-A} is solved with a pseudo-inverse, $A^{\dagger}$, generated using the singular value decomposition (SVD) \citep{Strang2006LinearAlgebraIts}. The SVD approach for rank-deficient systems produces a minimum norm solution vector; the authors of \cite{Berardino2002NewAlgorithmSurface} found that minimizing the norm of the velocity vector $ \bm{v} $ produced more physically plausible deformation results than minimizing the norm of $ \bm{\phi} $. We note that for recent missions like Sentinel-1 with tightly controlled repeat orbits, it is often possible to create one connected network of interferograms. This means that the formulations of Equations \eqref{eq:ch2-sbas-A} and \eqref{eq:ch2-sbas-B} lead to the same result, and the system in Equation \eqref{eq:ch2-sbas-A} with full rank $ \bm{A} $ can be solved using least squares.
+When $\bm{\Delta \phi}$ contains an isolated subset of interferograms, $A$ is not full column rank and Equation \eqref{eq:ch2-sbas-A} is solved with a pseudo-inverse, $A^{\dagger}$, generated using the singular value decomposition (SVD) \citep{Strang2006LinearAlgebraIts}. The SVD approach for rank-deficient systems produces a minimum norm solution vector; the authors of \cite{Berardino2002NewAlgorithmSurface} found that minimizing the norm of the velocity vector $ \bm{v} $ produced more physically plausible deformation results than minimizing the norm of $ \bm{\phi} $. We note that for recent missions like Sentinel-1 with tightly controlled repeat orbits, it is often possible to create one connected network of interferograms, leading to equivalent results from the formulations of Equations \eqref{eq:ch2-sbas-A} and \eqref{eq:ch2-sbas-B}. However, Equation \eqref{eq:ch2-sbas-B} enables alternative regularization strategies for inversion, as shown in Section \ref{sec:ch4-method-compare}.
+%and the system in Equation \eqref{eq:ch2-sbas-A} with full rank $ \bm{A} $ can be solved using least squares.
 
 
-Each element $\phi_i$ consists of all terms in Equation \eqref{eq:ch2-insar-noise-terms} which affect the phase of a SAR acquisition and all interferograms containing that acquisition (as opposed to interferogram-specific noise terms in $ \bm{\epsilon} $); this includes the deformation phase, $\frac{4 \pi}{\lambda} \Delta d$, as well as the atmospheric delay terms, $\alpha_i$.
-Since deformation is usually the quantity of interest, there are several approaches to separating $ \Delta d $ from $\Delta \alpha$.
-If a functional model of deformation is known to exist (e.g. linear, transient jumps \citep{Chen20142010SlowSlip, Fielding2017SurfaceDeformationNorth}, seasonal variations \citep{Murray2018ShortLivedPause}, or a combination \citep{Riel2018QuantifyingGroundDeformation}), a model fit can be performed on the noisy $ \Delta \phi $ time series to extract the model parameters of interest.
-Alternatively, the authors of \cite{Berardino2002NewAlgorithmSurface} used spatial and temporal filters on $\bm{\Delta \phi}$, relying on the fact that the turbulent component of $\Delta \alpha$ is uncorrelated in time \citep{Emardson2003NeutralAtmosphericDelay} while most deformation sources show strong temporal correlation.
-These filters are expanded upon and compared in Chapter \ref{CHAP:5-robust-ts}, where a new robust filter is presented to separate deformation from atmospheric noise.
-
-
-%%%% weightingn vector? %%% weighted least squares compare
-
-
-%$ \bm{v} = (\bm{A}^T \bm{A})^{-1}\bm{A}^T \bm{\Delta \phi} $
-%As noted in \cite{Simons2007InterferometricSyntheticAperture}, 
-The least squares solution $ \bm{v} = (\bm{B}^T \bm{B})^{-1}\bm{B}^T \bm{\Delta \phi} $ (or minimum norm solution n $ \bm{v} = \bm{B}^{\dagger} \bm{\Delta \phi}$ ) from \cite{Berardino2002NewAlgorithmSurface} assume that all measurements in $\bm{\Delta \phi}$ have equal variance; subsequent authors have implemented a weighted least squares solution:
-\begin{equation}
-%	\bm{\phi} = \bm{A}^{\dagger} \bm{\Delta \phi}
-%	\bm{\phi} = (\bm{A}^T \bm{\Sigma}^{-1} \bm{A})^{-1}\bm{A}^T \bm{\Sigma}^{-1} \bm{\Delta \phi}  \label{eq:ch2-sbas-wls}
-	\bm{v} = (\bm{B}^T \bm{\Sigma}^{-1} \bm{B})^{-1}\bm{B}^T \bm{\Sigma}^{-1} \bm{\Delta \phi}  \label{eq:ch2-sbas-wls}
-\end{equation}
-where $ \bm{\Sigma} = \mathbb{E}[\bm{\epsilon} \bm{\epsilon}^T] $ is the measurement covariance matrix.
 
 % ``Additionally, an atmospheric phase artifacts filtering operation is carried out on the computed space–time deformation measurements following the lines of the solution developed for the PS technique [16], [17]; in our case, the filtering operation takes benefit from the high spatial density of the imaged pixels''
 
@@ -596,14 +587,6 @@ An interferogram measures surface deformation between the two SAR acquisition ti
 where $u_{e}$, $u_{n}$ and $u_{u}$ are the east, north and up displacements, respectively. The radar look vector $\alpha = [\alpha_e, \alpha_n, \alpha_u]$ can be calculated from the known imaging geometry at every pixel location. This varies significantly for Sentinel-1 due to the $ \sim$250 km wide swath (Figure \ref{fig:los-map}). 
 
 
-%
-%\begin{figure}
-%	\centering
-%	% TODO
-%	%	\includegraphics[width=\textwidth]{}
-%	\caption[Line of sight convention]{Line of sight convention used in this thesis for ascending (a) and descending (b) satellite geometries. Vector points from the satellite to the ground}
-%	\label{fig:los-asc-desc}
-%\end{figure}
 
 \begin{figure}[!htbp]
 	\centering
@@ -656,3 +639,14 @@ To illustrate a decomposition, Figure \ref{fig:injection-kim-lu} shows a 12 km x
 %TODO: move this to appendix or not?
 %
 
+
+\section{InSAR processing chain}
+\label{sec:ch2-processing}
+We developed software for an efficient and scalable InSAR processing chain to ingest geocoded SLC images and output cumulative surface deformation maps (Figure).
+
+%- insatead of just TS formula, maybe mention the software... "geocoded SLCs". "write software into geocoded SLCs". "maybe one of the core group proc..."
+%- somehow reflect that i can contribute to mintpy
+%- one of key strengths... 'they can write fancy ts formula' they download software and run it... 
+%- things i did aren't in mintpy... so could mention that the things will be developed for our radar interfeometry group
+%- lot of people talk about algo method result... then you found they just ran code. "i ran this correction"
+%- this was a reason she got hired. 

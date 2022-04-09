@@ -2,13 +2,12 @@
 \chapter{Cumulative Surface Deformation over the Permian Basin with Automated Outlier Removal}
 \label{CHAP:4-GRL}
 
-\section{Introduction}
-
-
 %In this chapter,  we present a simple yet effective time series method for creating cumulative surface deformation maps over large regions with severe tropospheric noise. We use the method to create yearly deformation maps over the oil-producing region of the Permian Basin. The method incorporates an automated outlier detection and removal algorithm, which enabled ~2 mm/year agreement with GPS measurements in the presence of $\sim$15 cm of tropospheric noise.
 
 
-Previous InSAR studies have demonstrated the use of surface deformation data for understanding causes of induced seismicity; however, these studies focused on study areas $ \sim $ 60-by-60 km or smaller. Basin-wide InSAR surface deformation data with detailed uncertainty quantification are needed for assessing the likelihood of induced seismicity risk in the Permian Basin. Since InSAR tropospheric noise variance increases with the distance away from the reference point, it is difficult to expand the InSAR spatial coverage to the entire Permian Basin while retaining millimeter level accuracy.  
+Previous InSAR studies have demonstrated the use of surface deformation data for understanding causes of induced seismicity; however, these studies focused on study areas $ \sim $ 60-by-60 km or smaller. 
+%Basin-wide InSAR surface deformation data with detailed uncertainty quantification are needed for assessing the likelihood of induced seismicity risk in the Permian Basin. 
+Since InSAR tropospheric noise variance increases with the distance away from the reference point, it is difficult to expand the InSAR spatial coverage to the entire Permian Basin while retaining millimeter level accuracy.  
 In this chapter, we present a time series method for creating large cumulative surface deformation maps over areas containing severe tropospheric noise. 
 We developed an outlier detection algorithm that removes InSAR measurements corrupted by severe tropospheric noise (e.g. storms and heat waves).
 % withing multiple subsets of interferograms and produces a linear velocity estimate for each subset.
@@ -27,40 +26,28 @@ We use the method to create yearly deformation maps from November 2014 through J
 %This dataset, when combined with physics-based reservoir and fault modeling, can produce insights into the causes of induced seismicity. 
 %Furthermore, these surface deformation data products can be used to assess the areal effectiveness of the oil and gas production, a measure for estimating which regions of a reservoir are being depleted most quickly. InSAR techniques now provide a low-cost method to assist oil and gas operations and risk management at a basin-scale.
 
-\section{Methods}
-\subsection{InSAR data processing strategy}
-\label{sec:InSARprocessing}
-Using a geocoded SLC processor \citep{Zheng2017PhaseCorrectionSingle, Zebker2017UserFriendlyInsar}, we processed 91 ascending (path 78, frames 94-104) and 82 descending (path 85, frames 483-493) Sentinel-1 scenes acquired between Nov. 2014 and Jan. 2019 (Figure \ref{fig:paper1-study-area}). We generated more than 7000 interferograms with 120 meter pixel spacing and a maximum temporal baseline of 800 days. No spatial baseline threshold was imposed in the interferogram formation. Because few decorrelation artifacts were presented, we were able to unwrap all interferograms without additional spatial filtering using the Statistical-cost, Network-flow Algorithm for Phase Unwrapping (SNAPHU) \citep{Chen2001TwoDimensionalPhase}. We removed long-wavelength phase ramps, possibly due to residual orbit errors or long-wavelength tropospheric noise, using a planar phase model. Comparable interferograms can be generated using other processors such as the InSAR Scientific Computing Environment (ISCE) \citep{Rosen2012InsarScientificComputing}. 
+\section{Algorithms}
 
 
-\begin{figure}[hbt!]
-	\centering
-	\includegraphics[width=0.9\linewidth]{figures/chapter4-grl/figure1-study-area.pdf}
-	\caption[GPS and InSAR data coverage over the Permian Basin.]{GPS and InSAR data coverage over the Permian Basin. Yellow dots indicate GPS permanent stations. Teal and red boxes indicate ascending path 78 and descending path 85 paths of Sentinel 1 InSAR coverage, respectively. Each path contains over 80 SAR acquisitions, leading to over 3500 interferograms per path at 120 m pixel spacing.}
-	\label{fig:paper1-study-area}
-\end{figure}
-
-
-The coverage of GPS permanent stations in West Texas is sparse, and there are 14 permanent GPS stations (Figure \ref{fig:paper1-study-area}) that recorded daily east, north, and up (ENU) surface deformation measurements \citep{Blewitt2018HarnessingGpsData}. After removing the common tectonic motion, all GPS stations showed little surface deformation (0-3 mm/year) between Nov. 2014 and Jan. 2019. We chose the GPS station TXKM as the reference point for both ascending and descending InSAR data, and we used the remaining 13 stations as controls to assess InSAR measurement uncertainty as described in Section \ref{sec:errors}.
-
-\subsection{Solutions for cumulative surface deformation over time}
-\label{sec:stacking}
-An interferogram measures surface deformation that occurred between the two SAR acquisition times along the radar line-of-sight (LOS) direction \citep{Hanssen2001RadarInterferometryData}. We employed a stacking approach \citep{Sandwell1998PhaseGradientApproach} to calculate the average LOS velocity $v_{avg}$ of each ground pixel over a time period of interest $T$ as:
-\begin{equation}
-	v_{avg} = \frac{\sum_{i \in G} \Delta  d_i}{\sum_{i \in G} \Delta t_i}
-	\label{eq:stacking}
-\end{equation}
-where $G$ is a subset of interferograms that were formed using two SAR scenes acquired within the time period $T$. The LOS measurement (in cm) and the temporal baseline of the $i^{th}$ interferogram in $G$ are written as $\Delta d_i$ and $ \Delta t_i $ respectively. In Section \ref{sec:ch4-method-compare}, we show that comparable LOS velocity estimates can be produced using the Small Baseline Subset (SBAS) approach \citep{Berardino2002NewAlgorithmSurface} with a constant velocity (linear deformation) model.
-
-In this study, we solved for the average LOS velocities over three periods of interest: Nov. 2014 to Jan. 2017, Nov. 2014 to Jan. 2018, and Nov. 2014 to Jan. 2019. Over each period $T_j$, we computed the cumulative LOS surface deformation over this period as the product of $v_{avg,j}$ and $T_j$. We also solved for the vertical and eastward deformation in the region where path 78 and 85 overlap (see Section \ref{sec:ch3-insar-decomp}). To account for the large variation in look angle within one Sentinel-1 Interferometric Wide (IW) swath image, we used the LOS unit vector at each pixel location Figure \ref{fig:los-map})) in the LOS decomposition.
-
-
-\subsection{A comparison between stacking and InSAR time series methods}
+\subsection{Stacking and InSAR time series analysis}
 \label{sec:ch4-method-compare}
-%If data error treatments and deformation model assumptions are valid, we can derive meaningful and comparable deformation solutions using different InSAR time series analysis methods. 
-To investigate how InSAR measurement noise influences the LOS deformation solutions, we compared the results derived from (1) the stacking method, (2) a Small BAseline Subset (SBAS) linear deformation (constant velocity) model with $L_1$ and $L_2$-norm penalty functions, and (3) unregularized and regularized SBAS deformation time series. 
+%[Method only, define equations and formulas. This already outlines how we solve for deformation]
 
-For the remainder of this section, we assume there are $M$ small-baseline interferograms that were generated from $N$ SAR scenes acquired over a period of interest. The stacking method from \cite{Sandwell1998PhaseGradientApproach} that we employed in this study solves for the average velocity over the study period. Similarly, the SBAS linear deformation model solves for the average velocity $ v_{avg} $ over this period at each pixel of interest as \citep{Berardino2002NewAlgorithmSurface}:
+To investigate how InSAR measurement noise influences the LOS deformation solutions, we compared the results derived from (1) the stacking method, (2) a Small BAseline Subset (SBAS) linear deformation (constant velocity) model with $L_1$ and $L_2$-norm penalty functions, and (3) unregularized and regularized SBAS deformation time series. 
+We assume there are $M$ small-baseline interferograms that were generated from $N$ SAR scenes acquired over a period of interest. 
+%The stacking method from \cite{Sandwell1998PhaseGradientApproach} solves for the average velocity over the study period. 
+%An interferogram measures surface deformation that occurred between the two SAR acquisition times along the radar line-of-sight (LOS) direction \citep{Hanssen2001RadarInterferometryData}.
+We employed a stacking approach \citep{Sandwell1998PhaseGradientApproach} to calculate the average LOS velocity $v_{avg}$ of each ground pixel over a time period of interest $T$ as:
+\begin{equation}
+	v_{avg} = \frac{\sum_{i \in G} \bm{\Delta  d_i}}{\sum_{i \in G} \Delta t_i}
+	\label{eq:ch4-stacking}
+\end{equation}
+where $G$ is a subset of interferograms that were formed using two SAR scenes acquired within the time period $T$. The LOS measurement (in cm) and the temporal baseline of the $i^{th}$ interferogram in $G$ are written as $\Delta d_i$ and $ \Delta t_i $ respectively. 
+%In Section \ref{sec:ch4-method-compare}, we show that comparable LOS velocity estimates can be produced using the Small Baseline Subset (SBAS) approach \citep{Berardino2002NewAlgorithmSurface} with a constant velocity (linear deformation) model.
+
+
+Similarly, the SBAS method outlined in Section \ref{sec:ch2-insar-ts} can be augmented with a linear deformation model.
+In this formulation, we solve for the average velocity $ v_{avg} $ over this period at each pixel of interest as \citep{Berardino2002NewAlgorithmSurface}:
 \begin{equation}
 	\arg \min_{v_{avg}} \norm{ \bm{BP} v_{avg} - \bm{\Delta d}   }_p
 	\label{eq:ch4-sbas-linear}
@@ -73,51 +60,44 @@ The LOS surface velocities between adjacent SAR acquisitions $ \bm{v} = \left[v_
 \end{equation}
 where $ \bm{D} $ is a $ (N-2) \times (N-1) $ matrix, with $1$ on the main diagonal and $-1$ on the superdiagonal, which approximates the first-order differentiation operator. The first term penalizes the data misfit, the second term is a temporal smoothness constraint, and $ \alpha \in \mathbb{R} $ is the weight between the two terms. When $ \alpha = 0 $, the solution is the unregularized SBAS deformation time series. An additional integration of $\mathbf{v}$ over time yields the LOS deformation time series.
 
-Little surface deformation occurred between Nov. 2014 and Jan. 2019 at the 13 GPS permanent GPS stations. At each GPS location, we projected the GPS time series to the radar line-of-sight (LOS), and we used the GPS-inferred average LOS velocity (0-3 mm/year) as ground truth. Table \ref{tab:compare-errors} shows the root mean square (RMS) and the worst-case absolute differences between InSAR and GPS inferred average LOS velocities between Nov. 2014 and Jan. 2018 as derived from the four InSAR time series methods. We found that InSAR tropospheric noise has a strong influence on all the surface deformation solutions before removing the measurement outliers. As an example, Figure \ref{fig:compare} (a) shows the ascending LOS solutions between Nov. 2014 and Jan. 2018 at the GPS station TXSO before removing InSAR measurement outliers. The random tropospheric noise creates up to $\sim$6 cm of error in the unregularized SBAS surface deformation time series. This error can be reduced by increasing $ \alpha$ in Equation \eqref{eq:ch4-sbas}. As $\alpha$ increases, the LOS deformation time series converge to the $L_2$ linear deformation (constant velocity) solution. However, there are visible cm-level tropospheric artifacts in the cumulative deformation solutions by using either $L_1$ or $L_2$ linear deformation models (e.g. Figure \ref{fig:outliers}(d) below). 
 
-After removing InSAR outlier measurements associated with extreme local weather events as described in Section 2.3 (main text), all SBAS time series methods produce more accurate and consistent deformation trends (Figure \ref{fig:compare} (b)). The unregularized SBAS time series still contain up to $\sim$3 cm of tropospheric noise, which leads to long-wavelength artifacts in the basin-wide deformation maps. The $ L_1 $ and $ L_2 $ linear deformation solutions show close agreement ($<$ 2 mm difference) at all GPS stations. Since both methods suggest a deformation trend consistent with the stacking approach, we chose the simple stacking method as the final processing strategy for estimating cumulative surface deformation in the Permian Basin.
+
+
+%%An interferogram measures surface deformation that occurred between the two SAR acquisition times along the radar line-of-sight (LOS) direction \citep{Hanssen2001RadarInterferometryData}.
+%We employed a stacking approach \citep{Sandwell1998PhaseGradientApproach} to calculate the average LOS velocity $v_{avg}$ of each ground pixel over a time period of interest $T$ as:
+%\begin{equation}
+%	v_{avg} = \frac{\sum_{i \in G} \Delta  d_i}{\sum_{i \in G} \Delta t_i}
+%	\label{eq:ch4-stacking}
+%\end{equation}
+%where $G$ is a subset of interferograms that were formed using two SAR scenes acquired within the time period $T$. The LOS measurement (in cm) and the temporal baseline of the $i^{th}$ interferogram in $G$ are written as $\Delta d_i$ and $ \Delta t_i $ respectively. In Section \ref{sec:ch4-method-compare}, we show that comparable LOS velocity estimates can be produced using the Small Baseline Subset (SBAS) approach \citep{Berardino2002NewAlgorithmSurface} with a constant velocity (linear deformation) model.
+
+%
+%\section{Study site and data}
+%\label{sec:ch4-site}
+
+
+\subsection{Tropospheric noise outlier removal}
+\label{sec:ch4-outlier-method}
+
+We examined interferograms at the 13 control locations and discovered that non-Gaussian tails (outliers) are present. For example, LOS measurements of the ascending interferograms at pixels near the GPS station TXMC show a near zero median (-4 mm) and a standard deviation of 3.2 cm (Figure \ref{fig:ch4-outliers} (a)). Due to the absence of substantial deformation signal at this station, the standard deviation of the LOS distribution is a measure of turbulent tropospheric noise.  We found that the median LOS turbulent error is close to zero (no systematic noise bias) at all GPS control stations. The standard deviation of the turbulent noise increases as the square root of the distance from the InSAR reference point (Figure \ref{fig:ch4-outliers} (b)). Furthermore, we compared the LOS turbulent noise distribution observed at each GPS station to a normal distribution using a normal probability plot \citep{Filliben1975ProbabilityPlotCorrelation}. We discovered that non-Gaussian tails (outliers) are present (e.g. Figure \ref{fig:ch4-outliers}(c)) as a result of severe tropospheric noise (e.g. storms or heat waves). 
+
+
 
 \begin{figure}
 	\centering
-	\includegraphics[width=\textwidth]{figures/chapter4-grl/supplement/figureS5-compare-insar-2panel.pdf}
-	\caption[Comparisons of InSAR SBAS solutions]{Comparisons of InSAR unregularized SBAS time series (purple), regularized SBAS time series (green), linear deformation trend estimated by minimizing the $L_1$-norm of the residuals (blue), and the $L_2$-norm of the residuals/ stacking approach (red)  (a) before and (b) after removing LOS measurement outliers. ENU GPS data from station TXSO has been projected onto the radar LOS (orange dots).}
-	\label{fig:compare}
-\end{figure}
-
-\subsection{Errors in InSAR surface deformation estimates}
-\label{sec:errors} 
-As outlined in Section \ref{sec:ch3-noise}, the phase of an interferogram can be written as \citep{Zebker1992DecorrelationInterferometricRadar, Zebker1994AccuracyTopographicMaps, Zebker1997AtmosphericEffectsInterferometric}
-\begin{equation}
-	\Delta \phi = \frac{4 \pi}{\lambda} \Delta d_{LOS} +  \Delta \phi_{orb} + \Delta \phi_{decor} + \Delta \phi_{unwrap}  + \Delta \phi_{dem} + \Delta \phi_{iono} + \Delta \phi_{tropo}  + \Delta \phi_{n}
-\end{equation}
-where $ \lambda $ is the radar wavelength and $ \Delta d_{LOS} $ is the surface deformation along the radar LOS direction. The noise terms include orbital errors, phase decorrelation, unwrapping errors, DEM inaccuracies, ionospheric and tropospheric artifacts, and other residual noise terms that are typically an order of magnitude smaller than the error terms listed here. Following the processing strategy outlined in Section \ref{sec:InSARprocessing}, $\Delta \phi_{orb}$, $\Delta \phi_{decor}$, and $\Delta \phi_{unwrap}$ were either removed or negligible in our dataset. Because the relatively flat Permian Basin is located in the middle latitudes, $\Delta \phi_{dem}$ and $\Delta \phi_{iono}$ are not substantial \citep{Fattahi2013DemErrorCorrection, Liang2019IonosphericCorrectionInsar}. For the reminder of this section, we focused on evaluating and mitigating the impact of tropospheric noise on the West Texas Sentinel-1 data.
-
-
-%
-%\subsection{The impact of the stratified component of tropospheric noise}
-%\label{sec:noise-quant}
-
-
-As described in Chapter \ref{sec:ch3-noise-tropo}, tropospheric noise $\Delta \phi_{tropo}$ consists of a stratified component that correlates with topography \citep{Doin2009CorrectionsStratifiedTropospheric} and a turbulent component that is random at time scales longer than one day \citep{Emardson2003NeutralAtmosphericDelay}. We checked for a stratified tropospheric noise component using the Generic Atmospheric Correction Online Service (GACOS), and we found that the stratified tropospheric errors in our Sentinel-1 data are minimal
-%This is because the oil-producing region of the Permian Basin is relatively flat, and we observed little correlation between InSAR LOS measurements and the Digital Elevation Model (DEM) data 
-(see Section \ref{sec:ch3-noise-tropo-mitigate}).
-
-
-
-We further examined interferograms at the 13 control locations. For example, LOS measurements of the ascending interferograms at pixels near the GPS station TXMC show a near zero median (-4 mm) and a standard deviation of 3.2 cm (Figure \ref{fig:outliers} (a)). Due to the absence of substantial deformation signal at this station, the standard deviation of the LOS distribution is a measure of turbulent tropospheric noise.  We found that the median LOS turbulent error is close to zero (no systematic noise bias) at all GPS control stations. The standard deviation of the turbulent noise increases as the square root of the distance from the InSAR reference point (Figure \ref{fig:outliers} (b)). Furthermore, we compared the LOS turbulent noise distribution observed at each GPS station to a normal distribution using a normal probability plot \citep{Filliben1975ProbabilityPlotCorrelation}. We discovered that non-Gaussian tails (outliers) are present (e.g. Figure \ref{fig:outliers}(c)) as a result of severe tropospheric noise (e.g. storms or heat waves). Identifying and removing these InSAR measurement outliers is crucial for achieving millimeter level accuracy. 
-
-
-
-
-\begin{figure}[hbt!]
-	\centering
-	\includegraphics[width=0.95\linewidth]{figures/chapter4-grl/figure2-outlier-removal-5panel.pdf}
-	\caption[Noise measurement and tropospheric outlier removal comparison]{(a) LOS measurements (in cm) of all ascending interferograms at the GPS station TXMC. The distribution has a near zero median (-4 mm) and a standard deviation of 3.2 cm. Due to the absence of substantial deformation signals, the standard deviation of the distribution is a measure of LOS turbulent tropospheric noise. (b) The standard deviation of random tropospheric turbulent noise at 13 control locations (blue dots), which increases as the square root of the distance from the InSAR reference point (blue line). (c) A comparison between the tropospheric noise distribution at TXMC with a normal distribution. Dashed line connects the 1st and 3rd quartiles of the data. Troposphere noise following a normal distribution would match the dashed line, and non-Gaussian tails (we noted as outliers) are present. Cumulative ascending LOS deformation solutions (Nov. 2014 - Dec. 2017) (d) before and (e) after excluding InSAR outlier measurements. Note that 1.1 cm cumulative error over 3 years is equivalent to 3.5 mm/year RMS error in the velocity estimate.}
-	\label{fig:outliers}
+	\includegraphics[width=0.99\linewidth]{figures/chapter4-grl/outlier-top-only.pdf}
+	%	\includegraphics[width=0.95\linewidth]{figures/chapter4-grl/figure2-outlier-removal-5panel.pdf}
+	\caption[Noise measurement and tropospheric outliers]{
+		(a) LOS measurements (in cm) of all ascending interferograms at the GPS station TXMC. The distribution has a near zero median (-4 mm) and a standard deviation of 3.2 cm. Due to the absence of substantial deformation signals, the standard deviation of the distribution is a measure of LOS turbulent tropospheric noise. (b) The standard deviation of random tropospheric turbulent noise at 13 control locations (blue dots), which increases as the square root of the distance from the InSAR reference point (blue line). (c) A comparison between the tropospheric noise distribution at TXMC with a normal distribution. Dashed line connects the 1st and 3rd quartiles of the data. Troposphere noise following a normal distribution would match the dashed line, and non-Gaussian tails are present. 
+	}
+	\label{fig:ch4-outliers}
 \end{figure}
 
 
-Because severe tropospheric noise may only affect a portion of a SAR image, we identified InSAR measurement outliers at each pixel independently as follows. Given $N$ SAR acquisitions, there are up to $N-1$ InSAR LOS measurements at a pixel of interest that contain the common tropospheric noise of the $k^{th}$ SAR scene. We defined $u_{k,n}$ as the $n^{th}$ such LOS measurement, and $\bar{u}_k$ as:
+
+%When severe tropospheric noise (e.g. storms or heat waves) affects interferograms, the resulting measurement distribution at a given pixel can contain large non-Gaussian tails. 
+%Identifying and removing InSAR measurement outliers is crucial for achieving millimeter level accuracy. 
+Because severe tropospheric noise may only impact a portion of a SAR image, we identified InSAR measurement outliers at each pixel independently as follows. Given $N$ SAR acquisitions, there are up to $N-1$ InSAR LOS measurements at a pixel of interest that contain the common tropospheric noise of the $k^{th}$ SAR scene. We defined $u_{k,n}$ as the $n^{th}$ such LOS measurement, and $\bar{u}_k$ as the mean absolute measurement:
 \begin{equation}
 	\bar{u}_k  = \frac{1}{N-1} \sum_{n=1}^{N-1} |u_{k,n}|  
 \end{equation}
@@ -127,12 +107,46 @@ We labeled $u_{k,n}$ (for all $n$) as outlier measurements if $\bar{u}_k > \math
 \end{equation}
 where $x_m$ is the $m^{th}$ data sample. 
 
-To evaluate the performance of our InSAR processing strategy, we projected GPS data recorded at 13 control stations onto the LOS directions to use as ground truth. The differences between InSAR and GPS inferred average LOS velocities were used as a measure of the uncertainty in the InSAR surface deformation solutions (Section \ref{sec:error-quant}). We found that stacking reduces the impact of random Gaussian turbulent noise by $ \sim \sqrt{N} $, where $ N $ is the number of SAR acquisitions. The outlier removal algorithm further reduces the uncertainty in the LOS velocity estimates by a factor of 2, down to 1-3 mm/year across the basin. For example, the average InSAR velocity along the ascending LOS direction between Nov. 2014 and Jan. 2018 shows a root mean square (RMS) error of 3.4 mm/year before the outlier removal, and 1.5 mm/year after the outlier removal. The presence of InSAR measurement outliers resulted in long-wavelength artifacts ($ \sim $100km and greater) in the cumulative deformation solutions (e.g. Figure \ref{fig:outliers} (d)), which were automatically mitigated through the pixel-based outlier removal algorithm (e.g. Figure \ref{fig:outliers} (e)). Additionally, we compared InSAR LOS deformation solutions as derived from (1) the stacking method, (2) a SBAS linear deformation model with $L_1$ and $L_2$-norm penalty functions, and (3) unregularized and regularized SBAS deformation time series (Section \ref{sec:ch4-method-compare}). These InSAR time series algorithms can be implemented using software packages such as Generic InSAR Analysis Toolbox (GIAnT) \citep{Agram2013NewRadarInterferometric}, STAMPS \citep{Hooper2012RecentAdvancesSar}, and LiCSBAS \citep{Morishita2020LicsbasOpenSource}. Removing the detected outliers leads to more accurate and consistent surface deformation solutions in all three cases.
 
 
-\subsection{InSAR LOS velocity estimation errors using the stacking method}
-\label{sec:error-quant}
-We used independently processed GPS east, north, and up GPS time series as ground truth to quantify errors in the InSAR stacking solutions before and after the outlier removal. There are 13 permanent GPS stations in the ascending SAR footprint. At each GPS location, we projected the GPS time series to the radar line-of-sight (LOS), and we computed the GPS-inferred average LOS velocity through a linear regression. Table \ref{tab:gps-error-78} shows the root mean square (RMS) and the worst-case absolute differences between InSAR and GPS inferred average LOS velocities over the three study periods. Similarly, there are 5 permanent GPS stations in the descending SAR footprint, and Table \ref{tab:gps-error-85} shows the uncertainty in the descending stacking solutions using these 5 GPS stations as control. Both Table \ref{tab:gps-error-78} and Table \ref{tab:gps-error-85} show that our outlier removal algorithm reduced the uncertainty in InSAR stacking solutions by a factor of $\sim$2, down to 1-2 mm/year across the basin. For a given period of interest $T_j$, the LOS velocity error $ E_{vel,j} $ propagates into the cumulative deformation error $ E_{c, j} $ as $ E_{c,j} = E_{vel,j} \cdot T_j $. 
+
+%To account for the large variation in look angle within one Sentinel-1 Interferometric Wide (IW) swath image, we used the LOS unit vector at each pixel location Figure \ref{fig:los-map})) in the LOS decomposition.
+
+
+
+%
+%\subsection{The impact of the stratified component of tropospheric noise}
+
+%\label{sec:ch4-noise-quant}
+%As described in Chapter \ref{sec:ch3-noise-tropo}, tropospheric noise $\Delta \phi_{tropo}$ consists of a stratified component that correlates with topography \citep{Doin2009CorrectionsStratifiedTropospheric} and a turbulent component that is random at time scales longer than one day \citep{Emardson2003NeutralAtmosphericDelay}. We checked for a stratified tropospheric noise component using the Generic Atmospheric Correction Online Service (GACOS), and we found that the stratified tropospheric errors in our Sentinel-1 data are minimal
+%This is because the oil-producing region of the Permian Basin is relatively flat, and we observed little correlation between InSAR LOS measurements and the Digital Elevation Model (DEM) data 
+%(see Section \ref{sec:ch3-noise-tropo-mitigate}).
+
+\subsection{LOS decomposition}
+
+
+TODO?
+
+In this study, used the Sentinel-1 interferograms from path 78 and path 85 processed as described in Section \ref{sec:ch3-insar-processing}.
+We solved for the average LOS velocities over three periods of interest: Nov. 2014 to Jan. 2017, Nov. 2014 to Jan. 2018, and Nov. 2014 to Jan. 2019. Over each time period $T_j$, we computed the cumulative LOS surface deformation as the product of $v_{avg,j}$ and $T_j$. We also solved for the vertical and eastward deformation in the region where path 78 and 85 overlap (see Section \ref{sec:ch2-insar-decomp}) using the LOS unit vector at each pixel location Figure \ref{fig:los-map})) in the LOS decomposition.
+
+
+\section{Time series comparisons and outlier removal}
+\label{sec:ch4-ts-compare-result}
+
+%- Describe the GPS comparisons for the stacking+outlier results, cutting errors by 2x [Maybe with your uncertainty tables]
+%- Bottom half of outlier figure showing the visible artifacts removed
+%- Talk about the time series comparison figure, how each had problems, then after outlier removal most converge (+ table quantifying the before/after)
+%- conclude all methods converge and we use a simple stacking with outlier removal to calculate cumulative deformation.
+%
+
+
+
+
+
+Using the 13 GPS east, north, and up time series as ground truth, we quantified the errors in the InSAR stacking solutions before and after the outlier removal. 
+%There are 13 permanent GPS stations in the ascending SAR footprint.
+At each GPS location, we projected the GPS time series to the radar line-of-sight (LOS), and we computed the GPS-inferred average LOS velocity through a linear regression. Table \ref{tab:gps-error-78} shows the root mean square (RMS) and the worst-case absolute differences between InSAR and GPS inferred average LOS velocities over the three study periods. Similarly, there are 5 permanent GPS stations in the descending SAR footprint, and Table \ref{tab:gps-error-85} shows the uncertainty in the descending stacking solutions using these 5 GPS stations as control. Both Table \ref{tab:gps-error-78} and Table \ref{tab:gps-error-85} show that our outlier removal algorithm reduced the uncertainty in InSAR stacking solutions by a factor of $\sim$2, down to 1-3 mm/year across the basin. For a given period of interest $T_j$, the LOS velocity error $ E_{vel,j} $ propagates into the cumulative deformation error $ E_{c, j} $ as $ E_{c,j} = E_{vel,j} \cdot T_j $. 
 
 
 \begin{table}
@@ -164,6 +178,45 @@ We used independently processed GPS east, north, and up GPS time series as groun
 	\label{tab:gps-error-85}
 \end{table}
 
+
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.99\linewidth]{figures/chapter4-grl/outlier-bottom-only.pdf}
+	\caption[Tropospheric outlier removal comparison]{
+	Cumulative ascending LOS deformation solutions (Nov. 2014 - Dec. 2017) 
+	(a) before and (b) after excluding InSAR outlier measurements. Note that 1.1 cm cumulative error over 3 years is equivalent to 3.5 mm/year RMS error in the velocity estimate.}
+	\label{fig:ch4-outliers-visual}
+\end{figure}
+
+
+
+%To evaluate the performance of our InSAR processing strategy, 
+We projected GPS data recorded at 13 control stations onto the LOS directions to use as ground truth. The differences between InSAR and GPS inferred average LOS velocities were used as a measure of the uncertainty in the InSAR surface deformation solutions (Section \ref{sec:error-quant}). 
+We found that stacking reduces the impact of random Gaussian turbulent noise by $ \sim \sqrt{N} $, where $ N $ is the number of SAR acquisitions. The outlier removal algorithm further reduces the uncertainty in the LOS velocity estimates by a factor of 2, down to 1-3 mm/year across the basin. For example, the average InSAR velocity along the ascending LOS direction between Nov. 2014 and Jan. 2018 shows a root mean square (RMS) error of 3.4 mm/year before the outlier removal, and 1.5 mm/year after the outlier removal. The presence of InSAR measurement outliers resulted in long-wavelength artifacts ($ \sim $100km and greater) in the cumulative deformation solutions (e.g. Figure \ref{fig:ch4-outliers} (d)), which were automatically mitigated through the pixel-based outlier removal algorithm (e.g. Figure \ref{fig:ch4-outliers} (e)). Additionally, we compared InSAR LOS deformation solutions as derived from (1) the stacking method, (2) a SBAS linear deformation model with $L_1$ and $L_2$-norm penalty functions, and (3) unregularized and regularized SBAS deformation time series (Section \ref{sec:ch4-method-compare}). These InSAR time series algorithms can be implemented using software packages such as Generic InSAR Analysis Toolbox (GIAnT) \citep{Agram2013NewRadarInterferometric}, STAMPS \citep{Hooper2012RecentAdvancesSar}, and LiCSBAS \citep{Morishita2020LicsbasOpenSource}. Removing the detected outliers leads to more accurate and consistent surface deformation solutions in all three cases. 
+
+
+
+%Little surface deformation occurred between Nov. 2014 and Jan. 2019 at the 13 GPS permanent GPS stations. 
+At each GPS location, we projected the GPS time series to the radar line-of-sight (LOS), and we used the GPS-inferred average LOS velocity (0-3 mm/year) as ground truth. Table \ref{tab:compare-errors} shows the root mean square (RMS) and the worst-case absolute differences between InSAR and GPS inferred average LOS velocities between Nov. 2014 and Jan. 2018 as derived from the four InSAR time series methods. We found that InSAR tropospheric noise has a strong influence on all the surface deformation solutions before removing the measurement outliers. As an example, Figure \ref{fig:compare} (a) shows the ascending LOS solutions between Nov. 2014 and Jan. 2018 at the GPS station TXSO before removing InSAR measurement outliers. The random tropospheric noise creates up to $\sim$6 cm of error in the unregularized SBAS surface deformation time series. This error can be reduced by increasing $ \alpha$ in Equation \eqref{eq:ch4-sbas}. As $\alpha$ increases, the LOS deformation time series converge to the $L_2$ linear deformation (constant velocity) solution. However, there are visible cm-level tropospheric artifacts in the cumulative deformation solutions by using either $L_1$ or $L_2$ linear deformation models (e.g. Figure \ref{fig:ch4-outliers}(d)).   
+
+
+
+After removing InSAR outlier measurements associated with extreme local weather events (Section \ref{sec:ch4-method-compare}), all SBAS time series methods produce more accurate and consistent deformation trends (Figure \ref{fig:compare} (b)). The unregularized SBAS time series still contain up to $\sim$3 cm of tropospheric noise, which leads to long-wavelength artifacts in the basin-wide deformation maps. The $ L_1 $ and $ L_2 $ linear deformation solutions show close agreement ($<$ 2 mm difference) at all GPS stations. Since both methods suggest a deformation trend consistent with the stacking approach, we chose the simple stacking method as the final processing strategy for estimating cumulative surface deformation in the Permian Basin.
+
+
+
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{figures/chapter4-grl/supplement/figureS5-compare-insar-2panel.pdf}
+	\caption[Comparisons of InSAR SBAS solutions]{Comparisons of InSAR unregularized SBAS time series (purple), regularized SBAS time series (green), linear deformation trend estimated by minimizing the $L_1$-norm of the residuals (blue), and the $L_2$-norm of the residuals/ stacking approach (red)  (a) before and (b) after removing LOS measurement outliers. ENU GPS data from station TXSO has been projected onto the radar LOS (orange dots).}
+	\label{fig:compare}
+\end{figure}
+
+
 \begin{table}
 	\caption{Errors (in mm) in four SBAS ascending LOS deformation (Nov. 2014 - Jan. 2018) solutions}
 	\centering
@@ -182,14 +235,19 @@ We used independently processed GPS east, north, and up GPS time series as groun
 
 
 
-\section{Results and discussion}
-\subsection{Surface deformation in the Permian Basin}
+%
+%\subsection{InSAR LOS velocity estimation error}
+%\label{sec:error-quant}
+
+
+\section{Surface deformation in the Permian Basin}
 The Sentinel-1 cumulative LOS deformation solutions reveal numerous surface deformation features over the oil-producing region in the Permian Basin (Figure \ref{fig:insar-los}). From the ascending geometry, we observed no substantial deformation in the Central Basin Platform, where oil and gas are mostly produced from conventional reservoirs. In the Midland and Delaware Basins, we observed an accelerating surface deformation rate between Nov. 2014 and Jan. 2019, which coincides with the sharp rise of oil production from unconventional reservoirs in 2017 and 2018. For example, a 30 km$^2 $ area northwest of Pecos shows approximately 0.5 cm cumulative LOS deformation between Nov. 2014 and Jan. 2017, 1.5 cm between Nov. 2014 and Jan. 2018, and over 5.5 cm from Nov. 2014 to Jan. 2019. The greatest number of observable signals are present in 2018 when peak production occurred in the region. Similarly, from the descending geometry, we find no substantial deformation in the Central Basin Platform and an increasing rate of surface deformation in the Delaware Basin. 
 
 
 \begin{figure}[hbt!]
 	\centering
-	\includegraphics[width=.96\linewidth]{figures/chapter4-grl/figure3-los-insar.pdf}
+%	\includegraphics[width=.99\linewidth]{figures/chapter4-grl/figure3-los-insar.pdf}
+	\includegraphics[width=.99\linewidth]{figures/chapter4-grl/figure3-los-insar-small.pdf}
 	\caption[Cumulative LOS deformation for path 78 and path 85]{Cumulative LOS deformation (Nov. 2014 - Jan.2017; Nov. 2014 - Jan.2018; Nov. 2014 - Jan. 2019) as inferred from Sentinel-1 (a) ascending path 78, and (b) descending path 85 data over an 80,000 square km oil-producing region of the Permian Basin. Here a subsidence or eastward deformation signal leads to a positive LOS measurement in the ascending geometry, and a subsidence or westward deformation signal leads to a positive LOS measurement in the descending geometry. Areas with $>$1200 m altitude are masked due to the low oil production activity in mountainous regions.}
 	\label{fig:insar-los}
 \end{figure}
@@ -200,13 +258,14 @@ In the northern Delaware Basin, where large volumes of oil production and wastew
 
 \begin{figure}[hbt!]
 	\centering
-	\includegraphics[width=0.96\linewidth]{figures/chapter4-grl/figure4-east-vertical-6panel-labelled.pdf}
+%	\includegraphics[width=0.96\linewidth]{figures/chapter4-grl/figure4-east-vertical-6panel-labelled.pdf}
+	\includegraphics[width=0.96\linewidth]{figures/chapter4-grl/figure4-east-vertical-6panel-labelled-small.pdf}
 	\caption[Cumulative vertical and horizontal deformation]{(a) Cumulative vertical deformation between Nov. 2014 and Jan. 2019 over the region where Sentinel-1 path 78 and path 85 overlap. A zoomed-in view of Box A in the northern Delaware Basin and Box B in the southern Delaware Basin are shown in panel (b) and (c) respectively. (d) Cumulative eastward deformation between Nov. 2014 and Jan. 2019 over the region where Sentinel-1 path 78 and path 85 overlap. A zoomed-in view of Box A in the northern Delaware Basin and Box B in the southern Delaware Basin are shown in panel (e) and (f) respectively. In the southern Delaware Basin, the observed vertical and eastward deformation (panel (c) and (f)) show linear patterns along with earthquake hypocenters (gray dots) detected by TexNet in 2018.}
 	\label{fig:insar-decomp}
 \end{figure}
 
 
-\subsection{Implications for geomechanical modeling}
+\section{Implications for geomechanical modeling}
 Based on fault plane solutions derived from recent seismic activity and the faulting stress regime interpretations \citep{LundSnee2018StateStressPermian}, the Pecos area is in a normal faulting regime. We employed an elastic dislocation model \citep{Okada1992InternalDeformationDue} to demonstrate that the presence of dip-slip normal faults can produce the observed linear subsidence patterns in this area (Figure \ref{fig:model} (a)). We solved for the dip angle, depth, width along the dip direction, and slip magnitude of four normal faults by best fitting the forward model to InSAR vertical deformation observations, minimizing the sum of squared residuals, and maximizing the r-squared values \citep{Du1992ComparisonVariousInversion} (Appendix \ref{appen:okada}). The optimal solution suggests that the depth of the faults ranges from 0.9 km to 1.5 km, which is shallower than most of the TexNet recorded earthquakes (2-6 km in depth). Possible explanations for this discrepancy include: (1) the existence of aseismic fault slippage being responsible for the observed surface deformation \citep{McGarr2017WastewaterDisposalEarthquake}; (2) bias in earthquake depth estimation in the TexNet catalog \citep{Lomax2019ImprovingAbsoluteEarthquake}; (3) systematic modeling errors associated with representing a mechanically layered earth as a homogeneous half space \citep{Du1992ComparisonVariousInversion}. 
 
 

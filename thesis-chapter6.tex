@@ -58,7 +58,7 @@ Our algorithm is flexible, and it can be integrated with different time series t
 
 
 
-\section{Methods}
+\section{Algorithm}
 \label{sec:methods}
 
 \subsection{Automatic Feature Detection}
@@ -229,40 +229,41 @@ Using the average 1D PSD of all $N$ InSAR-observed tropospheric turbulence noise
 Similarly, we generate many synthetic InSAR data sets that share the same noise spectrum derived from data, and record all detected noise blobs. We create 2D histograms of the noise attributes (filter response magnitude vs. radius and deformation magnitude vs. radius), which allows us to remove candidate blob features in the real deformation map $M$ that are likely due to tropospheric noise artifacts.
 
 
-\section{Test Site and Available InSAR Data}
+\section{Test Site}
 \label{sec:site}
 
-We tested our deformation detection algorithm on over an 80,000 km$^2$ oil-producing region in the Permian Basin, West Texas.  As described in \cite{Staniewicz2020InsarRevealsComplex}, we processed 84 ascending Sentinel-1 scenes (Path 78, Frames 94–104) acquired between November 2014 and January 2019 (Figure \ref{fig:study-area}). We imposed no maximum spatial baseline and a maximum temporal baseline of 800 days for interferogram selection, resulting in 2550 multi-looked interferograms with 120 m pixel spacing.  We used the GPS station TXKM as the reference location, where little surface deformation was observed over the study period (Figure \ref{fig:study-area}, yellow dot).
+% on over an 80,000 km$^2$ oil-producing region in the Permian Basin, West Texas.  As described in \cite{Staniewicz2020InsarRevealsComplex}, we processed 84 ascending Sentinel-1 scenes (Path 78, Frames 94–104) acquired between November 2014 and January 2019 (Figure \ref{fig:study-area}). We imposed no maximum spatial baseline and a maximum temporal baseline of 800 days for interferogram selection, resulting in 2550 multi-looked interferograms with 120 m pixel spacing.  We used the GPS station TXKM as the reference location, where little surface deformation was observed over the study period (Figure \ref{fig:study-area}, yellow dot).
 
 
-
-\begin{figure}[hbt!]
-	\centering
-	\includegraphics[width=0.59\linewidth]{figures/chapter6-blobs/figure4-study-area.pdf}
-	%\includegraphics[width=0.96\linewidth]{figures/chapter6-blobs/figure4-study-area.png}
-	\caption{GPS and InSAR data coverage over the Permian Basin. Teal and red boxes indicate Sentinel-1 InSAR coverage for ascending Path 78 and descending Path 85. GPS station TXKM (yellow dot) was used as the reference point for both paths.
-		%Each path contains over 80 SAR acquisitions, leading to over 3500 interferograms per path at 180 m pixel spacing.
-	}
-	\label{fig:study-area}
-\end{figure}
-
+%\begin{figure}[hbt!]
+%	\centering
+%	\includegraphics[width=0.59\linewidth]{figures/chapter6-blobs/figure4-study-area.pdf}
+%	%\includegraphics[width=0.96\linewidth]{figures/chapter6-blobs/figure4-study-area.png}
+%	\caption{GPS and InSAR data coverage over the Permian Basin. Teal and red boxes indicate Sentinel-1 InSAR coverage for ascending Path 78 and descending Path 85. GPS station TXKM (yellow dot) was used as the reference point for both paths.
+%		%Each path contains over 80 SAR acquisitions, leading to over 3500 interferograms per path at 180 m pixel spacing.
+%	}
+%	\label{fig:study-area}
+%\end{figure}
 
 
+%We employed a stacking approach \cite{Sandwell1998PhaseGradientApproach, Staniewicz2020InsarRevealsComplex} to calculate the average LOS velocity $v_{avg}$ at each ground pixel over a time period of interest $ T $ as
+%\begin{equation}
+%	v_{avg} = \frac{\sum_{i \in G} \Delta d_i}{\sum_{i \in G} \Delta t_i}
+%	\label{eq:ch6-stacking}
+%\end{equation}
+%where $G$ is a subset of interferograms formed using two SAR scenes acquired within the time period $T$. The LOS measurement (in cm) and the temporal baseline of the $i^{th}$ interferogram in $G$ are written as $\Delta d_i$ and $\Delta  t_i $ respectively.
+%In this study, we used 29 SAR scenes acquired between November 2014 and January 2017 to solve for the average velocity during this period, and we computed the cumulative deformation as the average velocity times the total time span ($\sim 2$ years). Similarly, we used 52 SAR scenes acquired between November 2014 and January 2018, and 84 SAR scenes acquired between November 2014 to January 2019 to derive the cumulative deformation maps over these two study periods ($\sim 3$ and $4$ years).
 
-We employed a stacking approach \cite{Sandwell1998PhaseGradientApproach, Staniewicz2020InsarRevealsComplex} to calculate the average LOS velocity $v_{avg}$ at each ground pixel over a time period of interest $ T $ as
-\begin{equation}
-	v_{avg} = \frac{\sum_{i \in G} \Delta d_i}{\sum_{i \in G} t_i}
-	\label{eq:ch6-stacking}
-\end{equation}
-where $G$ is a subset of interferograms formed using two SAR scenes acquired within the time period $T$. The LOS measurement (in cm) and the temporal baseline of the $i^{th}$ interferogram in $G$ are written as $\Delta d_i$ and $ t_i $ respectively.
-In this study, we used 29 SAR scenes acquired between November 2014 and January 2017 to solve for the average velocity during this period, and we computed the cumulative deformation as the average velocity times the total time span ($\sim 2$ years). Similarly, we used 52 SAR scenes acquired between November 2014 and January 2018, and 84 SAR scenes acquired between November 2014 to January 2019 to derive the cumulative deformation maps over these two study periods ($\sim 3$ and $4$ years).
-
+We tested our deformation detection algorithm using the three ascending and three descending surface deformation maps derived from Sentinel-1 Paths 78 and 85 (Chapter \ref{CHAP:4-GRL}).
 We estimated the tropospheric turbulence noise for each SAR acquisition date using all interferograms that contain this SAR scene based on Equation \eqref{eq:avg-ifg}. We removed a quadratic ramp in each noise map, and calculated the average 1D PSD of all 84 noise maps as described in \ref{subsec:methods-2-tropo-spectrum}.
-Using the average noise spectrum, we generated 29 synthetic noise maps, which corresponds to the 29 Sentinel-1 acquisition dates between November 2014 and January 2017. We formed noise-only synthetic interferograms and calculated the cumulative stacking solution using Equation \eqref{eq:ch6-stacking}. We ran our blob detection algorithm on the noise-only stacking solution, and recorded the size, the filter response magnitude, and the magnitude of each noise blob feature. We repeated this process until the number of recorded detections exceeded 100,000. We smoothed the resulting histograms using a kernel density estimate (KDE) \cite{Scott2015MultivariateDensityEstimation}, and generated 2D empirical Probability Density Functions (PDFs) of the noise attributes for the November 2014-January 2018 cumulative LOS deformation map.
+Using the average noise spectrum, we generated 29 synthetic noise maps, which corresponds to the 29 Sentinel-1 acquisition dates between November 2014 and January 2017. We formed noise-only synthetic interferograms and calculated the cumulative stacking solution using Equation \eqref{eq:ch4-stacking}. 
+
+We ran our blob detection algorithm on the noise-only stacking solution, and recorded the size, the filter response magnitude, and the magnitude of each noise blob feature. We repeated this process until the number of recorded detections exceeded 100,000. We smoothed the resulting histograms using a kernel density estimate (KDE) \cite{Scott2015MultivariateDensityEstimation}, and generated 2D empirical Probability Density Functions (PDFs) of the noise attributes for the November 2014-January 2018 cumulative LOS deformation map.
 Similarly, we ran additional simulations to generate 2D histograms of the noise attributes for the November 2014-January 2018, and November 2014-January 2019 cumulative deformation maps.
 These histograms were then used to remove candidate blob features in the real Sentinel-1 InSAR deformation maps that are likely due to tropospheric noise artifacts.
 
-We also processed 81 descending Sentinel-1 scenes (Path 85 Frames 483–493) acquired between November 2014 and January 2019 (Figure \ref{fig:study-area}). The same GPS station TXKM was used as the reference location to calibrate all interferograms. Following the same processing strategy, we estimated three cumulative deformation maps spanning November 2014 to January 2017, January 2018, and January 2019. We characterized the tropospheric noise from InSAR data, and identified deformation features in the cumulative deformation maps that are likely real.
+We similarly characterized the tropospheric noise for the descending Path 85 data and identified deformation features in the cumulative deformation maps that are likely real in the three cumulative deformation maps spanning November 2014 to January 2017, January 2018, and January 2019.
+%We also processed 81 descending Sentinel-1 scenes (Path 85 Frames 483–493) acquired between November 2014 and January 2019 (Figure \ref{fig:study-area}). The same GPS station TXKM was used as the reference location to calibrate all interferograms. Following the same processing strategy, we estimated three cumulative deformation maps spanning November 2014 to January 2017, January 2018, and January 2019. We characterized the tropospheric noise from InSAR data, and identified deformation features in the cumulative deformation maps that are likely real.
 
 
 
