@@ -27,7 +27,7 @@ The original radars developed during World War 2 were for tracking the position 
 
 \begin{figure}
 	\centering
-	\includegraphics[width=1.1\textwidth]{figures/chapter2-sar/sar-missions.pdf}
+	\includegraphics[width=1.\textwidth]{figures/chapter2-sar/sar-missions.pdf}
 	\caption[Timeline of government SAR missions]{Timeline of government-sponsored SAR missions since 1990. Bar lengths indicate life span of mission. Bars which intersect the right edge indicate ongoing missions.
 		Colors indicate the space agency operating the mission.
 		Missions which provide data free of charge to the general public (as of May 2022) are marked with blue stars.
@@ -131,11 +131,13 @@ In the azimuth direction, the size of the radar footprint determines which groun
 \begin{figure}
 	\label{fig:ch2-synth-aper}
 	\centering
-	\includegraphics[width=0.8\linewidth]{figures/chapter2-sar/synth-aper2.pdf}
-	\includegraphics[width=0.99\linewidth]{figures/chapter2-sar/sar-synthetic-aperture.pdf}
+	\includegraphics[width=0.75\linewidth]{figures/chapter2-sar/synth-aper2.pdf}
+	\includegraphics[width=0.95\linewidth]{figures/chapter2-sar/sar-synthetic-aperture.pdf}
 	\caption[Formation of a synthetic aperture]{
-		(Top) One point on the ground is illuminated by a series of pulses. Pictured here are the footprints of the first and last pulses that illuminate the point. 
-		(Bottom) Side view of a series of pulses illuminating a target. By coherently processing all pulses, we can form a synthetic aperture of length $L_s$.
+		(Top) One point on the ground is illuminated by a series of pulses (only first and last pulses shown here) .
+%		Pictured here are the footprints of the first and last pulses that illuminate the point. 
+		(Bottom) Side view of a series of pulses illuminating a target. Coherently processing all pulses forms synthetic aperture of length $L_s$.
+%		By coherently processing all pulses, we can form a synthetic aperture of length $L_s$.
 	}
 \end{figure}
 
@@ -275,7 +277,7 @@ When the correlation is very low, the phase unwrapping processing may fail and p
 
 
 
-The term $ \Delta \phi_{scat} $ represents phase introduced by changes to the surface and subsurface scattering properties. This term is separated from the random decorrelation noise since it has recently been shown that systematic, non-random effects can occur from changes to subsurface dielectric properties (e.g. from changes to soil moisture) \citep{Zan2014SarInterferometricModel, Zan2015PhaseInconsistenciesMultiple, Zwieback2016InfluenceSoilMoisture, Michaelides2020QuantifyingPermafrostProcesses}.
+The term $ \Delta \phi_{scat} $ represents phase introduced by changes to the surface and subsurface scattering properties. This term is separated from the random decorrelation noise since it has recently been shown that systematic, non-random effects can occur from changes to subsurface dielectric properties (e.g. from changes to soil moisture) \citep{Zan2014SarInterferometricModel, Zan2015PhaseInconsistenciesMultiple, Zwieback2015AssessmentSoilMoisture, Michaelides2020QuantifyingPermafrostProcesses}.
 Although this term is noise for the application of deformation monitoring
 \citep{Michaelides2019AlgorithmEstimatingCorrecting, Ansari2021StudySystematicBias}, other recent efforts have attempted to use this term to invert for changes to soil moisture \citep{Zwieback2017SoilMoistureEstimation, Zan2018VegetationSoilMoisture}. 
 Finally, $ \Delta \phi_n $ represents other residual noise terms, including thermal noise from the radar antenna system, that are typically an order of magnitude smaller than the other errors listed.
@@ -388,7 +390,7 @@ For the purposes of InSAR analysis, noise from tropospheric delay is usually div
 
 Previous studies have made advances in correcting for the stratified component of tropospheric noise.  Several empirical approaches have been developed to fit linear or power-law relationships between the unwrapped phase and elevation of coherent pixels within unnwrapped interferograms \citep{Elliott2008InsarSlipRate, Lauknes2011InsarTroposphericStratification, Bekaert2015SpatiallyVariablePower, Zebker2021AccuracyModelFree, Murray2021ClusterBasedEmpirical}. Under the assumption that the deformation does not correlate with topography, these approaches can be effective and simple to implement. For example, Figure \ref{fig:ch2-hawaii-strat} shows the unwrapped interferograms from the area on top of Mauna Kea indicated in Figure \ref{fig:ch2-hawaii-example}c. Although the interferogram appears to show a bowl shape deformation (Figure \ref{fig:ch2-hawaii-strat}a), the phase is actually closely correlated with the topography (Figure \ref{fig:ch2-hawaii-strat}b-c). Fitting and removing a linear trend from the phase vs. elevation plot mitigates the stratified atmospheric noise in this case. However, these approaches can be less effective in regions with multiple weather patterns where the phase-elevation correlation can vary dramatically in space \cite{Murray2021ClusterBasedEmpirical}.
 
-\begin{figure}[!h]
+\begin{figure}
 	\centering
 	\includegraphics[width=1.0\textwidth]{figures/chapter2-sar/hawaii-strat-zoom.pdf}
 	\caption[Stratified tropospheric noise over Hawaii]{
@@ -415,7 +417,7 @@ In the first example, the secondary acquisition of the interferogram contains a 
 Note that the different imaging geometries of the Sentinel-1 satellites in low Earth orbit and the GOES satellites in geostationary orbit mean the pixels of Figure \ref{fig:ch2-tropo-correct-storm}a and Figure \ref{fig:ch2-tropo-correct-storm}b do not fully align, but cover approximately the same area.
 The $\sim 5$ km storm cells are too small for the GMAO weather model to predict, due to its $\sim30$ km grid spacing (Figure \ref{fig:ch2-tropo-correct-storm}c). Thus, the corrected inteferogram still contains most of the turbulent noise from the storm (Figure \ref{fig:ch2-tropo-correct-storm}d).
 
-\begin{figure}[!ht]
+\begin{figure}
 	\centering
 	\includegraphics[width=1.0\textwidth]{figures/chapter2-sar/figure_tropo_correct_storm.pdf}
 	\caption[West Texas tropospheric correction for thunderstorm]{
@@ -429,7 +431,7 @@ The $\sim 5$ km storm cells are too small for the GMAO weather model to predict,
 
 The second example illustrates strong tropospheric noise resulting from a low-pressure front moving from northwest to southeast, which creates a $\sim 20$ cm decrease in LOS delay compraed to the southeast portion of the interferogram (Figure \ref{fig:ch2-tropo-correct-wave}b). Note that this pressure front is not visible in the visible spectrum of the GOES image (Figure \ref{fig:ch2-tropo-correct-wave}a), but is present in the GMAO weather model (Figure \ref{fig:ch2-tropo-correct-wave}c). Although the RMS noise of the corrected interferogram drops from 6.1 cm to 2.6 cm, the slight temporal differences of the model output and interferogram acquisition times lead to only a partial correction of the tropospheric pattern.
 
-\begin{figure}[!h]
+\begin{figure}
 	\centering
 	\includegraphics[width=1.0\textwidth]{figures/chapter2-sar/figure_tropo_correct_wave.pdf}
 	\caption[West Texas tropospheric correction attempt for pressure front]{
@@ -462,7 +464,7 @@ While these correction methods show promise in certain study areas, the spatial 
 
 %There are many techniques which fall under the umbrella of InSAR time series techniques, (sometimes called ``multi-temporal InSAR'' or MT-InSAR).
 Since many noise sources cannot be distinguished from deformation in a single interferogram (e.g. Figure \ref{fig:ch2-hawaii-example}), it is common to analyze multiple interferograms to quantify and mitigate InSAR noise sources.
-InSAR time series techniques (sometimes called ``multi-temporal InSAR'' or MT-InSAR) are a class of methods for extracting information about the temporal evolution of surface deformation or other geophysical parameters of interest.  Most multi-temporal methods have generally been classified as belonging to one of the following categories: 1) stacking (averaging) \citep{Zebker1997AtmosphericEffectsInterferometric, Sandwell1998PhaseGradientApproach}, 2) small-baseline approaches \citep{Berardino2002NewAlgorithmSurface}, or 3) persistent-scatterer (PS) methods \citep{Ferretti2001PermanentScatterersSar, Hooper2006PersistentScatterRadar}. In the past decade, a fourth category of ``phase-linking'' approaches have been popularized by the SqueeSAR algorithm \citep{Ferretti2011NewAlgorithmProcessing}; these are based on optimizations or decompositions of the complex covariance matrix of SAR image stacks \citep{Guarnieri2008ExploitationTargetStatistics, Fornaro2015CaesarApproachBased, Ansari2018EfficientHighPrecision}. Methods (3) and (4) have shown success in extracting high-precision estimates of interferometric phase where decorrelation is the dominant noise source (e.g. in local, high-rate deformation, \citep{Tebaldini2010MethodsPerformancesMulti}); in the following section, we focus on (1) and (2).
+InSAR time series techniques (sometimes called ``multi-temporal InSAR'' or MT-InSAR) are a class of methods for extracting information about the temporal evolution of surface deformation or other geophysical parameters of interest.  Most multi-temporal methods belong to one of the following categories: 1) stacking (averaging) \citep{Zebker1997AtmosphericEffectsInterferometric, Sandwell1998PhaseGradientApproach}, 2) small-baseline approaches \citep{Berardino2002NewAlgorithmSurface}, or 3) persistent-scatterer (PS) methods \citep{Ferretti2001PermanentScatterersSar, Hooper2006PersistentScatterRadar}. In the past decade, a fourth category of ``phase-linking'' approaches have been popularized by the SqueeSAR algorithm \citep{Ferretti2011NewAlgorithmProcessing}; these are based on optimizations or decompositions of the complex covariance matrix of SAR image stacks \citep{Guarnieri2008ExploitationTargetStatistics, Fornaro2015CaesarApproachBased, Ansari2018EfficientHighPrecision}. Methods (3) and (4) have shown success in extracting high-precision estimates of interferometric phase where decorrelation is the dominant noise source (e.g. in local, high-rate deformation, \citep{Tebaldini2010MethodsPerformancesMulti}); in the following section, we focus on (1) and (2).
 
 
 For deformation signals which occur as a transient event 
@@ -577,73 +579,6 @@ When $\bm{\Delta \phi}$ contains an isolated subset of interferograms, $A$ is no
 %- Leads into feature-wise uq
 
 
-
-\section{InSAR Line-of-sight Decomposition}
-\label{sec:ch2-insar-decomp}
-
-
-\begin{figure}
-	\centering
-	%	\includegraphics[width=.98\textwidth]{paper1-permian/figures/supplement/figureS2-los.pdf}
-	\includegraphics[width=.98\textwidth]{figures/chapter2-sar/figure_los_enu_coeffs.pdf}
-	\caption[East, north, and vertical coefficients of Sentinel-1 LOS vectors]{East, north, and vertical coefficient of the LOS unit vector of all Sentinel-1 path 78 and path 85 pixels. Positive LOS direction points away from the satellite to the ground.
-	}
-	\label{fig:los-map}
-\end{figure}
-
-An interferogram measures surface deformation between the two SAR acquisition times along the radar line-of-sight (LOS) direction. The LOS deformation, $u_{LOS}$, can be written as: 
-\begin{align}
-	u_{LOS}= \alpha_{e} u_{e} + \alpha_{n} u_{n} + \alpha_{u} u_{u}
-\end{align}
-where $u_{e}$, $u_{n}$ and $u_{u}$ are the east, north and up displacements, respectively. The radar look vector $\alpha = [\alpha_e, \alpha_n, \alpha_u]$ can be calculated from the known imaging geometry at every pixel location. This varies significantly for Sentinel-1 due to the $ \sim$250 km wide swath (Figure \ref{fig:los-map}). 
-
-
-
-
-In regions where InSAR data are available from two LOS directions, we can decompose the ground motion into its eastward and vertical components.
-To perform the decomposition, we first write $u_{asc}$ and $u_{desc}$ in terms of $u_e$, $u_n$ and $u_u$:
-\begin{align}
-	u_{asc} &= \alpha_{a,e} u_{e} + \alpha_{a,n} u_{n} + \alpha_{a,u} u_{u}\\
-	u_{desc} &= \alpha_{d,e} u_{e} + \alpha_{d,n} u_{n} + \alpha_{d,u} u_{u}
-\end{align}
-We can express $u_e$ and $u_u$ as:
-\begin{align}
-	u_{e} &\approx  \frac{1}{\beta}  \left[\alpha_{d,u}  u_{asc} - \alpha_{a,u} u_{desc} \right] \\
-	u_{u} &\approx  \frac{1}{\beta}  \left[\alpha_{a,e} u_{desc} - \alpha_{d,e}  u_{asc}  \right] 
-\end{align}
-where  $ \beta = {\alpha_{a,e} \alpha_{d,u}- \alpha_{d,e} \alpha_{a,u}} $.
-
-
-
-
-\begin{figure}
-	\centering
-	\includegraphics[width=\textwidth]{figures/chapter2-sar/injection-asc-desc.pdf}
-	\includegraphics[width=\textwidth]{figures/chapter2-sar/injection-kim-lu}
-	%	\includegraphics[width=\textwidth]{paper1-permian/figures/supplement/figureS3-injection-kim-lu.pdf}
-	\caption[Vertical and horizontal deformation near Winkler County, TX]{
-		(top) Ascending and descending line-of-sight cumulative deformation between November 2014 and April 2017. Red indicates motion toward each satellite.
-		(bottom) Cumulative vertical and horizontal surface deformation due to wastewater injection in Winkler County, TX. The horizontal motion here is $\sim$ 20\% of the vertical motion, with up to $\sim$ 5.5 cm of uplift and $\sim$ 1.2 cm of east-west motion. This localized deformation feature was originally reported in \cite{Kim2018AssociationLocalizedGeohazards}.}
-	\label{fig:ch2-injection-kim-lu}
-\end{figure}
-
-
-
-Because Sentinel-1 satellites are operating in a near-polar orbit, the north look coefficients $\alpha_{a,n}$ and $\alpha_{d,n}$ are both relatively small. Ignoring 1 cm northward motion in $u_n$ only leads to $\sim$ 0.1-0.2 mm error in $u_e$ and $\sim$ 1 mm error in $u_u$ at most locations. 
-
-To illustrate a decomposition, Figure \ref{fig:ch2-injection-kim-lu} shows a 12 km x 12 km region centered on a wastewater injection well found by \cite{Kim2018AssociationLocalizedGeohazards} to show injection-related uplift. We observe similar magnitude deformation toward the satellite in both ascending and descending tracks (Figure \ref{fig:ch2-injection-kim-lu} top). After decomposing the two geometries using the LOS vector at each pixel, we observed $\sim$ 5.5 cm of uplift and $\sim$1.2 cm of east-west motion between November 2014 and April 2017 (Figure \ref{fig:ch2-injection-kim-lu} bottom). 
-
-% ORIGINAL:  \cite{Kim2018AssociationLocalizedGeohazards} detected several localized deformation features within the Delaware Basin related to wastewater injection, CO2 injection, and hydrocarbon production using Sentinel-1 InSAR data.  Our LOS decomposition results are consistent with their study at these locations. For example, in a 12 km x 12 km region centered on a wastewater injection well, we observed $\sim$ 5.5 cm of uplift and $\sim$1.2 cm of east-west motion between November 2014 and April 2017 (Figure \ref{fig:injection-kim-lu}). 
-
-
-
-%
-%\subsection{Uncertainty Propagation through LOS decomposition}
-%\label{sec:ch2-decomp-uq-prop}
-%Since the LOS decomposition is a linear operation, given two LOS uncertainties, we can use linear uncertainty propagation theory to determine the vertical/horizontal uncertainties.
-%
-%TODO: move this to appendix or not?
-%
 
 
 \section{InSAR processing chain}
