@@ -179,7 +179,7 @@ Interferometric synthetic aperture radar (InSAR) refers to a broad class of appl
 The InSAR measurement is made after precisely coregistering and resampling two SLC images $S_1$ and $S_2$ to the same coordinates. The phase measurement $I_{1,2}$ is formed by multiplying the first SLC $S_1$ by the complex conjugate of the second $S_2$: 
 \begin{equation}
 %	I_{1,2} = S_1 S_2^{*} = A_1 A_2 e^{j \left(\phi_1 - \phi_2 \right)}  \label{eq:insar-conj-mult}
-I_{1,2} = S_1 S_2^{*} = A_1 A_2 e^{j \Delta \phi_{1,2}}  \label{eq:insar-conj-mult}
+I_{1,2} = S_1 S_2^{*} = A_1 A_2 e^{j \Delta \phi_{1,2}}  \label{eq:ch2-conj-mult}
 \end{equation}
 where $S_k = A_k e^{j \phi_k}$, $A_k$ is the amplitude of the $k$th image, and the phase $\phi_k = -\frac{4 \pi}{\lambda} r_k$. The image $I$ is called an \emph{interferogram},  and the quantity $\Delta \phi_{1,2} \triangleq  \phi_1 - \phi_2$ is the interferometric phase.
 
@@ -580,6 +580,17 @@ When $\bm{\Delta \phi}$ contains an isolated subset of interferograms, $A$ is no
 
 \section{InSAR Line-of-sight Decomposition}
 \label{sec:ch2-insar-decomp}
+
+
+\begin{figure}
+	\centering
+	%	\includegraphics[width=.98\textwidth]{paper1-permian/figures/supplement/figureS2-los.pdf}
+	\includegraphics[width=.98\textwidth]{figures/chapter2-sar/figure_los_enu_coeffs.pdf}
+	\caption[East, north, and vertical coefficients of Sentinel-1 LOS vectors]{East, north, and vertical coefficient of the LOS unit vector of all Sentinel-1 path 78 and path 85 pixels. Positive LOS direction points away from the satellite to the ground.
+	}
+	\label{fig:los-map}
+\end{figure}
+
 An interferogram measures surface deformation between the two SAR acquisition times along the radar line-of-sight (LOS) direction. The LOS deformation, $u_{LOS}$, can be written as: 
 \begin{align}
 	u_{LOS}= \alpha_{e} u_{e} + \alpha_{n} u_{n} + \alpha_{u} u_{u}
@@ -588,14 +599,6 @@ where $u_{e}$, $u_{n}$ and $u_{u}$ are the east, north and up displacements, res
 
 
 
-\begin{figure}[!htbp]
-	\centering
-%	\includegraphics[width=.98\textwidth]{paper1-permian/figures/supplement/figureS2-los.pdf}
-	\includegraphics[width=.98\textwidth]{figures/chapter2-sar/figure_los_enu_coeffs.pdf}
-	\caption[East, north, and vertical coefficients of Sentinel-1 LOS vectors]{East, north, and vertical coefficient of the LOS unit vector of all Sentinel-1 path 78 and path 85 pixels. Positive LOS direction points away from the satellite to the ground.
-	}
-	\label{fig:los-map}
-\end{figure}
 
 In regions where InSAR data are available from two LOS directions, we can decompose the ground motion into its eastward and vertical components.
 To perform the decomposition, we first write $u_{asc}$ and $u_{desc}$ in terms of $u_e$, $u_n$ and $u_u$:
@@ -610,11 +613,6 @@ We can express $u_e$ and $u_u$ as:
 \end{align}
 where  $ \beta = {\alpha_{a,e} \alpha_{d,u}- \alpha_{d,e} \alpha_{a,u}} $.
 
-Because Sentinel-1 satellites are operating in a near-polar orbit, the north look coefficients $\alpha_{a,n}$ and $\alpha_{d,n}$ are both relatively small. Ignoring 1 cm northward motion in $u_n$ only leads to $\sim$ 0.1-0.2 mm error in $u_e$ and $\sim$ 1 mm error in $u_u$ at most locations. 
-
-To illustrate a decomposition, Figure \ref{fig:injection-kim-lu} shows a 12 km x 12 km region centered on a wastewater injection well found by \cite{Kim2018AssociationLocalizedGeohazards} to show injection-related uplift. We observe similar magnitude deformation toward the satellite in both ascending and descending tracks (Figure \ref{fig:injection-kim-lu} top). After decomposing the two geometries using the LOS vector at each pixel, we observed $\sim$ 5.5 cm of uplift and $\sim$1.2 cm of east-west motion between November 2014 and April 2017 (Figure \ref{fig:injection-kim-lu} bottom). 
-
-% ORIGINAL:  \cite{Kim2018AssociationLocalizedGeohazards} detected several localized deformation features within the Delaware Basin related to wastewater injection, CO2 injection, and hydrocarbon production using Sentinel-1 InSAR data.  Our LOS decomposition results are consistent with their study at these locations. For example, in a 12 km x 12 km region centered on a wastewater injection well, we observed $\sim$ 5.5 cm of uplift and $\sim$1.2 cm of east-west motion between November 2014 and April 2017 (Figure \ref{fig:injection-kim-lu}). 
 
 
 
@@ -622,12 +620,20 @@ To illustrate a decomposition, Figure \ref{fig:injection-kim-lu} shows a 12 km x
 	\centering
 	\includegraphics[width=\textwidth]{figures/chapter2-sar/injection-asc-desc.pdf}
 	\includegraphics[width=\textwidth]{figures/chapter2-sar/injection-kim-lu}
-%	\includegraphics[width=\textwidth]{paper1-permian/figures/supplement/figureS3-injection-kim-lu.pdf}
+	%	\includegraphics[width=\textwidth]{paper1-permian/figures/supplement/figureS3-injection-kim-lu.pdf}
 	\caption[Vertical and horizontal deformation near Winkler County, TX]{
-	(top) Ascending and descending line-of-sight cumulative deformation between November 2014 and April 2017. Red indicates motion toward each satellite.
-	(bottom) Cumulative vertical and horizontal surface deformation due to wastewater injection in Winkler County, TX. The horizontal motion here is $\sim$ 20\% of the vertical motion, with up to $\sim$ 5.5 cm of uplift and $\sim$ 1.2 cm of east-west motion. This localized deformation feature was originally reported in \cite{Kim2018AssociationLocalizedGeohazards}.}
-	\label{fig:injection-kim-lu}
+		(top) Ascending and descending line-of-sight cumulative deformation between November 2014 and April 2017. Red indicates motion toward each satellite.
+		(bottom) Cumulative vertical and horizontal surface deformation due to wastewater injection in Winkler County, TX. The horizontal motion here is $\sim$ 20\% of the vertical motion, with up to $\sim$ 5.5 cm of uplift and $\sim$ 1.2 cm of east-west motion. This localized deformation feature was originally reported in \cite{Kim2018AssociationLocalizedGeohazards}.}
+	\label{fig:ch2-injection-kim-lu}
 \end{figure}
+
+
+
+Because Sentinel-1 satellites are operating in a near-polar orbit, the north look coefficients $\alpha_{a,n}$ and $\alpha_{d,n}$ are both relatively small. Ignoring 1 cm northward motion in $u_n$ only leads to $\sim$ 0.1-0.2 mm error in $u_e$ and $\sim$ 1 mm error in $u_u$ at most locations. 
+
+To illustrate a decomposition, Figure \ref{fig:ch2-injection-kim-lu} shows a 12 km x 12 km region centered on a wastewater injection well found by \cite{Kim2018AssociationLocalizedGeohazards} to show injection-related uplift. We observe similar magnitude deformation toward the satellite in both ascending and descending tracks (Figure \ref{fig:ch2-injection-kim-lu} top). After decomposing the two geometries using the LOS vector at each pixel, we observed $\sim$ 5.5 cm of uplift and $\sim$1.2 cm of east-west motion between November 2014 and April 2017 (Figure \ref{fig:ch2-injection-kim-lu} bottom). 
+
+% ORIGINAL:  \cite{Kim2018AssociationLocalizedGeohazards} detected several localized deformation features within the Delaware Basin related to wastewater injection, CO2 injection, and hydrocarbon production using Sentinel-1 InSAR data.  Our LOS decomposition results are consistent with their study at these locations. For example, in a 12 km x 12 km region centered on a wastewater injection well, we observed $\sim$ 5.5 cm of uplift and $\sim$1.2 cm of east-west motion between November 2014 and April 2017 (Figure \ref{fig:injection-kim-lu}). 
 
 
 
@@ -642,7 +648,26 @@ To illustrate a decomposition, Figure \ref{fig:injection-kim-lu} shows a 12 km x
 
 \section{InSAR processing chain}
 \label{sec:ch2-processing}
-We developed software for an efficient and scalable InSAR processing chain to ingest geocoded SLC images and output cumulative surface deformation maps (Figure).
+We developed software for an efficient and scalable InSAR processing chain to process geocoded SLC images and output cumulative surface deformation maps (Figure \ref{fig:ch2-processing}). An area of interest (AOI) is chosen in latitude and longitude coordinates, and all Sentinel-1 SLC products are downloaded from the 
+Alaska Satellite Facility (ASF) DAAC. The NASA Shuttle Radar Topography Mission (SRTM, \citep{Nasa2013NasaShuttleRadar}) 30 meter DEM is downloaded over this region (stitching together tiles for regions larger than 1 x 1 degree) and upsampled.
+The DEM, along with ESA's precise orbit files, are used by the Stanford processor \cite{Zheng2017PhaseCorrectionSingle, Zebker2017UserFriendlyInsar} to produce topography corrected, geocoded SLCs (GSLCs).
+We note that working with GSLCs considerably simplifies the workflow to merge of multiple Sentinel-1 frames over large areas \citep{Zheng2019ImagingCascadiaSlow}.
+Interferograms are formed from GSLCs through a pixel-wise cross multiplication (Equation \eqref{eq:ch2-conj-mult}), which are then unwrapped using the Statistical-cost, Network-flow Algorithm for Phase Unwrapping (SNAPHU) \citep{Chen2001TwoDimensionalPhase}. The unwrapped interferograms are referenced and (optionally) denoised by removing a planar or quadratic phase ramp. These are finally saved using the Hierarchical Data Format 5 (HDF5) data format, which allows efficient parallel pixel-wise processing, as well as geographic metadata annotation. 
+%While equivalent interferograms can be produced by other software such as GMTSAR \citep{Sandwell2011OpenRadarInterferometry} or ISCE \citep{Rosen2012InsarScientificComputing}, 
+% reduces the interferogram formation step to a simple cross multiplication, and they .
+% as well as the ingesting future acquisitions  over the same AOI.
+
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{figures/chapter2-sar/processing-flow.pdf}
+	\caption[Diagram of InSAR processing chain]{
+	Processing chain used to create geocoded unwrapped of interferograms for stacking or SBAS time series analysis. Grey boxes indicate intermediate data products, yellow parallelograms indicate externally developed software packages, green parallelograms indicate software written for this thesis.
+}
+	\label{fig:ch2-processing}
+\end{figure}
+
 
 %- insatead of just TS formula, maybe mention the software... "geocoded SLCs". "write software into geocoded SLCs". "maybe one of the core group proc..."
 %- somehow reflect that i can contribute to mintpy
