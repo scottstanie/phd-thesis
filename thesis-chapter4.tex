@@ -33,16 +33,16 @@ We use the method to create yearly deformation maps from November 2014 through J
 \label{sec:ch4-method-compare}
 %[Method only, define equations and formulas. This already outlines how we solve for deformation]
 
-To investigate how InSAR measurement noise influences the LOS deformation solutions, we compared the results derived from (1) the stacking method, (2) a Small BAseline Subset (SBAS) linear deformation (constant velocity) model with $L_1$ and $L_2$-norm penalty functions, and (3) unregularized and regularized SBAS deformation time series. 
+To investigate how InSAR measurement noise influences the LOS deformation solutions, we compared the results derived from (1) the stacking method, (2) an SBAS linear deformation (constant velocity) model with $L_1$ and $L_2$-norm penalty functions, and (3) unregularized and regularized SBAS deformation time series. 
 We assume there are $M$ small-baseline interferograms that were generated from $N$ SAR scenes acquired over a period of interest. 
 %The stacking method from \cite{Sandwell1998PhaseGradientApproach} solves for the average velocity over the study period. 
 %An interferogram measures surface deformation that occurred between the two SAR acquisition times along the radar line-of-sight (LOS) direction \citep{Hanssen2001RadarInterferometryData}.
 We employed a stacking approach \citep{Sandwell1998PhaseGradientApproach} to calculate the average LOS velocity $v_{avg}$ of each ground pixel over a time period of interest $T$ as:
 \begin{equation}
-	v_{avg} = \frac{\sum_{i \in G} \bm{\Delta  d_i}}{\sum_{i \in G} \Delta t_i}
+	v_{avg} = \frac{\sum_{i \in G} \bm{\Delta  d_i}}{\sum_{i \in G} \bm{\Delta t}_i}
 	\label{eq:ch4-stacking}
 \end{equation}
-where $G$ is a subset of interferograms that were formed using two SAR scenes acquired within the time period $T$. The LOS measurement (in cm) and the temporal baseline of the $i^{th}$ interferogram in $G$ are written as $\Delta d_i$ and $ \Delta t_i $ respectively. 
+where $G$ is a subset of interferograms that were formed using two SAR scenes acquired within the time period $T$. The LOS measurement (in cm) and the temporal baseline of the $i^{th}$ interferogram in $G$ are written as $  \bm{\Delta  d_i} $ and $ \bm{\Delta t}_i $ respectively. 
 %In Section \ref{sec:ch4-method-compare}, we show that comparable LOS velocity estimates can be produced using the Small Baseline Subset (SBAS) approach \citep{Berardino2002NewAlgorithmSurface} with a constant velocity (linear deformation) model.
 
 

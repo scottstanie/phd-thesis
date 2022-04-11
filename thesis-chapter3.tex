@@ -162,6 +162,8 @@ However, subsurface measurements of pore pressure changes can be difficult or im
 
 
 \section{Available Geodetic Data}
+\label{sec:ch3-geodetic-data}
+
 %- next: geodetic data
 %- need basin wide character...
 %- *check PNAS independent section*
@@ -206,7 +208,7 @@ InSAR surface deformation measurements have much broader spatial coverage, and t
 
 
 \section{InSAR processing strategy and noise analysis}
-\label{sec:ch2-insar-processing}
+\label{sec:ch3-insar-processing}
 
 Using a geocoded SLC processor \citep{Zheng2017PhaseCorrectionSingle, Zebker2017UserFriendlyInsar} (Section \ref{sec:ch2-processing}), we processed 91 ascending (path 78, frames 94-104) and 82 descending (path 85, frames 483-493) Sentinel-1 scenes acquired between Nov. 2014 and Jan. 2019 (Figure \ref{fig:paper1-study-area}). We generated more than 7000 interferograms with 120 meter pixel spacing and a maximum temporal baseline of 800 days. No spatial baseline threshold was imposed in the interferogram formation. Because few decorrelation artifacts were presented, we were able to unwrap all interferograms without additional spatial filtering using the Statistical-cost, Network-flow Algorithm for Phase Unwrapping (SNAPHU) \citep{Chen2001TwoDimensionalPhase}. We removed long-wavelength phase ramps due to long-wavelength tropospheric noise, using a planar phase model. Comparable interferograms can be generated using other processors such as the InSAR Scientific Computing Environment (ISCE) \citep{Rosen2012InsarScientificComputing}. 
 We chose the GPS station TXKM as the reference point for both ascending and descending InSAR data, and we used the remaining 13 stations as controls to assess InSAR measurement uncertainty as described in Chapter \ref{CHAP:4-GRL}.
@@ -223,10 +225,10 @@ In our West Texas data, interferograms showing signs of $\Delta \phi_{orb}$, $\D
 
 As described in Section \ref{sec:ch2-noise-tropo}, tropospheric noise $\Delta \phi_{tropo}$ consists of a stratified component that correlates with topography \citep{Doin2009CorrectionsStratifiedTropospheric} and a turbulent component that is random at time scales longer than one day \citep{Emardson2003NeutralAtmosphericDelay}.
 Since the majority of the oil-producing Permian Basin is flat (less than 700 meters of elevation change), there is not a substantial stratified component of tropospheric noise in our data. 
-We also analyzed the effectiveness of correction techniques based on auxiliary data (Section \ref{sec:ch2-noise-tropo-mitigate}).
-We tested the Generic Atmospheric Correction Online Service (GACOS, \citep{Yu2018InterferometricSyntheticAperture,Yu2018GenericAtmosphericCorrection}), which combines global atmospheric models (GAMs) and GPS data to produce synthetic delay maps.
+We also analyzed the effectiveness of correction techniques based on auxiliary data.
+We tested the Generic Atmospheric Correction Online Service (GACOS, \citep{Yu2018InterferometricSyntheticAperture,Yu2018GenericAtmosphericCorrection}), which combines global atmospheric models (GAMs) and GPS data to produce synthetic delay maps, as well as the line-of-sight path integration of GAMs using the ray tracing library of \cite{Maurer2021RaiderRaytracingAtmospheric}.
 % tropospheric correction estimate. 
-Due to the sparsity of GPS stations, the GACOS corrections for West Texas mostly rely on the GAM input.
+Due to the sparsity of GPS stations, the GACOS corrections for West Texas mostly rely on the GAM input, so the methods showed similar corrections.
 % GAMs and GPS data . 
 % stratified tropospheric noise component using 
 %

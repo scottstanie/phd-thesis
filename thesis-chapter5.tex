@@ -11,13 +11,13 @@
 
 
 In this chapter, present a method for robustly extracting slow-moving cumulative surface deformation from time series with large noise. 
-We perform a temporal smoothing using the robust locally weighted regression (LOWESS) method \cite{Cleveland1979RobustLocallyWeighted} on noisy surface deformation time-series derived using SBAS.
-The method extends the ideas behind the outlier-removal technique presented in Chapter \ref{CHAP:4-GRL}.
-Additionally, compared to the alternatives presenting in Section \ref{sec:ch4-method-compare}, the LOWESS smoothing most easily accounts for nonlinear deformation while also suppressing the 10-15 cm of tropospheric noise present in the summer SAR acquisitions. 
+We perform a temporal smoothing using the robust LOcally WEighted Scatterplot Smoothing (LOWESS) regression technique \cite{Cleveland1979RobustLocallyWeighted} on noisy surface deformation time-series derived using SBAS.
+%The method extends the ideas behind the outlier-removal technique presented in Chapter \ref{CHAP:4-GRL}.
+Compared to the alternatives presenting in Section \ref{sec:ch4-method-compare}, the LOWESS smoothing more easily accounts for nonlinear deformation while also suppressing the 10-15 cm of tropospheric noise present in the summer SAR acquisitions. 
 We demonstrate the technique using synthetic time series and using three paths of Sentinel-1 data over the Permian Basin in West Texas. 
 The cumulative results show subtle basin-wide uplift features arising after 4-5 years of heavy sustained wastewater injection.
 
-% compared the stacking method used in Chapter \ref{CHAP:4-GRL} with several alternatives .
+
 
 %- Problem: 
 %1. Longer time series, the linear assumption becomes less valid.  This is at odds with the balance of using more measurements to average out tropospheric noise
@@ -26,17 +26,33 @@ The cumulative results show subtle basin-wide uplift features arising after 4-5 
 %	
 
 \section{Algorithm}
+%	\bm{A \phi} = \bm{\Delta \phi} + \bm{\epsilon} . \label{eq:ch2-sbas-A}
+%where  $\bm{A}$ is the system design matrix, and $ \bm{\epsilon}  $ is the vector of interferogram-specific noise sources (e.g. $ \Delta \phi_{decor}, \Delta \phi_{unwrap}, \Delta \phi_{scat}, \Delta \phi_{n} $ from Equation \eqref{eq:ch2-insar-noise-terms}).
+Consider time series of LOS phase delay,  $ \bm{\phi} = \left[\phi_0, \phi_1, \ldots, \phi_{N-1} \right]^T $, for a single pixel solved using the SBAS system from Equation \eqref{eq:ch2-sbas-A}.
+Here we consider the case that the interferogram-specific noise sources (e.g. $  \Delta \phi_{decor}, \Delta \phi_{unwrap}, \Delta \phi_{scat}  $) have been properly accounted for in the process used to calculate $ \bm{\phi} $.
+Each element $\phi_i$ contains
+% consists of all terms in Equation \eqref{eq:ch2-insar-noise-terms} which affect the phase of a SAR acquisition and all interferograms containing that acquisition
+the deformation phase, $\frac{4 \pi}{\lambda} d_i$, as well as the atmospheric delay terms, $\frac{4 \pi}{\lambda} \alpha_i$.
+Since deformation is usually the quantity of interest, there are several approaches to separating $ d_i $ from $ \alpha_i $.
+If a functional model of deformation is known to exist (e.g. linear, transient jumps \citep{Chen20142010SlowSlip, Fielding2017SurfaceDeformationNorth}, seasonal variations \citep{Murray2018ShortLivedPause}, or a combination \citep{Riel2018QuantifyingGroundDeformation}), a model fit can be performed on the noisy $ \bm{\phi} $ time series to extract the model parameters of interest.
+Alternatively, the authors of \cite{Berardino2002NewAlgorithmSurface} used spatial and temporal filters on $\bm{\Delta \phi}$, relying on the fact that the turbulent component of $\bm{\alpha}$ is uncorrelated in time \citep{Emardson2003NeutralAtmosphericDelay} while most deformation sources show strong temporal correlation.
+
+%These filters are expanded upon and compared in Chapter \ref{CHAP:5-robust-ts}, where a new robust filter is presented to separate deformation from atmospheric noise.
 
 
-Each element $\phi_i$ consists of all terms in Equation \eqref{eq:ch2-insar-noise-terms} which affect the phase of a SAR acquisition and all interferograms containing that acquisition (as opposed to interferogram-specific noise terms in $ \bm{\epsilon} $); this includes the deformation phase, $\frac{4 \pi}{\lambda} \Delta d$, as well as the atmospheric delay terms, $\alpha_i$.
-Since deformation is usually the quantity of interest, there are several approaches to separating $ \Delta d $ from $\Delta \alpha$.
-If a functional model of deformation is known to exist (e.g. linear, transient jumps \citep{Chen20142010SlowSlip, Fielding2017SurfaceDeformationNorth}, seasonal variations \citep{Murray2018ShortLivedPause}, or a combination \citep{Riel2018QuantifyingGroundDeformation}), a model fit can be performed on the noisy $ \Delta \phi $ time series to extract the model parameters of interest.
-Alternatively, the authors of \cite{Berardino2002NewAlgorithmSurface} used spatial and temporal filters on $\bm{\Delta \phi}$, relying on the fact that the turbulent component of $\Delta \alpha$ is uncorrelated in time \citep{Emardson2003NeutralAtmosphericDelay} while most deformation sources show strong temporal correlation.
-These filters are expanded upon and compared in Chapter \ref{CHAP:5-robust-ts}, where a new robust filter is presented to separate deformation from atmospheric noise.
+\begin{figure}
+\centering
+%\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure1-demo.pdf}
+\caption[Demo of LOWESS fitting]{
+	Demo of LOWESS fitting
+	(a) fake time series to fit
+	(b) weighting window
+	(c) slope at one point
+}
+\label{fig:ch5-algo-demo}
+\end{figure}
 
 
-%%%%% weightingn vector? %%% weighted least squares compare
-%
 %
 %%$ \bm{v} = (\bm{A}^T \bm{A})^{-1}\bm{A}^T \bm{\Delta \phi} $
 %%As noted in \cite{Simons2007InterferometricSyntheticAperture}, 
@@ -49,15 +65,58 @@ These filters are expanded upon and compared in Chapter \ref{CHAP:5-robust-ts}, 
 %where $ \bm{\Sigma} = \mathbb{E}[\bm{\epsilon} \bm{\epsilon}^T] $ is the measurement covariance matrix.
 
 
+
+
+\begin{figure}
+	\centering
+%	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure1-demo.pdf}
+	\caption[Effect of window size on LOWESS fit]{
+		(a) Using a narrow window 
+		(b) Using a wide window approaches a single linear fit
+	}
+	\label{fig:ch5-algo-window}
+\end{figure}
+
+
+\begin{figure}
+	\centering
+%	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure1-demo.pdf}
+	\caption[Multiple iterations of LOWESS fit]{
+		(a) First round fit at one $ x $ location (Same as Figure \ref{fig:ch5-algo-demo}c)
+		(b) Additional weights imposed from the residuals of first fit
+		(c) New weighting window
+		(d) Improved fit from second and third iterations
+	}
+	\label{fig:ch5-algo-iteration}
+\end{figure}
+
+
 \section{Synthetic Example}
+
+
+
+\begin{figure}
+	\centering
+%	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure1-demo.pdf}
+	\caption[Multiple iterations of LOWESS fit]{
+		(a) First round fit at one $ x $ location (Same as Figure \ref{fig:ch5-algo-demo}c)
+		(b) Additional weights imposed from the residuals of first fit
+		(c) New weighting window
+		(d) Improved fit from second and third iterations
+	}
+	\label{fig:ch5-compare-tri}
+\end{figure}
 
 
 
 \section{InSAR Processing for Sentinel-1}
 
-For Sentinel-1 path 78, we processed all interferograms with temporal baselines less than 500. Since every interferograms had less than 250 meter spatial baseline, we required no maximum spatial baseline threshold.  We unwrapped each interferogram using the Statistical-cost, Network-flow Algorithm for Phase Unwrapping (SNAPHU).
-We reduce long wavelength and stratified tropospheric noise by removing a combined planar phase ramp and linear phase vs. elevation relation \cite{Doin2009CorrectionsStratifiedTropospheric,Zebker2021AccuracyModelFree}. We used pixels around the GPS station TXKM as the reference location.
-We repeated this process for descending path 85 and ascending path 151. Since path 151 does not contain station TXKM, or any other GPS station near the center of the acquisition, we used the referencing technique presented in \cite{Zebker2021AccuracyModelFree} to fit and remove a phase-elevation trend from all high-coherence pixels in each interferogram. This method relies on the assumption that most pixels in each interferogram do not show significant deformation, which is valid for the large West Texas area containing the Guadalupe mountain range.
+%For Sentinel-1 path 78, we processed all interferograms with temporal baselines less than 500. 
+%Since all interferograms had less than 250 meter spatial baseline, we required no maximum spatial baseline threshold.  
+%We unwrapped each interferogram using the Statistical-cost, Network-flow Algorithm for Phase Unwrapping (SNAPHU).
+We use the Path 78 and Path 85 inteferograms from Section .
+We reduce long wavelength and stratified tropospheric noise by removing a combined planar phase ramp and linear phase vs. elevation relation \cite{Doin2009CorrectionsStratifiedTropospheric, Zebker2021AccuracyModelFree}. We used the mean of the pixel values in a window around GPS station TXKM as a reference.
+We repeated this process for descending path 85 and ascending path 151. Since path 151 does not contain station TXKM, or any other GPS station near the center of the acquisition, we used the referencing technique presented in \cite{Zebker2021AccuracyModelFree} to fit and remove a phase-elevation trend from all high-coherence pixels in each interferogram. This method relies on the assumption that most pixels in each interferogram do not show significant deformation, which is valid Path 151 which only partially overlaps with the western portion of the oil-producing Permian Basin. 
 %our signals deform slowly over time
 
 %FIGURE: 3 path study
@@ -73,9 +132,9 @@ We repeated this process for descending path 85 and ascending path 151. Since pa
 
 \section{Results}
 
-\subsection{Permian Basin 7-year Time Series}
+\subsection{Permian Basin 7-year time series}
 
-\subsection{GPS Comparison}
+\subsection{GPS comparison}
 
 \section{Discussion}
 
