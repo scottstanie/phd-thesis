@@ -205,7 +205,7 @@ InSAR surface deformation measurements have much broader spatial coverage, and t
 \end{figure}
 
 
-\section{InSAR processing strategy}
+\section{InSAR processing strategy and noise analysis}
 \label{sec:ch2-insar-processing}
 
 Using a geocoded SLC processor \citep{Zheng2017PhaseCorrectionSingle, Zebker2017UserFriendlyInsar} (Section \ref{sec:ch2-processing}), we processed 91 ascending (path 78, frames 94-104) and 82 descending (path 85, frames 483-493) Sentinel-1 scenes acquired between Nov. 2014 and Jan. 2019 (Figure \ref{fig:paper1-study-area}). We generated more than 7000 interferograms with 120 meter pixel spacing and a maximum temporal baseline of 800 days. No spatial baseline threshold was imposed in the interferogram formation. Because few decorrelation artifacts were presented, we were able to unwrap all interferograms without additional spatial filtering using the Statistical-cost, Network-flow Algorithm for Phase Unwrapping (SNAPHU) \citep{Chen2001TwoDimensionalPhase}. We removed long-wavelength phase ramps due to long-wavelength tropospheric noise, using a planar phase model. Comparable interferograms can be generated using other processors such as the InSAR Scientific Computing Environment (ISCE) \citep{Rosen2012InsarScientificComputing}. 
@@ -214,11 +214,67 @@ We chose the GPS station TXKM as the reference point for both ascending and desc
 As outlined in Section \ref{sec:ch2-noise}, interferograms may include noise from many possible sources. %orbital errors, phase decorrelation, unwrapping errors, DEM inaccuracies, ionospheric and tropospheric artifacts, and other residual noise terms. 
 In our West Texas data, interferograms showing signs of $\Delta \phi_{orb}$, $\Delta \phi_{decor}$, and $\Delta \phi_{unwrap}$ were either removed or were negligible. Because the Permian Basin is located in the middle latitudes and is relatively flat, $\Delta \phi_{iono}$ and $\Delta \phi_{dem}$  are not substantial \citep{Fattahi2013DemErrorCorrection, Liang2019IonosphericCorrectionInsar}. 
 %For the reminder of this section, we focused on evaluating and mitigating the impact of tropospheric noise on the West Texas Sentinel-1 data.
-As described in Section \ref{sec:ch2-noise-tropo}, tropospheric noise $\Delta \phi_{tropo}$ consists of a stratified component that correlates with topography \citep{Doin2009CorrectionsStratifiedTropospheric} and a turbulent component that is random at time scales longer than one day \citep{Emardson2003NeutralAtmosphericDelay}. We checked for a stratified tropospheric noise component using the Generic Atmospheric Correction Online Service (GACOS, \citep{Yu2018GenericAtmosphericCorrection, Yu2018InterferometricSyntheticAperture}), and we found that the stratified tropospheric errors in our Sentinel-1 data are minimal.
+
+%I also think it is much easier to first state, the study area is flat, and thus there is no substantial stratified tropospheric noise component. Then explain why GACOS does not work (no dense GPS network, and the weather models mainly capture the stratified component). This is a good place to include your GRL Supp on GACOS figure for the Permian Basin correction results (You may have mentioned GACOS in the radar section, but the discussion there should be more general without specific West Texas results).
+
 %This is because the oil-producing region of the Permian Basin is relatively flat, and we observed little correlation between InSAR LOS measurements and the Digital Elevation Model (DEM) data 
 %(see Section \ref{sec:ch3-noise-tropo-mitigate}).
-The dominant noise term for our West Texas Sentinel-1 data was tropospheric noise.
-In Chapters \ref{CHAP:4-GRL} and \ref{CHAP:5-robust-ts}, we present mitigation strategies capable of producing robust estimates of surface deformation despite the strong tropospheric turbulence noise.
+
+
+As described in Section \ref{sec:ch2-noise-tropo}, tropospheric noise $\Delta \phi_{tropo}$ consists of a stratified component that correlates with topography \citep{Doin2009CorrectionsStratifiedTropospheric} and a turbulent component that is random at time scales longer than one day \citep{Emardson2003NeutralAtmosphericDelay}.
+Since the majority of the oil-producing Permian Basin is flat (less than 700 meters of elevation change), there is not a substantial stratified component of tropospheric noise in our data. 
+We also analyzed the effectiveness of correction techniques based on auxiliary data (Section \ref{sec:ch2-noise-tropo-mitigate}).
+We tested the Generic Atmospheric Correction Online Service (GACOS, \citep{Yu2018InterferometricSyntheticAperture,Yu2018GenericAtmosphericCorrection}), which combines global atmospheric models (GAMs) and GPS data to produce synthetic delay maps.
+% tropospheric correction estimate. 
+Due to the sparsity of GPS stations, the GACOS corrections for West Texas mostly rely on the GAM input.
+% GAMs and GPS data . 
+% stratified tropospheric noise component using 
+%
+% and we found that the stratified tropospheric errors in our Sentinel-1 data are minimal.
+
+
+%Due to the limited spatial and temporal resolution of weather models and GPS data, GACOS is more effective in removing the stratified tropospheric noise \citep{Doin2009CorrectionsStratifiedTropospheric} than the random turbulent tropospheric noise \citep{Emardson2003NeutralAtmosphericDelay}. 
+%We found that GACOS does not produce substantial corrections in most Sentinel-1 West Texas interferograms for areas outside the main area of interest (e.g. Figure \ref{fig:GACOS} (a)-(c)).
+
+
+We illustrate two correction attempts for Sentinel-1 (path 78) interferograms over West Texas using GAM predictions (Figures \ref{fig:ch2-tropo-correct-storm}, \ref{fig:ch2-tropo-correct-wave}). 
+The corrections shown here are produced by the Raytracing Atmospheric Delay Estimation for Radar (RAiDER) library \citep{Maurer2021RaiderRaytracingAtmospheric}, which generates a troposphere correction product from a user-selected GAM by integrating along the radar LOS paths. We use NASA's Global Modeling and Assimilation Office (GMAO) reanalysis weather models, which are interpolated by the RAiDER library to the same pixel spacing as the interferograms ($\sim$ 500 m for this example). We also compare the weather conditions that are visible at the secondary SAR acquisition time \footnote{For both Figures \ref{fig:ch2-tropo-correct-wave}, \ref{fig:ch2-tropo-correct-storm}, the earlier SAR acquisition occurs during winter, which is after sunset for Sentinel-1 path 78 over West Texas. Most of the tropospheric noise in these winter-to-summer interferograms comes from the summer SAR acquisition.} using the Geostationary Operational Environmental Satellites (GOES).
+
+In the first example, the secondary acquisition of the interferogram contains a summer thunderstorm (Figure \ref{fig:ch2-tropo-correct-storm}a). The tall cumulonimbus clouds create patches of excess delay of $>10$ cm (Figure \ref{fig:ch2-tropo-correct-storm}b)\footnote{The different imaging geometries of the Sentinel-1 satellites in low Earth orbit and the GOES satellites in geostationary orbit mean the pixels of Figure \ref{fig:ch2-tropo-correct-storm}a and Figure \ref{fig:ch2-tropo-correct-storm}b do not fully align, but cover approximately the same area.}.
+The $\sim 5$ km storm cells are too small for the GAM to predict, due to its $\sim30$ km grid spacing (Figure \ref{fig:ch2-tropo-correct-storm}c). Thus, the corrected interferogram still contains most of the turbulent noise from the storm (Figure \ref{fig:ch2-tropo-correct-storm}d).
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1.0\textwidth]{figures/chapter2-sar/figure_tropo_correct_storm.pdf}
+	\caption[West Texas tropospheric correction attempt for thunderstorm]{
+		(a) Weather conditions visible from the GOES satellite on July 23rd, 2019 at the same time as the Sentinel-1 acquisition
+		(b) Unwrapped interferogram from Jan. 12, 2019 to July 23, 2019. Blue indicates an increase in relative LOS delay
+		(c) Tropospheric correction predicted from delays computed by the GMAO weather model.
+		(d) Corrected interferogram (panel (b) - panel (c))
+	}
+	\label{fig:ch2-tropo-correct-storm}
+\end{figure}
+
+The second example illustrates strong tropospheric noise resulting from a low-pressure front moving from northwest to southeast, which creates a $\sim 20$ cm decrease in LOS delay compared to the southeast portion of the interferogram (Figure \ref{fig:ch2-tropo-correct-wave}b). Note that this pressure front is not visible in the visible spectrum of the GOES image (Figure \ref{fig:ch2-tropo-correct-wave}a), but is present in the GMAO weather model (Figure \ref{fig:ch2-tropo-correct-wave}c). Although the RMS noise of the corrected interferogram drops from 6.1 cm to 2.6 cm, the slight temporal differences of the model output and interferogram acquisition times lead to only a partial correction of the tropospheric pattern.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1.0\textwidth]{figures/chapter2-sar/figure_tropo_correct_wave.pdf}
+	\caption[West Texas tropospheric correction attempt for pressure front]{
+		(a) Weather conditions visible from the GOES satellite on May 29th, 2018 at the same time as the Sentinel-1 acquisition.
+		(b) Unwrapped interferogram from Jan. 5, 2018 to May 29, 2018. Blue indicates an increase in relative LOS delay.
+		(c) Tropospheric correction predicted from delays computed by the GMAO weather model.
+		(d) Corrected interferogram (panel (b) - panel (c))
+	}
+	\label{fig:ch2-tropo-correct-wave}
+\end{figure}
+
+
+ 
+%The dominant noise term for our West Texas Sentinel-1 data is turbulenct tropospheric noise.
+%Since the correction methods based on auxiliary data 
+Since the turbulent tropospheric noise is more difficult to predict using the auxiliary correction methods, Chapters \ref{CHAP:4-GRL} and \ref{CHAP:5-robust-ts} present data-driven mitigation strategies for producing robust estimates of surface deformation.
+% despite the strong tropospheric noise.
 
 %	- thern ' infollowing section, well see how to produce robust surface defo' (presumable revied all the challenges...)
 

@@ -405,45 +405,7 @@ Previous studies have made advances in correcting for the stratified component o
 Many efforts have advanced stratified noise correction using auxiliary sources of data, including global atmospheric models (GAMs) \citep{Doin2009CorrectionsStratifiedTropospheric, Jolivet2011SystematicInsarTropospheric, Jolivet2014ImprovingInsarGeodesy, Cao2021AdvancedInsarTropospheric}, GPS zenith delay measurements \citep{Onn2006ModelingWaterVapor, Yu2017GenerationRealTime}, and external satellite measurements from sensors such as the Moderate Resolution Imaging Spectroradiometer (MODIS) \citep{Li2005InterferometricSyntheticAperture, Barnhart2013CharacterizingEstimatingNoise} or the Medium Resolution Imaging Spectrometer (MERIS)  \citep{Ding2008AtmosphericEffectsInsar}.
 Several authors have attempted to create off-the-shelf correction services or toolboxes from these data sources. For example,	
 \cite{Yu2018GenericAtmosphericCorrection} combined information from GAMs and available GPS zenith delay measurements to create the Generic Atmospheric Correction Online Service (GACOS) for estimating tropospheric noise in InSAR data. \cite{Maurer2021RaiderRaytracingAtmospheric} created a library for ray-tracing the LOS paths through GAM-predicted delays to create correction products.
-
-%Due to the limited spatial and temporal resolution of weather models and GPS data, GACOS is more effective in removing the stratified tropospheric noise \citep{Doin2009CorrectionsStratifiedTropospheric} than the random turbulent tropospheric noise \citep{Emardson2003NeutralAtmosphericDelay}. 
-%We found that GACOS does not produce substantial corrections in most Sentinel-1 West Texas interferograms for areas outside the main area of interest (e.g. Figure \ref{fig:GACOS} (a)-(c)).
-
-
-Below we illustrate correction attempts for two Sentinel-1 (path 78) interferograms over West Texas using GAM predictions (Figures \ref{fig:ch2-tropo-correct-wave}, \ref{fig:ch2-tropo-correct-storm}). 
-The corrections are produced by the Raytracing Atmospheric Delay Estimation for Radar (RAiDER) library \citep{Maurer2021RaiderRaytracingAtmospheric}, which generates a troposphere correction product from a user-selected GAM. Here we use NASA's Global Modeling and Assimilation Office (GMAO) reanalysis weather models, which are interpolated by the RAiDER library to the same pixel spacing as the interferograms ($\sim$ 500 m here). We also compare the weather conditions that are visible at the secondary SAR acquisition time \footnote{For both Figures \ref{fig:ch2-tropo-correct-wave}, \ref{fig:ch2-tropo-correct-storm}, the earlier SAR acquisition time occurs during winter, which is after sunset for Sentinel-1 path 78 over West Texas. Most of the tropospheric noise in these winter-to-summer interferograms comes from the summer SAR acquisition.} using the Geostationary Operational Environmental Satellites (GOES).
-
-In the first example, the secondary acquisition of the interferogram contains a summer thunderstorm (Figure \ref{fig:ch2-tropo-correct-storm}a). The tall cumulonimbus clouds create areas of excess delay of $>10$ cm to the interferogram over short scale lengths (under 5 km, Figure \ref{fig:ch2-tropo-correct-storm}b). 
-Note that the different imaging geometries of the Sentinel-1 satellites in low Earth orbit and the GOES satellites in geostationary orbit mean the pixels of Figure \ref{fig:ch2-tropo-correct-storm}a and Figure \ref{fig:ch2-tropo-correct-storm}b do not fully align, but cover approximately the same area.
-The $\sim 5$ km storm cells are too small for the GMAO weather model to predict, due to its $\sim30$ km grid spacing (Figure \ref{fig:ch2-tropo-correct-storm}c). Thus, the corrected inteferogram still contains most of the turbulent noise from the storm (Figure \ref{fig:ch2-tropo-correct-storm}d).
-
-\begin{figure}
-	\centering
-	\includegraphics[width=1.0\textwidth]{figures/chapter2-sar/figure_tropo_correct_storm.pdf}
-	\caption[West Texas tropospheric correction for thunderstorm]{
-		(a) Weather conditions visible from the GOES satellite on July 23rd, 2019 at the same time as the Sentinel-1 acquisition
-		(b) Unwrapped interferogram from Jan. 12, 2019 to July 23, 2019. Blue indicates an increase in relative LOS delay
-		(c) Tropospheric correction predicted from delays computed by the GMAO weather model.
-		(d) Corrected interferogram (panel (b) - panel (c))
-	}
-	\label{fig:ch2-tropo-correct-storm}
-\end{figure}
-
-The second example illustrates strong tropospheric noise resulting from a low-pressure front moving from northwest to southeast, which creates a $\sim 20$ cm decrease in LOS delay compraed to the southeast portion of the interferogram (Figure \ref{fig:ch2-tropo-correct-wave}b). Note that this pressure front is not visible in the visible spectrum of the GOES image (Figure \ref{fig:ch2-tropo-correct-wave}a), but is present in the GMAO weather model (Figure \ref{fig:ch2-tropo-correct-wave}c). Although the RMS noise of the corrected interferogram drops from 6.1 cm to 2.6 cm, the slight temporal differences of the model output and interferogram acquisition times lead to only a partial correction of the tropospheric pattern.
-
-\begin{figure}
-	\centering
-	\includegraphics[width=1.0\textwidth]{figures/chapter2-sar/figure_tropo_correct_wave.pdf}
-	\caption[West Texas tropospheric correction attempt for pressure front]{
-		(a) Weather conditions visible from the GOES satellite on May 29th, 2018 at the same time as the Sentinel-1 acquisition.
-		(b) Unwrapped interferogram from Jan. 5, 2018 to May 29, 2018. Blue indicates an increase in relative LOS delay.
-		(c) Tropospheric correction predicted from delays computed by the GMAO weather model.
-		(d) Corrected interferogram (panel (b) - panel (c))
-	}
-	\label{fig:ch2-tropo-correct-wave}
-\end{figure}
-
-While these correction methods show promise in certain study areas, the spatial and temporal resolution is often too low to correct for noise from severe weather or turbulent mixing of water vapor. Therefore, most methods for mitigating the turblent tropospheric noise rely on time series methods that exploit the uncorrelated temporal characteristics of the noise.
+While these correction methods show promise in certain study areas, the spatial and temporal resolution can be too low to correct for noise from severe weather or turbulent mixing of water vapor. Therefore, most methods for mitigating the turblent tropospheric noise rely on time series methods that exploit the uncorrelated temporal characteristics of the noise.
 % on the atmospheric delay being uncorrelated for time scales longer than $\sim 6$ hours \cite{Emardson2003NeutralAtmosphericDelay}.
 
 
