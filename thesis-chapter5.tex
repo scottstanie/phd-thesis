@@ -11,7 +11,7 @@
 
 
 In this chapter, present a method for robustly extracting slow-moving cumulative surface deformation from time series with large noise. 
-We perform a temporal smoothing using the robust LOcally WEighted Scatterplot Smoothing (LOWESS) regression technique \cite{Cleveland1979RobustLocallyWeighted} on noisy surface deformation time-series derived using SBAS.
+We perform a temporal smoothing using the robust Locally Weighted Scatterplot Smoothing (LOWESS) regression technique \cite{Cleveland1979RobustLocallyWeighted} on noisy surface deformation time-series derived using SBAS.
 %The method extends the ideas behind the outlier-removal technique presented in Chapter \ref{CHAP:4-GRL}.
 Compared to the alternatives presenting in Section \ref{sec:ch4-method-compare}, the LOWESS smoothing more easily accounts for nonlinear deformation while also suppressing the 10-15 cm of tropospheric noise present in the summer SAR acquisitions. 
 We demonstrate the technique using synthetic time series and using three paths of Sentinel-1 data over the Permian Basin in West Texas. 
@@ -28,18 +28,18 @@ The cumulative results show subtle basin-wide uplift features arising after 4-5 
 \section{Algorithm}
 %	\bm{A \phi} = \bm{\Delta \phi} + \bm{\epsilon} . \label{eq:ch2-sbas-A}
 %where  $\bm{A}$ is the system design matrix, and $ \bm{\epsilon}  $ is the vector of interferogram-specific noise sources (e.g. $ \Delta \phi_{decor}, \Delta \phi_{unwrap}, \Delta \phi_{scat}, \Delta \phi_{n} $ from Equation \eqref{eq:ch2-insar-noise-terms}).
-Consider a time series of $N$ LOS phase delays for a single pixel,  $ \bm{\phi} = \left[\phi_0, \phi_1, \ldots, \phi_{N-1} \right]^T $, solved from the SBAS linear system (Equation \eqref{eq:ch2-sbas-A}).
+Consider a time series of $N$ LOS phase delays for a single pixel,  $ \bm{\phi} = \left[\phi_0, \phi_1, \ldots, \phi_{N-1} \right]^T $ sampled at time intervals $ \bm{t} = \left[t_0, \ldots, t_{N-1} \right]^T $, solved from the SBAS linear system (Equation \eqref{eq:ch2-sbas-A}).
 Here we consider the case that the interferogram-specific noise sources (e.g. $  \Delta \phi_{decor}, \Delta \phi_{unwrap}, \Delta \phi_{scat}  $) have been properly accounted for in the inversion for $ \bm{\phi} $ so that the noise from $ \alpha_i $ is much larger than other residual noises.
 We can write each element $\phi_i$ as a sum of surface deformation and atmospheric delay,
 \begin{equation}
 	\phi_i = \frac{4 \pi}{\lambda} \left(d_i + \alpha_i \right)
 \end{equation}
-where $ d_i$ and  $\alpha_i$ are the (relative )surface deformation and atmospheric delay on the $i$th day, and $ \lambda $ is the radar wavelength.
+where $ d_i$ and $\alpha_i$ are the surface deformation and atmospheric delay on the $i$th day, and $ \lambda $ is the radar wavelength.
 %Since deformation is usually the quantity of interest,
 Our goal is to separate the vector of surface deformation $ \bm{d} =  \left[d_0, d_1, \ldots, d_{N-1} \right]^T $ from the atmospheric noise contribution $ \bm{\alpha} $.
 % consists of all terms in Equation \eqref{eq:ch2-insar-noise-terms} which affect the phase of a SAR acquisition and all interferograms containing that acquisition
 
-The most widely used non-parametric methods for separating $ \bm{d} $ from $ \bm{\alpha} $ rely on the fact that the turbulent component of $\bm{\alpha}$ is uncorrelated in time (at the repeat interval of SAR acquisition), while most deformation sources show strong temporal correlation.
+The most widely used non-parametric methods for separating $ \bm{d} $ from $ \bm{\alpha} $ rely on the fact that the turbulent component of $\bm{\alpha}$ is uncorrelated in time, while most deformation sources show strong temporal correlation.
 %There are several approaches to separating $ \bm{d} $ from $ \bm{\alpha} $.
 %If a functional model of deformation is known to exist (e.g. linear, transient jumps \citep{Chen20142010SlowSlip, Fielding2017SurfaceDeformationNorth}, seasonal variations \citep{Murray2018ShortLivedPause}, or a combination \citep{Riel2018QuantifyingGroundDeformation}), a model fit can be performed on the noisy $ \bm{\phi} $ time series to extract the model parameters of interest.
 %However, when the deformation model is not known, methods usually rely on the fact that the turbulent component of $\bm{\alpha}$ is uncorrelated in time \citep{Emardson2003NeutralAtmosphericDelay} while most deformation sources show strong temporal correlation.
@@ -48,7 +48,7 @@ The temporal high pass filter was implemented by subtracting a low-pass filtered
 % (i.e. $ \phi $)
 %used spatial and temporal filters on $\bm{\Delta \phi}$.
 %These filters are expanded upon and compared in Chapter \ref{CHAP:5-robust-ts}, where a new robust filter is presented to separate deformation from atmospheric noise.
-Once difficulty with the triangular filter and other moving-average filters is that the filter coefficients are non-adaptive, and noisier atmospheric conditions will be weighted the same as calmer conditions \citep{Liu2012SatelliteRadarInterferometry}.
+One difficulty with the triangular filter and other moving-average filters (e.g. a Gaussian filter) is that the filter coefficients are non-adaptive; noisier atmospheric conditions will be weighted the same as calmer conditions \citep{Liu2012SatelliteRadarInterferometry}.
 This can cause considerable leakage of noise from severe weather conditions (e.g. thunderstorms) into the deformation estimate of adjacent days.
 
 % From Liu, 2012
@@ -66,11 +66,11 @@ This can cause considerable leakage of noise from severe weather conditions (e.g
 \end{figure}
 
 
-We can adaptively filter the noisy $ \bm{\phi} $ time series by implementing a robust LOWESS regression. The LOWESS algorithm moves along the time axis and fits a local linear regression to nearby data points, repeating over multiple iterations to refine the fit and reduce the effect of outliers \citep{Efron2019ComputerAgeStatistical}.
+We can adaptively filter the noisy $ \bm{\phi} $ time series by implementing a robust LOWESS regression \citep{Cleveland1979RobustLocallyWeighted}. The LOWESS algorithm fits a local linear regression at every $t_i$ using nearby data points, repeating over multiple iterations to refine the fit and reduce the effect of outliers \citep{Efron2019ComputerAgeStatistical}.
 % which performs several iterations of weighted linear regression for each SAR acquisition. 
-For the first iteration at time $t_i$,  we calculate a set of weights which is centered around $t_i$. The weight function has with a maximum value of $1$ at $t_i$ and decays to zero at the $r$th nearest nneighbor to $t_i$, where $r = \left\lfloor \gamma N \right\rfloor$ and $0 < \gamma \leq 1$ is the fraction of the data chosen to include for each local fit.
-Lett $h_i$ be the $r$th smallest number of $\left| x_i - x_k \right|$ for $ k = 0, \ldots, N-1 $.
-The weight $w_k(t_i)$ for the $k$th data point, defined as
+For the first iteration, at each time $t_i$,  we calculate a set of weights $\bm{w}(t_i)$. The weight function has with a maximum value of $1$ at $t_i$ and decays to zero at the $r$th nearest neighbor to $t_i$, where $r = \left\lfloor \gamma N \right\rfloor$ and $0 < \gamma \leq 1$ is the fraction of the data chosen to include for each local fit.
+Let $h_i$ be the $r$th smallest number of $\left| x_i - x_k \right|$ for $ k = 0, \ldots, N-1 $.
+The $k$th weight $w_k(t_i)$ is defined as
 \begin{equation}
 	w_k(t_i) = 
 	\begin{cases}
@@ -78,11 +78,11 @@ The weight $w_k(t_i)$ for the $k$th data point, defined as
 		0, & \text{otherwise}
 	\end{cases}          \label{eq:ch5-lowess-weights}
 \end{equation}
-for $k =0, \ldots, N-1 $, is known as the \emph{tricube} weighting function.
-Figure \ref{fig:ch5-algo-window} shows three example $ \bm{w}(t_i) $ weights for $\gamma = 1/6, 1/3, 1/2 $.
-A synthetic time series $\phi$ (gold dots) spans 3 years and has with a data point every 12 days, making the three $ \gamma $ choices equal to $0.5, 1,$ and $1.5$ years.
+for $k =0, \ldots, N-1 $. This weight function is known as the \emph{tricube} weighting function.
+Figure \ref{fig:ch5-algo-window} shows three examples of $ \bm{w}(t_i) $ for $\gamma = 1/6, 1/3, 1/2 $.
+Since the example synthetic time series $\phi$ (gold dots) spans 3 years and has with a data point every 12 days, this makes the three $ \gamma $ choices equal to $0.5, 1,$ and $1.5$ years.
 
-\begin{figure}
+\begin{figure}[!h]
 	\centering
 	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure2-fits.pdf}
 	\caption[Demo of LOWESS fitting]{
@@ -113,9 +113,9 @@ Using $ \bm{w}(t_i) $, we compute a weighted linear regression around $t_i$ by f
 \begin{equation}
 	\sum_{k=0}^{N-1} w_k(t_i) \left(\phi_k - a_i - b_i t_k \right)^2
 \end{equation}
-The smoothed estimate $\hat{\phi}_i$ at the point $t_i$ is calculated as $\hat{\phi}_i = a_i + t_i b_i$. This process is repeated at each time $t_i$ for $i = 0, \ldots, N-1$.
+The smoothed estimate $\hat{\phi}_i$ at the point $t_i$ is calculated as $\hat{\phi}_i = a_i + t_i b_i$. This process is repeated for all $t_i$,  $i = 0, \ldots, N-1$.
 
-The second iteration performs another weighted least squares fit with an additional downweighting based on the residuals of the first iteration.
+The second iteration performs another weighted least squares fit, this time adding an additional downweighting based on the residuals of the first iteration.
 Let $\epsilon_k = \left| \hat{\phi}_k - \phi_k  \right|$ be the residual at $t_k$ and $s$ be the median residual for all $k$. We create an additional set of weights $ \delta_k $ for each $ k = 0, \ldots, N-1$ as
 \begin{equation}
 	\delta_k = 
@@ -124,9 +124,12 @@ Let $\epsilon_k = \left| \hat{\phi}_k - \phi_k  \right|$ be the residual at $t_k
 		0, & \text{otherwise}
 	\end{cases}          \label{eq:ch5-lowess-weights2}
 \end{equation}
-Similar to the use of the median absolute deviation from Section \ref{sec:ch4-outlier-method}, Equation \eqref{eq:ch5-lowess-weights2} uses the median $ s $ so that large outliers are clipped to 0. For each new fit in the second iteration, the weights $ \bm{w}(t_i) $ are multiplied by the residual weights $\bm{delta}$ to perform the local regressions.
+Similar to the use of the median absolute deviation from Section \ref{sec:ch4-outlier-method}, Equation \eqref{eq:ch5-lowess-weights2} uses the median $ s $ so that large outliers are clipped to 0. For each new fit in the second iteration, the weights $ \bm{w}(t_i) $ are multiplied by the residual weights $\bm{\delta}$ to perform the local regressions.
 
-Figure \ref{fig:ch5-algo-demo} illustrates two iterations of iterations 
+Figure \ref{fig:ch5-algo-demo} illustrates two iterations of iterations of the LOWESS algorithm on the synthetic timeseries of Figure \ref{fig:ch5-algo-window}. During the first iteration, each $ \hat{\phi}_i $ is calculated using a locally weighted regression, with the weight based solely on the proximity to $ t_i $ (Figure \ref{fig:ch5-algo-demo}a). The resulting fit tracks the slowly varying pattern of the data, but outlier points can strongly influence the fit (Figure \ref{fig:ch5-algo-demo}b). 
+%Using the residuals of the fit from Figure \ref{fig:ch5-algo-demo}b, 
+The second iteration combiners the proximity weighting from Figure \ref{fig:ch5-algo-demo}a with the residual weighting calculated from Figure \ref{fig:ch5-algo-demo}b, $ \bm{\delta} $ (Figure \ref{fig:ch5-algo-demo}c).
+The second iteration gets influenced less by the outlier points and has fewer spurious bumps in the time series (Figure \ref{fig:ch5-algo-demo}d). Note that more iterations can be performed if desired; in this example, further iterations provide little benefit ($ \sim $ 1 mm or less).
 
 
 %
@@ -161,17 +164,17 @@ Figure \ref{fig:ch5-algo-demo} illustrates two iterations of iterations
 
 
 
-\begin{figure}
-	\centering
-%	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure1-demo.pdf}
-	\caption[Multiple iterations of LOWESS fit]{
-		(a) First round fit at one $ x $ location (Same as Figure \ref{fig:ch5-algo-demo}c)
-		(b) Additional weights imposed from the residuals of first fit
-		(c) New weighting window
-		(d) Improved fit from second and third iterations
-	}
-	\label{fig:ch5-compare-tri}
-\end{figure}
+%\begin{figure}
+%	\centering
+%%	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure1-demo.pdf}
+%	\caption[Multiple iterations of LOWESS fit]{
+%		(a) First round fit at one $ x $ location (Same as Figure \ref{fig:ch5-algo-demo}c)
+%		(b) Additional weights imposed from the residuals of first fit
+%		(c) New weighting window
+%		(d) Improved fit from second and third iterations
+%	}
+%	\label{fig:ch5-compare-tri}
+%\end{figure}
 
 
 
