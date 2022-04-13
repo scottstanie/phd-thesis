@@ -146,30 +146,24 @@ While \cite{Ferretti2000NonlinearSubsidenceRate} uses mean value of the common-r
 % TODO: The first date of SBAS?
 
 
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure2-demo-data.pdf}
+	\caption[Synthetic data for LOWESS smoothing]{
+		(a)  A 300 x 300 pixel region contains a synthetic uplift bowl which peaks at 3 cm.
+		(b) Turbulent tropospheric is noise added to panel (a) for 
+		(c) Time series of true deformation $\bm{d}$ (orange) and $\bm{\phi} =\bm{d} + \bm{\alpha}$ (green). The pixels where the $\bm{d}$ and $\bm{\phi}$ time series are drawn from are marked with an x in panels (a) and (b), respectively. The date that panels (a) and (b) are plotting from is marked with the grey dashed vertical line. Note that the $ \bm{\phi} $ time series is offset due to SBAS assuming the first date is $ 0 $.
+	}
+	\label{fig:ch5-demo-data}
+\end{figure}
 
 \section{Synthetic Example}
 
-%Since the example synthetic time series $\phi$ (gold dots) spans 3 years and has with a data point every 12 days, this makes the three $ \gamma $ choices equal to $0.5, 1,$ and $1.5$ years.
-%
-%%		For a 3-year synthetic time series (gold dots), the weights $ w_k(t_i) $ are shown for $t_i = $ 2018-09-01.
-%%A fraction of $\gamma = 1/6, 1/3, 1/2 $ (corresponding to time windows of $0.5, 1,$ and $1.5$ years) are shown in blue, orange, and green, respectively.
 
 We first illustrate the LOWESS algorithm on a synthetic 3-year deformation time series (Figure \ref{fig:ch5-demo-data}).
 A 300 x 300 pixel region contains an uplift bowl which linearly increases to $ 3 $cm max after 1.5 years (Figure \ref{fig:ch5-demo-data}a) and deflates back to zero by the end of 3 years. Turbulent tropospheric noise is simulated for acquisitions every 12 days and added to the deformation (Figure \ref{fig:ch5-demo-data}b). The uplift bowl inflates at a constant rate for 1.5 years, then deflates back to 0 by the end of the 3rd year (Figure \ref{fig:ch5-demo-data}c).
 To emulate the output from an SBAS inversion, the sum of the deformation and noise is shifted by the noise on the first day so that $ \phi_0 = 0 $.
 
-
-
-\begin{figure}
-	\centering
-	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure2-demo-data.pdf}
-	\caption[Synthetic data for LOWESS smoothing]{
-	(a)  A 300 x 300 pixel region contains a synthetic uplift bowl which peaks at 3 cm.
-	(b) Turbulent tropospheric is noise added to panel (a) for 
-	(c) Time series of true deformation $\bm{d}$ (orange) and $\bm{\phi} =\bm{d} + \bm{\alpha}$ (green). The pixels where the $\bm{d}$ and $\bm{\phi}$ time series are drawn from are marked with an x in panels (a) and (b), respectively. The date that panels (a) and (b) are plotting from is marked with the grey dashed vertical line. Note that the $ \bm{\phi} $ time series is offset due to SBAS assuming the first date is $ 0 $.
-	}
-	\label{fig:ch5-demo-data}
-\end{figure}
 
 
 
@@ -178,7 +172,6 @@ During the first iteration, each $ \hat{\phi}_i $ is calculated using a locally 
 %Using the residuals of the fit from Figure \ref{fig:ch5-algo-demo}b, 
 The second iteration combiners the proximity weighting from Figure \ref{fig:ch5-algo-demo}a with the residual weighting calculated from Figure \ref{fig:ch5-algo-demo}b, $ \bm{\delta} $ (Figure \ref{fig:ch5-algo-demo}c).
 The second iteration gets influenced less by the outlier points and has fewer spurious bumps in the time series (Figure \ref{fig:ch5-algo-demo}d). Note that more iterations can be performed if desired; in this example, further iterations provide little benefit ($ \sim $ 1 mm or less).
-
 
 \begin{figure}
 	\centering
@@ -193,29 +186,22 @@ The second iteration gets influenced less by the outlier points and has fewer sp
 	\label{fig:ch5-algo-demo}
 \end{figure}
 
-
-
-%\begin{figure}
-%	\centering
-%%	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure1-demo.pdf}
-%	\caption[Multiple iterations of LOWESS fit]{
-%		(a) First round fit at one $ x $ location (Same as Figure \ref{fig:ch5-algo-demo}c)
-%		(b) Additional weights imposed from the residuals of first fit
-%		(c) New weighting window
-%		(d) Improved fit from second and third iterations
-%	}
-%	\label{fig:ch5-compare-tri}
-%\end{figure}
+\FloatBarrier
 
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure4-compare-tri.pdf}
 	\caption[Comparison of LOWESS smoothing to triangle filter for synthetic data]{
-Results of smoothing the synthetic noisy time series $ \bm{\phi} $ (blue with dots) using the LOWESS algorithm (green) and a triangle filter (pink). Both the LOWESS algorithm and the triangle filter use $ 1/3 $ of the data (a filter width of 1 year) and have been shifted to attempt to remove the first day's atmospheric noise.
+Results of smoothing the synthetic noisy time series $ \bm{\phi} $ (blue with dots) using the LOWESS algorithm (green) and a triangle filter (pink). True deformation time series is shown in orange.
+ Both the LOWESS algorithm and the triangle filter use $ 1/3 $ of the data (a filter width of 1 year) and have been shifted to attempt to remove the first day's atmospheric noise.
+
 	}
 	\label{fig:ch5-compare-tri}
 \end{figure}
+
+After subtracting $ \phi_0 $ from all points, the results of the LOWESS estimate $ \bm{\hat{\phi}} $ are shown in Figure \ref{fig:ch5-compare-tri} (green line). The LOWESS algorithm smooths away the large spikes of turbulence noise in  $ \bm{\phi} $. We note that since the width of the weighting window $ \bm{w} $ was 1 year, the algorithm smooths over the peak of the deformation.
+For comparison, we have also smoothed the noisy time series with a 1-year wide triangle filter (Figure \ref{fig:ch5-compare-tri}, pink line). The triangle filter performs similarly if the noise is Gaussian; however, in this example with several large turbulence jumps, the triangle filter is pulled 5-10 mm away from the real deformation time series (Figure \ref{fig:ch5-compare-tri}, orange line).
 
 
 \section{InSAR Processing for Sentinel-1}
