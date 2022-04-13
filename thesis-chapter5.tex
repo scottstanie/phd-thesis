@@ -205,7 +205,7 @@ After subtracting $ \phi_0 $ from all points, the results of the LOWESS estimate
 For comparison, we have also smoothed the noisy time series with a 1.2 year wide triangle filter (Figure \ref{fig:ch5-compare-tri}a pink line). The triangle filter performs similarly to LOWESS when the noise is Gaussian; however, in this example with several large turbulence jumps, the triangle filter is pulled $>2$ cm away from the true deformation time series (Figure \ref{fig:ch5-compare-tri}d).
 
 
-\section{InSAR Processing for Sentinel-1}
+%\section{InSAR Processing for Sentinel-1}
 
 %TODO: do I show the 3-path example?
 
@@ -229,13 +229,38 @@ For comparison, we have also smoothed the noisy time series with a 1.2 year wide
 %
 %To mitigate final residual long wavelength tropospheric noise, we remove quadratic ramp from the phase of each date in the time series (where we mask out pixels with $>$2 cm of estimated deformation to avoid removing deformation) \cite{Morishita2020LicsbasOpenSource}.
 
-\section{Results}
+%\section{Results}
 
-\subsection{Permian Basin 7-year time series}
+\subsection{Sentinel-1 7-year time series over the Permian Basin}
+We processed an additional 3 years of Sentinel-1 data though December, 2021 for Paths 78 and 85 (Figure \ref{fig:paper1-study-area}) following the processing outlined in Section \ref{sec:ch3-insar-processing}. 
+We performed an unregularized SBAS inversion to get a noisy time series $ \bm{\phi} $ for each pixel. We temporally smoothed each pixel's time series using the LOWESS algorithm with a 2 year weighting window and 2 robust iterations.
+
+Additionally, we tested our algorithm on the ascending Path 151 immediately west of Path 85 to obtain full coverage of the Delaware Basin.
 
 \subsection{GPS comparison}
 
-\section{Discussion}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/gps_path78.pdf}
+	\caption[GPS comparison for Path 78 LOWESS smoothing]{
+		Comparison of Path 78 LOWESS smoothed algorithm with permanent GPS stations projected onto the radar LOS..
+	}
+	\label{fig:ch5-results-gpsi}
+\end{figure}
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/deformation_path78.pdf}
+	\caption[GPS comparison for Path 78 LOWESS smoothing]{
+STAND IN. Change to QGIS version.
+Cumulative LOS deformation for Path 78 from Nov. 2014 to Dec. 2021.
+	}
+	\label{fig:ch5-results-path78}
+\end{figure}
+
+%\section{Discussion}
 
 %1. Limitations of stacking to long time series
 %2. Robust Time Series Methods
