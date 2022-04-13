@@ -156,6 +156,21 @@ While \cite{Ferretti2000NonlinearSubsidenceRate} uses mean value of the common-r
 
 We first illustrate the LOWESS algorithm on a synthetic deformation time series
 
+
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure2-demo-data.pdf}
+	\caption[Synthetic data for LOWESS smoothing]{
+	(a) Artificial deformation containing uplift bowl for 300 x 300 image.
+	(b) Noise image
+	(c) Time series of true deformation $\bm{d}$ (orange) and $\bm{\phi} =\bm{d} + \bm{\alpha}$ (green). The pixels where the $\bm{d}$ and $\bm{\phi}$ time series are drawn from are marked with an x in panels (a) and (b), respectively. The date that panels (a) and (b) are plotting from is marked with the grey dashed vertical line. Note that the $ \bm{\phi} $ time series is offset due to SBAS assuming the first date is $ 0 $.
+	}
+	\label{fig:ch5-demo-data}
+\end{figure}
+
+
+
 Figure \ref{fig:ch5-algo-demo} illustrates two iterations of iterations of the LOWESS algorithm on a 3-year synthetic time series with a data point every 12 days (more explanation, show truth and noisy). 
 During the first iteration, each $ \hat{\phi}_i $ is calculated using a locally weighted regression, with the weight based solely on the proximity to $ t_i $ (Figure \ref{fig:ch5-algo-demo}a). The resulting fit tracks the slowly varying pattern of the data, but outlier points can strongly influence the fit (Figure \ref{fig:ch5-algo-demo}b). 
 %Using the residuals of the fit from Figure \ref{fig:ch5-algo-demo}b, 
@@ -165,7 +180,7 @@ The second iteration gets influenced less by the outlier points and has fewer sp
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure2-fits.pdf}
+	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure3-fits.pdf}
 	\caption[Demo of LOWESS fitting]{
 		(a) First iteration of local fit at $t_i$, weighted by window (orange) with $ \gamma=1/3 $ (1 year of data). Shading of dots indicates the weight factor, where gray indicates 0 weighting and gold indicates full weighting.
 		(b) First iteration of smoothed $ \hat{\phi}_i $ (orange line) for all $i$. 
