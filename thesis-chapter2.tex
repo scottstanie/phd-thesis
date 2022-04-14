@@ -12,10 +12,12 @@
 \section{Radar Imaging}
 \label{sec:ch2-radar}
 
-``Radar'' was originally an acronym for ``RAdio Detection And Ranging'' but it has since become ubiquitous enough enter the common vernacular. Unlike passive sensors that rely on illumination for outside sources, such as optical cameras, a radar is an active sensor that emits its own electromagnetic energy.  As such, radars are able to operate both day and night, and generally operate at microwave frequencies that are not blocked by clouds (between $\sim$ 1 GHz and 300 GHz, or wavelengths of 3 m to 1 mm).
+``Radar'' was originally an acronym for ``RAdio Detection And Ranging'', but it has since become ubiquitous enough enter the common vernacular. Unlike passive sensors like optical cameras that rely on illumination from outside sources, a radar is an active sensor that emits its own electromagnetic energy.  As such, radars are able to operate both day and night, and generally operate at microwave frequencies that are not blocked by clouds (between $\sim$ 1 GHz and 300 GHz, or wavelengths of 3 m to 1 mm).
 %The ability to operate both day and night is one of the main advantages of radar.
 
-The original radars developed during World War 2 were for tracking the position of targets. In these systems, the range to the target is calculated from the round trip travel time of an electromagnetic pulse that is reflected off the target, and the angle is determined by the antenna pointing direction. Later researchers developed imaging radar systems converted a series of radar pulses on a moving platform into a two-dimension image. Although these images originally had coarse resolution, research led by Carl Wiley at Goodyear in the 1950s resulted in the development of the radar imaging technique known as synthetic aperture radar (SAR) \citep{Wiley1954PulsedDopplerRadar, Wiley1985SyntheticApertureRadars}. The first demonstration of a spaceborne earth-observing SAR mission with interferometric capability was Seasat, launched by NASA in 1978 \citep{Born1979SeasatMissionOverview, Gabriel1989MappingSmallElevation}. Since that time, there have been dozens of mission launched by various space agencies, leading some to call the last decade ``the golden age of SAR'' \citep{Moreira2014GoldenAgeSpaceborne}.
+The original radars developed during World War 2 were for tracking the position of targets. In these systems, the range to the target is calculated from the round trip travel time of an electromagnetic pulse that is reflected off the target, and the angle is determined by the antenna pointing direction. Researchers later developed imaging radar systems that convert a series of radar pulses on a moving platform into a two-dimension image. Although these side-looking radar images originally had coarse resolution, fine resolution images were first demonstrated in the research led by Carl Wiley at Goodyear in the 1950s. The research later led to the imaging technique known as synthetic aperture radar (SAR) \citep{Wiley1954PulsedDopplerRadar, Wiley1985SyntheticApertureRadars}. 
+
+The first demonstration of a spaceborne earth-observing SAR mission with interferometric capability was Seasat, launched by NASA in 1978 \citep{Born1979SeasatMissionOverview, Gabriel1989MappingSmallElevation}. Since that time, there have been dozens of mission launched by various space agencies, leading some to call the last decade ``the golden age of SAR'' \citep{Moreira2014GoldenAgeSpaceborne}.
 
 %Synthetic aperture radar (SAR) is a powerful radar imaging technique which works day and night through all weather conditions.
 
@@ -39,11 +41,14 @@ The original radars developed during World War 2 were for tracking the position 
 \end{figure}
 
 
-Figure \ref{fig:ch2-sar-missions} shows a timeline of SAR missions that have been launched by governments and space agencies since 1990. The missions are grouped vertically into the three most commonly used frequency bands for SAR sensors in earth-observing missions: L-band (wavelengths of $\sim$24 cm), C-band ($\sim$6 cm cm) and X-band ($\sim$3 cm).
-During the 90s, the European Space Agency (ESA) launched two C-band SAR satellites: ERS-1 in 1991 and ERS-2 in 1995. The ERS-1 satellite provided the first practical demonstration of spaceborne InSAR's ability to capture surface deformation
-when \cite{Massonnet1993DisplacementFieldLanders} mapped the surface deformation pattern caused by the 1992 Landers, California earthquake. The first L-band SAR satellite, JERS-1, was launched by NASDA\footnote{Although JERS-1 is labeled as a JAXA mission in Figure \ref{fig:ch2-sar-missions}, it was run by NASDA at the time. In 2003, NASDA merged with two other Japanese space agencies, ISAS and NAL, to form JAXA.} in 1992, and the Canadian Space Agency (CSA) launched their own C-band mission, RADARSAT-1, in 1995. In 2000, NASA flew the 11-day Shuttle Radar Topography Mission (SRTM) to generate the first high-resolution near-global topographical map of Earth \citep{Farr2007ShuttleRadarTopography}.
+Figure \ref{fig:ch2-sar-missions} shows a timeline of SAR missions that have been launched by governments and space agencies since 1990. The missions are grouped vertically into the three most commonly used frequency bands for SAR sensors in earth-observing missions: L-band (wavelengths of $\sim$24 cm), C-band ($\sim$6 cm) and X-band ($\sim$3 cm).
+During the 90s, the European Space Agency (ESA) launched two C-band SAR satellites: ERS-1 in 1991 and ERS-2 in 1995. The ERS-1 satellite provided the first practical demonstration of spaceborne InSAR's ability to capture surface deformation when \cite{Massonnet1993DisplacementFieldLanders} mapped the surface deformation pattern caused by the 1992 Landers, California earthquake. The first L-band SAR satellite, JERS-1, was launched by NASDA\footnote{Although JERS-1 is labeled as a JAXA mission in Figure \ref{fig:ch2-sar-missions}, it was run by NASDA at the time. In 2003, NASDA merged with two other Japanese space agencies, ISAS and NAL, to form JAXA.} in 1992, and the Canadian Space Agency (CSA) launched their own C-band mission, RADARSAT-1, in 1995. In 2000, NASA flew the 11-day Shuttle Radar Topography Mission (SRTM) to generate the first high-resolution near-global topographical map of Earth \citep{Farr2007ShuttleRadarTopography}.
 
-The most influential recent SAR mission within the science community has been Sentinel-1 \citep{Torres2012GmesSentinel1}. First launched in 2014, the Sentinel-1 satellites acquire data using the TOPSAR imaging mode which images very wide swaths ($\sim$240 km in the interferometry mode) \cite{Zan2006TopsarTerrainObservation}, allowing them revisit any point on Earth every 12 days.  Additionally, Sentinel is the first mission of its kind to provide free public data. This advanced SAR and InSAR from being an opportunistic study tool to  a operational technique to monitor nearly anywhere on Earth  \cite{Rosen2021ShiftingGround}. Sentinel-1 is currently the only active mission providing open SAR data; however, the future NISAR ISRO SAR mission (NISAR) will also provide free L-band SAR data with global coverage \citep{Rosen2015NasaIsroSar}.
+The most influential recent SAR mission within the science community has been Sentinel-1 \citep{Torres2012GmesSentinel1}. First launched in 2014, the Sentinel-1 satellites acquire $\sim$240 km wide images
+% acquire data using the TOPSAR imaging mode which images very wide swaths ($\sim$240 km in the interferometry mode)
+\citep{Zan2006TopsarTerrainObservation}, allowing them revisit any point on Earth every 12 days.  Additionally, Sentinel is the first mission of its kind to provide regularly updating free public data. 
+%This has advanced SAR and InSAR from being an opportunistic study tool to an operational technique to monitor nearly anywhere on Earth  \citep{Rosen2021ShiftingGround}. 
+While Sentinel-1 is currently the only active SAR mission with an open data policy, the future NISAR ISRO SAR mission (NISAR) will also provide its L-band SAR data free to the public \citep{Rosen2015NasaIsroSar}.
 
 
 \begin{figure}
@@ -57,8 +62,7 @@ The most influential recent SAR mission within the science community has been Se
 \end{figure}
 
 
-
-The first small SAR SmallSats (satellites weighing under 180 kg) have been launched by private companies over the past four years (Figure \ref{fig:ch2-sar-private-const}). Finland's ICEYE had its first succesful launch in January 2018, while Capella Space had their first launch 11 months later. Seven other companies have since launched at least 1 SAR satellite, and in the next five years, there are plans to launch over 500 additional SAR SmallSats \citep{Kulu2021SatelliteConstellations2021}. While many large SAR constellations expect sub-hourly revisit time for any given point on earth \citep{Stringham2019CapellaXband}, only the large government SAR missions, such as Sentinel-1, ALOS, and NISAR, explicitly plan for consistent global coverage in their mission objectives. However, the possibility of daily or hourly InSAR revisit times opens many new applications previously not possible with the 6-12 day revisit times of large SAR missions \citep{YagueMartinez2021TowardsFrequentFlood, Taylor2021RemoteSensingMountain, Kitajima2021PotentialSarSmall}.
+In the past four years, the first small SAR SmallSats (satellites weighing under 180 kg) have been launched by a series of private companies (Figure \ref{fig:ch2-sar-private-const}). Finland's ICEYE had its first succesful launch in January 2018, while Capella Space had their first launch 11 months later. Seven other companies have since launched at least 1 SAR satellite, and in the next five years, there are plans to launch over 500 additional SAR SmallSats \citep{Kulu2021SatelliteConstellations2021}. While many large SAR constellations expect sub-hourly revisit time for any given point on earth \citep{Stringham2019CapellaXband}, only the large government SAR missions, such as Sentinel-1, ALOS, and NISAR, explicitly plan for consistent global coverage in their mission objectives. However, the possibility of daily or hourly InSAR revisit times opens many new applications previously not possible with the 6-12 day revisit times of large SAR missions \citep{YagueMartinez2021TowardsFrequentFlood, Taylor2021RemoteSensingMountain, Kitajima2021PotentialSarSmall}.
 
 
 
@@ -67,7 +71,7 @@ The first small SAR SmallSats (satellites weighing under 180 kg) have been launc
 \label{sec:ch2-sar}
 
 
-Synthetic aperture radar is an imaging technique that uses a radar mounted on a moving platform. A two-dimensional image is created by coherently processing the returned energy from transmitted pulses. While the images are often displayed in grayscale and may appear similar to optical images, they represent the electrical and geometrical properties of the objects in the scene \cite{Simons2007InterferometricSyntheticAperture}.
+Synthetic aperture radar is an imaging technique that uses a radar mounted on a moving platform. A two-dimensional image is created by coherently processing the returned energy from transmitted pulses. While the images are often displayed in grayscale and may appear similar to optical images, they represent the electrical and geometrical properties of the objects in the scene \citep{Simons2007InterferometricSyntheticAperture}.
 %To create a radar image, the energy scattered by points on the ground must be collected and focused in two dimensions.  The image represents the electrical and geometrical properties of the scene \cite{Simons2007InterferometricSyntheticAperture} 
 
 
@@ -93,9 +97,9 @@ Each pulse illuminates a portion of the ground known as the radar footprint.
 % Resolution: shorter pulse better resolution, but also lowers SNR. To get around tradeoff, send long with LFM chip to high snr and fine resolution in range direction
 
 
-The signal-to-noise ratio (SNR) of the system depends on the total energy transmitted.  SNR can be increased by either sending a higher peak power (which is often limited by design constraints) or sending pulses with longer duration $\tau$. This choice creates a dilemma: in the absence further processing, sending pulses with a larger $\tau$ results in coarser range resolution $\delta_r$, where resolution is the ability to distinguish points illuminated by the same radar pulse. The illuminated size in range is $\delta_r = \frac{c \tau}{2}$, where $c \approx 3 \times 10^8$ is the speed of light. Thus, a pulse with $\tau = 30 $ microseconds would have a resolution of approximately 4.5 km. 
+The signal-to-noise ratio (SNR) of the system depends on the total energy transmitted.  SNR can be increased by either sending a higher peak power (which is often limited by design constraints) or sending pulses with longer duration $\tau$. This choice creates a dilemma: in the absence further processing, sending pulses with a larger $\tau$ results in coarser range resolution $\delta_r$, where resolution is the ability to distinguish points illuminated by the same radar pulse. The illuminated size in range is $\delta_r = \frac{c \tau}{2}$, where $c \approx 3 \times 10^8$ m/s is the speed of light. Thus, a pulse with $\tau = 30 $ microseconds would have a resolution of approximately 4.5 km. 
 
-For this reason, SAR systems usually transmit pulsed waveforms called \emph{chirps} whose frequency $f$ increases or decreases over time. For example, in a linear frequency moduled (LFM) chirp, the frequency can be written as $ f(t) = k t$, where $k$ is the chirp slope (in Hz / s) and $-\tau / 2 < t < \tau/2$.
+For this reason, SAR systems usually transmit pulsed waveforms called \emph{chirps} whose frequency $f$ increases or decreases over time. For example, in a linear frequency modulated (LFM) chirp, the frequency can be written as $ f(t) = k t$ for $-\tau / 2 < t < \tau/2$, where $k$ is the chirp slope (in Hz / s).
 These special waveforms allow the receiver to correlate the returned echoes with a \emph{matched filter}, or a replica of the transmitted chirp. The improved range resolution depends on the frequency bandwidth of the chirp: $BW = f_{max} - f_{min}$.
 For a given $BW$, the range resolution can be written as $\delta_r = \frac{c}{2 BW}$. 
 %which means the resolution improves by a factor of $\tau \cdot BW$ (known as the \emph{time-bandwidth product}).
@@ -104,7 +108,7 @@ For a given $BW$, the range resolution can be written as $\delta_r = \frac{c}{2 
 Figure \ref{fig:ch2-range-compress} demonstrates the effect of using a chirp waveform on range resolution. An example chirp with parameters matching the ERS-1 satellite (Figure \ref{fig:ch2-range-compress}a)
 %The real part of an example chirp with parameters matching the ERS-1 satellite has an oscillation frequency which increases linearly over time (Figure \ref{fig:ch2-range-compress}a). 
 has a duration of $\tau \approx 37.12 \mu s$ and chirp slope $k = 4 \times 10^{11} Hz / s$, resulting in frequency bandwidth $BW = k \tau$ $\approx$15.5 MHz (Figure \ref{fig:ch2-range-compress}b). By convolving the transmitted chirp with its complex conjugate, we get the impulse response of a point scatterer (Figure \ref{fig:ch2-range-compress}c). If a chirp with the same time duration had a smaller slope $k$ (Figure \ref{fig:ch2-range-compress}d), the bandwidth would shrink by the same proportion (Figure \ref{fig:ch2-range-compress}e), and the impulse response would also have worse resolution (Figure \ref{fig:ch2-range-compress}f).
-Thus, we see that using chirped waveforms eliminates the original problem, as a pulse with larger bandwidth actually has a better resolution than a shorter pulse.
+Thus, we see that using chirped waveforms eliminates the original problem, as a longer pulse with larger bandwidth actually has a better resolution than a shorter pulse.
 
 
 \begin{figure}
@@ -122,7 +126,9 @@ Thus, we see that using chirped waveforms eliminates the original problem, as a 
 \end{figure}
 
 
-In the azimuth direction, the size of the radar footprint determines which ground points can be distinguished from the echo of one pulse;  this is known as the \emph{real aperture radar} (RAR) resolution. The footprint size can be written as $r \lambda / L$, which comes from the antenna's angular beam width $\lambda / L$ and the range $r$ to the target. The earliest imaging radar platforms were limited to this resolution in azimuth. For an airborne platform with a 1 meter antenna imaging at C-band, this would be a $\sim$600 meter resolution. Note that for some applications, such as military detection applications or wide-area ocean mapping \cite{Simons2007InterferometricSyntheticAperture}, this azimuth resolution is sufficient; however, the RAR resolution for spaceborne radars are on the order of 10s of kilometers, which is far too coarse for most applications.
+In the azimuth direction, the size of the radar footprint determines which ground points can be distinguished from the echo of one pulse;  this is known as the \emph{real aperture radar} (RAR) resolution. The footprint size can be written as $r \lambda / L$, where $ r $ is the target range, $ L $ is the along-track antenna length, and $ \lambda $ is the radar wavelength. 
+%which comes from the antenna's angular beam width $\lambda / L$ and the range $r$ to the target. 
+The earliest imaging radar platforms were limited to this resolution in azimuth. For an airborne platform with a 1 meter antenna imaging at C-band, this would be a $\sim$600 meter resolution. Note that for some applications, such as military detection applications or wide-area ocean mapping, this azimuth resolution is sufficient \cite{Simons2007InterferometricSyntheticAperture}; however, the RAR resolution for spaceborne radars is on the order of 10s of kilometers, which is far too coarse for most applications.
 
 
 %The advantages long wavelengths offer in terms of penetration come with compensating drawbacks. The resolution a sensor depends on the wavelength and on the size of its aperture—the mirror or lens in the case of a camera or a telescope, the antenna in a radar. If you lengthen the wavelength, you increase the size of the aperture you need in order to achieve a given resolution. To produce detailed images with radar requires a very large aperture indeed—far larger than anything a single spacecraft can offer.
@@ -142,13 +148,13 @@ In the azimuth direction, the size of the radar footprint determines which groun
 \end{figure}
 
 
-The resolution in azimuth is greatly improved by creating a \emph{synthetic aperture}, which is a technique that processes the reflected echoes coherently (i.e. using both magnitude and phase) to focus the image (Figure \ref{fig:ch2-synth-aper}).
-Coherent processing is possible by carefully tracking each target's phase history, $ \phi(t) $, which is related to the range to the target $r(t)$ 
+The resolution in azimuth is greatly improved by creating a \emph{synthetic aperture}, which is a technique that focuses the image using a series of reflected echoes (Figure \ref{fig:ch2-synth-aper}).
+Coherent processing (i.e. using both magnitude and phase) is possible by carefully tracking each target's phase history, $ \phi(t) $, which is related to the range to the target $r(t)$:
 \begin{equation}
-\phi(t) = -\frac{4 \pi}{\lambda} r(t)  \label{eq:ch2-phase-range}
+\phi(t) = -\frac{4 \pi}{\lambda} r(t)  \label{eq:ch2-phase-range} \, .
 \end{equation}
-There are multiple image formation algorithms which create this synthetic aperture and use the phase history. One of the first developed and most widely today used is the range-Doppler algorithm (RDA) \citep{Wu1976DigitalSystemProduce, Cumming1979DigitalProcessingSeasat}. 
-RDA uses the apparent shift in Doppler frequency due to the platform motion to create a matched filter in azimuth, similar to the matched filter used for range compression \cite{Cumming2004DigitalProcessingSynthetic}.
+There are multiple signal processing algorithms which create use the target phase history to create a synthetic aperture. One of the first developed and most widely today used is the range-Doppler algorithm (RDA) \citep{Wu1976DigitalSystemProduce, Cumming1979DigitalProcessingSeasat}. 
+RDA uses the apparent shift in Doppler frequency due to the platform motion to create a matched filter in azimuth, similar to the matched filter used for range compression \citep{Cumming2004DigitalProcessingSynthetic}.
 %RDA is a frequency-domain algorithm, since it converts the phase history 
 %Which converts the range-compressed data into the frequency domain. 
 An alternative to RDA is time-domain backprojection \citep{Duersch2013BackprojectionSyntheticAperture}, which provides a more exact phase compensation at the cost of being more computationally expensive.
@@ -158,7 +164,7 @@ The complex-valued radar image $S$ (also known as a \emph{single-look complex} i
 \begin{equation}
 	S(x, y) = \sum_{k} s_k \left(t_k \right) e^{j \frac{4 \pi}{\lambda} r_k(x, y)}
 \end{equation}
-where $j = \sqrt{-1}$, $r_k(x, y)$ is the range distance from the radar sensor to the point $ (x, y) $ at the time of the $k$th pulse, $s_k(t_k)$ is the value of the $k$th range-compressed pulse at time $t_k = r_k(x, y) / c$, and $c$ is the speed of light \citep{Zebker2018InsarMissionLevel}.
+where $j = \sqrt{-1}$, $r_k(x, y)$ is the range distance from the radar sensor to the point $ (x, y) $ at the time of the $k$th pulse, $s_k(t_k)$ is the complex value of the $k$th range-compressed pulse at time $t_k = r_k(x, y) / c$, and $c$ is the speed of light \citep{Zebker2018InsarMissionLevel}.
 %While computationally expansive, backprojection has become more common recently due to advances in computing hardware and 
 If the radar imaging geometry is known precisely so that $r_k$ can be computed for all pulses, the coherent summation can be performed for each pixel to focus the SAR image.
 
@@ -170,7 +176,7 @@ For all image formation methods, the final achievable azimuth resolution $\delta
 \end{equation}
 where $L$ is the physical antenna length in the azimuth direction.
 %Note the this final resolution is independent of wavelength, range or platform speed.
-Normal spaceborne satellites have antennas on the order of 5-10 meters, resulting in a $\delta_{az} $ between 2.5-5 meters.
+Since typical spaceborne satellites have antenna lengths on the order of 5-10 meters, the resulting $\delta_{az} $ is around 2.5-5 meters.
 The intuition behind this surprising result is that, unlike with RAR, a smaller physical antenna size $L$ leads to a wider angular beam width $ \lambda / L$. This means that a given target is illuminated for a longer time, leading to a greater number of pulses to coherently process. Thus, the azimuth resolution will actually improve with a smaller antenna size.
 
 
@@ -178,15 +184,15 @@ The intuition behind this surprising result is that, unlike with RAR, a smaller 
 \section{SAR Interferometry}
 
 Interferometric synthetic aperture radar (InSAR) refers to a broad class of applications that exploit the phase difference between two SAR images to obtain extra information beyond the 2D locations of points \citep{Bamler1998SyntheticApertureRadar}. The most common applications are generating topography maps \citep{Graham1974SyntheticInterferometerRadar, Zebker1986TopographicMappingInterferometric} and mapping surface deformation \citep{Goldstein1987InterferometricRadarMeasurement, Gabriel1989MappingSmallElevation, Li1990StudiesMultibaselineSpaceborne, Massonnet1993DisplacementFieldLanders, Rosen2000SyntheticApertureRadar}. 
-The InSAR measurement is made after precisely coregistering and resampling two SLC images $S_1$ and $S_2$ to the same coordinates. The phase measurement $I_{1,2}$ is formed by multiplying the first SLC $S_1$ by the complex conjugate of the second $S_2$: 
+The InSAR measurement is made after precisely coregistering and resampling two SLC images $S_1$ and $S_2$ to the same coordinates. The phase measurement $I_{1,2}$ is formed by multiplying each pixel of the first SLC $S_1$ by the complex conjugate of the second $S_2$:
 \begin{equation}
 %	I_{1,2} = S_1 S_2^{*} = A_1 A_2 e^{j \left(\phi_1 - \phi_2 \right)}  \label{eq:insar-conj-mult}
 I_{1,2} = S_1 S_2^{*} = A_1 A_2 e^{j \Delta \phi_{1,2}}  \label{eq:ch2-conj-mult}
 \end{equation}
 where $S_k = A_k e^{j \phi_k}$, $A_k$ is the amplitude of the $k$th image, and the phase $\phi_k = -\frac{4 \pi}{\lambda} r_k$. The image $I$ is called an \emph{interferogram},  and the quantity $\Delta \phi_{1,2} \triangleq  \phi_1 - \phi_2$ is the interferometric phase.
 
-%TODO: 
-TODO: summarize SRTM, and TANDEM X missions.
+
+%TODO: summarize SRTM, and TANDEM X missions.
 %
 %maybe his topography stuff....
 %- summarize SRTM, and TANDEM X mission
@@ -220,7 +226,7 @@ In repeat-pass InSAR (sometimes called \emph{differential} InSAR, or DInSAR or D
 \end{equation} 
 %In the repeat pass setup, a small spatial baseline between the satellite at the two times is desired, while the topographic mapping application is more sensitive when the baseline is larger.
 Since the measurement uses the phase of the propagated radar waves, it is only known modulo $2\pi$; the process of obtaining the full continuous phase is known as \emph{phase unwrapping}
-\citep{Goldstein1988SatelliteRadarInterferometry, Chen2001TwoDimensionalPhase}. Note that even after phase unwrapping, the absolute number of $2\pi$ cycles from the radar to the ground is not known; thus, an unwrapped interferogram represents the surface deformation \emph{relative} to some point which is assumed to be zero.
+\citep{Goldstein1988SatelliteRadarInterferometry, Chen2001TwoDimensionalPhase}. Note that even after phase unwrapping, the absolute number of $2\pi$ cycles from the radar to the ground is not known; thus, an unwrapped interferogram represents the surface deformation \emph{relative} to some point that is assumed to be zero.
 Additionally, the description of the interferometric phase in Equation \eqref{eq:ch2-insar-phase-0noise} assumes no noise; in reality there are numerous noise sources which affect either the phase of an individual SAR acquisitions or the phase difference between pairs of images.
 
 
@@ -243,20 +249,24 @@ Additionally, the description of the interferometric phase in Equation \eqref{eq
 %thermal noise
 %
 After removing phase contributions from topography and satellite geometry, the phase at each pixel in an interferogram formed from SLCs $S_1$ and $S_2$ can be written as
-%\citep{Zebker1992DecorrelationInterferometricRadar, Zebker1994AccuracyTopographicMaps, Zebker1997AtmosphericEffectsInterferometric, Hooper2006PersistentScatterRadar, Agram2010PersistentScattererInterferometry}
 \begin{equation}
-	\Delta \phi_{1, 2} = \frac{4 \pi}{\lambda} \left( \Delta d_{1,2} + \alpha_2 - \alpha_1 \right) + \Delta \phi_{iono} + \Delta \phi_{orb} + \Delta \phi_{dem} + \Delta \phi_{decor} + \Delta \phi_{unwrap} + \Delta \phi_{scat} + \Delta \phi_{n}  ,
+%\begin{multline}
+%	\Delta \phi_{1, 2} = \frac{4 \pi}{\lambda} \left( \Delta d_{1,2} + \alpha_2 - \alpha_1 \right) + \Delta \phi_{iono} + \Delta \phi_{orb} + \Delta \phi_{dem} + \Delta \phi_{decor} + \Delta \phi_{unwrap} + \Delta \phi_{scat} + \Delta \phi_{n}  ,
+	\Delta \phi_{1, 2} = \frac{4 \pi}{\lambda} \left( \Delta d_{1,2} + \Delta \alpha_{1,2} \right) + \Delta \phi_{iono} + \Delta \phi_{orb} + \Delta \phi_{dem} + \Delta \phi_{decor} + \Delta \phi_{unwrap} + \Delta \phi_{scat} + \Delta \phi_{n}  ,
 	\label{eq:ch2-insar-noise-terms}
+%	\end{multline}
 \end{equation}
 where $ \lambda $ is the radar wavelength and $ \Delta d_{1,2} $ is the surface deformation between $S_1$ and $S_2$ along the radar LOS direction. 
 
-The $\alpha_i$ terms represent the excess delay introduced by the neutral atmosphere on the $i$th day.
-Tropospheric noise, $\Delta \phi_{tropo} \triangleq \alpha_2 - \alpha_1 $, arises from differences in pressure, temperature, or water vapor content between the two radar acquisitions \citep{Zebker1997AtmosphericEffectsInterferometric}.
+The term $\Delta \alpha_{1,2} \triangleq \alpha_2 - \alpha_1 $ represents tropospheric noise arising from differences in excess delay induced by the neutral atmosphere. %$ on the $i$th day.
+Tropospheric noise
+%, $\Delta \phi_{tropo} \triangleq \alpha_2 - \alpha_1 $, 
+is caused by atmospheric pressure, temperature, or water vapor changes between the two radar acquisitions \citep{Zebker1997AtmosphericEffectsInterferometric}.
 %, which lead to changes in the index of refraction. 
-Since tropospheric noise is the dominant noise for the West Texas study of Chapters \ref{CHAP:4-GRL}-\ref{CHAP:6-blob}, the noise is further detailed in Section \ref{sec:ch2-noise-tropo}.
+Since tropospheric noise is the dominant noise for the West Texas study of Chapters \ref{CHAP:4-GRL}-\ref{CHAP:6-blob}, the noise is further detailed in the following section (Section \ref{sec:ch2-noise-tropo}).
 
 
-Phase errors can also arise from variations in the index of refraction from due to ionospheric heterogeneities \citep{Gray2000InfluenceIonosphericElectron}. Since the ionosphere is a dispersive medium, the phase effects  $\Delta \phi_{iono}$ are dependent on radar frequency, with the effect at C-band being approximately 1/16 the effect at L-band \citep{Liang2019IonosphericCorrectionInsar}. Additionally, the dependence on frequency enables mitigation techniques which split the radar spectrum into sub-bands to calculate phase corrections \cite{Rosen2010MeasurementMitigationIonosphere}.
+Phase errors can also arise from variations in the index of refraction from due to ionospheric heterogeneities, $\Delta \phi_{iono}$  \citep{Gray2000InfluenceIonosphericElectron}. Since the ionosphere is a dispersive medium, the phase effects are dependent on radar frequency, with lower frequencies seeing more distortion. The effect at C-band is approximately 1/16 the effect at L-band \citep{Liang2019IonosphericCorrectionInsar}. Additionally, the dependence on frequency enables mitigation techniques which split the radar spectrum into sub-bands to calculate phase corrections \citep{Rosen2010MeasurementMitigationIonosphere}.
 %with the index of refraction varying as $ \propto \frac{1}{f^2} $ \citep{Meyer2006PotentialLowFrequency}. 
 %This means that 
 
@@ -264,7 +274,7 @@ Phase errors can also arise from variations in the index of refraction from due 
 The terms $ \Delta \phi_{orb} $ and $ \Delta \phi_{dem} $ represent systematic errors resulting from imprecise knowledge of the platform's orbital position or topographic height. Orbital errors usually appear as a planar phase ramp in stripmap acquisitions. Although these were common to see in ERS-1 or ENVISAT data, they rarely appear in Sentinel-1 data due to it's high precision orbit determination \citep{Fattahi2014InsarUncertaintyDue}. Errors in the DEM used to remove the topographic phase result in a spatial baseline-dependent phase error \citep{Fattahi2013DemErrorCorrection}. These errors often small in Sentinel-1 data due to the tight control of the repeat orbit tube, but can be significant in mountains or regions with sharp topography changes.
 
 Decorrelation errors, $ \Delta \phi_{decor} $, arise from a loss of coherence of the phase between $S_1$ and $S_2$ due to changes in the surface dielectric properties or scattering characteristics \citep{Zebker1992DecorrelationInterferometricRadar, Michaelides2019AlgorithmEstimatingCorrecting, Ansari2018EfficientHighPrecision}. 
-The correlation can be estimated from the complex coherence $\gamma $ of the interferogram \cite{Bamler1998SyntheticApertureRadar}
+The correlation can be estimated from the complex coherence $\gamma $ of the interferogram \citep{Bamler1998SyntheticApertureRadar}
 \begin{equation}
 	\gamma = \frac{\left\langle S_1 S_2^{*} \right\rangle }{\sqrt{\left\langle S_1 S_1^{*} \right\rangle^2 \left\langle S_2 S_2^{*} \right\rangle^2}}
 \end{equation}
@@ -277,13 +287,13 @@ When the correlation is very low, the phase unwrapping processing may fail and p
 
 
 
-The term $ \Delta \phi_{scat} $ represents phase introduced by changes to the surface and subsurface scattering properties. This term is separated from the random decorrelation noise since it has recently been shown that systematic, non-random effects can occur from changes to subsurface dielectric properties (e.g. from changes to soil moisture) \citep{Zan2014SarInterferometricModel, Zan2015PhaseInconsistenciesMultiple, Zwieback2015AssessmentSoilMoisture, Michaelides2020QuantifyingPermafrostProcesses}.
+The term $ \Delta \phi_{scat} $ represents phase introduced by changes to the surface and subsurface scattering properties. This term is separated from the random decorrelation noise since it has been shown recently that systematic, non-random effects can occur from changes to subsurface dielectric properties (e.g. from changes to soil moisture) \citep{Zan2014SarInterferometricModel, Zan2015PhaseInconsistenciesMultiple, Zwieback2015AssessmentSoilMoisture, Michaelides2020QuantifyingPermafrostProcesses}.
 Although this term is noise for the application of deformation monitoring
 \citep{Michaelides2019AlgorithmEstimatingCorrecting, Ansari2021StudySystematicBias}, other recent efforts have attempted to use this term to invert for changes to soil moisture \citep{Zwieback2017SoilMoistureEstimation, Zan2018VegetationSoilMoisture}. 
 Finally, $ \Delta \phi_n $ represents other residual noise terms, including thermal noise from the radar antenna system, that are typically an order of magnitude smaller than the other errors listed.
 
 
-Although these effects have been presented as noise sources for the application of deformation monitoring, they can be the signal of interest in other InSAR applications. For example, the presence of decorrelation indicates a change to the scattering surface properties and can be used for coherent change detection \citep{Simons2007InterferometricSyntheticAperture, Jung2016CoherentChangeDetection}, and the phase variations from the troposphere have been used for atmospheric mapping and meteorological purposes \citep{Hanssen1999HighResolutionWater, Liu2012SatelliteRadarInterferometry}.
+Although these effects have been presented as noise sources for the application of deformation monitoring, each one can be a signal of interest in other InSAR applications. For example, the presence of decorrelation indicates a change to the scattering surface properties and can be used for coherent change detection \citep{Simons2007InterferometricSyntheticAperture, Jung2016CoherentChangeDetection}, and the phase variations from the troposphere have been used for atmospheric mapping and meteorological purposes \citep{Hanssen1999HighResolutionWater, Liu2012SatelliteRadarInterferometry}.
 
 % include orbital errors, phase decorrelation, unwrapping errors, DEM inaccuracies, ionospheric and tropospheric artifacts,
 % and other residual noise terms that are typically an order of magnitude smaller than the error terms listed here.
@@ -299,10 +309,10 @@ Although these effects have been presented as noise sources for the application 
 %\end{table}
 
 
-\subsection{Visual Example of Common Noise Sources}
+\subsection{Visualizing Common Noise Sources}
 \label{sec:ch2-noise-example}
 
-In high signal to noise ratio (SNR) interferograms (e.g. for large magnitude earthquakes such as \cite{Massonnet1993DisplacementFieldLanders}), one can estimate the deformation magnitude by simply ``counting the fringes'' (i.e. visually estimating the number of $ 2 \pi $ cycles) and multiplying by $\lambda/2$. However, it is more common for an interferogram to contain many visual features corresponding to noise terms in Equation \eqref{eq:ch2-insar-noise-terms}. These noise sources can often be visually identified by InSAR experts, but they can add considerable difficulty for newer users without background knowledge of the study area.
+In high signal-to-noise ratio (SNR) interferograms (e.g. large magnitude earthquakes such as \cite{Massonnet1993DisplacementFieldLanders}), one can estimate the deformation magnitude by simply ``counting the fringes'', where the number of $ 2 \pi $ cycles is estimated and converted to centimeters through the factor $\lambda/2$. However, it is more common for an interferogram to contain many visual features corresponding to noise terms in Equation \eqref{eq:ch2-insar-noise-terms}. These noise sources can often be visually identified by InSAR experts, but they can add considerable difficulty for newer users without background knowledge of the study area.
 
 \begin{figure}[!htbp]
 	\centering
@@ -322,19 +332,18 @@ In high signal to noise ratio (SNR) interferograms (e.g. for large magnitude ear
 \end{figure}
 
 To illustrate several common noise sources, Figure \ref{fig:ch2-hawaii-example} shows a Sentinel-1 interferogram of the Big Island of Hawaii from April 20th, 2018 to May 2nd, 2018. 
-This time period spans the beginning of the 2018 Kilauea eruption during which a large subsidence event occurred from subsurface magma flow. However, the diversity in weather conditions, topography, and vegetation create many noise sources in most interferograms of Hawaii.
+This time period spans the beginning of the 2018 Kilauea eruption, during which a large subsidence event occurred from subsurface magma flow. However, the diversity in weather conditions, topography, and vegetation lead to many noise artifacts in most interferograms of Hawaii.
 For example, the coastal region in Figure \ref{fig:ch2-hawaii-example}b contains dense fringes which could be mistaken as deformation, but in fact is due to turbulent tropospheric noise.
 % (further explained in Section \ref{sec:ch2-noise-tropo-mitigate}).
-The large elevation changes on Mauna Loa and Mauna Kea in the center of the island lead to stratified tropospheric noise,
-%(see Section \ref{sec:ch2-noise-tropo-mitigate}) 
-which creates a concentric ring pattern that is the same shape as a subsidence bowl (Figure \ref{fig:ch2-hawaii-example}c).
+The large elevation changes on Mauna Loa and Mauna Kea in the center of the island lead to stratified tropospheric noise, 
+which creates a concentric ring pattern (Figure \ref{fig:ch2-hawaii-example}c) that is the same shape as a subsidence bowl (see Section \ref{sec:ch2-noise-tropo-mitigate}).
 An example of decorrelation noise occurs on the windward side of the island (Figure \ref{fig:ch2-hawaii-example}d), which contains many dense tropical rain forests (Figure \ref{fig:ch2-hawaii-example}e). 
 
 Finally, a real deformation feature of $ \sim 30-40 $ cm occurred near the Pu'u '\=O'\=o volcanic cone (Figure \ref{fig:ch2-hawaii-example}f).
-In this case, the ground subsided down and to the southeast as magma flowed away from Pu'u '\=O'\=o (Figure \ref{fig:ch2-hawaii-example}g).
-One can estimate the magnitude of deformation by counting the number of cycles in the interferogram in the zoomed-in region of Figure \ref{fig:ch2-hawaii-example}f and multiplying by 2.7 cm.
-However, even this analysis can be difficult due to the high spatial frequency of the fringes.
-For the Hawaiian case here, the deformation magnitude can be verified using nearby permanent GPS stations.
+In this case, the ground sank down and to the southeast as magma flowed away from Pu'u '\=O'\=o (Figure \ref{fig:ch2-hawaii-example}g).
+One can estimate the magnitude of subsidence by counting the number of cycles in the zoomed-in region of the interferogram (Figure \ref{fig:ch2-hawaii-example}f) and multiplying by $ \lambda/2 = 2.8$ cm.
+However, even this analysis can be difficult due to the high spatial frequency of the fringes, which can cause \emph{aliasing} of large deformation events.
+For the Hawaiian case here, the magnitude can be verified using nearby permanent GPS stations.
 
 %These areas show heavy decorrelation at the Sentinel-1 C-band wavelength of 5.5 cm (Figure \ref{fig:ch2-hawaii-example}d). 
 
@@ -352,25 +361,26 @@ For the Hawaiian case here, the deformation magnitude can be verified using near
 \section{Tropospheric Noise}
 \label{sec:ch2-noise-tropo}
 
+\subsection{Background}
 
 % SEASONAL plots...??
 
-The conversion between phase two-way distance from ground to satellite in Equation \eqref{eq:ch2-phase-range} assumes that the electromagnetic waves travel though a homogeneous medium with constant velocity. In reality, they travel through a spatially inhomogenous atmosphere with variable index of refraction $n$, where $n$ relates to the phase velocity $v$ and speed of light in a vacuum $c$ by $n = c/v$ \citep{Zebker1997AtmosphericEffectsInterferometric, Hanssen2001RadarInterferometryData, Liu2012SatelliteRadarInterferometry}.  Since $n$ is always real and slightly greater than $1$ for Earth's neutral atmosphere, it is more common to describe fluctuations using the \emph{refractivity} $N = 10^{6}(n - 1)$, which is the additional refractive index beyond unity.
+The conversion between phase and two-way distance from ground to satellite in Equation \eqref{eq:ch2-phase-range} assumes that the electromagnetic waves travel though a homogeneous medium with constant velocity. In reality, they travel through a spatially inhomogenous atmosphere with variable index of refraction $n$, where $n$ relates to the phase velocity $v$ and speed of light in a vacuum $c$ by $n = c/v$ \citep{Zebker1997AtmosphericEffectsInterferometric, Hanssen2001RadarInterferometryData, Liu2012SatelliteRadarInterferometry}.  Since $n$ is always real and slightly greater than $1$ for Earth's neutral atmosphere, it is more common to describe fluctuations using the \emph{refractivity} $N = 10^{6}(n - 1)$, which is the additional refractive index beyond unity.
 Writing $N$ as $N(x,y,z)$ to emphasize the 3D variation, we can express the excess delay $D$ caused by the propagation through the atmosphere as
 \begin{equation}
 	D = 10^{-6} \int_{s} N(x, y, z) ds
 \end{equation}
-where $ds$ is the incremental slant length, and the integration runs along the radar line of sight. The excess delay adds an additional phase of $\phi = - \frac{4 \pi}{\lambda} D$ to a radar image acquired with the given atmospheric conditions.
+where $ds$ is the incremental slant length, and the integration runs along the radar line of sight. The excess delay adds a phase of $\phi = - \frac{4 \pi}{\lambda} D$ to a radar image acquired with the given atmospheric conditions.
 %, and each interferogram contains a phase difference of two SLCs (i.e. the phase contains the difference from two atmospheric conditions).
 
-The refractivity of the troposphere is commonly decomposed into a hydrostatic, wet, and liquid component \citep{Hanssen2001RadarInterferometryData, Bekaert2015StatisticalComparisonInsar}:
+The refractivity of the troposphere is commonly decomposed into hydrostatic, wet, and liquid components \citep{Hanssen2001RadarInterferometryData, Bekaert2015StatisticalComparisonInsar}:
 \begin{equation}
 	N = \left(k_1 \frac{P}{T} \right)_{\text{hyd}} + \left( k_2^{'} \frac{e}{T} + k_3  \frac{e}{T^2}   \right)_{\text{wet}} + \left(k_4 W \right)_{\text{liquid}}
 \end{equation}
 where $ P $ is the total atmospheric pressure in hPa, $ T $ is the atmospheric temperature in Kelvin,  $ e $ is the partial pressure of water vapor in hPa, and W is the liquid water content of clouds in g/m$^3 $ 
 The coefficients $ k_1, k_2^{'}, k_3 $ and $ k_4 $ are constants estimated from laboratory measurements, commonly taken to be $ k_1 = 77.6$ , $ k_2^{'} = 23.3 $, $ k_3= 3.75 \cdot 10^5 $, and $ k_4 = 1.45 $ from \cite{Smith1953ConstantsEquationAtmospheric} and \cite{Solheim1999PropagationDelaysInduced}.
 %Although absolute delays decrease at lower altitudes as the signal travels through more of the atmosphere, an interferogram always measures a \emph{difference} of delays from two SAR acquisitions, and hence difference of refractivity. This means that although the hydrostatic delay is of the order of a few meters and the wet delay is $ \sim10$s of centimeters, phase artifacts in interferograms are more commonly caused by the spatial variations of the wet component of refractivity \citep{Zebker1997AtmosphericEffectsInterferometric, Hanssen2001RadarInterferometryData}. 
-The hydrostatic delay is on the order of a few meters; however, it varies slowly laterally and it is often assumed to be vertically stratified (i.e. varying only with elevation) for small study areas (roughly $50 \times 50$ km or less) \citep{Doin2009CorrectionsStratifiedTropospheric}.
+The hydrostatic delay is on the order of a few meters; however, it varies slowly laterally and it is often assumed to be vertically stratified (i.e. varying only with elevation) for study areas roughly $50 \times 50$ km or less \citep{Doin2009CorrectionsStratifiedTropospheric}.
 The wet component, caused by variations in water vapor content, is smaller in absolute terms ($ \sim10$s of centimeters) but has significant lateral variations at short length scales. The delay from the liquid component is often negligible (1-2 millimeters or less) but can be several centimeters in the presence of tall cumulonimbus clouds \citep{Liu2012SatelliteRadarInterferometry}.
 For the purposes of InSAR analysis, noise from tropospheric delay is usually divided into a stratified component, which correlates with height \citep{Hanssen2001RadarInterferometryData, Doin2009CorrectionsStratifiedTropospheric}, and a turbulent component that is random at time scales longer than a day \citep{Emardson2003NeutralAtmosphericDelay, Onn2006ModelingWaterVapor}. 
 
@@ -391,15 +401,15 @@ For the purposes of InSAR analysis, noise from tropospheric delay is usually div
 
 
 
-Previous studies have made advances in correcting for the stratified component of tropospheric noise.  Several empirical approaches have been developed to fit linear or power-law relationships between the unwrapped phase and topography height of coherent pixels within interferograms \citep{Elliott2008InsarSlipRate, Lauknes2011InsarTroposphericStratification, Bekaert2015SpatiallyVariablePower, Zebker2021AccuracyModelFree, Murray2021ClusterBasedEmpirical}. Under the assumption that the deformation does not correlate with topography, these approaches can be effective and simple to implement. For example, Figure \ref{fig:ch2-hawaii-strat} shows the unwrapped interferograms from the area on top of Mauna Kea indicated in Figure \ref{fig:ch2-hawaii-example}c. Although the interferogram appears to show a bowl shape deformation (Figure \ref{fig:ch2-hawaii-strat}a), the phase is actually closely correlated with the topography (Figure \ref{fig:ch2-hawaii-strat}b-c). Fitting and removing a linear trend from the phase vs. elevation plot mitigates the stratified atmospheric noise in this case. However, these approaches can be less effective in regions with multiple weather patterns where the phase-elevation correlation can vary dramatically in space \citep{Murray2021ClusterBasedEmpirical}.
+Previous studies have advanced correction techniques for the stratified component of tropospheric noise.  Several empirical approaches have fit linear or power-law relationships between the unwrapped phase and topography height of coherent pixels within interferograms \citep{Elliott2008InsarSlipRate, Lauknes2011InsarTroposphericStratification, Bekaert2015SpatiallyVariablePower, Zebker2021AccuracyModelFree, Murray2021ClusterBasedEmpirical}. Under the assumption that the deformation does not correlate with topography, these approaches can be effective and simple to implement. For example, Figure \ref{fig:ch2-hawaii-strat} shows the portion of the unwrapped interferogram on top of Mauna Kea from Figure \ref{fig:ch2-hawaii-example}c. Although the interferogram appears to show a bowl shape deformation (Figure \ref{fig:ch2-hawaii-strat}a), the phase is actually closely correlated with the topography (Figure \ref{fig:ch2-hawaii-strat}b-c). Fitting and removing a linear trend from the phase vs. elevation plot mitigates the stratified atmospheric noise in this case. However, these approaches can be less effective in regions with multiple weather patterns where the phase-elevation correlation can vary dramatically in space \citep{Murray2021ClusterBasedEmpirical}.
 
 \begin{figure}
 	\centering
 	\includegraphics[width=1.0\textwidth]{figures/chapter2-sar/hawaii-strat-zoom.pdf}
 	\caption[Stratified tropospheric noise over Hawaii]{
-		(a) Unwrapped version of interferogram from Figure \ref{fig:ch2-hawaii-example}c, zoomed in to the top of Mauna Kea.
-		(b) SRTM DEM heights for same area as (a)
-		(c) Scatterplot of unwrapped phase (converted to centimeters) from panel (a) vs heights from panel (b) for all pixels.
+		(a) Unwrapped interferogram from Figure \ref{fig:ch2-hawaii-example}c, zoomed in to the top of Mauna Kea.
+		(b) The SRTM DEM heights for same area as panel (a).
+		(c) Scatterplot of unwrapped phase (in cm) from panel (a) vs heights from panel (b).
 	}
 	\label{fig:ch2-hawaii-strat}
 \end{figure}
@@ -408,7 +418,7 @@ Previous studies have made advances in correcting for the stratified component o
 Many efforts have advanced stratified noise corrections using auxiliary sources of data, including global atmospheric models (GAMs) \citep{Doin2009CorrectionsStratifiedTropospheric, Jolivet2011SystematicInsarTropospheric, Jolivet2014ImprovingInsarGeodesy, Cao2021AdvancedInsarTropospheric}, GPS zenith delay measurements \citep{Onn2006ModelingWaterVapor, Yu2017GenerationRealTime}, and external satellite measurements from sensors such as the Moderate Resolution Imaging Spectroradiometer (MODIS) \citep{Li2005InterferometricSyntheticAperture, Barnhart2013CharacterizingEstimatingNoise} or the Medium Resolution Imaging Spectrometer (MERIS)  \citep{Ding2008AtmosphericEffectsInsar}.
 Several authors have attempted to create off-the-shelf correction services or toolboxes from these data sources. For example,	
 \cite{Yu2018GenericAtmosphericCorrection} combined information from GAMs and available GPS zenith delay measurements to create the Generic Atmospheric Correction Online Service (GACOS) for estimating tropospheric noise in InSAR data. \cite{Maurer2021RaiderRaytracingAtmospheric} created a library for ray-tracing the LOS paths through GAM-predicted delays to create correction products.
-While these correction methods show promise in certain study areas, the spatial and temporal resolution can be too low to correct for noise from severe weather or turbulent mixing of water vapor \citep{Murray2019TroposphericCorrectionsInsar}. Therefore, most methods for mitigating the turblent tropospheric noise rely on time series methods that exploit the uncorrelated temporal characteristics of the noise.
+While these correction methods show promise in certain study areas, the spatial and temporal resolution can be too low to correct for noise from severe weather or turbulent mixing of water vapor (e.g. Section \ref{sec:ch3-insar-processing}) \citep{Murray2019TroposphericCorrectionsInsar}. Therefore, most methods for mitigating the turbulent tropospheric noise rely on time series methods that exploit the uncorrelated temporal characteristics of the noise.
 % on the atmospheric delay being uncorrelated for time scales longer than $\sim 6$ hours \cite{Emardson2003NeutralAtmosphericDelay}.
 
 
@@ -430,18 +440,22 @@ While these correction methods show promise in certain study areas, the spatial 
 %There are many techniques which fall under the umbrella of InSAR time series techniques, (sometimes called ``multi-temporal InSAR'' or MT-InSAR).
 Since many noise sources cannot be distinguished from deformation in a single interferogram (e.g. Figure \ref{fig:ch2-hawaii-example}), it is common to analyze multiple interferograms 
 %to quantify and mitigate InSAR noise sources.
-using InSAR time series techniques (sometimes called ``multi-temporal InSAR'' or MT-InSAR), which extract information about the temporal evolution of surface deformation or other geophysical parameters of interest.  Most multi-temporal methods belong to one of the following categories: 1) stacking (averaging) \citep{Zebker1997AtmosphericEffectsInterferometric, Sandwell1998PhaseGradientApproach}, 2) small-baseline approaches \citep{Berardino2002NewAlgorithmSurface}, or 3) persistent-scatterer (PS) methods \citep{Ferretti2001PermanentScatterersSar, Hooper2006PersistentScatterRadar}. In the past decade, a fourth category of ``phase-linking'' approaches have been popularized by the SqueeSAR algorithm \citep{Ferretti2011NewAlgorithmProcessing}; these are based on optimizations or decompositions of the complex covariance matrix of SAR image stacks \citep{Guarnieri2008ExploitationTargetStatistics, Fornaro2015CaesarApproachBased, Ansari2018EfficientHighPrecision}. Methods (3) and (4) have shown success in extracting high-precision estimates of interferometric phase where decorrelation is the dominant noise source (e.g. in local, high-rate deformation, \citep{Tebaldini2010MethodsPerformancesMulti}); in the following section, we focus on (1) and (2).
+using InSAR time series techniques (sometimes called ``multi-temporal InSAR'' or MT-InSAR).
+%, which extract information about the temporal evolution of surface deformation or other geophysical parameters of interest.  
+Most multi-temporal methods belong to one of the following categories: 1) stacking (averaging) \citep{Zebker1997AtmosphericEffectsInterferometric, Sandwell1998PhaseGradientApproach}, 2) small-baseline approaches \citep{Berardino2002NewAlgorithmSurface}, or 3) persistent scatterer (PS) methods \citep{Ferretti2001PermanentScatterersSar, Hooper2006PersistentScatterRadar}. In the past decade, a fourth category of ``phase-linking'' approaches have been popularized by the SqueeSAR algorithm \citep{Ferretti2011NewAlgorithmProcessing}; these are based on optimizations or decompositions of the complex covariance matrix of SAR image stacks \citep{Guarnieri2008ExploitationTargetStatistics, Fornaro2015CaesarApproachBased, Ansari2018EfficientHighPrecision}. Methods (3) and (4) have shown success in extracting high-precision estimates of interferometric phase where decorrelation is the dominant noise source (e.g. in local, high-rate deformation, \citep{Tebaldini2010MethodsPerformancesMulti}); in the following section, we focus on (1) and (2).
 
 
 For deformation signals which occur as a transient event 
 %(which includes all processes quicker than one SAR acquisition interval) 
 or with a constant rate, stacking consists of averaging multiple interferograms (possibly with different weights for each interferogram) which all contain the deformation signal \citep{Simons2007InterferometricSyntheticAperture, Zheng2019ImagingCascadiaSlow}. 
 %Stacking approaches are the simplest conceptually and the earliest developed to mitigate tropospheric noise. 
-For example, suppose an earthquake occurred at a known date, and we would like to estimate the coseismic displacement $\theta$ that occurred using a set of $M$ interferograms which all span the earthquake date. For each ground pixel, we can collect the phase difference measurements into a vector $\bm{\Delta \phi} \in \mathbb{R}^{M} $.
+For example, suppose an earthquake occurred at a known date, and we have a set of $M$ interferograms which all span this date.
+%we would like 
+For each ground pixel, we can collect the phase difference measurements into a vector $\bm{\Delta \phi} \in \mathbb{R}^{M} $.
 %\begin{equation}
 %	\bm{\Delta \phi} = \left[ \Delta \phi_{1,2}, \Delta \phi_{1,3} , \ldots  \right]^T
 %\end{equation}
-To estimate the $\theta$, the simplest stacking solution is
+To estimate the coseismic displacement $\theta$, the simplest stacking solution is
 \begin{equation}
 	\theta = \frac{\lambda }{4 \pi} \frac{1}{M} \sum_i^M \bm{\Delta \phi}_i ,
 	\label{eq:ch2-stacking-1}
@@ -486,11 +500,11 @@ The linear system is now written as
 	\bm{B v} = \bm{\Delta \phi} + \bm{\epsilon}, \label{eq:ch2-sbas-B}
 \end{equation}
 where the row of $\bm{B}$
-corresponding to measurement $ \Delta \phi_{j,k} $ has $t_i - t_{i-1}$ in the $i$th column for $j < i \leq k$ and 0 elsewhere. 
+corresponding to measurement $ \Delta \phi_{j,k} $ has $t_i - t_{i-1}$ in columns $i$ for $j < i \leq k$, and 0 elsewhere. 
 After solving Equation \eqref{eq:ch2-sbas-B}, $ \bm{v} $ is integrated to obtain $ \bm{\phi} $.
 
 The rationale behind solving for $\bm{v}$ is that for early SAR satellites, such as ERS-1 and ERS-2, the acquisitions are often grouped as subsets of images with small spatial baselines that are separated from other groups by large temporal or spatial baselines. 
-When $\bm{\Delta \phi}$ contains an isolated subset of interferograms, $A$ is not full column rank and Equation \eqref{eq:ch2-sbas-A} is solved with a pseudo-inverse, $A^{\dagger}$, generated using the singular value decomposition (SVD) \citep{Strang2006LinearAlgebraIts}. The SVD approach for rank-deficient systems produces a minimum norm solution vector; the authors of \cite{Berardino2002NewAlgorithmSurface} found that minimizing the norm of the velocity vector $ \bm{v} $ produced more physically plausible deformation results than minimizing the norm of $ \bm{\phi} $. We note that for recent missions like Sentinel-1 with tightly controlled repeat orbits, it is often possible to create one connected network of interferograms, leading to equivalent results from the formulations of Equations \eqref{eq:ch2-sbas-A} and \eqref{eq:ch2-sbas-B}. However, Equation \eqref{eq:ch2-sbas-B} enables alternative regularization strategies for inversion, as shown in Section \ref{sec:ch4-method-compare}.
+When $\bm{\Delta \phi}$ contains an isolated subset of interferograms, $A$ is not full column rank and Equation \eqref{eq:ch2-sbas-A} is solved with a pseudo-inverse, $A^{\dagger}$, generated using the singular value decomposition (SVD) \citep{Strang2006LinearAlgebraIts}. The SVD approach for rank-deficient systems produces a minimum norm solution vector. The authors of \cite{Berardino2002NewAlgorithmSurface} found that minimizing the norm of the velocity vector $ \bm{v} $ produced more physically plausible deformation results than minimizing the norm of $ \bm{\phi} $. We note that for recent missions like Sentinel-1 with tightly controlled repeat orbits, it is often possible to create one connected network of interferograms, leading to equivalent results from the formulations of Equations \eqref{eq:ch2-sbas-A} and \eqref{eq:ch2-sbas-B}. However, Equation \eqref{eq:ch2-sbas-B} enables alternative regularization strategies for inversion, as shown in Section \ref{sec:ch4-method-compare}.
 %and the system in Equation \eqref{eq:ch2-sbas-A} with full rank $ \bm{A} $ can be solved using least squares.
 
 
@@ -550,7 +564,7 @@ When $\bm{\Delta \phi}$ contains an isolated subset of interferograms, $A$ is no
 \section{InSAR processing chain}
 \label{sec:ch2-processing}
 We developed software for an efficient and scalable InSAR processing chain to process geocoded SLC images and output cumulative surface deformation maps (Figure \ref{fig:ch2-processing}). An area of interest (AOI) is chosen in latitude and longitude coordinates, and all overlapping Sentinel-1 SLC products from a specified time frame are downloaded from the Alaska Satellite Facility (ASF) Distributed Active Archive Center (DAAC). The NASA Shuttle Radar Topography Mission (SRTM) \citep{Nasa2013NasaShuttleRadar} 30 meter DEM is downloaded for the AOI (stitching together tiles for regions larger than 1 x 1 degree) and upsampled.
-The DEM, along with ESA's precise orbit files, are used by the Stanford processor \cite{Zheng2017PhaseCorrectionSingle, Zebker2017UserFriendlyInsar} to produce topography corrected, geocoded SLCs (GSLCs).
+The DEM, along with ESA's precise orbit files, are used by the Stanford processor \citep{Zheng2017PhaseCorrectionSingle, Zebker2017UserFriendlyInsar} to produce topography corrected, geocoded SLCs (GSLCs).
 We note that working with GSLCs simplifies workflows for merging multiple Sentinel-1 frames over large areas \citep{Zheng2019ImagingCascadiaSlow}.
 Interferograms are formed from the GSLCs through a pixel-wise cross multiplication (Equation \eqref{eq:ch2-conj-mult}), which are then unwrapped using the Statistical-cost, Network-flow Algorithm for Phase Unwrapping (SNAPHU) \citep{Chen2001TwoDimensionalPhase}. The unwrapped interferograms are referenced and (optionally) denoised by removing a planar or quadratic phase ramp. These are finally saved using the Hierarchical Data Format 5 (HDF5) data format, which allows user-defined metadata, data chunking, and compression.  HDF5 also simplifies and accelerates parallel implementations of pixel-wise SBAS algorithms (used in Chapter \ref{CHAP:4-GRL} and \ref{CHAP:5-robust-ts}).
 %While equivalent interferograms can be produced by other software such as GMTSAR \citep{Sandwell2011OpenRadarInterferometry} or ISCE \citep{Rosen2012InsarScientificComputing}, 
