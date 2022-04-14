@@ -28,6 +28,9 @@ We use the method to create yearly deformation maps from November 2014 through J
 
 \section{Algorithms}
 
+%In this study, used the Sentinel-1 interferograms from Path 78 and Path 85 processed as described in Section \ref{sec:ch2-insar-processing}.
+%We solved for the average LOS velocities over three periods of interest: Nov. 2014 to Jan. 2017, Nov. 2014 to Jan. 2018, and Nov. 2014 to Jan. 2019. Over each time period $T_j$, we computed the cumulative LOS surface deformation as the product of $v_{avg,j}$ and $T_j$. We also solved for the vertical and eastward deformation in the region where Path 78 and 85 overlap (see Section \ref{sec:ch2-insar-decomp}) using the LOS unit vector at each pixel location Figure \ref{fig:los-map})) in the LOS decomposition.
+
 
 \subsection{Stacking and InSAR time series analysis}
 \label{sec:ch4-method-compare}
@@ -35,8 +38,6 @@ We use the method to create yearly deformation maps from November 2014 through J
 
 To investigate how InSAR measurement noise influences the line-of-sight (LOS) deformation solutions, we compared the results derived from (1) the stacking method, (2) an SBAS linear deformation (constant velocity) model with $L_1$ and $L_2$-norm penalty functions, and (3) unregularized and regularized SBAS deformation time series. 
 We assume there are $M$ small-baseline interferograms that were generated from $N$ SAR scenes acquired over a period of interest. 
-%The stacking method from \cite{Sandwell1998PhaseGradientApproach} solves for the average velocity over the study period. 
-%An interferogram measures surface deformation that occurred between the two SAR acquisition times along the radar line-of-sight (LOS) direction \citep{Hanssen2001RadarInterferometryData}.
 We employed a stacking approach \citep{Sandwell1998PhaseGradientApproach} to calculate the average LOS velocity $v_{avg}$ of each ground pixel over a time period of interest $T$ as:
 \begin{equation}
 %	v_{avg} = \frac{ \sum_{i \in G} \bm{\Delta  d}_i}{\sum_{i \in G} \bm{\Delta t}_i}
@@ -64,20 +65,6 @@ The LOS surface velocities between adjacent SAR acquisitions $ \bm{v} = \left[v_
 \end{equation}
 where $ \bm{D} $ is a $ (N-2) \times (N-1) $ matrix, with $1$ on the main diagonal and $-1$ on the superdiagonal, which approximates the first-order differentiation operator. The first term penalizes the data misfit, the second term is a temporal smoothness constraint, and $ \alpha \in \mathbb{R} $ is the weight between the two terms. When $ \alpha = 0 $, the solution is the unregularized SBAS deformation time series. An additional integration of $\mathbf{v}$ over time yields the LOS deformation time series.
 
-
-
-
-%%An interferogram measures surface deformation that occurred between the two SAR acquisition times along the radar line-of-sight (LOS) direction \citep{Hanssen2001RadarInterferometryData}.
-%We employed a stacking approach \citep{Sandwell1998PhaseGradientApproach} to calculate the average LOS velocity $v_{avg}$ of each ground pixel over a time period of interest $T$ as:
-%\begin{equation}
-%	v_{avg} = \frac{\sum_{i \in G} \Delta  d_i}{\sum_{i \in G} \Delta t_i}
-%	\label{eq:ch4-stacking}
-%\end{equation}
-%where $G$ is a subset of interferograms that were formed using two SAR scenes acquired within the time period $T$. The LOS measurement (in cm) and the temporal baseline of the $i^{th}$ interferogram in $G$ are written as $\Delta d_i$ and $ \Delta t_i $ respectively. In Section \ref{sec:ch4-method-compare}, we show that comparable LOS velocity estimates can be produced using the Small Baseline Subset (SBAS) approach \citep{Berardino2002NewAlgorithmSurface} with a constant velocity (linear deformation) model.
-
-%
-%\section{Study site and data}
-%\label{sec:ch4-site}
 
 
 \subsection{Tropospheric noise outlier removal}
@@ -116,14 +103,8 @@ where $x_m$ is the $m^{th}$ data sample.
 %To account for the large variation in look angle within one Sentinel-1 Interferometric Wide (IW) swath image, we used the LOS unit vector at each pixel location Figure \ref{fig:los-map})) in the LOS decomposition.
 
 
-
-
-
-%In this study, used the Sentinel-1 interferograms from path 78 and path 85 processed as described in Section \ref{sec:ch2-insar-processing}.
-%We solved for the average LOS velocities over three periods of interest: Nov. 2014 to Jan. 2017, Nov. 2014 to Jan. 2018, and Nov. 2014 to Jan. 2019. Over each time period $T_j$, we computed the cumulative LOS surface deformation as the product of $v_{avg,j}$ and $T_j$. We also solved for the vertical and eastward deformation in the region where path 78 and 85 overlap (see Section \ref{sec:ch2-insar-decomp}) using the LOS unit vector at each pixel location Figure \ref{fig:los-map})) in the LOS decomposition.
-
 \subsection{Line-of-sight Decomposition}
-\label{sec:ch2-insar-decomp}
+\label{sec:ch4-insar-decomp}
 
 
 An interferogram measures surface deformation between the two SAR acquisition times along the radar LOS direction. The LOS deformation, $u_{LOS}$, can be written as: 
@@ -137,7 +118,7 @@ where $u_{e}$, $u_{n}$ and $u_{u}$ are the east, north and up displacements, res
 	\centering
 	%	\includegraphics[width=.98\textwidth]{paper1-permian/figures/supplement/figureS2-los.pdf}
 	\includegraphics[width=.98\textwidth]{figures/chapter2-sar/figure_los_enu_coeffs.pdf}
-	\caption[East, north, and vertical coefficients of Sentinel-1 LOS vectors]{East, north, and vertical coefficient of the LOS unit vector of all Sentinel-1 path 78 and path 85 pixels. Positive LOS direction points away from the satellite to the ground.
+	\caption[East, north, and vertical coefficients of Sentinel-1 LOS vectors]{East, north, and vertical coefficient of the LOS unit vector of all Sentinel-1 Path 78 and Path 85 pixels. Positive LOS direction points away from the satellite to the ground.
 	}
 	\label{fig:los-map}
 \end{figure}
@@ -161,6 +142,9 @@ Because Sentinel-1 satellites are operating in a near-polar orbit, the north loo
 
 
 
+
+
+
 %\subsection{Uncertainty Propagation through LOS decomposition}
 %\label{sec:ch2-decomp-uq-prop}
 %Since the LOS decomposition is a linear operation, given two LOS uncertainties, we can use linear uncertainty propagation theory to determine the vertical/horizontal uncertainties.
@@ -177,11 +161,20 @@ Because Sentinel-1 satellites are operating in a near-polar orbit, the north loo
 %- Bottom half of outlier figure showing the visible artifacts removed
 %- Talk about the time series comparison figure, how each had problems, then after outlier removal most converge (+ table quantifying the before/after)
 %- conclude all methods converge and we use a simple stacking with outlier removal to calculate cumulative deformation.
-%
+
+
+Here we used the Sentinel-1 interferograms from Path 78 and Path 85 processed as described in Section \ref{sec:ch3-insar-processing}. 
+Using each time series method from Section \ref{sec:ch4-method-compare}, we solved for the cumulative LOS deformation over three periods of interest: Nov. 2014 to Jan. 2017, Nov. 2014 to Jan. 2018, and Nov. 2014 to Jan. 2019. 
+For the time series methods calculating an average velocity $v_{avg,j}$ over the $j$th time period $T_j$ , we computed the cumulative LOS surface deformation as the product $v_{avg,j} \cdot T_j$.
+%Over each time period 
+
+%We solved for the average LOS velocities over three periods of interest: Nov. 2014 to Jan. 2017, Nov. 2014 to Jan. 2018, and Nov. 2014 to Jan. 2019. Over each time period $T_j$, we computed the cumulative LOS surface deformation as the product of $v_{avg,j}$ and $T_j$. 
+%We also solved for the vertical and eastward deformation in the region where Path 78 and 85 overlap (see Section \ref{sec:ch4-insar-decomp}) using the LOS unit vector at each pixel location Figure \ref{fig:los-map})) in the LOS decomposition.
 
 %Little surface deformation occurred between Nov. 2014 and Jan. 2019 at the 13 GPS permanent GPS stations. 
-To compare the time series methods and the outlier removal strategy, we projected the GPS ENU time series onto the radar LOS at all 13 permanent GPS stations. We computed the average GPS LOS velocity with a linear regression and used this as ground truth to compare the InSAR solutions for ascending Path 78 data between Nov. 2014 and Jan. 2018.
-We found that InSAR tropospheric noise has a strong influence on all the surface deformation solutions before removing the measurement outliers. As an example, Figure \ref{fig:ch4-compare-ts} (a) shows the ascending LOS solutions between Nov. 2014 and Jan. 2018 at the GPS station TXSO before removing InSAR measurement outliers. The random tropospheric noise creates up to $\sim$6 cm of error in the unregularized SBAS surface deformation time series. This error can be reduced by increasing $ \alpha$ in Equation \eqref{eq:ch4-sbas}. As $\alpha$ increases, the LOS deformation time series converge to the $L_2$ linear deformation (constant velocity) solution. 
+To compare the time series methods, we projected the 13 GPS ENU time series onto the radar LOS. We computed the average GPS LOS velocity with a linear regression and used this as ground truth. 
+%We first compared InSAR solutions using the ascending Path 78 data between Nov. 2014 and Jan. 2018.
+We found that InSAR tropospheric noise has a strong influence on all the surface deformation solutions before removing the measurement outliers. As an example, Figure \ref{fig:ch4-compare-ts} (a) shows the ascending Path 78 LOS solutions between Nov. 2014 and Jan. 2018 at the GPS station TXSO before removing InSAR measurement outliers. The random tropospheric noise creates up to $\sim$6 cm of error in the unregularized SBAS surface deformation time series. This error can be reduced by increasing $ \alpha$ in Equation \eqref{eq:ch4-sbas}. As $\alpha$ increases, the LOS deformation time series converge to the $L_2$ linear deformation (constant velocity) solution. 
 
 
 
@@ -192,12 +185,11 @@ We found that InSAR tropospheric noise has a strong influence on all the surface
 	\label{fig:ch4-compare-ts}
 \end{figure}
 
-After removing InSAR outlier measurements associated with local weather events, all SBAS time series methods produce more accurate and consistent deformation trends (Figure \ref{fig:ch4-compare-ts} (b)). The unregularized SBAS time series still contain up to $\sim$3 cm of tropospheric noise, which leads to long-wavelength artifacts in the basin-wide deformation maps. The $ L_1 $ and $ L_2 $ linear deformation solutions show close agreement ($<$ 2 mm difference) at all GPS stations. Since both methods suggest a deformation trend consistent with the stacking approach, we chose the simple stacking method as the final processing strategy for estimating cumulative surface deformation in the Permian Basin. 
-Table \ref{tab:compare-errors} summarizes the differences before and after removing outliers for the four methods using the root mean square (RMS) and the worst-case absolute differences between InSAR and GPS inferred average LOS velocities.
-% between Nov. 2014 and Jan. 2018.
-% as derived from the four InSAR time series methods.
-
-
+After removing InSAR outlier measurements associated with local weather events, all SBAS time series methods produce more accurate and consistent deformation trends (Figure \ref{fig:ch4-compare-ts} (b)). The unregularized SBAS time series still contains up to $\sim$3 cm of tropospheric noise, which leads to long-wavelength artifacts in the basin-wide deformation maps. The $ L_1 $ and $ L_2 $ linear deformation solutions show close agreement ($<$ 2 mm difference) at all GPS stations. 
+% for estimating cumulative surface deformation for all time periods. 
+%in the Permian Basin. 
+Table \ref{tab:compare-errors} summarizes the differences before and after removing outliers for the four methods using the root mean square (RMS) and the worst-case absolute differences between InSAR and all 13 GPS inferred average LOS velocities.
+Since both linear methods suggest a deformation trend consistent with the stacking approach, we chose the simple stacking method as the final processing strategy.
 
 \begin{table}
 	\caption{Errors (in mm) in four SBAS ascending LOS deformation (Nov. 2014 - Jan. 2018) solutions}
@@ -215,15 +207,13 @@ Table \ref{tab:compare-errors} summarizes the differences before and after remov
 	\label{tab:compare-errors}
 \end{table}
 
-
-We performed the stacking and outlier removal algorithm on the Path 78
-
-We see a striking visual difference in the Path 78 cumulative deformation from Nov. 2014 to Jan. 2018.derived from stacking after removing tropospheric outliers (Figure \ref{fig:ch4-outliers-visual}).
-There are cm-level tropospheric artifacts in the cumulative deformation solutions by using either $L_1$ or $L_2$ linear deformation models (e.g. Figure \ref{fig:ch4-outliers-visual}(a)).   
+We see a striking visual difference in the Path 78 stacking-derived cumulative deformation from Nov. 2014 to Jan. 2018 after removing tropospheric outliers (Figure \ref{fig:ch4-outliers-visual}).
+There are cm-level tropospheric artifacts in the cumulative deformation solution that includes all noisy measurements
+% by using either $L_1$ or $L_2$ linear deformation models 
+(Figure \ref{fig:ch4-outliers-visual}(a)).   
 %The presence of InSAR measurement outliers resulted in long-wavelength artifacts ($ \sim $100km and greater) in the cumulative deformation solutions which did not match the GPS station measurements (Figure \ref{fig:ch4-outliers-visual} (a)).
-These long wavelength artifacts (e.g. the red near Midland) in the cumulative deformation solutions did not match the GPS stations measurements.
-However, the artifacts were mitigated in the stacking solutions through the pixel-wise outlier removal algorithm (Figure \ref{fig:ch4-outliers-visual} (b)). 
-
+These long wavelength artifacts (e.g. the red streak near Midland) do not match the GPS stations measurements.
+However, the artifacts were mitigated using the pixel-wise outlier removal algorithm (Figure \ref{fig:ch4-outliers-visual} (b)). 
 
 \begin{figure}
 	\centering
@@ -236,23 +226,31 @@ However, the artifacts were mitigated in the stacking solutions through the pixe
 
 
 
-We similarly performed 
-We derived the cumulative ...
-the stacking an outlier on X Y Z on Path 85 and compared. table.
+
+
+
+%We similarly performed 
+%We derived the cumulative ...
+%the stacking an outlier on X Y Z on Path 85 and compared. table.
 
 
 %Using the 13 GPS east, north, and up time series as ground truth, we quantified the errors in the InSAR stacking solutions before and after the outlier removal. 
-We summarize the errors in the InSAR stacking solutions before and after the outlier removal in Tables \ref{tab:gps-error-78} and \ref{tab:gps-error-85}. 
+%We summarize the errors in the InSAR stacking solutions before and after the outlier removal for Path 78 and 85 in Tables \ref{tab:gps-error-78} and \ref{tab:gps-error-85}, respectively. 
 %There are 13 permanent GPS stations in the ascending SAR footprint.
 %At each GPS location, we projected the GPS time series to the radar line-of-sight (LOS), and we computed the GPS-inferred average LOS velocity through a linear regression. 
-Table \ref{tab:gps-error-78} shows the root mean square (RMS) and the worst-case absolute differences between InSAR and GPS inferred average LOS velocities over the three study periods for Path 78. Similarly, there are 5 permanent GPS stations in the descending SAR footprint, and Table \ref{tab:gps-error-85} shows the uncertainty in the descending stacking solutions using these 5 GPS stations as control. 
-Both Table \ref{tab:gps-error-78} and Table \ref{tab:gps-error-85} show that our outlier removal algorithm reduced the uncertainty in InSAR stacking solutions by a factor of $\sim$2, down to 1-3 mm/year across the basin. For a given period of interest $T_j$, the LOS velocity error $ E_{vel,j} $ propagates into the cumulative deformation error $ E_{c, j} $ as $ E_{c,j} = E_{vel,j} \cdot T_j $. 
 
+Table \ref{tab:gps-error-78} shows the RMS and the worst-case absolute differences between the ascending Path 78 InSAR and GPS inferred average LOS velocities for all three study periods. 
+For each time period, our outlier removal algorithm reduced the uncertainty in the InSAR stacking solution by a factor of $\sim$2, down to 1-3 mm/year RMS across the basin.
+Similarly, there are 5 permanent GPS stations in the descending Path 85 SAR footprint, and Table \ref{tab:gps-error-85} shows the uncertainty in the descending stacking solutions using these stations for comparison.
+We see a similar reduction in noise by a factor of $\sim$2 for Path 85.
+%Both Table \ref{tab:gps-error-78} and Table \ref{tab:gps-error-85} show that . 
+Note that for a given period of interest $T_j$, the LOS velocity error $ E_{vel,j} $  propagates into the cumulative deformation error $ E_{c, j} $ as $ E_{c,j} = E_{vel,j} \cdot T_j $. 
+%from Table \ref{tab:gps-error-78} or \ref{tab:gps-error-85}
 
 
 
 \begin{table}
-	\caption{InSAR ascending LOS velocity estimation errors (in mm/year) using the stacking method}
+	\caption{InSAR ascending Path 78 LOS velocity estimation errors (in mm/year) using the stacking method}
 	\centering
 	\begin{tabular}{|c|c|c|}
 		\hline 
@@ -267,7 +265,7 @@ Both Table \ref{tab:gps-error-78} and Table \ref{tab:gps-error-85} show that our
 \end{table}
 
 \begin{table}
-	\caption{InSAR descending LOS velocity estimation errors (in mm/year) using the stacking method}
+	\caption{InSAR descending Path 85 LOS velocity estimation errors (in mm/year) using the stacking method}
 	\begin{tabular}{|c|c|c|}
 		\hline 
 		& Before the outlier removal & After the outlier removal \\
@@ -311,7 +309,7 @@ The Sentinel-1 cumulative LOS deformation solutions reveal numerous surface defo
 	\centering
 	%	\includegraphics[width=.99\linewidth]{figures/chapter4-grl/figure3-los-insar.pdf}
 	\includegraphics[width=.99\linewidth]{figures/chapter4-grl/figure3-los-insar-small.pdf}
-	\caption[Cumulative LOS deformation for path 78 and path 85]{Cumulative LOS deformation (Nov. 2014 - Jan.2017; Nov. 2014 - Jan.2018; Nov. 2014 - Jan. 2019) as inferred from Sentinel-1 (a) ascending path 78, and (b) descending path 85 data over an 80,000 square km oil-producing region of the Permian Basin. Here a subsidence or eastward deformation signal leads to a positive LOS measurement in the ascending geometry, and a subsidence or westward deformation signal leads to a positive LOS measurement in the descending geometry. Areas with $>$1200 m altitude are masked due to the low oil production activity in mountainous regions.}
+	\caption[Cumulative LOS deformation for Path 78 and Path 85]{Cumulative LOS deformation (Nov. 2014 - Jan.2017; Nov. 2014 - Jan.2018; Nov. 2014 - Jan. 2019) as inferred from Sentinel-1 (a) ascending Path 78, and (b) descending Path 85 data over an 80,000 square km oil-producing region of the Permian Basin. Here a subsidence or eastward deformation signal leads to a positive LOS measurement in the ascending geometry, and a subsidence or westward deformation signal leads to a positive LOS measurement in the descending geometry. Areas with $>$1200 m altitude are masked due to the low oil production activity in mountainous regions.}
 	\label{fig:ch4-insar-los}
 \end{figure}
 
@@ -329,16 +327,17 @@ The Sentinel-1 cumulative LOS deformation solutions reveal numerous surface defo
 \end{figure}
 
 
-
-We decomposed the ascending and descending LOS solutions from Figure \ref{fig:ch4-insar-decomp} to find the horizontal and vertical deformation.
-To illustrate the decomposition, Figure \ref{fig:ch2-injection-kim-lu} shows a 12 km x 12 km region centered on a wastewater injection well found by \cite{Kim2018AssociationLocalizedGeohazards} to have injection-related uplift. We observe similar magnitude deformation toward the satellite in both ascending and descending tracks (Figure \ref{fig:ch2-injection-kim-lu} top). After decomposing the two geometries using the LOS vector at each pixel, we observed $\sim$ 5.5 cm of uplift and $\sim$1.2 cm of east-west motion between November 2014 and April 2017 (Figure \ref{fig:ch2-injection-kim-lu} bottom). 
+We also solved for the vertical and eastward deformation in the region where Path 78 and 85 overlap (see Section \ref{sec:ch4-insar-decomp}) using the LOS unit vector at each pixel location (Figure \ref{fig:los-map}).
+%We decomposed the ascending and descending LOS solutions from Figure \ref{fig:ch4-insar-decomp} to find the horizontal and vertical deformation.
+To illustrate the decomposition, Figure \ref{fig:ch2-injection-kim-lu} shows a 12 km x 12 km region centered on a wastewater injection well found by \cite{Kim2018AssociationLocalizedGeohazards} to have injection-related uplift. We observe similar magnitude deformation toward the satellite in both ascending and descending tracks (Figure \ref{fig:ch2-injection-kim-lu} top). 
+%After decomposing the two geometries using the LOS vector at each pixel, 
+After decomposing the two geometries, we calculated $\sim$ 5.5 cm of uplift and $\sim$1.2 cm of east-west motion between November 2014 and April 2017 (Figure \ref{fig:ch2-injection-kim-lu} bottom), similar to the magnitudes found in \cite{Kim2018AssociationLocalizedGeohazards}.
 
 % ORIGINAL:  \cite{Kim2018AssociationLocalizedGeohazards} detected several localized deformation features within the Delaware Basin related to wastewater injection, CO2 injection, and hydrocarbon production using Sentinel-1 InSAR data.  Our LOS decomposition results are consistent with their study at these locations. For example, in a 12 km x 12 km region centered on a wastewater injection well, we observed $\sim$ 5.5 cm of uplift and $\sim$1.2 cm of east-west motion between November 2014 and April 2017 (Figure \ref{fig:injection-kim-lu}). 
 
-\FloatBarrier
 
 
-In the northern Delaware Basin, where large volumes of oil production and wastewater disposal occurred, the ascending and descending LOS deformation patterns are similar. This means that the observed deformation in this region is primarily vertical (Figure \ref{fig:ch4-insar-decomp} (b) and (e)). The observed subsidence or uplift features between Nov. 2014 and Jan. 2019 are $\sim$ 1-4 cm. In the southern Delaware Basin, \cite{Deng2020SurfaceDeformationInduced} solved for the cumulative LOS surface deformation between Nov. 2014 and Feb. 2019 ($\sim$ 100 km by 60 km) using the ascending Sentinel-1 data (path 78 frames 99-100). In this study, we found that the observed magnitudes of the ascending and descending LOS deformation are different (Figure \ref{fig:ch4-insar-los}), which suggests that both horizontal and vertical deformation occurred in this region. Previous studies near Mesquite, Nevada have shown that confined aquifer pumping in the presence of faults can produce complex asymmetrical deformation patterns with a non-trivial horizontal component \citep{Burbey2008InfluenceGeologicStructures}. In the Pecos area, the largest subsidence patterns ($\sim$ 13 cm over 4 years) occurred $\sim$ 15 km south of Pecos, and the largest eastward motion ($\sim$ 3-4 cm over 4 years) occurred near the town of Pecos along a line transect (Figure \ref{fig:ch4-insar-decomp} (c) and (f)). The observed linear deformation patterns parallel the inferred favorable fault plane orientation (a strike angle $\sim$ 300 degree lining up with the measured $S_{Hmax}$ direction) proposed by \cite{LundSnee2018StateStressPermian}, and they also align with a cluster of recent shallow earthquakes ($<$ 3 km depth) cataloged by TexNet.
+In the northern Delaware Basin, where large volumes of oil production and wastewater disposal occurred, the ascending and descending LOS deformation patterns are similar. This means that the observed deformation in this region is primarily vertical (Figure \ref{fig:ch4-insar-decomp} (b) and (e)). The observed subsidence or uplift features between Nov. 2014 and Jan. 2019 are $\sim$ 1-4 cm. In the southern Delaware Basin, \cite{Deng2020SurfaceDeformationInduced} solved for the cumulative LOS surface deformation between Nov. 2014 and Feb. 2019 ($\sim$ 100 km by 60 km) using the ascending Sentinel-1 data (Path 78 frames 99-100). In this study, we found that the observed magnitudes of the ascending and descending LOS deformation are different (Figure \ref{fig:ch4-insar-los}), which suggests that both horizontal and vertical deformation occurred in this region. Previous studies near Mesquite, Nevada have shown that confined aquifer pumping in the presence of faults can produce complex asymmetrical deformation patterns with a non-trivial horizontal component \citep{Burbey2008InfluenceGeologicStructures}. In the Pecos area, the largest subsidence patterns ($\sim$ 13 cm over 4 years) occurred $\sim$ 15 km south of Pecos, and the largest eastward motion ($\sim$ 3-4 cm over 4 years) occurred near the town of Pecos along a line transect (Figure \ref{fig:ch4-insar-decomp} (c) and (f)). The observed linear deformation patterns align with the inferred favorable fault plane orientation proposed by \cite{LundSnee2018StateStressPermian} (a strike angle of $\sim$ 300 degrees, lining up with the measured $S_{Hmax}$ direction), and they also align with a cluster of recent shallow earthquakes ($<$ 3 km depth) cataloged by TexNet.
 
 
 
@@ -346,7 +345,7 @@ In the northern Delaware Basin, where large volumes of oil production and wastew
 	\centering
 	%	\includegraphics[width=0.96\linewidth]{figures/chapter4-grl/figure4-east-vertical-6panel-labelled.pdf}
 	\includegraphics[width=0.96\linewidth]{figures/chapter4-grl/figure4-east-vertical-6panel-labelled-small.pdf}
-	\caption[Cumulative vertical and horizontal deformation]{(a) Cumulative vertical deformation between Nov. 2014 and Jan. 2019 over the region where Sentinel-1 path 78 and path 85 overlap. A zoomed-in view of Box A in the northern Delaware Basin and Box B in the southern Delaware Basin are shown in panel (b) and (c) respectively. (d) Cumulative eastward deformation between Nov. 2014 and Jan. 2019 over the region where Sentinel-1 path 78 and path 85 overlap. A zoomed-in view of Box A in the northern Delaware Basin and Box B in the southern Delaware Basin are shown in panel (e) and (f) respectively. In the southern Delaware Basin, the observed vertical and eastward deformation (panel (c) and (f)) show linear patterns along with earthquake hypocenters (gray dots) detected by TexNet in 2018.}
+	\caption[Cumulative vertical and horizontal deformation]{(a) Cumulative vertical deformation between Nov. 2014 and Jan. 2019 over the region where Sentinel-1 Path 78 and Path 85 overlap. A zoomed-in view of Box A in the northern Delaware Basin and Box B in the southern Delaware Basin are shown in panel (b) and (c) respectively. (d) Cumulative eastward deformation between Nov. 2014 and Jan. 2019 over the region where Sentinel-1 Path 78 and Path 85 overlap. A zoomed-in view of Box A in the northern Delaware Basin and Box B in the southern Delaware Basin are shown in panel (e) and (f) respectively. In the southern Delaware Basin, the observed vertical and eastward deformation (panel (c) and (f)) show linear patterns along with earthquake hypocenters (gray dots) detected by TexNet in 2018.}
 	\label{fig:ch4-insar-decomp}
 \end{figure}
 
