@@ -40,27 +40,26 @@ We assume there are $M$ small-baseline interferograms that were generated from $
 We employed a stacking approach \citep{Sandwell1998PhaseGradientApproach} to calculate the average LOS velocity $v_{avg}$ of each ground pixel over a time period of interest $T$ as:
 \begin{equation}
 %	v_{avg} = \frac{ \sum_{i \in G} \bm{\Delta  d}_i}{\sum_{i \in G} \bm{\Delta t}_i}
-	v_{avg} = \frac{ \sum_{i \in G} \bm{\Delta  \phi}_i}{\sum_{i \in G} \bm{\Delta t}_i}
+	v_{avg} = \frac{\lambda }{4 \pi}  \frac{ \sum_{i \in G} \bm{\Delta  \phi}_i}{\sum_{i \in G} \bm{\Delta t}_i}
 	\label{eq:ch4-stacking}
 \end{equation}
-where $G$ is a subset of interferograms that were formed using two SAR scenes acquired within the time period $T$. The LOS measurement (in cm) and the temporal baseline of the $i^{th}$ interferogram in $G$ are written as $  \bm{\Delta  \phi}_i $ and $ \bm{\Delta t}_i $ respectively. 
-
-$ \bm{\Delta d}_i = \frac{4 \pi}{\lambda} \bm{\Delta  \phi}_i $
-%In Section \ref{sec:ch4-method-compare}, we show that comparable LOS velocity estimates can be produced using the Small Baseline Subset (SBAS) approach \citep{Berardino2002NewAlgorithmSurface} with a constant velocity (linear deformation) model.
-
+where $G$ is a subset of interferograms that were formed using two SAR scenes acquired within the time period $T$, and the factor $ \frac{4 \pi}{\lambda} $ converts radians to centimeters. The LOS measurement (in radians) and the temporal baseline of the $i$th interferogram in $G$ are written as $  \bm{\Delta  \phi}_i $ and $ \bm{\Delta t}_i $ respectively. 
 
 Similarly, the SBAS method outlined in Section \ref{sec:ch2-insar-ts} can be augmented with a linear deformation model.
 In this formulation, we solve for the average velocity $ v_{avg} $ over this period at each pixel of interest as \citep{Berardino2002NewAlgorithmSurface}:
 \begin{equation}
-	\arg \min_{v_{avg}} \norm{ \bm{BP} v_{avg} - \bm{\Delta \phi}   }_p
+		v_{avg} = \frac{\lambda }{4 \pi} \cdot \arg \min_{v_{avg}} \norm{ \bm{BP} v_{avg} - \bm{\Delta \phi}   }_p
 %		\arg \min_{v_{avg}} \norm{ \bm{BP} v_{avg} - \bm{\Delta d}   }_p
 	\label{eq:ch4-sbas-linear}
 \end{equation}
-where $ \bm{B }$ is the $ M \times (N-1) $ SBAS matrix, $ \bm{P}$ is an $ (N-1) \times 1 $ vector of ones, $ \bm{\Delta d} $ is the $ M \times 1 $ vector of LOS measurements (in cm) at this pixel, and $ p \in \{1, 2\} $ is the norm used to penalize the data misfit. The $L_2$ linear deformation solution is comparable to the stacking solution (with an assumption of a constant velocity), and the $L_1$ solution is typically less sensitive to measurement outliers than the $L_2$ solution.
+where $ \bm{B }$ is the $ M \times (N-1) $ SBAS matrix, $ \bm{P}$ is an $ (N-1) \times 1 $ vector of ones, 
+%$ \bm{\Delta d} $ is the $ M \times 1 $ vector of LOS measurements (in cm) at this pixel, 
+$ \bm{\Delta \phi} $ is the $ M \times 1 $ vector of LOS measurements at this pixel, 
+and $ p \in \{1, 2\} $ is the norm used to penalize the data misfit. The $L_2$ linear deformation solution is comparable to the stacking solution (with an assumption of a constant velocity), and the $L_1$ solution is typically less sensitive to measurement outliers than the $L_2$ solution.
 
 The LOS surface velocities between adjacent SAR acquisitions $ \bm{v} = \left[v_1 , \ldots , v_{N-1} \right]^T $ can be solved as:
 \begin{equation}
-	\arg \min_{\bm{v} } \norm{ \bm{Bv} - \bm{\Delta \phi}   }^2_2 + \alpha \norm{ \bm{Dv} }^2_2  \label{eq:ch4-sbas}
+		\bm{v} = \frac{\lambda }{4 \pi} \cdot \arg \min_{\bm{v} } \norm{ \bm{Bv} - \bm{\Delta \phi}   }^2_2 + \alpha \norm{ \bm{Dv} }^2_2  \label{eq:ch4-sbas}
 %	\arg \min_{\bm{v} } \norm{ \bm{Bv} - \bm{\Delta d}   }^2_2 + \alpha \norm{ \bm{Dv} }^2_2  \label{eq:ch4-sbas}
 \end{equation}
 where $ \bm{D} $ is a $ (N-2) \times (N-1) $ matrix, with $1$ on the main diagonal and $-1$ on the superdiagonal, which approximates the first-order differentiation operator. The first term penalizes the data misfit, the second term is a temporal smoothness constraint, and $ \alpha \in \mathbb{R} $ is the weight between the two terms. When $ \alpha = 0 $, the solution is the unregularized SBAS deformation time series. An additional integration of $\mathbf{v}$ over time yields the LOS deformation time series.

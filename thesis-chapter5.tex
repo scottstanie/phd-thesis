@@ -128,31 +128,14 @@ While \cite{Ferretti2000NonlinearSubsidenceRate} uses mean value of the common-r
 %where $ \bm{\Sigma} = \mathbb{E}[\bm{\epsilon} \bm{\epsilon}^T] $ is the measurement covariance matrix.
 
 
-
-%
-%\begin{figure}
-%	\centering
-%%	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure1-demo.pdf}
-%	\caption[Multiple iterations of LOWESS fit]{
-%		(a) First round fit at one $ x $ location (Same as Figure \ref{fig:ch5-algo-demo}c)
-%		(b) Additional weights imposed from the residuals of first fit
-%		(c) New weighting window
-%		(d) Improved fit from second and third iterations
-%	}
-%	\label{fig:ch5-algo-iteration}
-%\end{figure}
-
-
-% TODO: The first date of SBAS?
-
-
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure2-demo-data.pdf}
 	\caption[Synthetic data for LOWESS smoothing]{
 		(a)  A 300 x 300 pixel region contains a synthetic uplift bowl which peaks at 3 cm.
 		(b) Turbulent tropospheric is noise added to panel (a) for 
-		(c) Time series of true deformation $\bm{d}$ (orange) and $\bm{\phi} =\bm{d} + \bm{\alpha}$ (green). The pixels where the $\bm{d}$ and $\bm{\phi}$ time series are drawn from are marked with an x in panels (a) and (b), respectively. The date that panels (a) and (b) are plotting from is marked with the grey dashed vertical line. Note that the $ \bm{\phi} $ time series is offset due to SBAS assuming the first date is $ 0 $.	
+		(c) Time series of true deformation $\bm{d}$ (orange) and $\bm{\phi} =\bm{d} + \bm{\alpha}$ (gray). The pixel marked with an x in panels (a) and (b) shows the location of the $\bm{d}$ and $\bm{\phi}$ time series, respectively.
+		The date shown in panels (a) and (b) is marked with the grey dashed line. Note that the $ \bm{\phi} $ time series is offset due to the SBAS assumption that $ \phi_0 = 0 $.
 	}
 	\label{fig:ch5-demo-data}
 \end{figure}
@@ -249,6 +232,7 @@ Additionally, we tested our algorithm on the ascending Path 151 immediately west
 	\label{fig:ch5-results-gpsi}
 \end{figure}
 
+\subsection{Surface Deformation}
 
 \begin{figure}
 	\centering
@@ -261,6 +245,11 @@ Cumulative LOS deformation for Path 78 from Nov. 2014 to Dec. 2021.
 \end{figure}
 
 %\section{Discussion}
+
+%Figure: Earthquakes through Jan 2019. Then EQs after (showing CMEZ)
+
+% Figure? Transect of the fault over time, lots of lines
+
 
 %1. Limitations of stacking to long time series
 %2. Robust Time Series Methods
