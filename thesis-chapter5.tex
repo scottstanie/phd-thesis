@@ -10,8 +10,9 @@
 \label{CHAP:5-robust-ts}
 
 
-In this chapter, present a method for robustly extracting slow-moving cumulative surface deformation from time series with large noise. 
-We perform a temporal smoothing using the robust Locally Weighted Scatterplot Smoothing (LOWESS) regression technique \cite{Cleveland1979RobustLocallyWeighted} on noisy surface deformation time-series derived using SBAS.
+In this chapter, we present a method for robustly extracting slowly-varying surface deformation over long period of time.
+% from time series with large noise. 
+We perform a temporal smoothing using the robust Locally Weighted Scatterplot Smoothing (LOWESS) regression technique \cite{Cleveland1979RobustLocallyWeighted} on noisy surface deformation time series derived using SBAS.
 %The method extends the ideas behind the outlier-removal technique presented in Chapter \ref{CHAP:4-GRL}.
 Compared to the alternatives presenting in Section \ref{sec:ch4-method-compare}, the LOWESS smoothing more easily accounts for nonlinear deformation while also suppressing the 10-15 cm of tropospheric noise present in the summer SAR acquisitions. 
 We demonstrate the technique using synthetic time series and using three paths of Sentinel-1 data over the Permian Basin in West Texas. 
@@ -48,8 +49,10 @@ The temporal high pass filter was implemented by subtracting a low-pass filtered
 % (i.e. $ \phi $)
 %used spatial and temporal filters on $\bm{\Delta \phi}$.
 %These filters are expanded upon and compared in Chapter \ref{CHAP:5-robust-ts}, where a new robust filter is presented to separate deformation from atmospheric noise.
-One difficulty with the triangular filter and other moving-average filters (e.g. a Gaussian filter) is that the filter coefficients are non-adaptive; noisier atmospheric conditions will be weighted the same as calmer conditions \citep{Liu2012SatelliteRadarInterferometry}.
-This can cause considerable leakage of noise from severe weather conditions (e.g. thunderstorms) into the deformation estimate of adjacent days.
+One difficulty with the triangular filter and linear methods enforcing temporal smoothness
+% other moving-average filters (e.g. a Gaussian filter) 
+is that the filter coefficients are non-adaptive; noisier atmospheric conditions will be weighted the same as calmer conditions \citep{Liu2012SatelliteRadarInterferometry}.
+This can cause considerable leakage of noise from severe weather conditions into the deformation estimate of adjacent days (e.g. the regularized solution shown in Figure \ref{fig:ch4-compare-ts}a).
 
 % From Liu, 2012
 % Given a good spatial density of coherent targets and a short satellite repeat orbit the filtering method used in the standard PSInSAR (see Ferretti et al. (2000)) provides a simple and fast means to separate APS from temporally correlated deformation signal. However, the separation is usually not optimal and can be erroneous when there are acquisition gaps in the time series or for acquisitions taken under extreme weather conditions such as thunderstorms. This is because the approach weights APS equally for all acquisitions and remove it by a window-based (e.g., triangle, Gaussian) temporal low-pass filter. The filter is not adaptive and its parameters (e.g., temporal correlation length) are up to the users to specify. A good filter, however, should weight APS per acquisition differently according to its significance and be self-adjustable based on the input data to optimize its parameters towards an optimal filtering.
@@ -231,6 +234,8 @@ Additionally, we tested our algorithm on the ascending Path 151 immediately west
 	}
 	\label{fig:ch5-results-gpsi}
 \end{figure}
+
+% REMINDER: TXM5, TXB8 started
 
 \subsection{Surface Deformation}
 

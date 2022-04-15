@@ -70,7 +70,7 @@ where $ \bm{D} $ is a $ (N-2) \times (N-1) $ matrix, with $1$ on the main diagon
 \subsection{Tropospheric noise outlier removal}
 \label{sec:ch4-outlier-method}
 
-We examined interferograms at the 13 control locations and discovered that non-Gaussian tails (outliers) are present. For example, LOS measurements of the ascending interferograms at pixels near the GPS station TXMC show a near zero median (-4 mm) and a standard deviation of 3.2 cm (Figure \ref{fig:ch4-outliers} (a)). Due to the absence of substantial deformation signal at this station, the standard deviation of the LOS distribution is a measure of turbulent tropospheric noise.  We found that the median LOS turbulent error is close to zero (no systematic noise bias) at all GPS control stations. The standard deviation of the turbulent noise increases as the square root of the distance from the InSAR reference point (Figure \ref{fig:ch4-outliers} (b)). Furthermore, we compared the LOS turbulent noise distribution observed at each GPS station to a normal distribution using a normal probability plot \citep{Filliben1975ProbabilityPlotCorrelation} (e.g. Figure \ref{fig:ch4-outliers}(c)). The probability plot illustrates the deviation of a set of samples from a normal distribution, which in our case occurs at the tails due to occasional severe tropospheric noise (e.g. storms or heat waves). 
+We examined interferograms at the 13 control locations and discovered that non-Gaussian tails (outliers) are present. For example, LOS measurements of the ascending interferograms at pixels near the GPS station TXMC show a near zero median (-4 mm) and a standard deviation of 3.2 cm (Figure \ref{fig:ch4-outliers} (a)). Due to the absence of substantial deformation signal at this station, the standard deviation of the LOS distribution is a measure of turbulent tropospheric noise.  We found that the median LOS turbulent error is close to zero (no systematic noise bias) at all GPS control stations. The standard deviation of the turbulent noise increases as the square root of the distance from the InSAR reference point (Figure \ref{fig:ch4-outliers} (b)). Furthermore, we compared the LOS turbulent noise distribution observed at each GPS station to a normal distribution using a normal probability plot \citep{Filliben1975ProbabilityPlotCorrelation} (e.g. Figure \ref{fig:ch4-outliers}(c)). The probability plot illustrates the deviation of a set of samples from a normal distribution, which in our case occurs at the tails due to occasional severe tropospheric noise events (e.g. storms or heat waves). 
 
 
 
@@ -138,20 +138,6 @@ Because Sentinel-1 satellites are operating in a near-polar orbit, the north loo
 
 
 
-
-
-
-
-
-%\subsection{Uncertainty Propagation through LOS decomposition}
-%\label{sec:ch2-decomp-uq-prop}
-%Since the LOS decomposition is a linear operation, given two LOS uncertainties, we can use linear uncertainty propagation theory to determine the vertical/horizontal uncertainties.
-%
-%TODO: move this to appendix or not?
-
-
-
-
 \section{Time series comparisons and outlier removal}
 \label{sec:ch4-ts-compare-result}
 
@@ -163,8 +149,7 @@ Because Sentinel-1 satellites are operating in a near-polar orbit, the north loo
 
 Here we used the Sentinel-1 interferograms from Path 78 and Path 85 processed in Section \ref{sec:ch3-insar-processing}. 
 We solved for the cumulative LOS deformation using each time series method from Section \ref{sec:ch4-method-compare} over three periods of interest: Nov. 2014 to Jan. 2017, Nov. 2014 to Jan. 2018, and Nov. 2014 to Jan. 2019. 
-For the time series methods which calculated an average velocity $v_{avg,j}$ over the $j$th time period $T_j$ , we computed the cumulative LOS surface deformation as the product $v_{avg,j} \cdot T_j$.
-%Over each time period 
+For the time series methods that calculate an average velocity $v_{avg,j}$ over the $j$th time period $T_j$ , we computed the cumulative LOS surface deformation as the product $v_{avg,j} \cdot T_j$.
 
 %We solved for the average LOS velocities over three periods of interest: Nov. 2014 to Jan. 2017, Nov. 2014 to Jan. 2018, and Nov. 2014 to Jan. 2019. Over each time period $T_j$, we computed the cumulative LOS surface deformation as the product of $v_{avg,j}$ and $T_j$. 
 %We also solved for the vertical and eastward deformation in the region where Path 78 and 85 overlap (see Section \ref{sec:ch4-insar-decomp}) using the LOS unit vector at each pixel location Figure \ref{fig:los-map})) in the LOS decomposition.
@@ -349,7 +334,7 @@ In the northern Delaware Basin, where large volumes of oil production and wastew
 \FloatBarrier
 
 \section{Implications for geomechanical modeling}
-Based on fault plane solutions derived from recent seismic activity and the faulting stress regime interpretations \citep{LundSnee2018StateStressPermian}, the Pecos area is in a normal faulting regime. We employed an elastic dislocation model \citep{Okada1992InternalDeformationDue} to demonstrate that the presence of dip-slip normal faults can produce the observed linear subsidence patterns in this area (Figure \ref{fig:ch4-model} (a)). We solved for the dip angle, depth, width along the dip direction, and slip magnitude of four normal faults by best fitting the forward model to InSAR vertical deformation observations, minimizing the sum of squared residuals, and maximizing the r-squared values \citep{Du1992ComparisonVariousInversion} (Appendix \ref{appen:okada}). The optimal solution suggests that the depth of the faults ranges from 0.9 km to 1.5 km, which is shallower than most of the TexNet recorded earthquakes (2-6 km in depth). Possible explanations for this discrepancy include: (1) the existence of aseismic fault slippage being responsible for the observed surface deformation \citep{McGarr2017WastewaterDisposalEarthquake}; (2) bias in earthquake depth estimation in the TexNet catalog \citep{Lomax2019ImprovingAbsoluteEarthquake}; (3) systematic modeling errors associated with representing a mechanically layered earth as a homogeneous half space \citep{Du1992ComparisonVariousInversion}. 
+Based on fault plane solutions derived from recent seismic activity and the faulting stress regime interpretations \citep{LundSnee2018StateStressPermian}, the Pecos area is in a normal faulting regime. We employed an elastic dislocation model \citep{Okada1992InternalDeformationDue} to demonstrate that the presence of dip-slip normal faults can produce the observed linear subsidence patterns in this area (Figure \ref{fig:ch4-model} (a)). We solved for the dip angle, depth, width along the dip direction, and slip magnitude of four normal faults by best fitting the forward model to InSAR vertical deformation observations, minimizing the sum of squared residuals, and maximizing the R-squared values \citep{Du1992ComparisonVariousInversion} (Appendix \ref{appen:okada}). The optimal solution suggests that the depth of the faults ranges from 0.9 km to 1.5 km, which is shallower than most of the TexNet recorded earthquakes (2-6 km in depth). Possible explanations for this discrepancy include: (1) the existence of aseismic fault slippage being responsible for the observed surface deformation \citep{McGarr2017WastewaterDisposalEarthquake}; (2) bias in earthquake depth estimation in the TexNet catalog \citep{Lomax2019ImprovingAbsoluteEarthquake}; (3) systematic modeling errors associated with representing a mechanically layered earth as a homogeneous half space \citep{Du1992ComparisonVariousInversion}. 
 
 
 
