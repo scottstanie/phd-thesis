@@ -192,19 +192,13 @@ I_{1,2} = S_1 S_2^{*} = A_1 A_2 e^{j \Delta \phi_{1,2}}  \label{eq:ch2-conj-mult
 where $S_k = A_k e^{j \phi_k}$, $A_k$ is the amplitude of the $k$th image, and the phase $\phi_k = -\frac{4 \pi}{\lambda} r_k$. The image $I$ is called an \emph{interferogram},  and the quantity $\Delta \phi_{1,2} \triangleq  \phi_1 - \phi_2$ is the interferometric phase.
 
 
-%TODO: summarize SRTM, and TANDEM X missions.
-%
-%maybe his topography stuff....
-%- summarize SRTM, and TANDEM X mission
-%- after into topo, can even mention missions to emphasize importance
-%- for radar interferometry... mostly mention berardino chapter.
-
-
 For topography mapping, two SAR antennas are separated by a distance in the across-track direction and each acquires a SAR image simultaneously\footnote{The acquisitions can also be at different times, under the assumption that no ground deformation has occurred.} (Figure \ref{fig:ch2-insar-geometry-topo}). The baseline causes the two radars to view the same point on the ground with a slight change in angle.
 The difference in phase $\Delta \phi$ between $S_1$ and $S_2$ is related to the difference in the geometrical path length from each radar to the ground.
 %: $\Delta \phi = \frac{-4 \pi}{\lambda}(r_1 - r_2)$. 
 This means that $\Delta \phi$ changes based on whether the satellites are viewing flat ground (Figure \ref{fig:ch2-insar-geometry-topo}a) or topography (Figure \ref{fig:ch2-insar-geometry-topo}b). Thus, with precise knowledge of the viewing geometry, the height of the topography can be inferred from the interferometric phase for each point in the interferogram \citep{Simons2007InterferometricSyntheticAperture}. 
 %Note that the phase difference can be thought of as a third measurement (in addition to the location in the azimuth and range directions) that allows a reconstruction of the 3D location of each image point \cite{Simons2007InterferometricSyntheticAperture}.
+
+The first widely successful InSAR topography mission was the 11-day SRTM by NASA in 2000 (Figure \ref{fig:ch2-sar-missions}). The SRTM produced elevation data with 30-meter resolution for all Earth land surface  from -60$^{\circ} $ to 60$^{\circ} $ latitude. More recently, the TanDEM-X mission by DLR produced a global DEM in 2016 with 12 meter pixels and 2 meter vertical accuracy using two identical satellites flying in formation. However, the TanDEM-X DEM is not publicly available like the SRTM DEM.
 
 
 \begin{figure}
@@ -563,7 +557,8 @@ When $\bm{\Delta \phi}$ contains an isolated subset of interferograms, $A$ is no
 
 \section{InSAR processing chain}
 \label{sec:ch2-processing}
-We developed software for an efficient and scalable InSAR processing chain to process geocoded SLC images and output cumulative surface deformation maps (Figure \ref{fig:ch2-processing}). An area of interest (AOI) is chosen in latitude and longitude coordinates, and all overlapping Sentinel-1 SLC products from a specified time frame are downloaded from the Alaska Satellite Facility (ASF) Distributed Active Archive Center (DAAC). The NASA Shuttle Radar Topography Mission (SRTM) \citep{Nasa2013NasaShuttleRadar} 30 meter DEM is downloaded for the AOI (stitching together tiles for regions larger than 1 x 1 degree) and upsampled.
+
+We developed software for an efficient and scalable InSAR processing chain to process geocoded SLC images and output cumulative surface deformation maps (Figure \ref{fig:ch2-processing}). An area of interest (AOI) is chosen in latitude and longitude coordinates, and all overlapping Sentinel-1 SLC products from a specified time frame are downloaded from the Alaska Satellite Facility (ASF) Distributed Active Archive Center (DAAC). The 30-meter SRTM DEM is downloaded over the AOI (stitching together tiles for regions larger than 1 x 1 degree) and upsampled \citep{Nasa2013NasaShuttleRadar} .
 The DEM, along with ESA's precise orbit files, are used by the Stanford processor \citep{Zheng2017PhaseCorrectionSingle, Zebker2017UserFriendlyInsar} to produce topography corrected, geocoded SLCs (GSLCs).
 We note that working with GSLCs simplifies workflows for merging multiple Sentinel-1 frames over large areas \citep{Zheng2019ImagingCascadiaSlow}.
 Interferograms are formed from the GSLCs through a pixel-wise cross multiplication (Equation \eqref{eq:ch2-conj-mult}), which are then unwrapped using the Statistical-cost, Network-flow Algorithm for Phase Unwrapping (SNAPHU) \citep{Chen2001TwoDimensionalPhase}. The unwrapped interferograms are referenced and (optionally) denoised by removing a planar or quadratic phase ramp. These are finally saved using the Hierarchical Data Format 5 (HDF5) data format, which allows user-defined metadata, data chunking, and compression.  HDF5 also simplifies and accelerates parallel implementations of pixel-wise SBAS algorithms (used in Chapter \ref{CHAP:4-GRL} and \ref{CHAP:5-robust-ts}).
