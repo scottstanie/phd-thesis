@@ -217,37 +217,84 @@ For comparison, we have also smoothed the noisy time series with a 1.2 year wide
 
 %\section{Results}
 
-\subsection{Sentinel-1 7-year time series over the Permian Basin}
-We processed an additional 3 years of Sentinel-1 data though December, 2021 for Paths 78 and 85 (Figure \ref{fig:paper1-study-area}) following the processing outlined in Section \ref{sec:ch3-insar-processing}. 
+\section{Sentinel-1 surface deformation over the Permian Basin}
+
+We processed an additional three years of Sentinel-1 data though December, 2021 for Paths 78 and 85 (Figure \ref{fig:paper1-study-area}) following the processing outlined in Section \ref{sec:ch3-insar-processing}. 
 We performed an unregularized SBAS inversion to get a noisy time series $ \bm{\phi} $ for each pixel. We temporally smoothed each pixel's time series using the LOWESS algorithm with a 2 year weighting window and 2 robust iterations.
 
 Additionally, we tested our algorithm on the ascending Path 151 immediately west of Path 85 to obtain full coverage of the Delaware Basin.
 
+\subsection{Path 78 line of sight results}
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure-results-los-path78.pdf}
+	\caption[Path 78 cumulative deformation]{
+		(a) Cumulative LOS deformation for ascending Path 78 from Nov. 2014 to Dec. 2021 using LOWESS smoothing algorithm. Red (negative LOS) indicates motion toward the satellite. Pixels with low correlation have been masked.
+		(b) Time series of pixel indicated by black box in panel (a) near location of former waste water injection well (Figure \ref{fig:ch2-injection-kim-lu}) showing noisy $ \bm{\phi} $ time series (blue) and LOWESS result (orange).
+		Green bars show the annual injection volume of nearby Texas salt water disposal well (API  49533675).
+	}
+	\label{fig:ch5-results-path78}
+\end{figure}
+
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure-los-path78-production.pdf}
+	\caption[Cumulative deformation near oil and water production]{
+		(a) Cumulative LOS deformation for ascending Path 78 from Nov. 2014 to Dec. 2021. Blue areas contain subsidence from oil and water production. Grey dots indicate the location of wells active between 2014 and 2019.
+		(b) Annual production volumes of water (blue) and oil (orange) for all wells contained in circle of panel (a).
+	}
+	\label{fig:ch5-results-path78-subs}
+\end{figure}
+
+
 \subsection{GPS comparison}
+
+%TODO: plot Bettadpurs gps in figure
+
 
 
 \begin{figure}
 	\centering
 	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/gps_path78.pdf}
 	\caption[GPS comparison for Path 78 LOWESS smoothing]{
-		Comparison of Path 78 LOWESS smoothed algorithm with permanent GPS stations projected onto the radar LOS..
+		Comparison of Path 78 LOWESS smoothed algorithm (green linens) with permanent GPS stations projected onto the radar LOS (blue dots) along with moving 60-day average (orange line).
 	}
-	\label{fig:ch5-results-gpsi}
+	\label{fig:ch5-results-gps}
 \end{figure}
 
 % REMINDER: TXM5, TXB8 started
 
-\subsection{Surface Deformation}
+%\subsection{Surface Deformation}
+
+
+
 
 \begin{figure}
 	\centering
-	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/deformation_path78.pdf}
-	\caption[GPS comparison for Path 78 LOWESS smoothing]{
-STAND IN. Change to QGIS version.
-Cumulative LOS deformation for Path 78 from Nov. 2014 to Dec. 2021.
+	\includegraphics[height=.9\textheight]{figures/chapter5-lowess/figure-results-los.pdf}
+	\caption[Cumulative 7-year LOS deformation for three Sentinel-1 paths]{
+		Cumulative LOS deformation from Nov. 2014 to Dec. 2021.for (a) ascending Path 151, (b) descending Path 85, and (c) ascending Path 78.  Blue areas indicate motion away from the satellite, areas with low correlation have been masked.
+		Purple outlines indicates (from west to east) the Delaware Basin, Central Basin Platform, and Midland Basin.
 	}
-	\label{fig:ch5-results-path78}
+	\label{fig:ch5-results-los}
 \end{figure}
+
+
+
+\begin{figure}
+	\centering
+	\includegraphics[height=.9\textheight]{figures/chapter5-lowess/figure-results-east-up.pdf}
+	\caption[Cumulative 7-year vertical and eastward deformation]{
+		Cumulative (a) vertical and (b) eastward deformation from Nov. 2014 to Dec. 2021. Blue areas indicate subsidence (westward motion), red indicates uplift (eastward). Purple outlines indicate the Delaware Basin (to the west) and Central Basin Platform (east).
+	}
+	\label{fig:ch5-results-east-up}
+\end{figure}
+
+
 
 %\section{Discussion}
 
