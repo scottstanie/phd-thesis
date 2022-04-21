@@ -24,7 +24,20 @@
 
 
 %\usepackage{palatino}
-\usepackage{hyperref}
+
+%https://personalinterests.lipingyang.org/options-for-appearance-of-links-in-hyperref/
+% https://tex.stackexchange.com/questions/50747/options-for-appearance-of-links-in-hyperref
+
+\usepackage{xcolor}
+\hypersetup{
+	colorlinks,
+	linkcolor={red!50!black},
+	citecolor={blue!50!black},
+	urlcolor={blue!80!black}
+}
+% Makes all the links black, same as text
+%\hypersetup{ hidelinks} 
+
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
