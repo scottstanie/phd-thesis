@@ -215,11 +215,9 @@ In our West Texas data, interferograms showing signs of $\Delta \phi_{orb}$, $\D
 
 Tropospheric noise $\Delta \phi_{tropo}$ consists of a stratified component that correlates with topography \citep{Doin2009CorrectionsStratifiedTropospheric} and a turbulent component that is random at time scales longer than one day \citep{Emardson2003NeutralAtmosphericDelay} (Section \ref{sec:ch2-noise-tropo}).
 Since the majority of the oil-producing Permian Basin is flat (less than 700 meters of elevation change), there is not a substantial stratified component of tropospheric noise in our data. 
-We also analyzed the effectiveness of correction techniques based on auxiliary data.
-We tested the Generic Atmospheric Correction Online Service (GACOS, \citep{Yu2018InterferometricSyntheticAperture,Yu2018GenericAtmosphericCorrection}), which combines global atmospheric models (GAMs) and GPS data to produce synthetic delay maps. 
-GACOS derives its corrections using the High Resolution ECMWF weather model (0.125-degree, 6-hour resolutions) and the GNSS derived tropospheric delay products from Neveda Geodetic Laboratory.
-Note that for the West Texas region, GACOS mostly relies on the GAM inputs due to the sparsity of GPS stations.
-We also created line-of-sight delay estimates from GAMs using the Raytracing Atmospheric Delay Estimation for Radar (RAiDER) library of \cite{Maurer2021RaiderRaytracingAtmospheric}, which generates a troposphere correction product from a user-selected GAM by integrating along the radar LOS path for each InSAR pixel.
+We analyzed the effectiveness of correction techniques based on auxiliary data using the Generic Atmospheric Correction Online Service (GACOS, \citep{Yu2018InterferometricSyntheticAperture,Yu2018GenericAtmosphericCorrection}), which combines global atmospheric models (GAMs) and GPS data to produce synthetic delay maps. 
+GACOS derives its corrections using the High Resolution European Centre for Medium-Range Weather Forecasts (ECMWF) weather model (0.125-degree, 6-hour resolutions) and the GNSS derived tropospheric delay products from Neveda Geodetic Laboratory.
+Note that for the West Texas region, GACOS mostly relies on the weather model input due to the sparsity of GPS stations.
 
 
 %Due to the limited spatial and temporal resolution of weather models and GPS data, GACOS is more effective in removing the stratified tropospheric noise \citep{Doin2009CorrectionsStratifiedTropospheric} than the random turbulent tropospheric noise \citep{Emardson2003NeutralAtmosphericDelay}. 
@@ -234,7 +232,7 @@ We also created line-of-sight delay estimates from GAMs using the Raytracing Atm
 	\caption[West Texas tropospheric correction attempt for pressure front]{
 		(a) Weather conditions visible from the GOES satellite on May 29th, 2018 at the same time as the Sentinel-1 acquisition.
 		(b) Unwrapped interferogram from Jan. 5, 2018 to May 29, 2018. Blue indicates an increase in relative LOS delay.
-		(c) Tropospheric correction predicted from delays computed by the GMAO weather model.
+		(c) Tropospheric correction predicted from delays computed by GACOS.
 		(d) Corrected interferogram (panel (b) - panel (c))
 	}
 	\label{fig:ch2-tropo-correct-wave}
@@ -242,8 +240,8 @@ We also created line-of-sight delay estimates from GAMs using the Raytracing Atm
 
 
 %We illustrate two correction attempts for Sentinel-1 (path 78) interferograms over West Texas using GAM-based corrections produced by RAiDER (Figures \ref{fig:ch2-tropo-correct-wave},\ref{fig:ch2-tropo-correct-storm}). We use NASA's Global Modeling and Assimilation Office (GMAO) reanalysis weather models, which are interpolated by RAiDER to the same pixel spacing as the interferograms ($\sim$ 500 m for this example). 
-We illustrate two correction attempts for Sentinel-1 (path 78) interferograms over West Texas using GACOS tropospheric corrections (Figures \ref{fig:ch2-tropo-correct-wave},\ref{fig:ch2-tropo-correct-storm}). 
-We also compare the weather conditions that are visible at the secondary SAR acquisition time \footnote{For both Figures \ref{fig:ch2-tropo-correct-wave}, \ref{fig:ch2-tropo-correct-storm}, the earlier SAR acquisition occurs during winter, which is after sunset for Sentinel-1 path 78 over West Texas. Most of the tropospheric noise in these winter-to-summer interferograms comes from the summer SAR acquisition.} using the Geostationary Operational Environmental Satellites (GOES).
+We illustrate two correction attempts for Sentinel-1 (Path 78) interferograms over West Texas using GACOS tropospheric corrections (Figures \ref{fig:ch2-tropo-correct-wave},\ref{fig:ch2-tropo-correct-storm}). 
+We also compare the weather conditions that are visible at the secondary SAR acquisition time \footnote{For both Figures \ref{fig:ch2-tropo-correct-wave}, \ref{fig:ch2-tropo-correct-storm}, the earlier SAR acquisition occurs during winter, which is after sunset for ascending Sentinel-1 over West Texas. Most of the tropospheric noise in these winter-to-summer interferograms comes from the summer SAR acquisition.} using the Geostationary Operational Environmental Satellites (GOES).
 The first example contains strong tropospheric noise resulting from a mass of dry air moving in from the New Mexico mountains, which creates a $\sim 20$ cm decrease in LOS delay in half of the interferogram (Figure \ref{fig:ch2-tropo-correct-wave}b). This change is not visible in the optical GOES image (Figure \ref{fig:ch2-tropo-correct-wave}a), but is predicted in the global weather model (Figure \ref{fig:ch2-tropo-correct-wave}c). 
 The root mean square (RMS) noise drops from 6.4 cm in the original interferogram to 3.5 cm after the GACOS correction.
 %, the slight temporal differences of the model output and interferogram acquisition times lead to only a partial correction of the tropospheric pattern.
@@ -253,18 +251,20 @@ In the second example (Figure \ref{fig:ch2-tropo-correct-storm}), the secondary 
 The $\sim 5$ km storm cells are too small and turbulent for the GAM to predict (Figure \ref{fig:ch2-tropo-correct-storm}c). Thus, the corrected interferogram still contains most of the turbulent noise from the storm (Figure \ref{fig:ch2-tropo-correct-storm}d).
 
 
-
 \begin{figure}
 	\centering
 %	\includegraphics[width=1.0\textwidth]{figures/chapter2-sar/figure_tropo_correct_storm.pdf}
 	\includegraphics[width=1.0\textwidth]{figures/chapter2-sar/figure_tropo_correct_gacos_storm.pdf}	\caption[West Texas tropospheric correction attempt for thunderstorm]{
 		(a) Weather conditions visible from the GOES satellite on July 23rd, 2019 at the same time as the Sentinel-1 acquisition
 		(b) Unwrapped interferogram from Jan. 12, 2019 to July 23, 2019. Blue indicates an increase in relative LOS delay
-		(c) Tropospheric correction predicted from delays computed by the GMAO weather model.
+		(c) Tropospheric correction predicted from delays computed by GACOS.
 		(d) Corrected interferogram (panel (b) - panel (c))
 	}
 	\label{fig:ch2-tropo-correct-storm}
 \end{figure}
+
+
+We also created line-of-sight delay estimates from GAMs using the Raytracing Atmospheric Delay Estimation for Radar (RAiDER) library of \cite{Maurer2021RaiderRaytracingAtmospheric}. RAiDER generates a troposphere correction product by integrating along the radar LOS path for each InSAR pixel, given a user-selected GAM. We compared several GAM corrections to the ECMWF used by GACOS and found only small differences in the results. For example, the RMS noise of the interferogram in Figure \ref{fig:ch2-tropo-correct-wave} drops an additional 0.8 cm by using NASA's Global Modeling and Assimilation Office (GMAO) reanalysis weather model, despite have 5x coarser spatial resolution than the ECMWF. However, no GAM that we tested successfully generated corrections for Figure \ref{fig:ch2-tropo-correct-storm}.
 
  
 %The dominant noise term for our West Texas Sentinel-1 data is turbulenct tropospheric noise.
