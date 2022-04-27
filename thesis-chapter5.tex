@@ -131,33 +131,33 @@ While \cite{Ferretti2000NonlinearSubsidenceRate} uses mean value of the common-r
 %where $ \bm{\Sigma} = \mathbb{E}[\bm{\epsilon} \bm{\epsilon}^T] $ is the measurement covariance matrix.
 
 
+\section{Synthetic Example}
+
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure2-demo-data.pdf}
+%	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure2-demo-data.pdf}
+	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure2-demo-data-ts-only.pdf}
 	\caption[Synthetic data for LOWESS smoothing]{
-		(a)  A 300 x 300 pixel region contains a synthetic uplift bowl which peaks at 3 cm.
-		(b) Turbulent tropospheric is noise added to panel (a) for 
-		(c) Time series of true deformation $\bm{d}$ (orange) and $\bm{\phi} =\bm{d} + \bm{\alpha}$ (gray). The pixel marked with an x in panels (a) and (b) shows the location of the $\bm{d}$ and $\bm{\phi}$ time series, respectively.
-		The date shown in panels (a) and (b) is marked with the grey dashed line. Note that the $ \bm{\phi} $ time series is offset due to the SBAS assumption that $ \phi_0 = 0 $.
+%		(a)  A 300 x 300 pixel region contains a synthetic uplift bowl which peaks at 3 cm.
+%		(b) Turbulent tropospheric is noise added to panel (a) for 
+%		(c) 
+		Synthetic time series for one pixel $ \bm{\phi} $ (gray) containing a combination of true deformation $\bm{d}$ (orange) and non-Gaussian tropospheric noise $ \bm{\alpha} $: $\bm{\phi} =\bm{d} + \bm{\alpha}$. 
+%		The pixel marked with an x in panels (a) and (b) shows the location of the $\bm{d}$ and $\bm{\phi}$ time series, respectively.
+%		The date shown in panels (a) and (b) is marked with the grey dashed line. 
+		Note that the $ \bm{\phi} $ time series is offset by an amount equal to the noise on the first date, due to the SBAS assumption that $ \phi_0 = 0 $.
 	}
 	\label{fig:ch5-demo-data}
 \end{figure}
 
-\section{Synthetic Example}
 
-
-We first illustrate the LOWESS algorithm on a synthetic 3-year deformation time series with a 12-day acquistion interval (Figure \ref{fig:ch5-demo-data}).
-A 300 x 300 pixel region contains an uplift bowl which linearly increases to $ 3 $cm max after 1.5 years (Figure \ref{fig:ch5-demo-data}a) and deflates back to zero by the end of 3 years. Turbulent tropospheric noise is simulated for each date following \cite{Hanssen2001RadarInterferometryData} added to the deformation (Figure \ref{fig:ch5-demo-data}b). The uplift bowl inflates at a constant rate for 1.5 years, then deflates back to 0 by the end of the 3rd year (Figure \ref{fig:ch5-demo-data}c).
+We first illustrate the LOWESS algorithm on a synthetic 3-year deformation time series with a 12-day acquisition interval (Figure \ref{fig:ch5-demo-data}).
+%A 300 x 300 pixel region contains an uplift bowl which linearly increases to $ \sim3 $cm max after 1.5 years (Figure \ref{fig:ch5-demo-data}a) and deflates back to zero by the end of 3 years. 
+The true deformation simulates linearly uplift which linearly increases to $ \sim3 $cm max after 1.5 years and deflates back to zero by the end of 3 years. 
+Turbulent tropospheric noise is simulated for each date following \cite{Hanssen2001RadarInterferometryData} added to the deformation.
+% (Figure \ref{fig:ch5-demo-data}b). 
+%The uplift bowl inflates at a constant rate for 1.5 years, then deflates back to 0 by the end of the 3rd year (Figure \ref{fig:ch5-demo-data}c).
 To emulate the output from an SBAS inversion, the sum of the deformation and noise is shifted by the noise on the first day so that $ \phi_0 = 0 $.
 
-
-
-
-Figure \ref{fig:ch5-algo-demo} illustrates two iterations of the LOWESS algorithm the $ \bm{\phi} $ time series from(Figure \ref{fig:ch5-demo-data}c).
-During the first iteration, each $ \hat{\phi}_i $ is calculated using a locally weighted regression with the weight based solely on the proximity to $ t_i $ (Figure \ref{fig:ch5-algo-demo}a). The resulting fit tracks the slowly varying pattern of the data, but outlier points strongly influence the fit (Figure \ref{fig:ch5-algo-demo}b). 
-%Using the residuals of the fit from Figure \ref{fig:ch5-algo-demo}b, 
-The second iteration combiners the proximity weighting from Figure \ref{fig:ch5-algo-demo}a with the residual weighting calculated from Figure \ref{fig:ch5-algo-demo}b, $ \bm{\delta} $ (Figure \ref{fig:ch5-algo-demo}c).
-The second iteration is influenced less by the outlier points and has fewer spurious bumps in the time series (Figure \ref{fig:ch5-algo-demo}d). Note that more iterations can be performed if desired; in this example, further iterations provide little benefit ($ \sim $ 1 mm or less).
 
 
 \begin{figure}
@@ -173,25 +173,33 @@ The second iteration is influenced less by the outlier points and has fewer spur
 	\label{fig:ch5-algo-demo}
 \end{figure}
 
+
+
+Figure \ref{fig:ch5-algo-demo} illustrates two iterations of the LOWESS algorithm the $ \bm{\phi} $ time series from(Figure \ref{fig:ch5-demo-data}c).
+During the first iteration, each $ \hat{\phi}_i $ is calculated using a locally weighted regression with the weight based solely on the proximity to $ t_i $ (Figure \ref{fig:ch5-algo-demo}a). The resulting fit tracks the slowly varying pattern of the data, but outlier points strongly influence the fit (Figure \ref{fig:ch5-algo-demo}b). 
+%Using the residuals of the fit from Figure \ref{fig:ch5-algo-demo}b, 
+The second iteration combiners the proximity weighting from Figure \ref{fig:ch5-algo-demo}a with the residual weighting calculated from Figure \ref{fig:ch5-algo-demo}b, $ \bm{\delta} $ (Figure \ref{fig:ch5-algo-demo}c).
+The second iteration is influenced less by the outlier points and has fewer spurious bumps in the time series (Figure \ref{fig:ch5-algo-demo}d). Note that more iterations can be performed if desired; in this example, further iterations provide little benefit ($ \sim $ 1 mm or less).
+
+
 \FloatBarrier
 
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure4-compare-tri.pdf}
+%	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure4-compare-tri.pdf}
+	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure4-compare-tri-ts-only.pdf}
 	\caption[Comparison of LOWESS smoothing to triangle filter for synthetic data]{
-Results of smoothing the synthetic noisy time series $ \bm{\phi} $ (blue with dots) using the LOWESS algorithm (green) and a triangle filter (pink). True deformation time series is shown in orange.
- Both the LOWESS algorithm and the triangle filter use $ 40 $\% of the data (a filter width of $ \sim $1.2 years) and have been shifted to compensate the first day's atmospheric noise.
-
-	}
+		Results of smoothing the synthetic noisy time series $ \bm{\phi} $ (blue with dots) using the LOWESS algorithm (green) and a triangle filter (pink). True deformation time series is shown in orange. Both the LOWESS algorithm and the triangle filter use $ 40 $\% of the data (a filter width of $ \sim $1.2 years) and have been shifted to compensate the first day's atmospheric noise.
+}
 	\label{fig:ch5-compare-tri}
 \end{figure}
 
-After subtracting $ \phi_0 $ from all points, the results of the LOWESS estimate $ \bm{\hat{\phi}} $ are shown in Figure \ref{fig:ch5-compare-tri}a (green line). The LOWESS algorithm smooths away the large spikes of turbulence noise in  $ \bm{\phi} $ Figure \ref{fig:ch5-compare-tri}a (blue). 
+After subtracting $ \phi_0 $ from all points, the results of the LOWESS estimate $ \bm{\hat{\phi}} $ are shown in Figure \ref{fig:ch5-compare-tri} (green line). The LOWESS algorithm smooths away the large spikes of turbulence noise in  $ \bm{\phi} $ (Figure \ref{fig:ch5-compare-tri}, blue) and captures most of the deformation signal (Figure \ref{fig:ch5-compare-tri}, orange)
 %We note that since the width of the weighting window $ \bm{w} $ was slightly over 1 year, the algorithm smooths over the peak of the deformation lasting several months (Figure \ref{fig:ch5-compare-tri}a, orange line),
-The LOWESS solution captures most of the deformation signal (Figure \ref{fig:ch5-compare-tri}c), missing only the sharp peak due to the 1.2 year weighting window.
-For comparison, we have also smoothed the noisy time series with a 1.2 year wide triangle filter (Figure \ref{fig:ch5-compare-tri}a pink line). 
-The triangle filter performs similarly to LOWESS when the noise is Gaussian; however, in this example with several large turbulence jumps, the triangle filter is pulled $>2$ cm away from the true deformation time series (Figure \ref{fig:ch5-compare-tri}d).
+%The LOWESS solution captures most of the deformation signal (Figure \ref{fig:ch5-compare-tri}c), missing only the sharp peak due to the 1.2 year weighting window.
+For comparison, we have also smoothed the noisy time series with a 1.2 year wide triangle filter (Figure \ref{fig:ch5-compare-tri} pink line). 
+The triangle filter performs similarly to LOWESS when the noise is Gaussian; however, the large turbulence jumps in this example cause the triangle filter to be pulled $>2$ cm away from the true deformation time series.
 
 
 %\section{InSAR Processing for Sentinel-1}
@@ -222,14 +230,15 @@ The triangle filter performs similarly to LOWESS when the noise is Gaussian; how
 
 \section{7-year Sentinel-1 cumulative surface deformation}
 
-We processed an additional three years of Sentinel-1 data (January 2019 though December, 2021) for Path 78 (Figure \ref{fig:paper1-study-area}) following the processing strategy outlined in Section \ref{sec:ch3-insar-processing}. 
-We performed an unregularized SBAS inversion to get a noisy time series $ \bm{\phi} $ for each pixel on 151 SAR acquisitions from Nov. 2014 to Dec. 2021. We fit and removed a quadratic surface at each noisy deformation time step to mitigate residual long wavelength noise from seasonal tropospheric patterns. We temporally smoothed each pixel's time series with the LOWESS algorithm using a weighting window covering $\geq 2$ years at all time intervals  and 2 robust iterations. We similarly processed 147 descending Path 85 SAR acquisitions and created a 7-year cumulative LOS deformation time series.
+We processed an additional three years of Sentinel-1 data (January 2019 though December, 2021) for Path 78 (Figure \ref{fig:paper1-study-area}) following the processing strategy outlined in Section \ref{sec:ch3-insar-processing}, for a total of 151 SAR acquisitions from Nov. 2014 to Dec. 2021
+We performed an unregularized SBAS inversion to get a noisy time series $ \bm{\phi} $ for each pixel. We fit and removed a quadratic surface from the deformation image at each SAR time step to mitigate residual long wavelength noise from seasonal tropospheric patterns \citep{Morishita2020LicsbasOpenSource}. We temporally smoothed each pixel's time series with the LOWESS algorithm using a weighting window covering $\geq 2$ years at all time intervals  and 2 robust iterations. We similarly processed 147 descending Path 85 SAR acquisitions and created a 7-year cumulative LOS deformation time series.
 
 % sampled every 6 months.
 We also processed 148 SAR acquisitions from ascending Path 151 SAR (west of Path 85) to cover the full Delaware Basin with at least $2$ paths of data in all location.
 The Path 151 footprint does not contain GPS station TXKM that was used as the reference location;
 %therefore, or any other GPS station near the center of the footprint, 
-for this dataset, we used the referencing technique presented in \cite{Zebker2021AccuracyModelFree} to fit and remove a phase-elevation trend from all high-coherence pixels in each interferogram. This method relies on the assumption that the majority of pixels in all interferogram do not show significant deformation, which is a safe assumption for Path 151 which only partially overlaps with the Permian Basin's production region.
+instead, we used the referencing technique presented in \cite{Zebker2021AccuracyModelFree} to fit and remove a phase-elevation trend from all high-coherence pixels in each interferogram and zero-reference the deformation. This method works well for interferograms covering large regions where only a subset of high-coherence pixels contain significant deformation.
+%. which is true for Path 151 which only partially overlaps with the Permian Basin's production region.
 
 
 \subsection{LOS deformation results}
@@ -287,7 +296,7 @@ The average RMS difference across the 15 stations between the smoothed GPS time 
 	\label{fig:ch5-results-los}
 \end{figure}
 
-%\FloatBarrier
+\FloatBarrier
 %\subsection{Vertical Deformation}
 
 In addition to the LOS decomposition using Paths 78 and 85 described in Section \ref{sec:ch4-insar-decomp}, we performed a second LOS decomposition using Paths 85 and 151.
