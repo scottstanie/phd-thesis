@@ -279,12 +279,12 @@ The average RMS difference across the 15 stations between the smoothed GPS time 
 	\label{fig:ch5-results-gps}
 \end{figure}
 
-
-%\FloatBarrier
+\FloatBarrier
 
 
 %\subsection{Surface Deformation}
 
+The cumulative LOS deformation from Nov. 2014 to Dec. 2021 is shown in Figure \ref{fig:ch5-results-los} for Path 151 (panel (a)), Path 85 (panel (b)), and Path 78 (panel (c)). Areas with low average spatial coherence ($ < 0.2 $) or temporal coherence $ < 0.75 $ are masked. In the northern Delaware Basin, many of the subsidence patterns present in the 4-year cumulative maps (Figure \ref{fig:ch4-insar-los}) show an acceleration as oil production 
 
 \begin{figure}
 	\centering
@@ -296,6 +296,45 @@ The average RMS difference across the 15 stations between the smoothed GPS time 
 	\label{fig:ch5-results-los}
 \end{figure}
 
+\begin{figure}
+	\centering
+	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure-results-path78-examples.pdf}
+	\caption[Path 78 deformation features]{
+		(a) Cumulative LOS deformation for ascending Path 78 through Jan. 2018 using LOWESS smoothing algorithm. Red (negative LOS) indicates motion toward the satellite. 
+		Grey dot shows the location of Texas salt water disposal well (API  49533675).
+		(b) Time series of pixel indicated by grey dot in panel (a) showing noisy $ \bm{\phi} $ (blue) and LOWESS result (orange). Green bars show the annual injection volume, indicating that the well shut down injection operations in 2018.
+		(c) Cumulative LOS deformation for ascending Path 78 from Nov. 2014 to Dec. 2021. Grey dots indicate the location of oil or water production wells that were active between 2014 and 2019.
+		(d) Noisy SBAS time series (blue) and smoothed LOWESS result (orange) for InSAR pixel in the center of the circle in panel (c).
+		Annual production volumes of water (green) and oil (pink) for all wells contained in circle of panel (c). Note that production continued into 2020 and 2021, but individual well data was unavailable.
+	}
+	\label{fig:ch5-results-path78 examples}
+\end{figure}
+
+%
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure-results-los-path78.pdf}
+%	\caption[Path 78 cumulative deformation]{
+%		(a) Cumulative LOS deformation for ascending Path 78 from Nov. 2014 to Dec. 2021 using LOWESS smoothing algorithm. Red (negative LOS) indicates motion toward the satellite. Pixels with low correlation have been masked.
+%		(b) Time series of pixel indicated by black box in panel (a) near location of former waste water injection well (Figure \ref{fig:ch2-injection-kim-lu}) showing noisy $ \bm{\phi} $ time series (blue) and LOWESS result (orange).
+%		Green bars show the annual injection volume of nearby Texas salt water disposal well (API  49533675).
+%	}
+%	\label{fig:ch5-results-path78}
+%\end{figure}
+%
+%
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure-los-path78-production.pdf}
+%	\caption[Cumulative deformation near oil and water production]{
+%		(a) Cumulative LOS deformation for ascending Path 78 from Nov. 2014 to Dec. 2021. Blue areas contain subsidence from oil and water production. Grey dots indicate the location of wells active between 2014 and 2019.
+%		(b) Annual production volumes of water (blue) and oil (orange) for all wells contained in circle of panel (a).
+%	}
+%	\label{fig:ch5-results-path78-subs}
+%\end{figure}
+
+
+
 \FloatBarrier
 %\subsection{Vertical Deformation}
 
@@ -305,7 +344,8 @@ We merged the two vertical (and eastward) deformation maps in their region of ov
 
 \begin{figure}
 	\centering
-	\includegraphics[height=.9\textheight]{figures/chapter5-lowess/figure-results-east-up.pdf}
+%	\includegraphics[height=.9\textheight]{figures/chapter5-lowess/figure-results-east-up.pdf}
+	\includegraphics[height=.9\textheight]{figures/chapter5-lowess/figure-results-east-up-clipped.pdf}
 	\caption[Cumulative 7-year vertical and eastward deformation]{
 		Cumulative (a) vertical and (b) eastward deformation from Nov. 2014 to Dec. 2021. Blue areas indicate subsidence (westward motion), red indicates uplift (eastward). Purple outlines indicate the Delaware Basin (to the west) and Central Basin Platform (east).
 	}
@@ -316,30 +356,6 @@ We merged the two vertical (and eastward) deformation maps in their region of ov
 
 \section{Discussion}
 
-
-
-\begin{figure}
-	\centering
-	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure-results-los-path78.pdf}
-	\caption[Path 78 cumulative deformation]{
-		(a) Cumulative LOS deformation for ascending Path 78 from Nov. 2014 to Dec. 2021 using LOWESS smoothing algorithm. Red (negative LOS) indicates motion toward the satellite. Pixels with low correlation have been masked.
-		(b) Time series of pixel indicated by black box in panel (a) near location of former waste water injection well (Figure \ref{fig:ch2-injection-kim-lu}) showing noisy $ \bm{\phi} $ time series (blue) and LOWESS result (orange).
-		Green bars show the annual injection volume of nearby Texas salt water disposal well (API  49533675).
-	}
-	\label{fig:ch5-results-path78}
-\end{figure}
-
-
-
-\begin{figure}
-	\centering
-	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure-los-path78-production.pdf}
-	\caption[Cumulative deformation near oil and water production]{
-		(a) Cumulative LOS deformation for ascending Path 78 from Nov. 2014 to Dec. 2021. Blue areas contain subsidence from oil and water production. Grey dots indicate the location of wells active between 2014 and 2019.
-		(b) Annual production volumes of water (blue) and oil (orange) for all wells contained in circle of panel (a).
-	}
-	\label{fig:ch5-results-path78-subs}
-\end{figure}
 
 
 
