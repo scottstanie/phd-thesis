@@ -82,9 +82,9 @@ The line of sight (LOS) vector is defined as the unit vector pointing from the r
 Each pulse illuminates a portion of the ground known as the radar footprint.
 
 
-\begin{figure}
+\begin{figure}[!h]
 	\centering
-		\includegraphics[width=0.99\linewidth]{figures/chapter2-sar/sar-geometry.pdf}
+		\includegraphics[width=0.95\linewidth]{figures/chapter2-sar/sar-geometry.pdf}
 	\caption[Acquisition geometry of a SAR platform]{
 	A platform moving in the azimuth/along-track direction contains a radar instrument with look angle $\theta$.    The slant range $r$ to the ground point is measured along the line-of-sight (LOS) direction from the antenna to the ground.
    	The radar antenna shown has length $L$ (in the azimuth direction) and width $w$.
@@ -104,18 +104,19 @@ These special waveforms allow the receiver to correlate the returned echoes with
 For a given $BW$, the range resolution can be written as $\delta_r = \frac{c}{2 BW}$. 
 %which means the resolution improves by a factor of $\tau \cdot BW$ (known as the \emph{time-bandwidth product}).
 
+\FloatBarrier
+
 
 Figure \ref{fig:ch2-range-compress} demonstrates the effect of using a chirp waveform on range resolution. An example chirp with parameters matching the ERS-1 satellite (Figure \ref{fig:ch2-range-compress}a)
 %The real part of an example chirp with parameters matching the ERS-1 satellite has an oscillation frequency which increases linearly over time (Figure \ref{fig:ch2-range-compress}a). 
 has a duration of $\tau \approx 37.12 \mu s$ and chirp slope $k = 4 \times 10^{11} Hz / s$, resulting in frequency bandwidth $BW = k \tau$ $\approx$15.5 MHz (Figure \ref{fig:ch2-range-compress}b). By convolving the transmitted chirp with its complex conjugate, we get the impulse response of a point scatterer (Figure \ref{fig:ch2-range-compress}c). If a chirp with the same time duration had a smaller slope $k$ (Figure \ref{fig:ch2-range-compress}d), the bandwidth would shrink by the same proportion (Figure \ref{fig:ch2-range-compress}e), and the impulse response would also have worse resolution (Figure \ref{fig:ch2-range-compress}f).
 Thus, we see that using chirped waveforms eliminates the original problem, as a longer pulse with larger bandwidth actually has a better resolution than a shorter pulse.
 
-
-\begin{figure}
+\begin{figure}[!h]
 	\centering
-%	\includegraphics[width=0.99\linewidth]{figures/chapter2-sar/range-compress.pdf}
-	\includegraphics[width=0.99\linewidth]{figures/chapter2-sar/radar-chirp-bandwidth-ers.pdf}
-%		\includegraphics[width=0.99\linewidth]{figures/chapter2-sar/radar-chirp-bandwidth-ers2.pdf}
+	%	\includegraphics[width=0.99\linewidth]{figures/chapter2-sar/range-compress.pdf}
+	\includegraphics[width=0.95\linewidth]{figures/chapter2-sar/radar-chirp-bandwidth-ers.pdf}
+	%		\includegraphics[width=0.99\linewidth]{figures/chapter2-sar/radar-chirp-bandwidth-ers2.pdf}
 	\caption[Range resolution from chirp compression]{
 		(a) The real part of a linear frequency-modulated chirp with a duration of $\tau \approx 37.12 \mu s$ and a chirp slope $k = 4 \times 10^{11} Hz / s$.
 		(b) The magnitude of the Fourier transform of the chirp is approximately a rectangle function, which shows the chirp bandwidth $BW = k \tau$ $\approx 15.5$ MHz.
@@ -124,6 +125,10 @@ Thus, we see that using chirped waveforms eliminates the original problem, as a 
 	}
 	\label{fig:ch2-range-compress}
 \end{figure}
+
+
+
+
 
 
 In the azimuth direction, the size of the radar footprint determines which ground points can be distinguished from the echo of one pulse;  this is known as the \emph{real aperture radar} (RAR) resolution. The footprint size can be written as $r \lambda / L$, where $ r $ is the target range, $ L $ is the along-track antenna length, and $ \lambda $ is the radar wavelength. 
@@ -135,7 +140,6 @@ The earliest imaging radar platforms were limited to this resolution in azimuth.
 
 
 \begin{figure}
-	\label{fig:ch2-synth-aper}
 	\centering
 	\includegraphics[width=0.75\linewidth]{figures/chapter2-sar/synth-aper2.pdf}
 	\includegraphics[width=0.95\linewidth]{figures/chapter2-sar/sar-synthetic-aperture.pdf}
@@ -145,6 +149,7 @@ The earliest imaging radar platforms were limited to this resolution in azimuth.
 		(Bottom) Side view of a series of pulses illuminating a target. Coherently processing all pulses forms synthetic aperture of length $L_s$.
 %		By coherently processing all pulses, we can form a synthetic aperture of length $L_s$.
 	}
+	\label{fig:ch2-synth-aper}
 \end{figure}
 
 
