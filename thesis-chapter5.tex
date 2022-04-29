@@ -164,7 +164,8 @@ To emulate the output from an SBAS inversion, the time series is shifted by the 
 	\centering
 	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure3-fits.pdf}
 	\caption[Demo of LOWESS fitting]{
-		(a) First iteration of local fit at $t_i$, weighted by window (orange) with $ \gamma=0.4 $ ($ \sim $1.2 year of data). Shading of dots indicates the weight factor, where gray indicates 0 weighting and gold indicates full weighting.
+		(a) First iteration of local fit at $t_i$, weighted by window (orange) with $ \gamma=0.4 $ ($ \sim $1.2 year of data). 
+%		Shading of dots indicates the weight factor, where gray indicates 0 weighting and gold indicates full weighting.
 		(b) First iteration of smoothed $ \hat{\phi}_i $ (orange line) for all $i$. 
 		(c) Second iteration at $t_i$, where the weighting combines the original window with the updated residual weighting. The large anomalous points have a smaller effect on the new local fit (green slope) compared to the original (orange slope).
 		% to produce a new weighted least squares fit.
@@ -202,38 +203,15 @@ For comparison, we have also linearly filtered the noisy time series with triang
 The triangle filter performs similarly to LOWESS when the noise is Gaussian; however, the large turbulence jumps in this example cause the triangle filter to be pulled $>2$ cm away from the true deformation time series.
 
 
-%\section{InSAR Processing for Sentinel-1}
 
-%TODO: do I show the 3-path example?
 
-%%For Sentinel-1 path 78, we processed all interferograms with temporal baselines less than 500. 
-%%Since all interferograms had less than 250 meter spatial baseline, we required no maximum spatial baseline threshold.  
-%%We unwrapped each interferogram using the Statistical-cost, Network-flow Algorithm for Phase Unwrapping (SNAPHU).
-%
-%We use the Path 78 and Path 85 inteferograms from Section .
-%We reduce long wavelength and stratified tropospheric noise by removing a combined planar phase ramp and linear phase vs. elevation relation \cite{Doin2009CorrectionsStratifiedTropospheric, Zebker2021AccuracyModelFree}. We used the mean of the pixel values in a window around GPS station TXKM as a reference.
-%We repeated this process for descending path 85 and ascending path 151. Since path 151 does not contain station TXKM, or any other GPS station near the center of the acquisition, we used the referencing technique presented in \cite{Zebker2021AccuracyModelFree} to fit and remove a phase-elevation trend from all high-coherence pixels in each interferogram. This method relies on the assumption that most pixels in each interferogram do not show significant deformation, which is valid Path 151 which only partially overlaps with the western portion of the oil-producing Permian Basin. 
-%%our signals deform slowly over time
-
-%FIGURE: 3 path study
-
-%For each pixel, we solved for the cumulative line of sight path delay for all SAR acquisition dates using the SBAS linear system.
-%The path delay consist of the true relative surface deformation on each date and a tropospheric noise component, which can lead to jumps of 10 cm or more between consecutive dates.
-%Since the atmospheric noise is correlated in space but uncorrelated in time, previous authors have isolated and mitigated the atmospheric noise by using a high pass temporal filter followed by a 2D spatial low pass filter
-%\cite{Ferretti2000NonlinearSubsidenceRate, Ferretti2001PermanentScatterersSar, Berardino2002NewAlgorithmSurface, Hooper2012RecentAdvancesSar}.
-%Here we perform a temporal smoothing using the robust locally weighted regression (LOWESS) method \cite{Cleveland1979RobustLocallyWeighted}. For each pixel, LOWESS performs multiple iterations of weighted linear regression at each point in the time series. The method weights nearby points more heavily than far away points. We use a window size such that at least two years of SAR acquisitions are weighted for each date, with more points considered during times of regular acquisitions.
-%Subsequent iterations use the residuals of the data points from the smoothed line to further deweight noisy acquisitions. Points with residuals larger than 6 times the median absolute residual are clipped to have 0 weight in future iterations. In this manner, the smoothing is robust to strong tropospheric turbulence noise that would otherwise leak into neighboring days using a moving average temporal filter. Additionally, since LOWESS assumes no underlying model, the smoothing can accommodate nonlinear deformation.
-%
-%To mitigate final residual long wavelength tropospheric noise, we remove quadratic ramp from the phase of each date in the time series (where we mask out pixels with $>$2 cm of estimated deformation to avoid removing deformation) \cite{Morishita2020LicsbasOpenSource}.
-
-%\section{Results}
 
 \section{7-year Sentinel-1 cumulative surface deformation}
 
 We demonstrate the LOWESS algorithm on real Sentinel-1 data over the Permian Basin.
 We processed an additional three years of data (Jan. 2019 though Dec. 2021) for Path 78 (Figure \ref{fig:paper1-study-area}) following the processing strategy outlined in Section \ref{sec:ch3-insar-processing}, for a total of 151 SAR acquisitions from Nov. 2014 to Dec. 2021
 We performed an unregularized SBAS inversion to get a noisy time series $ \bm{\phi} $ for each pixel. 
-To mitigate residual long wavelength noise from seasonal tropospheric patterns, we fit and removed a quadratic surface from the deformation map at each SAR acquisition \citep{Morishita2020LicsbasOpenSource}. We then temporally smoothed each pixel's using the LOWESS algorithm with a weighting window covering $\geq 2$ years at all time intervals and 2 robust iterations. We similarly processed 147 descending Path 85 SAR acquisitions to create a 7-year cumulative LOS deformation time series.
+To mitigate residual long wavelength noise from seasonal tropospheric patterns, we fit and removed a quadratic surface from the deformation map at each SAR acquisition using pixels with $<$2 cm of estimated deformation \citep{Morishita2020LicsbasOpenSource}. We then temporally smoothed each pixel's using the LOWESS algorithm with a weighting window covering $\geq 2$ years at all time intervals and 2 robust iterations. We similarly processed 147 descending Path 85 SAR acquisitions to create a 7-year cumulative LOS deformation time series.
 
 % sampled every 6 months.
 We also processed 148 SAR acquisitions from ascending Path 151 SAR (west of Path 85) to cover the full Delaware Basin with at least $2$ paths of data in all location.
@@ -260,7 +238,8 @@ While the trend is captured by the InSAR LOWESS solution, the seasonal variation
 	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/gps_path78_2plots.pdf}
 	\caption[Example results for Path 78 LOWESS smoothing]{
 		Path 78 LOWESS smoothed algorithm (green line) plotted against the original noisy time series (gray) at pixels near (a) station TXFS, and (b) station TXSO.
-		For comparison, ENU GPS time series stations have been projected onto the radar LOS (blue dots). Orange line shows 30 day moving average of GPS daily measurements.
+		For comparison, ENU GPS time series stations have been projected onto the radar LOS (blue dots). 
+%		Orange line shows 30 day moving average of GPS daily measurements.
 	}
 	\label{fig:ch5-results-gps-example}
 \end{figure}
