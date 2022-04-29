@@ -318,7 +318,8 @@ The detected features are mainly clustered in regions within the Midland Basin a
 \begin{figure*}[h]
 	\centering 
 	% vertical version:
-	\includegraphics[width=0.98\linewidth]{figures/chapter6-blobs/figure_discussion_residual_defo.pdf}
+	\includegraphics[height=.9\textheight]{figures/chapter6-blobs/figure_discussion_residual_defo_1col.pdf}
+%	\includegraphics[width=0.98\linewidth]{figures/chapter6-blobs/figure_discussion_residual_defo.pdf}
 	%\includegraphics[width=0.98\linewidth]{figures/chapter6-blobs/figure_discussion_residual_defo_horizontal.pdf}
 	\caption[Effect of residual deformation on tropospheric noise PSD]{
 		(a) InSAR-estimated tropospheric noise map for the Path 78 SAR acquisition 2018-09-14. 
@@ -331,7 +332,7 @@ The detected features are mainly clustered in regions within the Midland Basin a
 
 For the West Texas case, the residual deformation term $  \frac{1}{N-1}  \sum  \Delta d_{n,k} $ in Equation \eqref{eq:avg-ifg} does not significantly influence our noise simulations. To demonstrate this, Figure \ref{fig:discussion-residual-defo} (a) shows the tropospheric noise estimates on a quiet atmospheric date (2018-09-04) and Figure  \ref{fig:discussion-residual-defo} (b) shows the cumulative LOS deformation solution between  Nov. 2014 and Jan. 2019. The 1D PSDs for the noise-only map and the noise plus deformation map are very similar (Figure \ref{fig:discussion-residual-defo} (c)). This is because the total integrated power of the noise map is five times larger than the total power of the deformation map. Since the residual deformation contribution in Equation \eqref{eq:avg-ifg}, $ \frac{1}{N-1}  \sum  \Delta d_{n,k} $, is much less than the total cumulative deformation over the entire study period, we conclude that this term in the tropospheric noise estimates has negligible effects on the detection confidences derived from the noise simulations.
 
-
+\FloatBarrier
 
 \subsection{Path 85 Detections}
 \label{subsec:discussion-path85}
@@ -393,7 +394,7 @@ Our algorithm identified similar numbers of blob features from the ascending and
 
 \begin{figure}
 	\centering 
-	\includegraphics[width=.85\linewidth]{figures/chapter6-blobs/figure_discussion_oil_vs_blob_count_1col.pdf}
+	\includegraphics[width=.9\linewidth]{figures/chapter6-blobs/figure_discussion_oil_vs_blob_count_1col.pdf}
 	\caption[Detected deformation features vs daily Permian Basin oil production]{
 		The number of deformation features ($<$ 5\% chance of being tropospheric noise) detected from three Path 78 cumulative LOS deformation maps (Figure \ref{fig:results-detections}) and three Path 85 cumulative LOS deformation maps (Figure \ref{fig:discussion-detections-85}). Only detections from the overlapping region of the two paths are counted. The Permian Basin average daily oil production from 2014 and 2018 is shown as the orange line.
 	}
