@@ -197,7 +197,7 @@ InSAR surface deformation measurements have much broader spatial coverage, and t
 
 \FloatBarrier
 
-\section{InSAR processing strategy and noise analysis}
+\section{InSAR processing strategy and noise assessment}
 \label{sec:ch3-insar-processing}
 
 Using a geocoded SLC processor \citep{Zheng2017PhaseCorrectionSingle, Zebker2017UserFriendlyInsar} (Section \ref{sec:ch2-processing}), we processed 91 ascending (path 78, frames 94-104) and 82 descending (path 85, frames 483-493) Sentinel-1 scenes acquired between Nov. 2014 and Jan. 2019 (Figure \ref{fig:paper1-study-area}). We generated more than 7000 interferograms with 120 meter pixel spacing and a maximum temporal baseline of 800 days. No spatial baseline threshold was imposed in the interferogram formation. Because few decorrelation artifacts were presented, we were able to unwrap all interferograms without additional spatial filtering using the Statistical-cost, Network-flow Algorithm for Phase Unwrapping (SNAPHU) \citep{Chen2001TwoDimensionalPhase}. We removed long-wavelength phase ramps due to long-wavelength tropospheric noise, using a planar phase model. Comparable interferograms can be generated using other processors such as the InSAR Scientific Computing Environment (ISCE) \citep{Rosen2012InsarScientificComputing} or GMTSAR \citep{Sandwell2011OpenRadarInterferometry}. 
