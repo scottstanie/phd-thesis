@@ -2,8 +2,7 @@
 \chapter{Summary and Conclusions}
 \label{CHAP:7}
 
-In this thesis, we demonstrated the ability to derive accurate surface deformation maps over broad areas from InSAR measurements corrupted by severe tropospheric noise. Specifically, we have made the following contributions:
-
+In this thesis, we demonstrated the ability to derive accurate surface deformation maps over broad areas from InSAR measurements corrupted by severe tropospheric noise. We further demonstrated techniques for estimating uncertainty of automatically detected deformation features. Specifically, we have made the following contributions:
 
 
 \begin{enumerate}
@@ -21,14 +20,12 @@ In this thesis, we demonstrated the ability to derive accurate surface deformati
 		
 \end{enumerate}
 
-With multiple government and commerical SAR missions scheduled in upcoming years, the ability to leverage...
-
-Several efforts are underway to leverage this data growth to produce standardized surface deformation products, including the 
-with scalable algorithm will become increasingly important.  
-
-Specficially, the Observational Products for End-Users from Remote Sensing Analysis (OPERA) project at NASA JPL has been tasked to produce a North America land-surface displacement product from Sentinel-1 and NISAR data
-\citep{Bekaert2021IntroducingOperaProject}.The techniques developed in this thesis can be leveraged and extended to produce and analyze large-scale deformation maps. 
-Specific future work in this direction may include:
+With multiple government and commercial SAR missions scheduled in upcoming years, there will be opportunities for creating continental and global deformation products from InSAR data.
+For example, the Observational Products for End-Users from Remote Sensing Analysis (OPERA) project at NASA JPL has been tasked to produce a North America land-surface displacement product from Sentinel-1 and NISAR data
+\citep{Bekaert2021IntroducingOperaProject}.
+%The processing and analysis techniques 
+Since the processing and analysis techniques required to produce and analyze such products must be scalable and robust, the techniques developed in this thesis can be leveraged and extended to contribute to these efforts.
+Specific future work may include:
 
 \begin{itemize}
 
@@ -47,12 +44,14 @@ Specific future work in this direction may include:
 %it should be noted that the PSD description is not in general a complete specification of a process; the power spectrum is only a summary of second moments (variance versus frequency). Stochastic processes with identical power spectra can have very different appearances in the time domain
 
 
-\item Accounting for both seasonal and stratified tropospheric noise, in addition to tropospheric turbulence used in Chapter \ref{CHAP:6-blob}, to more reliably map of mountainous study areas. Additionally, the seasonal variations of tropospheric noise may be important to simulate to accurately infer uncertainty for other time series analysis methods.
+\item Accounting for both seasonal and stratified tropospheric noise in addition to tropospheric turbulence used in Chapter \ref{CHAP:6-blob}.The seasonal variations of tropospheric noise may be important to accurately infer uncertainty for certainty time series analysis methods.
 
 \item Incorporating additional error sources into the noise simulations presented in Chapter \ref{CHAP:6-blob}, including unwrapping errors \citep{Yunjun2019SmallBaselineInsar}, closure phase bias \citep{Zheng2022ClosurePhaseSystematic}, and speckle-induced uncertainty \citep{Zwieback2022ReliableInsarPhase}. 
-Since difference study regions experience  a difference balance of phase errors from Equation \eqref{eq:ch2-insar-noise-terms} which need to be included for a reliable uncertainty estimate in the final time series.
+%Since difference study regions experience  a difference balance of phase errors from Equation \eqref{eq:ch2-insar-noise-terms} which need to be included for a reliable uncertainty estimate in the final time series.
 
-\item Combining auxiliary data sources with the deformation detections of Chapter \ref{CHAP:6-blob} to classify/categorize possible causes of deformation. This data fusion may become increasingly useful as larger deformation maps are accessible through cloud computing environments (e.g. \cite{Kellndorfer2022GlobalSeasonalSentinel}).
+\item Combining auxiliary data sources with the deformation detections of Chapter \ref{CHAP:6-blob} to classify/categorize possible causes of deformation. 
+
+\item Increasing accessibility of derived products by leveraging new, cloud-friendly data formats (e.g. \cite{Kellndorfer2022GlobalSeasonalSentinel}).
 
 % Estimation of errors from decorr, from fading signal bias (yujies paper?), from aliasing effect (cite karissa) and phase unwrapping errors (cite yunjun), and from speckle induced errors (Zwiebeck)
 
