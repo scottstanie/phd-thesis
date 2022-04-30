@@ -85,6 +85,28 @@
 \begin{abstract}
 %  The text must be either double-spaced or 1.5-spaced. Abstracts should be limited to 350 words.
 % From word template: <Abstract: Should not exceed 350 words. It should be a continuous description, not disconnected notes or an outline.>
+
+The Permian Basin has become the United States' largest producer of oil and gas over the past decade, largely due to advances in shale recovery technologies. 
+Injection or withdrawal of fluids from the subsurface can induce earthquakes along existing faults, and an increased rate of low magnitude earthquakes have been observed along with the increase in hydrocarbon production in West Texas. 
+%While petroleum production and wastewater injection volumes have been rising throughout the basin, the recently cataloged earthquakes are spatially clustered. 
+%One significant cluster is near Pecos, TX, where increased seismic activity began in 2009 and climbed to more than 2000 earthquakes in 2017. 
+To better understand the causes of these earthquakes and to assess the likelihood of infrastructure damage and safety concerns, knowledge of subsurface stress and pore pressure changes is needed. 
+However, in situ measurements for characterizing the Earth’s subsurface are expensive and difficult to obtain. 
+Interferometric Synthetic Aperture Radar (InSAR) is a remote sensing technique which can measure deformation of Earth's surface over broad areas with 10-100 meter spatial resolution and millimeter-to-centimeter accuracy.
+These measurements can be used to derive information about Earth’s subsurface, estimate the distribution of fault slip, and infer associated seismic risk.
+However, the noise sources of InSAR pose considerable challenges to achieving millimeter-level accuracy over large study areas.
+%Previous InSAR induced seismicity studies have mostly focused on areas 60-by-60 km or smaller. Because InSAR tropospheric noise variance increases with the distance away from the reference point, it is difficult to expand the InSAR spatial coverage to the entire Permian basin while retaining millimeter level accuracy. 
+In this thesis, we demonstrate the ability to measure subtle surface deformation features caused by petroleum production and induced earthquakes over the entire Permian Basin. 
+A novel outlier detection technique is developed to detect measurements corrupted by >10 cm of turbulent tropospheric noise. 
+We also present a robust time series smoothing technique for extracting nonlinear deformation in the presence of non-Gaussian noise.
+%, as well as a robust 
+Our deformation maps achieve basin-wide 1-3 mm/year accuracy as verified by available permanent GPS stations.
+Furthermore, the recent growth in satellite data has created a need for automated and scalable algorithms for processing and interpreting large deformation maps.
+%The final surface deformation products, which achieve basin-wide 1-3 mm/year accuracy, enable physics-based modeling of the subsurface processes that drive the induced seismicity. 
+We develop a computer vision algorithm capable of detecting deformation features of unknown size and location in large deformation maps.
+We combine this algorithm with a data-driven method for estimating tropospheric noise strength on individual SAR acquisitions. We use this estimate to produce uncertainty measures for each automatically detected deformation feature.
+
+
 \end{abstract}
 
 %% The table of contents is required.
