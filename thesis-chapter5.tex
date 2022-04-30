@@ -15,8 +15,8 @@ In this chapter, we present a method for robustly extracting slowly-varying surf
 We perform a temporal smoothing using the robust Locally Weighted Scatterplot Smoothing (LOWESS) technique \citep{Cleveland1979RobustLocallyWeighted} on noisy surface deformation time series derived using SBAS.
 %The method extends the ideas behind the outlier-removal technique presented in Chapter \ref{CHAP:4-GRL}.
 %Compared to the alternatives presenting in Section \ref{sec:ch4-method-compare}, 
-The LOWESS smoothing technique easily accounts for nonlinear deformation while also suppressing the strong summer tropospheric noise (10-15 cm).
-We demonstrate the technique on a synthetic time series and on three paths of Sentinel-1 data over the Permian Basin.
+The LOWESS smoothing technique easily accounts for nonlinear deformation while also suppressing the strong summer tropospheric noise.
+We demonstrate the technique on both synthetic data and on three paths of Sentinel-1 data over the Permian Basin.
 The cumulative results show subtle basin-wide uplift features arising after 4-5 years of heavy sustained wastewater injection.
 
 
@@ -221,29 +221,53 @@ The Path 151 footprint does not contain GPS station TXKM that was used as the re
 instead, we used the technique presented in \cite{Zebker2021AccuracyModelFree} to fit and remove a phase-elevation trend from all high-coherence pixels in each interferogram and zero-reference the deformation. This method is effective for study areas where only a subset of high-coherence interferogram pixels contain significant deformation.
 %. which is true for Path 151 which only partially overlaps with the Permian Basin's production region.
 
-
-\subsection{LOS deformation results}
-\label{sec:ch5-results-path78}
-
-
-To assess the performance of the LOWESS-smoothed LOS deformation results, we projected the available GPS ENU time series onto the radar LOS. 
-As an example, Figure \ref{fig:ch5-results-gps-example}a shows the LOS time series (blue dots) for GPS station TXFS, along with its 30-day moving average (orange line).
-The unregularized InSAR time series (gray) contains up to 5-7 cm of tropospheric noise during the summer months. However, the LOWESS solution (green line) is unaffected by the spikes and successfully tracks the $ \sim1 $cm of long term motion shown in the GPS data. 
-In Figure \ref{fig:ch5-results-gps-example}b, the LOS time series for GPS station TXSO shows a combination of a 5-10 mm increase in LOS along with 10-15 mm of seasonal variations.
-While the trend is captured by the InSAR LOWESS solution, the seasonal variations are smoothed over due to the $2$ year weighting window.
+\subsection{GPS comparison and smoothing window choice}
+\label{sec:ch5-results-gps}
 
 
-
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/gps_path78_2plots.pdf}
 	\caption[Example results for Path 78 LOWESS smoothing]{
 		Path 78 LOWESS smoothed algorithm (orange line) plotted against the original noisy time series (gray) at pixels near (a) station TXFS, and (b) station TXSO.
 		GPS time series (blue dots) have been projected onto the radar LOS. 
-%		Orange line shows 30 day moving average of GPS daily measurements.
+		%		Orange line shows 30 day moving average of GPS daily measurements.
 	}
 	\label{fig:ch5-results-gps-example}
 \end{figure}
+
+To assess the performance of the LOWESS-smoothed LOS deformation results, we projected the available GPS ENU time series onto the radar LOS. 
+As an example, Figure \ref{fig:ch5-results-gps-example}a shows the LOS time series (blue dots) for GPS station TXFS.
+%, along with its 30-day moving average (orange line).
+The unregularized InSAR time series (gray) contains up to 5-7 cm of tropospheric noise during the summer months. However, the LOWESS solution (green line) is unaffected by the spikes and successfully tracks the $ \sim1 $cm of long term motion shown in the GPS data. 
+In Figure \ref{fig:ch5-results-gps-example}b, the LOS time series for GPS station TXSO shows a combination of a 5-10 mm increase in LOS along with 10-15 mm of seasonal variations.
+While the trend is captured by the InSAR LOWESS solution, the seasonal variations are smoothed over due to the $2$ year weighting window.
+
+We compared multiple choices of the LOWESS window size to determine an appropriate choice of $ \gamma $ which balances the tradeoff between noise reduction and temporal resolution.
+To estimate the variance of the LOWESS-smoothed solution, we used the bootstrap technique \citep{Efron1979BootstrapMethodsAnother, Efron1994IntroductionBootstrap}, which have been included in InSAR time series packages such as GIAnT, MintPy, and LiCSBAS
+\citep{Agram2013NewRadarInterferometric, Yunjun2019SmallBaselineInsar, Morishita2020LicsbasOpenSource}.
+%The bootstrap and jackknife (a special case of the bootstrap) techniques have been included in various InSAR time series packages including GIAnT, MintPy, and LiCSBAS
+
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure-results-bootstrap.pdf}
+	\caption[Cumulative 7-year LOS deformation for three Sentinel-1 paths]{
+	LOWESS smoothed solutions of bootstrap resampled noisy InSAR time series at GPS station TXSO using a window size of (a) $ \gamma = 0.5 $ and (b) $ \gamma = 2 $ years. Each smoothed resampling is shown as a green line, with the mean of all green lines shown in black.
+	(c) LOWESS InSAR solution compared to GPS stations projected onto the radar LOS for the $ \gamma = 2 $ year case. Green shaded region shows $ \pm 2  $ standard deviations as estimated by taking the standard deviation of all resampled solutions from panel (b).
+	(d) Bootstrap estimated standard deviation of LOWESS result for $ \gamma = 0.5, 1, 2 $, and $ 3 $ years of smoothing.
+	}
+	\label{fig:ch5-results-bootstrap}
+\end{figure}
+
+
+
+Figure \ref{fig:ch5-results-bootstrap} shows an example of the bootstrap analysis on the InSAR data near GPS station TXSO.
+We resampled the datapoints from the noisy $ \bm{\phi} $ with replacement and performed the LOWESS smoothing on each bootstrap sample (Figure \ref{fig:ch5-results-bootstrap}b). As the number of bootstrap draws increases, the mean of the LOWESS results (black) converges to the smoothed result on the real data.
+Taking the standard deviation of the resamples gives an estimate the variance of the smoothed result (Figure \ref{fig:ch5-results-bootstrap}b).
+Note that the $ \gamma = 0.5  $ year solutions have a much larger variance than the $ 2 $ year smoothed solutions; however, the variance starts to converge after a 2 year window (Figure \ref{fig:ch5-results-bootstrap}d). Note that while increasing window size decreases the variance in the middle of the time series, the end points still have the highest uncertainty. Similar to other linear fitting procedures, the uncertainty of the estimated slopes propagate into a larger absolute uncertainty at the end points of the data.
+
+%(d) Bootstrap estimated standard deviation of LOWESS result for $ \gamma = 0.5, 1, 2 $, and $ 3 $ years of smoothing.
 
 
 The full set of GPS comparisons for Path 78 is shown in Figure \ref{fig:ch5-results-gps}. 
@@ -252,13 +276,14 @@ There is an average of 3 mm RMS difference between the smoothed GPS time series 
 
 %TODO: discuss the end point variance? largest uncertainty for the final 6-12 months?
 
-
 \begin{figure}
 	\centering
-	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/gps_path78.pdf}
-%	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/gps_path78_2.pdf}
+%	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/gps_path78.pdf}
+	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/gps_path78_with_sigma.pdf}
 	\caption[Full GPS comparison for Path 78 LOWESS solutions]{
-		Comparison of Path 78 LOWESS smoothed algorithm (orange lines) with daily permanent GPS stations projected onto the radar LOS (blue dots). Orange lines show 30 day moving average of GPS daily measurements.
+		Comparison of permanent GPS stations projected onto the radar LOS (blue dots)
+		with Path 78 LOWESS smoothed algorithm (orange lines). Green shaded region shows $ \pm 2  $ standard deviations as estimated by bootstrap resampling.
+%		Orange lines show 30 day moving average of GPS daily measurements.
 	}
 	\label{fig:ch5-results-gps}
 \end{figure}
@@ -266,14 +291,10 @@ There is an average of 3 mm RMS difference between the smoothed GPS time series 
 \FloatBarrier
 
 
-\subsection{Choosing the LOWESS window size}
 
-Tradeoff between noise reduction and temporal resolution.
 
-We compared multiple $ \gamma $ choices...
-
-As a measure of uncertainty, we usee the bootstrap technique \citep{Efron2019ComputerAgeStatistical},  \citep{Efron1979BootstrapMethodsAnother}
-
+\subsection{LOS deformation results}
+\label{sec:ch5-results-path78}
 
 \begin{figure}
 	\centering

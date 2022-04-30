@@ -2,7 +2,7 @@
 \chapter{Radar Interferometry Background}
 \label{CHAP:2}
 
-In this chapter, we introduce the technical principles of Interferometric Synthetic Aperture Radar (InSAR). We provide background on synthetic aperture radar (SAR) image formation and show how the phase difference between two SAR images acquired at different times can be used to infer topography or surface deformation. We outline common InSAR noise sources, and we show how to combine many interferograms to solve for a time series of surface deformation. Finally, we outline out InSAR processing workflow using geocoded single-look complex (SLC) images.
+In this chapter, we introduce the technical principles of Interferometric Synthetic Aperture Radar (InSAR). We provide background on synthetic aperture radar (SAR) image formation and show how the phase difference between two SAR images acquired at different times can be used to infer surface deformation. We outline common InSAR noise sources, and we show how to combine many interferograms to derive time series of surface deformation. Finally, we outline an efficient InSAR processing workflow using geocoded single-look complex (SLC) images.
 
 
 %Simons: operating at microwave frequencies, synthetic aperture radar (SAR) systems provide unique images representing the electrical and geometrical proper- ties of a surface in nearly all weather conditions. Since they provide their own illumination, SARs can image in daylight or at night. 
@@ -13,7 +13,7 @@ In this chapter, we introduce the technical principles of Interferometric Synthe
 \section{Radar Imaging}
 \label{sec:ch2-radar}
 
-``Radar'' was originally an acronym for ``RAdio Detection And Ranging'', but it has since become ubiquitous enough enter the common vernacular. Unlike passive sensors like optical cameras that rely on illumination from outside sources, a radar is an active sensor that emits its own electromagnetic energy.  As such, radars are able to operate both day and night, and generally operate at microwave frequencies that are not blocked by clouds (between $\sim$ 1 GHz and 300 GHz, or wavelengths of 3 m to 1 mm).
+``Radar'' was originally an acronym for ``RAdio Detection And Ranging'' has since entered the common vernacular. Unlike passive sensors like optical cameras that rely on illumination from outside sources, a radar is an active sensor that emits its own electromagnetic energy.  As such, radars are able to operate both day and night, and generally operate at microwave frequencies that are not blocked by clouds (between $\sim$ 1 GHz and 300 GHz, or wavelengths of 3 m to 1 mm).
 %The ability to operate both day and night is one of the main advantages of radar.
 
 The original radars developed during World War 2 were for tracking the position of targets. In these systems, the range to the target is calculated from the round trip travel time of an electromagnetic pulse that is reflected off the target, and the angle is determined by the antenna pointing direction. Researchers later developed imaging radar systems that convert a series of radar pulses on a moving platform into a two-dimension image. Although these side-looking radar images originally had coarse resolution, fine resolution images were first demonstrated in the research led by Carl Wiley at Goodyear in the 1950s. The research later led to the imaging technique known as synthetic aperture radar (SAR) \citep{Wiley1954PulsedDopplerRadar, Wiley1985SyntheticApertureRadars}. 
