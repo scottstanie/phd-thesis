@@ -24,8 +24,9 @@ With multiple government and commercial SAR missions scheduled in upcoming years
 For example, the Observational Products for End-Users from Remote Sensing Analysis (OPERA) project at NASA JPL has been tasked to produce a North America land-surface displacement product from Sentinel-1 and NISAR data
 \citep{Bekaert2021IntroducingOperaProject}.
 %The processing and analysis techniques 
-Since the processing and analysis techniques required to produce and analyze such products must be scalable and robust, the techniques developed in this thesis can be leveraged and extended to contribute to these efforts.
-Specific future work may include:
+Since the processing and analysis techniques required for such products must be scalable and robust, the techniques developed in this thesis can contribute to these efforts.
+
+Future work beyond extending the results presented here may include:
 
 \begin{itemize}
 
@@ -36,22 +37,21 @@ Specific future work may include:
 
 %\item Geomechanical modeling of the time-varying deformation maps over the Permian Basin. As Figure \ref{fig:ch5-discuss-eqs} suggests, 
 
-\item Combining subsurface pore pressure models using the wastewater disposal history (e.g. \cite{Ge2022RecentWaterDisposal}) with the recent changes to surface deformation.
-
-\item Using the vertical and eastward maps of Chapter \ref{CHAP:5-robust-ts} to estimate locations of new, unmapped faults \citep{Horne2021BasementRootedFaults}.
+\item Combining subsurface pore pressure models using the wastewater disposal history (e.g. \cite{Ge2022RecentWaterDisposal}) with the recent changes to surface deformation to determine subsurface flow barriers and locations of elevated pressure. This effort could leverage the recent detailed compilation of known faults in the Delaware Basin \citep{Horne2021BasementRootedFaults}.
 
 % From Agnew, 1992
 %it should be noted that the PSD description is not in general a complete specification of a process; the power spectrum is only a summary of second moments (variance versus frequency). Stochastic processes with identical power spectra can have very different appearances in the time domain
 
 
-\item Accounting for both seasonal and stratified tropospheric noise in addition to tropospheric turbulence used in Chapter \ref{CHAP:6-blob}.The seasonal variations of tropospheric noise may be important to accurately infer uncertainty for certainty time series analysis methods.
+\item Simulating both seasonal and stratified tropospheric noise to more accurately estimate uncertainty. The noise simulations presented in Chapter \ref{CHAP:6-blob} used tropospheric turbulence, which was the dominant error source for West Texas. The seasonal variations of tropospheric noise may be important to accurately infer uncertainty for other study areas.
+% or when using other time series analysis methods.
 
-\item Incorporating additional error sources into the noise simulations presented in Chapter \ref{CHAP:6-blob}, including unwrapping errors \citep{Yunjun2019SmallBaselineInsar}, closure phase bias \citep{Zheng2022ClosurePhaseSystematic}, and speckle-induced uncertainty \citep{Zwieback2022ReliableInsarPhase}. 
+\item Incorporating additional error sources into the noise simulations, including unwrapping errors \citep{Yunjun2019SmallBaselineInsar}, closure phase bias \citep{Zheng2022ClosurePhaseSystematic}, and speckle-induced uncertainty \citep{Zwieback2022ReliableInsarPhase}. 
 %Since difference study regions experience  a difference balance of phase errors from Equation \eqref{eq:ch2-insar-noise-terms} which need to be included for a reliable uncertainty estimate in the final time series.
 
-\item Combining auxiliary data sources with the deformation detections of Chapter \ref{CHAP:6-blob} to classify/categorize possible causes of deformation. 
+\item Combining auxiliary data sources with the automatically detected deformation features of Chapter \ref{CHAP:6-blob} to classify/categorize possible causes of deformation.
 
-\item Increasing accessibility of derived products by leveraging new, cloud-friendly data formats (e.g. \cite{Kellndorfer2022GlobalSeasonalSentinel}).
+\item Increasing accessibility of InSAR-derived products by leveraging new, cloud-friendly data formats (e.g. \cite{Kellndorfer2022GlobalSeasonalSentinel}).
 
 % Estimation of errors from decorr, from fading signal bias (yujies paper?), from aliasing effect (cite karissa) and phase unwrapping errors (cite yunjun), and from speckle induced errors (Zwiebeck)
 

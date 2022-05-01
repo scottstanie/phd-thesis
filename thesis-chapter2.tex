@@ -421,7 +421,7 @@ Previous studies have advanced correction techniques for the stratified componen
 Many efforts have advanced stratified noise corrections using auxiliary sources of data, including global atmospheric models (GAMs) \citep{Doin2009CorrectionsStratifiedTropospheric, Jolivet2011SystematicInsarTropospheric, Jolivet2014ImprovingInsarGeodesy, Cao2021AdvancedInsarTropospheric}, GPS zenith delay measurements \citep{Onn2006ModelingWaterVapor, Yu2017GenerationRealTime}, and external satellite measurements from sensors such as the Moderate Resolution Imaging Spectroradiometer (MODIS) \citep{Li2005InterferometricSyntheticAperture, Barnhart2013CharacterizingEstimatingNoise} or the Medium Resolution Imaging Spectrometer (MERIS)  \citep{Ding2008AtmosphericEffectsInsar}.
 Several authors have attempted to create off-the-shelf correction services or toolboxes from these data sources. For example,	
 \cite{Yu2018GenericAtmosphericCorrection} combined information from GAMs and available GPS zenith delay measurements to create the Generic Atmospheric Correction Online Service (GACOS) for estimating tropospheric noise in InSAR data. \cite{Maurer2021RaiderRaytracingAtmospheric} created a library for ray-tracing the LOS paths through GAM-predicted delays to create correction products.
-While these correction methods show promise in certain study areas, the spatial and temporal resolution can be too low to correct for noise from severe weather or turbulent mixing of water vapor (e.g. Section \ref{sec:ch3-insar-processing}) \citep{Murray2019TroposphericCorrectionsInsar}. Therefore, most methods for mitigating the turbulent tropospheric noise rely on time series methods that exploit the uncorrelated temporal characteristics of the noise.
+While these correction methods show promise in certain study areas, the spatial and temporal resolution can be too low to correct for noise from severe weather or turbulent mixing of water vapor (e.g. Section \ref{sec:ch3-insar-processing}) \citep{Murray2019TroposphericCorrectionsInsar}. Therefore, many methods for mitigating the turbulent tropospheric noise analyze many interferograms over time and exploit the uncorrelated temporal characteristics of the noise.
 % on the atmospheric delay being uncorrelated for time scales longer than $\sim 6$ hours \cite{Emardson2003NeutralAtmosphericDelay}.
 
 
@@ -564,7 +564,7 @@ When $\bm{\Delta \phi}$ contains an isolated subset of interferograms, $A$ is no
 
 
 
-\section{InSAR processing chain}
+\section{InSAR Processing Chain}
 \label{sec:ch2-processing}
 
 We developed software for an efficient and scalable InSAR processing chain to process geocoded SLC images and output cumulative surface deformation maps (Figure \ref{fig:ch2-processing}). An area of interest (AOI) is chosen in latitude and longitude coordinates, and all overlapping Sentinel-1 SLC products from a specified time frame are downloaded from the Alaska Satellite Facility (ASF) Distributed Active Archive Center (DAAC). The 30-meter SRTM DEM is downloaded over the AOI (stitching together tiles for regions larger than 1 x 1 degree) and upsampled \citep{Nasa2013NasaShuttleRadar} .
