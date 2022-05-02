@@ -110,23 +110,19 @@ Additionally, not all algorithms have attempted to quantify the detection uncert
 \label{sec:chap1-contributions}
 
 
-The contributions of this thesis center around designing scalable methods to produce reliable surface deformation maps over large regions. We have focused on the mitigation of strong atmospheric noise and the creation of uncertainty measures which are easy to interpret for non-expert stakeholders.
-
-
-The contributions may be summarized as follows:
+The contributions of this dissertation center around designing scalable methods to produce reliable surface deformation maps over large regions. We focus on the mitigation of strong tropospheric noise, as well as the uncertainty quantification of InSAR time series solutions. The contributions are summarized as follows:
 
 \begin{enumerate}
 	
-	\item We developed Python-based InSAR time series analysis software to ingest geocoded SAR images, extract surface deformation, decompose multiple geometries into horizontal and vertical deformation, and verify results with permanent GPS stations.
+	\item We developed Python-based InSAR time series analysis software that process geocoded SAR images acquired from multiple imaging geometries and reconstruct surface deformation in eastward and vertical directions.
 	
-	\item We performed a rigorous uncertainty analysis to identify the dominant noise source in the Permian Basin for Sentinel-1.  In the process, we developed a method to estimate the tropospheric noise and its power spectral density from InSAR data.
+	\item We performed a rigorous analysis of all noise sources in the Permian Basin Sentinel-1 InSAR data. We identified that the dominant noise term is the tropospheric turbulence noise with up to 15 cm non-Gaussian outliers. We developed methods for characterizing the tropospheric noise and its power spectral density directly from InSAR data, as well as methods for mitigating the impact of the troposphere noise outliers.
 	
-	\item We designed scalable, robust time series algorithms for tracking yearly changes of deformation over large regions.
+	\item We designed scalable, robust time series algorithms for reconstructing the temporal evolution of surface deformation over very wide regions. Based on independent validation from GPS permanent stations, we achieved millimeter-level accuracy in the cumulative surface deformation solutions.
 	
-	\item We created millimeter-level accurate maps of cumulative surface deformation that are available online for analysis. These maps contain many subsidence and uplift features near oil and gas production, as well as linear patterns near clusters of seismic activity.
+	\item We developed a computer vision algorithm for automatically detecting surface deformation signals of unknown sizes in basin-scale InSAR maps. The detection algorithm produces uncertainty measures for each detected feature based on a realistic tropospheric turbulence noise model.
 	
-	\item We created a computer vision algorithm to automatically detect surface deformation signals of unknown sizes in large InSAR maps. The detection algorithm produces uncertainty estimates for each visual feature in the InSAR data.
-	
+	\item InSAR reveals numerous subsidence and uplift features near active production and disposal wells, as well as linear deformation patterns associated with fault activities near clusters of seismic activity over the Pecos area. OUr InSAR deformation maps are now openly available through the Center for Integrated Seismicity Research (CISR) for the broader scientific community and stakeholders. 
 	
 	
 \end{enumerate}
@@ -136,21 +132,21 @@ The contributions may be summarized as follows:
 \label{sec:chap1-roadmap}
 
 
-In Chapter \ref{CHAP:2}, we introduce the principles of InSAR. We start with a review of synthetic aperture radar (SAR) image formation. We show how the phase difference between two SAR images acquired at different times can be used to infer topography or surface deformation. We outline common InSAR noise sources, emphasizing the origins of tropospheric noise, and we show how to combine many interferograms to solve for a time series of surface deformation. Finally, we show how the use of geocoded single-look complex (SLC) products enables a simple InSAR processing workflow. 
+In Chapter \ref{CHAP:2}, we introduce the principles of Interferometric Synthetic Aperture Radar (InSAR). We start with a review of synthetic aperture radar (SAR) image formation. We show how the phase difference between two SAR images acquired at different times can be used to infer topography or surface deformation. We discuss common InSAR noise sources and their origins, and we show how to combine many interferograms to solve for a time series of surface deformation. Finally, we show how the use of geocoded single-look complex (SLC) SAR images enables a simple InSAR processing workflow. 
 
 
-In Chapter \ref{CHAP:3}, we introduce the scientific background of the induced seismicity problem. We review the oil and gas production boom of the last decade within the Permian Basin, as well as previous studies on the increase in low magnitude earthquakes during this time. We describe the geodetic datasets available to study the problem, and we present the case to use InSAR to better inform efforts to mitigate induced seismicity.
+In Chapter \ref{CHAP:3}, we introduce the scientific background of the induced seismicity problem. We first review the oil and gas production boom of the last decade within the Permian Basin, as well as previous studies on the increase in low magnitude earthquakes during this time. We then describe the geodetic datasets available for monitoring the study site, and discuss the general InSAR data processing strategy and data quality.
 %for new high-quality observational datasets 
 
 
-In Chapter \ref{CHAP:4-GRL}, we present a simple yet effective time series method for creating cumulative surface deformation maps over large regions with severe tropospheric noise. We use the method to create yearly line-of-sight and eastward/vertical deformation maps over the oil-producing region of the Permian Basin. The method incorporates an automated outlier detection and removal algorithm, which enabled ~2 mm/year agreement with GPS measurements in the presence of $\sim$15 cm of tropospheric noise.
+In Chapter \ref{CHAP:4-GRL}, we present a simple yet effective time series method for mapping cumulative surface deformation over very wide regions. The method incorporates an automated outlier detection and removal algorithm, which enabled ~2 mm/year accuracy in the presence of severe non-Gaussian tropospheric noise based on indepedent GPS validation.
 %we describe how to decompose deformation from multiple satellite geometries into horizontal and vertical components.
 
 
-In Chapter \ref{CHAP:5-robust-ts}, we expand our robust time series methods to account for non-linear deformation. We introduce a method to extract nonlinear deformation over long time series using non-parametric LOWESS smoothing. We demonstrate the method's ability to mitigate strong tropospheric noise on synthetic data. We use the method on Sentinel-1 data to create yearly cumulative and differential surface deformation maps for 2015-2021 over the Permian Basin, where a variety of anthropogenic causes have led to local and large-scale deformation patterns.
+In Chapter \ref{CHAP:5-robust-ts}, we expand our robust time series methods for reconstructing non-linear deformation. We present an InSAR time series analysis algorithm using non-parametric Locally Weighted Scatterplot Smoothing (LOWESS). We apply this method to derive the temporal evolution of surface deformation (2015-2021) over the Permian Basin using Sentinel-1 data.
 
 
-In Chapter \ref{CHAP:6-blob}, we demonstrate methods for automatically detecting surface deformation signals in InSAR maps. We present a computer vision algorithm based on Laplacian of Gaussian filters. We show how the tropospheric noise levels can be estimated from InSAR data, and we use these estimates to simulate new instances of noise. We create confidence measures based on the simulations for automatically detected signals in real InSAR maps.
+In Chapter \ref{CHAP:6-blob}, we develop a computer vision algorithm based on Laplacian of Gaussian filters for automatically detecting surface deformation signals in InSAR maps. To quantify the likelihood that a detected feature is related to tropospheric noise artifacts, we estimate the tropospheric noise spectrum directly from InSAR data, and simulate new instances of noise that resemble the actual InSAR observations. 
 
 
-Finally, we conclude in Chapter \ref{CHAP:7} with a summary and discussions of possible directions of future research.
+Finally, we conclude with a summary and suggest areas of future work in Chapter \ref{CHAP:7}.
