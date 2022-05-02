@@ -99,16 +99,17 @@ These measurements can be used to derive information about Earth’s subsurface,
 However, the noise sources of InSAR pose considerable challenges to achieving millimeter-level accuracy over large study areas, and automated and scalable algorithms are necessary to process and interpret the ever-growing volume of InSAR data. 
 %Previous InSAR induced seismicity studies have mostly focused on areas 60-by-60 km or smaller. Because InSAR tropospheric noise variance increases with the distance away from the reference point, it is difficult to expand the InSAR spatial coverage to the entire Permian basin while retaining millimeter level accuracy. 
 Here we demonstrate the ability to measure subtle surface deformation features caused by petroleum production and induced earthquakes over the entire Permian Basin.
-A rigorous analysis of all noise sources in the Permian Basin Sentinel-1 InSAR data identified tropospheric turbulence noise as the dominant noise term.
-We developed methods for characterizing the tropospheric noise and its power spectral density directly from InSAR data, and we designed scalable, robust time series algorithms for reconstructing the temporal evolution of surface deformation over very wide regions which are robust to troposphere noise outliers.
-Based on independent validation from GPS permanent stations, our cumulative surface deformation solutions achieved millimeter-level accuracy.
+A rigorous analysis of all noise sources in the Permian Basin Sentinel-1 InSAR data identified tropospheric turbulence noise as the dominant noise term, and we developed methods for characterizing the tropospheric noise and its power spectral density directly from InSAR data.
+We designed scalable time series algorithms which are robust to troposphere noise outliers for reconstructing the temporal evolution of surface deformation over very wide regions.
+Based on independent validation from GPS permanent stations, our cumulative surface deformation solutions from 2014 - 2021 achieved millimeter-level accuracy.
 %, as well as methods for mitigating the impact of the troposphere noise outliers.
-Furthermore, the recent growth in satellite data has created a need for automated and scalable algorithms for processing and interpreting large deformation maps.
+Furthermore, the recent growth in satellite data has created a need for automatically locating deformation signal of interest.
 %The final surface deformation products, which achieve basin-wide 1-3 mm/year accuracy, enable physics-based modeling of the subsurface processes that drive the induced seismicity. 
-We developed a computer vision algorithm capable of detecting deformation features of unknown size and location in large deformation maps.
-Combined with our tropospheric noise characterization, we produced uncertainty measures for each automatically detected deformation feature and observed a growing number of high-confidence detected deformation features as oil production rose in the Basin.
+We developed a computer vision algorithm capable of detecting deformation features of unknown size and location in large deformation maps. Combined with our tropospheric noise characterization, our algorithm produces uncertainty measures for each automatically detected deformation feature. We detected a growing number of high-confidence features as oil production rose across the basin, including numerous subsidence and uplift features near active production and disposal wells and linear deformation patterns associated with fault activities near clusters of earthquakes.
 %increases substantially over the study period, which is consistent with the overall rise in oil production within the Permian Basin since 2014.
-As the volume of publicly available SAR data continues to grow from future missions, will help realize InSAR's science potential for monitoring and understanding our changing planet.
+As the volume of publicly available SAR data continues to grow from future missions, the techniques developed here will help realize InSAR's full science potential for monitoring and understanding our changing planet.
+
+%InSAR reveals numerous subsidence and uplift features near active production and disposal wells, as well as linear deformation patterns associated with fault activities near clusters of seismic activity over the Pecos area.
 
 \end{abstract}
 
