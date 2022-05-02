@@ -10,7 +10,7 @@
 \label{CHAP:5-robust-ts}
 
 
-In this chapter, we present a method for robustly extracting slowly-varying surface deformation over long time periods.
+In this chapter, we present a method for robustly extracting slowly-varying surface deformation.
 % from time series with large noise. 
 We perform a temporal smoothing using the robust Locally Weighted Scatterplot Smoothing (LOWESS) technique \citep{Cleveland1979RobustLocallyWeighted} on noisy surface deformation time series derived using SBAS.
 %The method extends the ideas behind the outlier-removal technique presented in Chapter \ref{CHAP:4-GRL}.
@@ -207,7 +207,7 @@ The triangle filter performs similarly to LOWESS when the noise is Gaussian; how
 
 
 
-\section{Sentinel-1 7-year cumulative surface deformation}
+\section{Sentinel-1 7-year Cumulative Surface Deformation}
 
 We demonstrate the LOWESS algorithm on real Sentinel-1 data over the Permian Basin.
 We processed an additional three years of data (Jan. 2019 though Dec. 2021) for Path 78 (Figure \ref{fig:paper1-study-area}) following the processing strategy outlined in Section \ref{sec:ch3-insar-processing}, for a total of 151 SAR acquisitions from Nov. 2014 to Dec. 2021
@@ -248,7 +248,7 @@ While the trend is captured by the InSAR LOWESS solution, the seasonal variation
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure-results-bootstrap.pdf}
-	\caption[Cumulative 7-year LOS deformation for three Sentinel-1 paths]{
+	\caption[Bootstrap uncertainties for LOWESS solutions]{
 	LOWESS smoothed solutions of bootstrap resampled noisy InSAR time series at GPS station TXSO using a window size of (a) $ \gamma = 0.5 $ and (b) $ \gamma = 2 $ years. Each smoothed resampling is shown as a green line, with the mean of all green lines shown in black.
 	(c) LOWESS InSAR solution compared to GPS stations projected onto the radar LOS for the $ \gamma = 2 $ year case. Green shaded region shows $ \pm 2  $ standard deviations as estimated by taking the standard deviation of all resampled solutions from panel (b).
 	(d) Bootstrap estimated standard deviation of LOWESS result for $ \gamma = 0.5, 1, 2 $, and $ 3 $ years of smoothing.
@@ -302,7 +302,7 @@ There is an average of 3 mm RMS difference between the smoothed GPS time series 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=.99\textwidth]{figures/chapter5-lowess/figure-results-los-path78.pdf}
-	\caption[Cumulative 7-year LOS deformation for three Sentinel-1 paths]{
+	\caption[Cumulative 7-year LOS deformation for  Sentinel-1 ascending Path 78]{
 		Cumulative LOS deformation from Nov. 2014 to Dec. 2021 (ascending Path 78). Blue areas indicate motion away from the satellite (subsidence or eastward). Areas with low correlation have been masked.
 		Black boxes indicate the zoomed-in locations for Figure \ref{fig:ch5-results-path78-examples} panels (a) and (c).
 		Purple outlines indicate (from west to east) the Delaware Basin, Central Basin Platform, and Midland Basin.
@@ -435,7 +435,7 @@ By examining two-year increments of the cumulative LOWESS time series, we observ
 %Although the LOWESS smoothing produces a deformation estimate $ \hat{\phi} $ for each time step, 
 We divide the data into two-year intervals to match our choice of smoothing window size $ \gamma $.
 %, to investigate independent time periods.
-During 2016-2017 (Figure \ref{fig:ch5-discuss-eqs}a), the largest subsidence occurred in the southern portion of the Delaware Basin. In this region, linear deformation features are visible near the earthquake cluster as recorded by TexNet.
+During 2016-2017 (Figure \ref{fig:ch5-discuss-eqs}a), the largest subsidence occurred in the southern portion of the Delaware Basin. In this region, linear deformation features are visible near an earthquake cluster recorded by TexNet.
 The volumes of oil production and wastewater injection increased during 2018-2019 (Figure \ref{fig:ch5-discuss-eqs}b), leading to substantially more total uplift and subsidence. 
 During this period, we observe 2-3 cm of uplift in areas where \cite{Ge2022RecentWaterDisposal} modeled an increase in pore pressure within the Delaware Mountain Group due to wastewater disposal.
 We also observe an uplift pattern near a new cluster of earthquakes in the western portion of the Delaware Basin within the Culberson-Mentone Earthquake Zone (CMEZ, \cite{Hennings2021StabilityFaultSystems}).
@@ -454,7 +454,7 @@ Previous studies have suggested that faults within the southern Delaware Basin a
 \begin{figure}
 	\centering
 	\includegraphics[width=.98\textwidth]{figures/chapter5-lowess/figure-cmez-zoom-transect.pdf}
-	\caption[Culberson-Mentone Earthquake Zone earthquakes during 2020 - 2021]{
+	\caption[Deformation near Culberson-Mentone Earthquake Zone earthquakes during 2020 - 2021]{
 		(a) Vertical surface deformation and TexNet recorded earthquakes (black dots) for during 2020-2021 in the Culberson-Mentone Earthquake Zone (CMEZ).
 		The M5.0 earthquake (purple dot) occurred on March 26, 2020.
 		Vertical surface deformation along transects (dashed lines) are shown in panels (b) and (c) for two-year intervals of 2016-2017 (blue), 2018-2019 (orange), and 2020-2021 (green). Both transects run from north to south as distance increases.
