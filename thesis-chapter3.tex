@@ -222,9 +222,9 @@ The dominant noise source in the West Texas Sentinel-1 data is turbulent troposp
 
 
 We analyzed the effectiveness of tropospheric correction techniques based on auxiliary data using the Generic Atmospheric Correction Online Service (GACOS, \citep{Yu2018InterferometricSyntheticAperture,Yu2018GenericAtmosphericCorrection}), 
-which derives its corrections using the High Resolution European Centre for Medium-Range Weather Forecasts (ECMWF) weather model (0.125-degree, 6-hour resolutions) and the GNSS-derived zenith delay maps from the Neveda Geodetic Laboratory.
+which derives its corrections using the High Resolution European Centre for Medium-Range Weather Forecasts (ECMWF) weather model (0.125-degree, 6-hour resolutions) and the GNSS-derived zenith delay maps from the Nevada Geodetic Laboratory.
 %which combines global atmospheric models (GAMs) and GPS data to produce synthetic delay maps. 
-%GACOS derives its corrections using the High Resolution European Centre for Medium-Range Weather Forecasts (ECMWF) weather model (0.125-degree, 6-hour resolutions) and the GNSS derived tropospheric delay products from Neveda Geodetic Laboratory.
+%GACOS derives its corrections using the High Resolution European Centre for Medium-Range Weather Forecasts (ECMWF) weather model (0.125-degree, 6-hour resolutions) and the GNSS derived tropospheric delay products from Nevada Geodetic Laboratory.
 Note that for the West Texas region, GACOS mostly relies on the weather model input due to the sparsity of GPS stations.
 
 
@@ -271,11 +271,11 @@ Note that for the West Texas region, GACOS mostly relies on the weather model in
 We illustrate several correction attempts for Sentinel-1 interferograms over West Texas using GACOS tropospheric corrections.
 % (Figures \ref{fig:ch2-tropo-correct-wave},\ref{fig:ch2-tropo-correct-storm}). 
 In Figures \ref{fig:ch2-tropo-correct-wave}, an ascending (Path 78) interferogram from Jan. 5, 2018 to May 29, 2018 contains a mass of dry air moving in from the New Mexico mountains, which creates a $\sim 20$ cm decrease in LOS delay in half of the interferogram (Figure \ref{fig:ch2-tropo-correct-wave}a, red).
-Here the ECMWF weather model used by GACOS predicts the most of the delay change between the dates Figure \ref{fig:ch2-tropo-correct-wave}b). 
+Here the ECMWF weather model used by GACOS predicts the some of the delay change between the dates Figure \ref{fig:ch2-tropo-correct-wave}b). 
 The root mean square (RMS) noise drops from 8.8 cm in the original interferogram to 5.7 cm after the GACOS correction (Figure \ref{fig:ch2-tropo-correct-wave}c), despite the interferogram showing no discernible phase vs. elevation trend (Figure \ref{fig:ch2-tropo-correct-wave}d). 
 
  
-In other examples, the GACOS corrections provided little benefit, and occasionally added noise to the interferogram. For example, Figure \ref{fig:ch2-tropo-correct-gacos-fail}a shows a descending Path 85 interferogram from June 8, 2015 to July 2, 2015. The GACOS correction is not correlated with the interferogram nosie structure (Figure \ref{fig:ch2-tropo-correct-gacos-fail}b), and the RMS noise in the corrected interferogram (Figure \ref{fig:ch2-tropo-correct-gacos-fail}c) increased from 2.6 cm to 2.9 cm.
+In other examples, the GACOS corrections provided little benefit, and occasionally added noise to the interferogram. For example, Figure \ref{fig:ch2-tropo-correct-gacos-fail}a shows a descending Path 85 interferogram from June 8, 2015 to July 2, 2015. The GACOS correction is not correlated with the interferogram noise structure (Figure \ref{fig:ch2-tropo-correct-gacos-fail}b), and the RMS noise in the corrected interferogram (Figure \ref{fig:ch2-tropo-correct-gacos-fail}c) increased from 2.6 cm to 2.9 cm.
 
 
 \begin{figure}
@@ -294,18 +294,14 @@ In other examples, the GACOS corrections provided little benefit, and occasional
 \FloatBarrier
 
 Thunderstorms commonly add 10-15 cm of turbulent tropospheric noise to interferograms using a summer SAR acquisition (Figure \ref{fig:ch2-tropo-correct-storm}).
-During summer months, 
-%when Sentinel-1 acquires images during daylight hours, 
-the weather conditions at the SAR acquisition time are visible in optical images taken by the Geostationary Operational Environmental Satellites (GOES) (Figure \ref{fig:ch2-tropo-correct-storm}a).
+During summer months, the weather conditions at the SAR acquisition time are visible in optical images taken by the Geostationary Operational Environmental Satellites (GOES) (Figure \ref{fig:ch2-tropo-correct-storm}a).
 %For both Figures \ref{fig:ch2-tropo-correct-wave}, \ref{fig:ch2-tropo-correct-storm}, the earlier SAR acquisition occurs during winter, which is after sunset for ascending Sentinel-1 over West Texas. Most of the tropospheric noise in these winter-to-summer interferograms comes from the summer SAR acquisition.
 %The first example contains strong tropospheric noise resulting from a mass of dry air moving in from the New Mexico mountains, which creates a $\sim 20$ cm decrease in LOS delay in half of the interferogram (Figure \ref{fig:ch2-tropo-correct-wave}b). This change is not visible in the optical GOES image (Figure \ref{fig:ch2-tropo-correct-wave}a), but is predicted in the global weather model (Figure \ref{fig:ch2-tropo-correct-wave}c). 
 %The root mean square (RMS) noise drops from 6.4 cm in the original interferogram to 3.5 cm after the GACOS correction.
 %, the slight temporal differences of the model output and interferogram acquisition times lead to only a partial correction of the tropospheric pattern.
 %Although the root mean square (RMS) noise of the corrected interferogram drops from 6.4 cm to 2.8 cm, the slight temporal differences of the model output and interferogram acquisition times lead to only a partial correction of the tropospheric pattern.
-
-
 %		(a) Weather conditions visible from the GOES satellite on July 23rd, 2019 at the same time as the Sentinel-1 acquisition
-For example, tall cumulonimbus clouds covered much of West Texas on July 23, 2019 at the time of Sentinel-1 acquistion (Figure \ref{fig:ch2-tropo-correct-storm}a), which created patches of excess delay of $>10$ cm in the interferogram from Jan. 12 to July 23, 2019 (Figure \ref{fig:ch2-tropo-correct-storm}b).
+For example, tall cumulonimbus clouds covered much of West Texas on July 23, 2019 at the time of the Sentinel-1 acquisition (Figure \ref{fig:ch2-tropo-correct-storm}a), which created patches of excess delay of $>10$ cm in the interferogram from Jan. 12 to July 23, 2019 (Figure \ref{fig:ch2-tropo-correct-storm}b).
 The different imaging geometries of the Sentinel-1 satellites (side-looking, in low Earth orbit) and the GOES satellites (nadir-looking, geostationary orbit) mean the pixels of Figure \ref{fig:ch2-tropo-correct-storm}a and Figure \ref{fig:ch2-tropo-correct-storm}b do not fully align, but cover approximately the same area.
 The $\sim 5$ km storm cells are not predicted by GACOS due to the relatively coarse spatial and temporal resolution of global weather models (Figure \ref{fig:ch2-tropo-correct-storm}c). Thus, the corrected interferogram still contains most of the turbulent noise from the storm (Figure \ref{fig:ch2-tropo-correct-storm}d).
 
@@ -346,46 +342,3 @@ Since the turbulent tropospheric noise is difficult to predict and correct using
 
 
 
-
-%In this thesis, we develop techniques for mitigating strong tropospheric noise to produce reliable surface deformation maps over large regions. These techniques are applicable to any large-scale deformation mapping, but they are critical to successfully detecting the centimeter-level changes occurring in the Permian Basin that are masked by 10s of centimeters of tropospheric noise. 
-
-
-%Understanding the nature and causes of earthquakes and how they are linked to certain production and disposal wells requires extensive knowledge of the subsurface. InSAR surface deformation measurements allow us to estimate the distribution of fault slip at depth and infer the associated seismic risk \citep{Segall2010EarthquakeVolcanoDeformation, Huang2017FaultGeometryInversion}. Furthermore, measurements of reservoir inflation due to wastewater injection allows operators to assess pressure build-up in disposal aquifers and the associated triggered seismicity risk. It is also worth noting that oil recovery in shale wells is notoriously low \citep{Clark2009DeterminationRecoveryFactor}, and the performance of these wells varies significantly. InSAR can be employed to map subsurface fluid depletion and pressurization. These surface deformation observations, when coupled with reservoir compaction inversion modeling, can be used to assess the areal effectiveness of oil and gas extraction operations \citep{Du2001PoroelasticReservoirModel, Vasco2005UseQuasiStatic}. 
-
-
-
-%%PNAS
-%
-%\section*{Shale development and induced seismicity}
-%
-%\begin{figure*}[hbt!]
-%	\centering
-%	\includegraphics[width=0.99\linewidth]{figures/Figure1.pdf}
-%	\caption{Shale development and induced seismicity in the Permian Basin. (a) Locations of oil production, enhanced oil recovery (EOR), and saltwater disposal (SWD) wells activ  e in 2017. (b) Annual oil production volume on a 10-mile grid in 2017. (c) Permian region oil production rate as reported by the Texas Railroad Commission. (d) Locations of e  arthquake hypocenters detected by TexNet in 2017. The color and size of a circle indicates the estimated earthquake depth and magnitude. (e) Annual injection volume (includin  g both SWD and EOR wells) on a 5-mile grid. (f) Permian region injection rate (including both SWD and EOR wells) as reported by the Texas Railroad Commission.
-%	}
-%	\label{fig:Permian}
-%\end{figure*}
-%
-%\begin{figure}[hbt!]
-%	\centering
-%	\includegraphics[width=0.99\linewidth]{figures/Figure2.pdf}
-%	\caption{GPS and InSAR data coverage over the Permian Basin. Yellow dots indicate GPS permanent stations. Teal and red boxes indicate ascending path 78 and descending path 85   paths of Sentinel 1 InSAR coverage, respectively. Each path contains over 80 SAR acquisitions, leading to over 3500 interferograms per path at 120 m pixel spacing.
-%	}
-%	--\label{fig:study-area}
-%\end{figure}
-%The success of shale development technologies \cite{Waters2006use} has opened up vast shale resources for economically viable oil and gas production. Based on a recent assess  ment by the U.S. Geological Survey (USGS), the Wolfcamp shale in Texas' Permian Basin is the largest continuous oil field that has ever been discovered in the United States \  cite{GaswirthAssessment2016}. As of 2017, there were over 130,000 active production wells, 23,041 active enhanced oil production (EOR) wells, and 3794 active saltwater dispos  al (SWD) wells in the Permian Basin (Figure \ref{fig:Permian} (a)). It has been recognized that injection or withdrawal of fluids from the subsurface can induce earthquakes a  long existing faults \cite{Ellsworth2013, simpson1988two}. While petroleum production and wastewater injection volumes have been rising throughout the basin, the recently cat  aloged earthquakes are spatially clustered (Figure \ref{fig:Permian} (b)-(f)). One significant cluster is near Pecos, TX, where increased seismic activity began in 2009. Subs  equent activity has increased considerably, with more than 2000 earthquakes identified in 2017 \cite{Frohlich2019}.
-%
-% Understanding the nature and causes of earthquakes and how they are linked to certain production and disposal wells requires extensive knowledge of the subsurface. InSAR surf  ace deformation measurements allow us to estimate the distribution of fault slip at depth and infer the associated seismic risk \cite{Segall2010, huang2017fault}. Furthermore  , measurements of reservoir inflation due to wastewater injection allows operators to assess pressure build-up in disposal aquifers and the associated triggered seismicity risk. It is also worth noting that oil recovery in shale wells is notoriously low \cite{clark2009determination}, and the performance of these wells varies significantly. InSAR can be employed to map subsurface fluid depletion and pressurization. These surface deformation observations, when coupled with reservoir compaction inversion modeling, can be used to assess the areal effectiveness of oil and gas extraction operations \cite{Du2001, Vasco2005}.
-
-
-
-%%  \section*{Geodetic data in West Texas}
-% The coverage of GPS permanent stations in West Texas is sparse (Figure \ref{fig:study-area}). There are no stations in the Delaware Basin. At 14 stations in the Midland Basin and the Central Basin Platform, daily east, north, and up (ENU) surface deformation measurements were processed by the Nevada Geodetic Laboratory \cite{Blewitt2018}. After removing the common tectonic motion, little motion was observed at all GPS stations over the study period.
-% 
-% We processed 91 ascending (path 78) and 82 descending (path 85) Sentinel-1 scenes acquired between Nov. 2014 and Jan. 2019 (Figure \ref{fig:study-area}). We generated more th  an 7000 interferograms with 120 meter pixel spacing and a maximum temporal baseline of 800 days. Given that few decorrelation artifacts are present in these interferograms du  e to the lack of vegetation, we did not impose any spatial baseline threshold. Each interferogram, formed using two radar images from the same path, measures surface deformat  ion between the Sentinel-1 acquisition dates along the radar line-of-sight (LOS) direction. We selected all interferograms that were generated using SAR acquisitions within a period of interest, and we estimated the average LOS deformation rate during this period by computing the ratio between the sum of all interferograms and the sum of their time spans \cite{Sandwell1998}. A comparable solution can be derived using the Small Baseline method with a linear deformation model \cite{SBAS2002}. In the region where the two paths overlap, we decomposed the eastward and vertical motion from the ascending and descending LOS solutions (\textit{Supporting Information}).
-% 
-% Because InSAR only measures relative motion between ground pixels, we chose the GPS station TXKM to serve as a common reference for deformation measurements. Given that little relative motion was observed at the remaining 13 GPS stations, we used these locations as controls. For example, at the GPS station TXMC, most interferograms indicate near   zero motion over their time spans, with no systematic bias and a standard deviation $\sigma$ of 7.2 cm (Figure \ref{fig:outliers} (a)). The spread of the LOS measurements is   likely caused by tropospheric turbulence that is approximately random at time scales longer than 1 day \citep{Emardson2003}, and local storms can produce $\pm$ 15 cm outliers   \cite{Bekaert2015statistical}. We observed similar noise distributions at all 13 GPS locations, and the tropospheric noise level increases linearly with the distance from th  e reference GPS station. At 40 km, $\sigma$ equals 3.7 cm. For every additional 50 km increase, $\sigma$ increases by 1.7 cm (Figure \ref{fig:outliers} (b)).
-%
-% Sentinel-1 satellites sample the Earth much more frequently in time compared to earlier InSAR missions. This allows us to average thousands of InSAR measurements and reduce the impact of random tropospheric noise \cite{Zebker1997}. However, the quality of InSAR measurements is heterogeneous. For example, local extreme weather events only impact certain pixels on a few SAR acquisition dates. Finding an automated way to identify these outlier measurements from thousands of interferograms that cover a wide region with very high spatial resolution is challenging, yet critical for further noise reduction.
-%
-%
