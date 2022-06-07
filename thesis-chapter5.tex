@@ -72,7 +72,7 @@ This can cause considerable leakage of noise from severe weather conditions into
 We can adaptively filter the noisy $ \bm{\phi} $ time series by implementing a robust LOWESS regression \citep{Cleveland1979RobustLocallyWeighted}. The LOWESS algorithm fits a local linear regression at every $t_i$ using nearby data points, repeating over multiple iterations to refine the fit and reduce the effect of outliers \citep{Efron2019ComputerAgeStatistical}.
 % which performs several iterations of weighted linear regression for each SAR acquisition. 
 For the first iteration, at each time $t_i$,  we calculate a set of weights $\bm{w}(t_i)$. The weight function has a maximum value of $1$ at $t_i$ and decays to zero at the $r$th nearest neighbor to $t_i$, where $r = \left\lfloor \gamma N \right\rfloor$, $0 < \gamma \leq 1$ is the fraction of the data chosen to include for each local fit, and $ \left\lfloor x \right\rfloor $ is rounds $ x $ down to the next lowest integer.
-Let $h_i$ be the $r$th smallest number of $\left| x_i - x_k \right|$ for $ k = 0, \ldots, N-1 $.
+Let $h_i$ be the $r$th smallest number of $\left| t_i - t_k \right|$ for $ k = 0, \ldots, N-1 $.
 The $k$th weight $w_k(t_i)$ is defined as
 \begin{equation}
 	w_k(t_i) = 
@@ -86,7 +86,7 @@ Figure \ref{fig:ch5-algo-window} illustrates the shape of  $ \bm{w}(t_i) $ for $
 
 
 
-Using $ \bm{w}(t_i) $, we compute a weighted linear regression around $t_i$ by finding the intercept and slope, $a_i, b_i$ that minimize
+Using $ \bm{w}(t_i) $, we compute a weighted linear regression around $t_i$ by finding the intercept, $a_i$, and slope, $b_i$, that minimize
 %\begin{equation}
 %		\begin{bmatrix}
 %		1, t_0 \\
@@ -100,7 +100,7 @@ Using $ \bm{w}(t_i) $, we compute a weighted linear regression around $t_i$ by f
 %= \bm{\phi}
 %\end{equation}
 \begin{equation}
-	\sum_{k=0}^{N-1} w_k(t_i) \left(\phi_k - a_i - b_i t_k \right)^2
+	\sum_{k=0}^{N-1} w_k(t_i) \left(\phi_k - a_i - b_i t_k \right)^2 \, .
 \end{equation}
 The smoothed estimate $\hat{\phi}_i$ at the point $t_i$ is calculated as $\hat{\phi}_i = a_i + t_i b_i$. This process is repeated for all $t_i$,  $i = 0, \ldots, N-1$.
 
@@ -113,11 +113,11 @@ Let $\epsilon_k = \left| \hat{\phi}_k - \phi_k  \right|$ be the residual at $t_k
 		0, & \text{otherwise}
 	\end{cases}          \label{eq:ch5-lowess-weights2}
 \end{equation}
-Equation \eqref{eq:ch5-lowess-weights2} uses the median $ s $ so that large outliers are clipped to 0, similar to the use of the median absolute deviation from Section \ref{sec:ch4-outlier-method}. For each new fit in the second iteration, the weights $ \bm{w}(t_i) $ are multiplied by the residual weights $\bm{\delta}$ to perform the local regressions.
+Equation \eqref{eq:ch5-lowess-weights2} uses a median so that large outliers are clipped to 0, similar to the use of the median absolute deviation from Section \ref{sec:ch4-outlier-method}. For each new fit in the second iteration, the weights $ \bm{w}(t_i) $ are multiplied point-wise by the residual weights $\bm{\delta}$ to perform the local regressions.
 
-Finally, we perform a shift of $ \bm{\hat{\phi}} $ to compensate for the first day's atmospheric conditions by setting $ \hat{\phi}_i = \hat{\phi}_i - \hat{\phi}_0 $ for all $ i = 1, \ldots, N-1 $.
-This step is necessary for $ \bm{\phi} $ solved using the SBAS formulation of Equation \eqref{eq:ch2-sbas-A}; since the first date's phase is assumed to be 0, $ \alpha_0 $ is added to all other dates.
-While \cite{Ferretti2000NonlinearSubsidenceRate} uses mean value of the common-reference interferogram phases as an estimation of the first date's atmospheric noise, here we use the y-intercept of the smoothed time series, $ \hat{\phi}_0 $, as an estimate of $ \alpha_0 $. 
+Finally, we perform a shift of the smoothed $ \bm{\hat{\phi}} $ to compensate for the first day's atmospheric conditions by setting $ \hat{\phi}_i = \hat{\phi}_i - \hat{\phi}_0 $ for all $ i = 1, \ldots, N-1 $.
+This step is necessary for $ \bm{\phi} $ solved using the SBAS formulation of Equation \eqref{eq:ch2-sbas-A}, since  $ \alpha_0 $ is added to all other dates when the first date's phase is assumed to be 0.
+While \cite{Ferretti2000NonlinearSubsidenceRate} use mean value of the common-reference interferogram phases as an estimation of the first date's atmospheric noise, here we use the y-intercept of the smoothed time series, $ \hat{\phi}_0 $, as an estimate of $ \alpha_0 $. 
 
 
 %
@@ -153,7 +153,7 @@ While \cite{Ferretti2000NonlinearSubsidenceRate} uses mean value of the common-r
 
 We first illustrate the LOWESS algorithm on a synthetic 3-year deformation time series with a 12-day acquisition interval (Figure \ref{fig:ch5-demo-data}).
 %A 300 x 300 pixel region contains an uplift bowl which linearly increases to $ \sim3 $cm max after 1.5 years (Figure \ref{fig:ch5-demo-data}a) and deflates back to zero by the end of 3 years. 
-The true deformation linearly increases to maximum of $ \sim3 $cm after 1.5 years and deflates back to zero by the end of 3 years. 
+The true deformation linearly increases to maximum of $ \sim3 $ cm after 1.5 years and deflates back to zero by the end of 3 years. 
 Non-Gaussian noise containing jumps of up to 8 cm is added to the deformation.
 %similar to tropospheric noise is simulated following \cite{Hanssen2001RadarInterferometryData} and 
 % (Figure \ref{fig:ch5-demo-data}b). 
@@ -239,7 +239,7 @@ instead, we used the technique presented in \cite{Zebker2021AccuracyModelFree} t
 To assess the performance of the LOWESS-smoothed LOS deformation results, we projected the available GPS ENU time series onto the radar LOS. 
 As an example, Figure \ref{fig:ch5-results-gps-example}a shows the LOS time series (blue dots) for GPS station TXFS.
 %, along with its 30-day moving average (orange line).
-The unregularized InSAR time series (gray) contains up to 5-7 cm of tropospheric noise during the summer months. However, the LOWESS solution (orange line) is unaffected by the spikes and successfully tracks the $ \sim1 $cm of long term motion shown in the GPS data. 
+The unregularized InSAR time series (gray) contains up to 5-6 cm of tropospheric noise during the summer months. However, the LOWESS solution (orange line) is unaffected by the spikes and successfully tracks the $ \sim1 $cm of long term motion shown in the GPS data. 
 In Figure \ref{fig:ch5-results-gps-example}b, the LOS time series for GPS station TXSO shows a combination of a 5-10 mm increase in LOS along with 10-15 mm of seasonal variations.
 While the trend is captured by the InSAR LOWESS solution, the seasonal variations are smoothed over due to the $2$ year weighting window.
 
@@ -263,7 +263,7 @@ Bootstrapping repeatedly draws a random sample with replacement of size $ N $ fr
 Bootstrapping has been included in InSAR time series packages such as GIAnT, MintPy, and LiCSBAS as a method of estimating uncertainty for linear deformation velocities
 \citep{Agram2013NewRadarInterferometric, Yunjun2019SmallBaselineInsar, Morishita2020LicsbasOpenSource}.
 
-As an example, we calculated the bootstrap variance using $ \gamma = 0.5 $ (Figure \ref{fig:ch5-results-bootstrap}a), $ \gamma = 1.0 $, $ \gamma = 2.0 $ (Figure \ref{fig:ch5-results-bootstrap}b), and $ \gamma = 3.0 $ using InSAR data near GPS station TXSO.
+We calculated the bootstrap variance using $ \gamma = 0.5 $ (Figure \ref{fig:ch5-results-bootstrap}a), $ \gamma = 1.0 $, $ \gamma = 2.0 $ (Figure \ref{fig:ch5-results-bootstrap}b), and $ \gamma = 3.0 $ using InSAR data near GPS station TXSO.
 %The bootstrap and jackknife (a special case of the bootstrap) techniques have been included in various InSAR time series packages including GIAnT, MintPy, and LiCSBAS
 %Each smoothed result (green lines) will be different 
 The variance of the LOWESS smoothing on all resamples (green lines) indicates that using a smaller window (Figure \ref{fig:ch5-results-bootstrap}a) leads to a noisier deformation solutions than a larger window (Figure \ref{fig:ch5-results-bootstrap}b). 
@@ -402,7 +402,7 @@ Note that the two vertical and eastward decompositions show sub-centimeter agree
 %	\includegraphics[height=.9\textheight]{figures/chapter5-lowess/figure-results-east-up.pdf}
 	\includegraphics[height=.85\textheight]{figures/chapter5-lowess/figure-results-east-up-clipped.pdf}
 	\caption[Cumulative 7-year vertical and eastward deformation]{
-		Cumulative (a) vertical and (b) eastward deformation from Nov. 2014 to Dec. 2021. Blue areas indicate subsidence (westward motion), red indicates uplift (eastward). Purple outlines indicate the Delaware Basin (to the west) and Central Basin Platform (east).
+		Cumulative (a) vertical and (b) eastward deformation from Nov. 2014 to Dec. 2021. Blue areas indicate subsidence (westward motion in panel (b)), red indicates uplift (eastward). Purple outlines indicate the Delaware Basin (to the west) and Central Basin Platform (east).
 	}
 	\label{fig:ch5-results-east-up}
 \end{figure}
@@ -414,7 +414,7 @@ Note that the two vertical and eastward decompositions show sub-centimeter agree
 	\centering
 	\includegraphics[height=0.85\textheight]{figures/chapter5-lowess/figure-results-eqs.pdf}
 	\caption[Incremental InSAR surface deformation and TexNet earthquake locations]{
-		InSAR-derived vertical surface deformation for the two-year intervals of 2016-2017 (a), 2018-2019 (b), and 2020-2021 (c). On the left (panel a,b,c) shows the InSAR vertical surface deformation.
+		InSAR-derived vertical surface deformation for the two-year intervals of 2016-2017 (a), 2018-2019 (b), and 2020-2021 (c).
 		Hypocenters of >M$2.0 $ earthquakes recorded by TexNet (2017 and later) are shown as black dots.
 		The hypocenters pictured are from the high-resolution catalog (availabe at \url{https://hirescatalog.texnet.beg.utexas.edu/}) that were relocated using GrowClust \citep{Trugman2017GrowclustHierarchicalClustering}.
 	}
