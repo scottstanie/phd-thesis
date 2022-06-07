@@ -9,7 +9,7 @@
 %% Your full official name
 \author{Scott Staniewicz}
 %% Month and year of graduation (month may be May, August, or December)
-\graduationdate{May}{2022}
+\graduationdate{August}{2022}
 %% Your thesis supervisor, full name only
 \supervisor{Jingyi Ann Chen}
 %% Your thesis co-supervisor, if any (leave commented if not applicable)
@@ -72,15 +72,29 @@
 \maketitle
 
 %% The dedication is optional and fills an entire page.
-\begin{dedication}
-
-
-\end{dedication}
+%\begin{dedication}
+%
+%\end{dedication}
 
 %% The acknowledgments, abstract, and table(s) of contents/tables/figures pages are numbered with roman numerals.
 
 %% The acknowledgments is optional and fills an entire page.
 \begin{acknowledgments}
+
+Completing a Ph.D. requires a great support network, and I'm fortunate to have many people to thank.
+First I'd like to express my deepest gratitude to my advisor Ann Chen. 
+Ann always kept not only my academic and career growth in mind, but my personal well-being. I'm lucky to have been among the first of her students. She also has built an outstanding research group: Sophy Wu, Ke Wang, and Molly Zebker. Our group meetings always led to my research presentations being greatly improved, and I couldn't have asked for a group of people more supportive, smart, helpful, and kind.
+
+I'd like to thank my committee members, each of whom contributed to improving this dissertation. Prof. Srinivas Bettadpur and  Prof. Todd Humphreys offered excellent research questions and guidance, and they were also outstanding teachers for the classes that I took with them. Prof. Jon Olson and Dr. Peter Hennings were wonderful coauthors and gave me valuable perspective on the impact of my data.  I'd also like to thank my coauthors and collaborators at the Center for Integrated Seismicity Research and the Bureau for Economic Geology: Hunjoo Lee, Lily Horne, Katie Smye, Alexandros Savvaidis, Bob Reedy, Caroline Breton, Jean-Philippe Nicot, and Ellen Rathje .
+
+My summer internship at JPL, while fully remote, was a fun and valuable learning experience, and I owe that entirely to my mentor Cathleen Jones. I'd also like to thank Yunling Lou for all the useful advice she gave me on my career choices, as well as Heresh Fattahi for career advice and direction.
+
+My work was supported by a grant from the NASA Earth Surface and Interior Program (80NSSC18K0467), as well as a University of Texas Graduate Continuing Fellowship. I'd like to express my gratitude to ESA for their open data policy with Sentinel-1, to the Alaska Satellite Facility for their improvements to data access, to NASA for their Shuttle Radar Topography Mission DEM data, and to the Texas Department of Transportation and the Nevada Geodetic Laboratory for their GPS data and processing. I also sincerely thank all the open source maintainers of the Python and geospatial libraries that my work was built upon.
+
+
+I give a big thanks to Arjun, Rahul, Kirsten, Kristen, Erika, Vishnuu, Ben, Enrico, Courtney, Nick, Sean, Shubham, David, Corey, Lakshay, Tucker, Corinne, and the rest of my Orbits and Controls friends for all the study groups, coffee and happy hours that made these 5 years fun.
+
+I give my thanks and my love to my Mom, Dad, and brother Matt for always supporting and encouraging me. Finally, I give my deepest thanks to Anne for taking the journey with me from Boston, and for her unwavering partnership at every step.
 
 \end{acknowledgments}
 
@@ -96,20 +110,11 @@ The Permian Basin has become the United States' largest producer of oil and gas 
 
 In this dissertation, we develop methods for characterizing tropospheric noise and its power spectral density directly from InSAR observations. We show that the tropospheric noise distribution is non-Gaussian, and a small portion of SAR scenes are corrupted by up to $\pm$ 15 cm noise outliers associated with storms and heat waves. This finding is significant because most of the InSAR time series solutions are optimal only when noise follows a Gaussian distribution. We design robust and scalable time series algorithms to reconstruct the temporal evolution of surface deformation in this challenging scenario, and we achieved basin-wide millimeter-level accuracy based on independent GPS validation. We observe numerous subsidence and uplift features near active production and disposal wells, as well as linear deformation patterns associated with fault activities near clusters of induced earthquakes. Furthermore, we designed  a new computer vision algorithm for detecting the size and location of unknown deformation features in large volumes of InSAR data. We are able to determine whether a detected feature is associated with tropospheric artifacts or real deformation signals based on a realistic tropospheric noise model derived from InSAR data.
 
-% However, the noise sources of InSAR pose considerable challenges to achieving millimeter-level accuracy over large study areas, and automated, scalable algorithms are necessary to process and interpret the growing volume of InSAR data.  Here we demonstrate the ability to measure subtle surface deformation features caused by petroleum production and induced earthquakes over the entire Permian Basin.
-% A rigorous analysis of all noise sources in the Sentinel-1 InSAR data identified tropospheric turbulence noise as the dominant noise term, and we developed methods for characterizing the tropospheric noise and its power spectral density directly from InSAR data. We designed scalable time series algorithms which are robust to troposphere noise outliers for reconstructing the temporal evolution of surface deformation over very wide regions. Based on independent validation from GPS permanent stations, our cumulative surface deformation solutions from 2014 - 2021 achieved millimeter-level accuracy.
-% Furthermore, the recent growth in satellite data has created a need for automatically locating deformation signals of interest. We developed a computer vision algorithm capable of detecting deformation features of unknown size and location in large deformation maps. Combined with our tropospheric noise characterization, our algorithm produces uncertainty measures for each automatically detected deformation feature. We detected a growing number of high-confidence features as oil production rose across the basin, including numerous subsidence and uplift features near active production and disposal wells, as well as linear deformation patterns associated with fault slip near clusters of earthquakes.
-%increases substantially over the study period, which is consistent with the overall rise in oil production within the Permian Basin since 2014.
-% As the volume of publicly available SAR data continues to grow from future missions, the techniques developed here will help realize InSAR's full science potential for monitoring and understanding our changing planet.
-%The final surface deformation products, which achieve basin-wide 1-3 mm/year accuracy, enable physics-based modeling of the subsurface processes that drive the induced seismicity. 
-%InSAR reveals numerous subsidence and uplift features near active production and disposal wells, as well as linear deformation patterns associated with fault activities near clusters of seismic activity over the Pecos area.
+
+
 
 \end{abstract}
 
-%PNAS
-%\significancestatement{Because energy-related injection and extraction activities often occur within deep and rigid subsurface formations, it is common to assume little deformation can be detected at Earth's surface. Here we use Sentinel-1 InSAR data to show that the sharp increase in oil and gas production from shale over the last five years has led to numerous surface deformation features in the Permian Basin. The prominent linear deformation streaks observed in the Pecos area can be explained by elastic modeling of combined fault slip and reservoir compaction. The location and orientation of these streaks align well with known shallow faults and recent earthquake clusters that are likely induced by injection or withdrawal of fluids from the subsurface.}
-
-%Over the past decade, technological breakthroughs in horizontal drilling and hydraulic fracturing have made the Permian Basin one of the most prolific oil fields in the world. Here we used over 7000 Sentinel-1 interferograms (Nov. 2014 - Jan. 2019; 120-meter pixel spacing) to map how Earth's surface deformed in response to fluid injection and extraction in this region. We developed an automated InSAR outlier removal algorithm, which allows us to achieve $\sim$ 2 mm/year accuracy across the basin in the presence of up to $\pm$ 15 cm of noise related to tropospheric effects. We observed numerous subsidence and uplift bowls in the vicinity of active production and disposal wells. The rate of deformation increased significantly in 2018 when peak production occurred in the region. The most important deformation signatures are linear streaks that extend tens of kilometers near Pecos, TX, where a cluster of increased seismic events was catalogued by TexNet. Elastic modeling shows that fluid extraction and dip-slip along normal faults are the potential causes for the observed deformation patterns, which align well with known shallow faults in the area. The implication for the scientific community, as well as a broader sector of stakeholders, is that the large increase of usable spaceborne geodetic data has enabled basin-wide monitoring of subsurface stress and pore pressure changes in oil producing regions.
 
 %% The table of contents is required.
 \maketableofcontents

@@ -18,7 +18,7 @@ In this chapter, we introduce the technical principles of Interferometric Synthe
 
 The original radars developed during World War 2 were for tracking the position of targets. In these systems, the range to the target is calculated from the round trip travel time of an electromagnetic pulse that is reflected off the target, and the angle is determined by the antenna pointing direction. Researchers later developed imaging radar systems that convert a series of radar pulses on a moving platform into a two-dimension image. Although these side-looking radar images originally had coarse resolution, fine resolution images were first demonstrated in the research led by Carl Wiley at Goodyear in the 1950s. The research later led to the imaging technique known as synthetic aperture radar (SAR) \citep{Wiley1954PulsedDopplerRadar, Wiley1985SyntheticApertureRadars}. 
 
-The first demonstration of a spaceborne earth-observing SAR mission with interferometric capability was Seasat, launched by NASA in 1978 \citep{Born1979SeasatMissionOverview, Gabriel1989MappingSmallElevation}. Since that time, there have been dozens of mission launched by various space agencies, leading some to call the last decade ``the golden age of SAR'' \citep{Moreira2014GoldenAgeSpaceborne}.
+The first demonstration of a spaceborne earth-observing SAR mission with interferometric capability was Seasat, launched by NASA in 1978 \citep{Born1979SeasatMissionOverview, Gabriel1989MappingSmallElevation}. Since that time, there have been dozens of missions launched by various space agencies, leading some to call the last decade ``the golden age of SAR'' \citep{Moreira2014GoldenAgeSpaceborne}.
 
 %Synthetic aperture radar (SAR) is a powerful radar imaging technique which works day and night through all weather conditions.
 
@@ -47,7 +47,7 @@ During the 90s, the European Space Agency (ESA) launched two C-band SAR satellit
 
 The most influential recent SAR mission within the science community has been Sentinel-1 \citep{Torres2012GmesSentinel1}. First launched in 2014, the Sentinel-1 satellites acquire $\sim$240 km wide images
 % acquire data using the TOPSAR imaging mode which images very wide swaths ($\sim$240 km in the interferometry mode)
-\citep{Zan2006TopsarTerrainObservation}, allowing them revisit any point on Earth every 12 days.  Additionally, Sentinel is the first mission of its kind to provide regularly updating free public data. 
+\citep{Zan2006TopsarTerrainObservation}, allowing them to revisit any point on Earth every 12 days.  Additionally, Sentinel is the first mission of its kind to provide regularly updating free public data. 
 %This has advanced SAR and InSAR from being an opportunistic study tool to an operational technique to monitor nearly anywhere on Earth  \citep{Rosen2021ShiftingGround}. 
 While Sentinel-1 is currently the only active SAR mission with an open data policy, the future NISAR ISRO SAR mission (NISAR) will also provide its L-band SAR data free to the public \citep{Rosen2015NasaIsroSar}.
 
@@ -76,7 +76,7 @@ Synthetic aperture radar is an imaging technique that uses a radar mounted on a 
 %To create a radar image, the energy scattered by points on the ground must be collected and focused in two dimensions.  The image represents the electrical and geometrical properties of the scene \cite{Simons2007InterferometricSyntheticAperture} 
 
 
-The SAR imaging geometry is shown in Figure \ref{fig:ch2-sar-geometry}. A side-looking radar with look angle $\theta$ moves in the azimuth directory and repeatedly emits pulses at some interval (called the \emph{pulse repetition interval}, or PRI) which travel in the range direction.
+The SAR imaging geometry is shown in Figure \ref{fig:ch2-sar-geometry}. A side-looking radar with look angle $\theta$ moves in the azimuth direction and repeatedly emits pulses at some interval (called the \emph{pulse repetition interval}, or PRI) which travel in the range direction.
 %The illuminated portion of the ground has a swath width of $r \lambda / w$
 %The width of the swath for stripmap operation is controlled by the antenna width, $w$, as $r \lambda / w$. Likewise, the size of the illuminated swath in the along track direction is $r \lambda / L$.
 The line of sight (LOS) vector is defined as the unit vector pointing from the radar antenna to a point in the illuminated swath.
@@ -159,7 +159,7 @@ Coherent processing (i.e. using both magnitude and phase) is possible by careful
 \begin{equation}
 \phi(t) = -\frac{4 \pi}{\lambda} r(t)  \label{eq:ch2-phase-range} \, .
 \end{equation}
-There are multiple signal processing algorithms which create use the target phase history to create a synthetic aperture. One of the first developed and most widely today used is the range-Doppler algorithm (RDA) \citep{Wu1976DigitalSystemProduce, Cumming1979DigitalProcessingSeasat}. 
+There are multiple signal processing algorithms which use the target's phase history to create a synthetic aperture. One of the first developed and most widely today used is the range-Doppler algorithm (RDA) \citep{Wu1976DigitalSystemProduce, Cumming1979DigitalProcessingSeasat}. 
 RDA uses the apparent shift in Doppler frequency due to the platform motion to create a matched filter in azimuth, similar to the matched filter used for range compression \citep{Cumming2004DigitalProcessingSynthetic}.
 %RDA is a frequency-domain algorithm, since it converts the phase history 
 %Which converts the range-compressed data into the frequency domain. 
@@ -325,7 +325,7 @@ In high signal-to-noise ratio (SNR) interferograms (e.g. large magnitude earthqu
 		(a) Sentinel-1 interferogram (ascending path 124) from April 20th, 2018 to May 2nd, 2018 over Hawaii, spanning the beginning of the 2018 K'\=ilauea eruption.
 		Each colored phase cycle of $2\pi$ radians indicates a range change of 2.7 cm along the radar line-of-sight, which can be caused by real surface deformation or a noise source.
 		(b) The dense fringes near the coast are caused by turbulent tropospheric noise (see Section \ref{sec:ch2-noise-tropo}).
-		(c) Stratified tropospheric noise on the peak of Mauna Kea, the tallest peak on Hawaii at 4,207 m, causes a concentric ring pattern. This pattern is also visible on Mauna Loa in the center of the island, where the phase is strongly correlated with topographic height. See Section \ref{sec:ch2-noise-tropo} for further details.
+		(c) Stratified tropospheric noise on the peak of Mauna Kea, the tallest peak in Hawaii at 4,207 m, causes a concentric ring pattern. This pattern is also visible on Mauna Loa in the center of the island, where the phase is strongly correlated with topographic height. See Section \ref{sec:ch2-noise-tropo} for further details.
 		(d) An example of decorrelation noise caused by dense tropical rain forests (e) located on windward side of the island.
 		(f) Real deformation of $ \sim 30-40 $cm around the Pu'u '\=O'\=o volcanic cone to the east of K'\=ilauea. In this case, the ground was subsiding down and to the southeast as magma flowed away from Pu'u '\=O'\=o.
 		%		The signal of interest in this interferograms, the collapse of the Pu'u '\=O'\=o caldera

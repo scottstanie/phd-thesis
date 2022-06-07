@@ -147,11 +147,11 @@ We can exclude undesired deformation features by setting magnitude thresholds on
 \label{sec:ch6-methods-2-tropo-spectrum}
 InSAR measurement noise can also produce spatially coherent "blob-like" features that are detectable by our algorithm.  Here we focus on characterizing the tropospheric turbulence noise in each SAR scene. This is because tropospheric turbulent noise (1) is correlated in space \citep{Emardson2003NeutralAtmosphericDelay, Lohman2005SomeThoughtsUse}; (2) is present in all InSAR data sets with greatly varying magnitudes \citep{Barnhart2013CharacterizingEstimatingNoise, Hooper2012RecentAdvancesSar}; and (3) is often the primary noise source that limits InSAR measurement accuracy \citep{Jolivet2014ImprovingInsarGeodesy, Bekaert2015StatisticalComparisonInsar, Parker2015SystematicAssessmentAtmospheric}.
 
-Consider an interferogram formed using two SAR scenes acquired at times $t_1$ and $t_2$. In the case that tropospheric turbulence noise is the dominant noise term, the measured interferometric phase $\phi_{1,2}$ (in radians) at a pixel of interest can be written as \citep{Zebker1997AtmosphericEffectsInterferometric}:
+Consider an interferogram formed using two SAR scenes acquired at times $t_1$ and $t_2$. In the case that tropospheric turbulence noise is the dominant noise term, the measured interferometric phase $ \Delta \phi_{1,2}$ (in radians) at a pixel of interest can be written as \citep{Zebker1997AtmosphericEffectsInterferometric}:
 \begin{equation}
-	\phi_{1,2} \approx \frac{4 \pi}{\lambda} \left(\alpha_2 - \alpha_1 + \Delta d_{1,2} \right)
+	\Delta \phi_{1,2} \approx \frac{4 \pi}{\lambda} \left(\alpha_2 - \alpha_1 + \Delta d_{1,2} \right)
 \end{equation}
-where $ \lambda $ is the radar wavelength, $\alpha_1$ and $\alpha_2$ represent the tropospheric delay at the two SAR acquisition times $t_1$ and $t_2$, and $\Delta d_{1,2} $ is the Line-Of-Sight (LOS) deformation ($d_2-d_1$) between $t_1$ and $t_2$. The unit of $\lambda$, $\alpha_1$, $\alpha_2$, and $\Delta d_{1,2} $ is in centimeters. 
+where $ \lambda $ is the radar wavelength, $\alpha_1$ and $\alpha_2$ represent the tropospheric delay at the two SAR acquisition times $t_1$ and $t_2$, and $\Delta d_{1,2} $ is the Line-Of-Sight (LOS) deformation ($d_2-d_1$) between $t_1$ and $t_2$. The units of $\lambda$, $\alpha_1$, $\alpha_2$, and $\Delta d_{1,2} $ are centimeters.
 
 Given $N$ SAR acquisitions, we can estimate the tropospheric noise on the $n^{th}$ SAR acquisition date by averaging $N-1$ interferograms that share the common reference SAR scene $n$ \citep{Tymofyeyeva2015MitigationAtmosphericPhase}:
 %multline not needed for single column
@@ -160,7 +160,7 @@ Given $N$ SAR acquisitions, we can estimate the tropospheric noise on the $n^{th
 %=  \alpha_n  + \frac{1}{N-1} \left( \sum_{k=1, k \neq n}^{N}  \Delta d_{k,n} - \sum_{k=1, k \neq n}^{N}  \alpha_k  \right)  \label{eq:avg-ifg} 
 %\end{multline}
 \begin{equation}
-	\bar{\alpha}_n = \frac{\lambda}{4 \pi} \frac{1}{N-1} \left(\sum_{k=1, k \neq n}^{N} \phi_{k,n}\right)  
+	\bar{\alpha}_n = \frac{\lambda}{4 \pi} \frac{1}{N-1} \left(\sum_{k=1, k \neq n}^{N} \Delta \phi_{k,n}\right)  
 	=  \alpha_n  + \frac{1}{N-1} \left( \sum_{k=1, k \neq n}^{N}  \Delta d_{k,n} - \sum_{k=1, k \neq n}^{N}  \alpha_k  \right)  \label{eq:avg-ifg} 
 \end{equation}
 Because tropospheric turbulence noise is uncorrelated in time for scales longer than one day \citep{Emardson2003NeutralAtmosphericDelay, Onn2006ModelingWaterVapor}, the term $ \frac{1}{N-1} \sum \alpha_k \rightarrow 0$ when $N$ is sufficiently large. 
